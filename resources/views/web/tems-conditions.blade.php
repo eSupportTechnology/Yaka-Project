@@ -1,11 +1,13 @@
 @extends('web.layout.layout')
 
 @section('content')
+<?php use Stichoza\GoogleTranslate\GoogleTranslate; ?>
+
   <div class="container">
     <div class="row">
-      <div class="col-md-12 mt-5">
+      <div class="mt-5 col-md-12">
         <h1 class="text-center">{{ GoogleTranslate::trans('Terms & Conditions', app()->getLocale()) }}</h1>
-        <div class="terms-content mb-5">
+        <div class="mb-5 terms-content">
           <h2 style="font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans('1. Acceptance of Terms', app()->getLocale()) }}</h2>
           <p>{{ GoogleTranslate::trans('By accessing or using [Yaka.lk] (“the Website”), you agree to be bound by these Terms and Conditions. If you do not agree to these terms, you may not use the Website.', app()->getLocale()) }}</p>
 
