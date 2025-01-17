@@ -1,13 +1,14 @@
 @extends('web.layout.layout')
 
 @section('content')
+<?php use Stichoza\GoogleTranslate\GoogleTranslate; ?>
   <div class="container">
     <div class="row">
-      <div class="col-md-12 pt-5 pb-5">
-        <h2 class="text-center mt-5 mb-4">{{ GoogleTranslate::trans('Banner Ads', app()->getLocale()) }}</h2>
-        <p class="text-center mb-4">{{ GoogleTranslate::trans('Banner ads are a great way to attract and engage with your target audience.', app()->getLocale()) }}</p>
+      <div class="pt-5 pb-5 col-md-12">
+        <h2 class="mt-5 mb-4 text-center">{{ GoogleTranslate::trans('Banner Ads', app()->getLocale()) }}</h2>
+        <p class="mb-4 text-center">{{ GoogleTranslate::trans('Banner ads are a great way to attract and engage with your target audience.', app()->getLocale()) }}</p>
         
-        <ul class="banner-ads-list text-center">
+        <ul class="text-center banner-ads-list">
           <li class="mb-2"><strong>{{ GoogleTranslate::trans('Number 1:', app()->getLocale()) }}</strong> {{ GoogleTranslate::trans('It is cost effective! Using banners is one of the cheapest methods of advertising available. Banners are often a better option financially compared to TV or radio station advertisements.', app()->getLocale()) }}</li>
           <li class="mb-2"><strong>{{ GoogleTranslate::trans('Number 2:', app()->getLocale()) }}</strong> {{ GoogleTranslate::trans('They target your main audience. Whether you hang up your banner at a sponsored event or outside your business location, you will have a much higher chance of gaining potential customers.', app()->getLocale()) }}</li>
           <li class="mb-2"><strong>{{ GoogleTranslate::trans('Number 3:', app()->getLocale()) }}</strong> {{ GoogleTranslate::trans('It’s a sustainable method for increasing customers. By placing your banner in a high-profile spot, it will influence customers, giving you a wider client base.', app()->getLocale()) }}</li>
@@ -20,15 +21,15 @@
           <li class="mb-2"><strong>{{ GoogleTranslate::trans('Number 10:', app()->getLocale()) }}</strong> {{ GoogleTranslate::trans('Banners are straightforward to create. Made from vinyl, the process of producing banners is much faster than other advertising methods.', app()->getLocale()) }}</li>
         </ul>
 
-        <h3 class="text-center mt-5">Leaderboard Banners</h3>
-        <img style="width: 100%" src="https://leadsdubai.com/wp-content/uploads/target-banner-advertising.jpg" alt="Leaderboard Banner" class="img-fluid mb-4">
-        <p class="text-center mb-4">{{ GoogleTranslate::trans("Leaderboard banners can run at a premium because of their coveted spot at the top of the webpage. However, it's important to note that they can also appear below the fold, just above the footer. The good news is that studies have found click-through rates are even higher in this position, as users have already scrolled down and engaged with the content. In some cases, your banner can occupy both top and bottom slots for maximum impact.", app()->getLocale()) }}</p>
+        <h3 class="mt-5 text-center">Leaderboard Banners</h3>
+        <img style="width: 100%" src="https://leadsdubai.com/wp-content/uploads/target-banner-advertising.jpg" alt="Leaderboard Banner" class="mb-4 img-fluid">
+        <p class="mb-4 text-center">{{ GoogleTranslate::trans("Leaderboard banners can run at a premium because of their coveted spot at the top of the webpage. However, it's important to note that they can also appear below the fold, just above the footer. The good news is that studies have found click-through rates are even higher in this position, as users have already scrolled down and engaged with the content. In some cases, your banner can occupy both top and bottom slots for maximum impact.", app()->getLocale()) }}</p>
 
-        <h3 class="text-center mt-5">Skyscraper Banners</h3>
-        <img style="width: 100%" src="https://www.mediaimpact.de/data/uploads/2023/07/skyscraper-622x350.jpg" alt="Leaderboard Banner" class="img-fluid mb-4">
-        <p class="text-center mb-4">{{ GoogleTranslate::trans("Since skyscraper banner ads are long and thin, achieving the right balance in your banner design is essential. You'll want to include your company logo, your value proposition, and a strong call to action—all of which require adequate space. This is where strong banner ad design skills come in, along with insights into what resonates with your target audience.", app()->getLocale()) }}</p>
+        <h3 class="mt-5 text-center">Skyscraper Banners</h3>
+        <img style="width: 100%" src="https://www.mediaimpact.de/data/uploads/2023/07/skyscraper-622x350.jpg" alt="Leaderboard Banner" class="mb-4 img-fluid">
+        <p class="mb-4 text-center">{{ GoogleTranslate::trans("Since skyscraper banner ads are long and thin, achieving the right balance in your banner design is essential. You'll want to include your company logo, your value proposition, and a strong call to action—all of which require adequate space. This is where strong banner ad design skills come in, along with insights into what resonates with your target audience.", app()->getLocale()) }}</p>
 
-        <p class="text-center mt-4">{{ GoogleTranslate::trans('Purchase your banners for your business today!', app()->getLocale()) }}</p>
+        <p class="mt-4 text-center">{{ GoogleTranslate::trans('Purchase your banners for your business today!', app()->getLocale()) }}</p>
       </div>
     </div>
   </div>

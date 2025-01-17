@@ -11,33 +11,15 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 class HomeController extends Controller
 {
     public function aboutUs()
-{
-    // Locale set 
-    app()->setlocale(Session::get('locale'));
-    $locale = app()->getLocale();
-
-    // Translate data
-    $data = [
-        'title' => GoogleTranslate::trans('About Us', $locale),
-        'content' => [
-            GoogleTranslate::trans('Yaka.lk is the largest growing market place in Sri Lanka. This is a 100 % Sri Lankan website which designed specially to suit Sri Lankans. If you want to buy or sell anything, you have arrived to the right destination.', $locale),
-            GoogleTranslate::trans('Yaka.lk has the broad selection of items so you can navigate through many categories such as Electronics, Vehicles, Property, jobs, Industrial, etc., also you can use search filters in order to make it quick in findings.', $locale),
-            GoogleTranslate::trans('You can create free account in yaka.lk and post your advertisement within no time and as soon as you publish, we will review it and allow to view in website. Also, you can choose add promotion packages for better results.', $locale),
-        ]
-    ];
-
-    // pass the data in the view
-    return view('web.about', compact('data'));
-}
+    {
+        app()->setlocale(Session::get('locale'));
+        return view('web.about');
+    }
 
     public function contactUs()
     {
-        // Locale set 
-        app()->setLocale(Session::get('locale', 'en')); //set  Default locale 'en' 
-        $locale = app()->getLocale();
-    
-        // View  return 
-        return view('web.contact', compact('locale'));
+        app()->setlocale(Session::get('locale'));
+        return view('web.contact');
     }
 
     public function privacySafety()
