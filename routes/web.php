@@ -8,6 +8,7 @@ use App\Http\Controllers\web\HomeController;
 use App\Http\Controllers\web\detailsController;
 use App\Http\Controllers\web\adsDisplayController;
 use App\Http\Controllers\web\adsPosttController;
+use App\Http\Controllers\web\bumpUpController;
 
 
 Route::get('/',[indexController::class,'index'])->name('/');
@@ -48,4 +49,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware('auth')->group(function () {
+    //userDashboardController
+    Route::get('/user/dashboard', [userDashboardController::class,'index'])->name('user.dashboard');
+    Route::get('/user/payment', [userDashboardController::class,'payment'])->name('user.payment');
+    Route::post('/user/notify', [userDashboardController::class,'notify'])->name('user.notify');
+    Route::get('/user/dashboard/ad-post',[userDashboardController::class,'mainCategories'])->name('user.dashboard.ad-post.main');
+    Route::get('/user/dashboard/ad-post/{url}',[userDashboardController::class,'subCategories'])->name('user.dashboard.ad-post.sub');
+    Route::get('/user/dashboard/ad-post/{curl}/{surl}',[userDashboardController::class,'postForm'])->name('user.dashboard.ad-post.main.sub');
+    Route::post('/user/dashboard/ad-post/post',[adsPosttController::class,'mainAdsPost'])->name('user.dashboard.ad-post.post');
+    Route::get('/user/dashboard/setting/{url}',[userDashboardController::class,'setting'])->name('user.dashboard.setting');
+    Route::post('/user/dashboard/setting/{url}',[userDashboardController::class,'update'])->name('user.dashboard.setting.update');
+    Route::get('/user/dashboard/my-ads/{type}',[userDashboardController::class,'myAds'])->name('user.dashboard.my-ads');
+
+    Route::get('/branmodel', [userDashboardController::class, 'getModels']);
+    Route::get('/getsublocation', [userDashboardController::class, 'getSubLocation']);
+});
+
+Route::get('/dashboard', [dashboardController::class,'index'])->middleware(['auth', 'verified','admin'])->name('dashboard');
 require __DIR__.'/auth.php';
