@@ -9,6 +9,7 @@ use App\Models\Districts;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class indexController extends Controller
 {

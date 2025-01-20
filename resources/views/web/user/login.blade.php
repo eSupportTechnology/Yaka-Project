@@ -110,9 +110,9 @@
                         </div>
                     </div>
 
-                   <div class="col-12">
+                   <div class="col-3">
                        <div class="form-group text-right">
-                           <a href="" class="form-forgot">Forgot password?</a>
+                           <a href="{{route('forgot')}}" class="form-forgot">Forgot password?</a>
                        </div>
                    </div>
                     <div class="col-12">

@@ -57,10 +57,10 @@
 
     <div class="feature-content" style="padding: 25px; position: absolute;background: none;border-radius: 0px 0px 8px 8px;" >
         <ol class="breadcrumb feature-category">
-            <li class="breadcrumb-item"><a href="{{route('ads',[$ads->category->url])}}">{{GoogleTranslate::trans($ads->category->name, app()->getLocale())}}</a>
+            <li class="breadcrumb-item"><a href="{{route('ads',[$ads->category->url])}}">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->category->name, app()->getLocale())}}</a>
             </li>
             <li class="breadcrumb-item active"
-                aria-current="page">{{GoogleTranslate::trans($ads->subcategory->name, app()->getLocale())}}</li>
+                aria-current="page">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->subcategory->name, app()->getLocale())}}</li>
         </ol>
         <h3 class="feature-title"><a href="{{route('ads.details',['id'=>$ads->id])}}">{{$ads->title}}</a>
         </h3>

@@ -49,7 +49,7 @@
                 AD LIST PART START
     =======================================-->
     <section class="inner-section ad-list-part">
-        <div class="container">
+        <div class="container" style="background-color:white; padding:20px">
             <div class="row content-reverse">
                 <div class="col-lg-4 col-xl-3">
                     <div class="row">

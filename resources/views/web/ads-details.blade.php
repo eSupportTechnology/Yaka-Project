@@ -181,15 +181,7 @@
                         </div>
                         @endif
                     </div>
-                    @if ($data->user_id == Auth::user()->id && isset(Session::get('user')['id']) && Session::get('user') !== null)
-
-                          
-                     <!-- BUMP UP CARD -->
-                    <div class="common-card">
-                        <a href="{{route('ads.bump-up',$data->id)}}" style="display: block;text-align: center;background: #FF0000;color: white;padding: 11px 0;border-radius: 7px;}">Jump up Now</a>
-                    </div>
-                          
-                      @endif
+                  
                     
                     <!-- SPECIFICATION CARD -->
                     <div class="common-card">
@@ -203,15 +195,15 @@
                             </li>
                             <li>
                                 <h6>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('District', app()->getLocale())}}:</h6>
-                                <p>{{$data->main_location->name_en}}</p>
+                                {{--   <p>{{$data->main_location->name_en}}</p>--}}
                             </li>
                             <li>
                                 <h6>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('city', app()->getLocale())}}:</h6>
-                                <p>{{$data->sub_location->name_en}}</p>
+                                {{--  <p>{{$data->sub_location->name_en}}</p>--}}
                             </li>
                             <li>
                                 <h6>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Category', app()->getLocale())}}:</h6>
-                                <p>{{$data->category->name}}</p>
+                                 <p>{{$data->category->name}}</p>
                             </li>
 
                             <li>

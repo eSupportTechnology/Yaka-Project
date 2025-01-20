@@ -42,9 +42,9 @@
                     <dotlottie-player src="https://lottie.host/07462177-04f3-4b21-93c1-8455179693c0/EUCuUmDPlB.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
                 </div>
                 <div class="col-lg-8">
-                    <h1>{{GoogleTranslate::trans('Hello,', app()->getLocale())}} {{Session::get('user')['first_name']}}</h1>
-                    <h1>{{GoogleTranslate::trans('welcome to Yaka.lk', app()->getLocale())}}</h1>
-                    <p>  {{GoogleTranslate::trans(" We're thrilled to have you here. As a valued member of our community, you now have access to the largest online marketplace in Sri Lanka, where countless opportunities await you.
+                    <h1>{{Stichoza\GoogleTranslate\GoogleTranslate::trans('Hello,', app()->getLocale())}} {{Session::get('user')['first_name']}}</h1>
+                    <h1>{{Stichoza\GoogleTranslate\GoogleTranslate::trans('welcome to Yaka.lk', app()->getLocale())}}</h1>
+                    <p>  {{Stichoza\GoogleTranslate\GoogleTranslate::trans(" We're thrilled to have you here. As a valued member of our community, you now have access to the largest online marketplace in Sri Lanka, where countless opportunities await you.
                         Explore an extensive range of categories, from real estate and vehicles to electronics and fashion. Our platform connects you with local sellers and unique products, making it easier than ever to find exactly what you need. With user-friendly features, advanced search options, and exclusive offers, shopping has never been more convenient.
                         Thank you for joining yaka.lk —dive in and start discovering the best deals and services ", app()->getLocale())}}</p>
                 </div>

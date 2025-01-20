@@ -96,19 +96,19 @@
 <!--=====================================
             FOOTER PART PART
 =======================================-->
-<footer class="footer-part" style="background-color:rgb(92, 2, 2); padding: 15px 0; text-align: left;" >
+<footer class="footer-part" style="background-color:rgb(47, 4, 4); padding: 15px 0; text-align: left;" >
     <div class="container">
         <div class="row newsletter">
-            <div class="col-lg-9">
-                <div class="news-content">
-                    <h2>Subscribe for Latest Offers</h2>
-                    <p>Don’t miss out on the best deals in Sri Lanka’s largest marketplace! Subscribe now to receive exclusive offers, promotions, and updates directly to your inbox. Be the first to know about discounts on a wide range of products and services, from electronics and fashion to home goods and vehicles. Our subscription ensures you stay connected with the latest opportunities and special events tailored just for you. Join our growing community of savvy shoppers and make the most of your shopping experience. Sign up today and start saving!</p>
+            <div class="col-lg-9" style="margin-top: 50px; text-align: left; margin-left: 30; padding:50px 20px 0px;">
+                <div class="news-content" style="margin: 10px auto;">
+                    <h2>{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Subscribe for Latest Offers', app()->getLocale())}}</h2>
+                    <p>{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Don’t miss out on the best deals in Sri Lanka’s largest marketplace! Subscribe now to receive exclusive offers, promotions, and updates directly to your inbox. Be the first to know about discounts on a wide range of products and services, from electronics and fashion to home goods and vehicles. Our subscription ensures you stay connected with the latest opportunities and special events tailored just for you. Join our growing community of savvy shoppers and make the most of your shopping experience. Sign up today and start saving!', app()->getLocale())}}</p>
                 </div>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3" style="margin-top: 150px;">
                 <div class="footer-info">
-                    <a href="#"><img src="{{asset('Logo-re.png')}}" alt="logo"></a>
+                    <a href="#"><img src="{{asset('Logo-re.png')}}" alt="logo" style="width: 300px; height: auto; object-fit: contain;"></a>
                 </div>
             </div>
 
@@ -116,7 +116,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col-lg-4">
                 <div class="footer-content">
-                    <h3>Contact Us</h3>
+                    <h3>{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Contact Us', app()->getLocale())}}</h3>
                     <ul class="footer-address">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
@@ -125,14 +125,14 @@
                         <li>
                             <i class="fas fa-envelope"></i>
                             <p>
-                                <a href="mailto:Yaka.lk@outlook.com">Yaka.lk@outlook.com</a> <span>|</span> 
-                                <a href="mailto:Yakalksrilanka@gmail.com">Yakalksrilanka@gmail.com</a>
+                                <a href="mailto:Yaka.lk@outlook.com" style="text-decoration: none; color: inherit;">Yaka.lk@outlook.com</a> <span></span> 
+                                <a href="mailto:Yakalksrilanka@gmail.com" style="text-decoration: none; color: inherit;">Yakalksrilanka@gmail.com</a>
                             </p>
                         </li>
                         <li>
                             <i class="fas fa-phone-alt"></i>
                             <p>
-                                <a href="tel:+94705321321">070 5 321 321</a>
+                                <a href="tel:+94705321321"style="text-decoration: none; color: inherit;" >070 5 321 321</a>
                             </p>
                         </li>
                     </ul>
@@ -141,26 +141,26 @@
             </div>
             <div class="col-sm-6 col-md-6 col-lg-4">
                 <div class="footer-content">
-                    <h3>Quick Links</h3>
+                    <h3>{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Quick Links', app()->getLocale())}}</h3>
                     <ul class="footer-widget">
-                        <li><a href="{{route('about-us')}}">About Us</a></li>
-                        <li><a href="{{route('contact-us')}}">Contact Us</a></li>
-                        <li><a href="{{route('privacy-safety')}}">Privacy & Safety</a></li>
+                        <li><a href="{{route('about-us')}}">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('About Us', app()->getLocale())}}</a></li>
+                        <li><a href="{{route('contact-us')}}">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Contact Us', app()->getLocale())}}</a></li>
+                        <li><a href="{{route('privacy-safety')}}">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Privacy & Safety', app()->getLocale())}}</a></li>
                         {{-- <li><a href="{{route('careers')}}">Careers</a></li> --}}
-                        <li><a href="{{route('tems-conditions')}}">Tems & Conditions</a></li>
-                        {{-- <li><a href="{{route('faq')}}">Faq</a></li> --}}
+                        <li><a href="{{route('tems-conditions')}}">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Tems & Conditions', app()->getLocale())}}</a></li>
+                        {{-- <li ><a href="{{route('faq')}}">Faq</a></li> --}}
                     </ul>
                 </div>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-4">
                 <div class="footer-content">
-                    <h3>General</h3>
+                    <h3>{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('General', app()->getLocale())}}</h3>
                     <ul class="footer-widget">
-                        <li><a href="{{route('tips')}}">Tips</a></li>
-                        <li><a href="{{route('boosting-ads')}}">Boosting ads</a></li>
-                        <li><a href="{{route('ads-posting-allowances')}}">Ad posting allowances</a></li>
-                        <li><a href="{{route('ad-posting-criteria')}}">Ad posting criteria</a></li>
-                        <li><a href="{{route('banner-ads')}}">Banner Ads</a></li>
+                        <li><a href="{{route('tips')}}">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Tips', app()->getLocale())}}</a></li>
+                        <li><a href="{{route('boosting-ads')}}">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Boosting ads', app()->getLocale())}}</a></li>
+                        <li><a href="{{route('ads-posting-allowances')}}">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Ad posting allowances', app()->getLocale())}}</a></li>
+                        <li><a href="{{route('ad-posting-criteria')}}">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Ad posting criteria', app()->getLocale())}}</a></li>
+                        <li><a href="{{route('banner-ads')}}">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Banner Ads', app()->getLocale())}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -169,22 +169,16 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="footer-card-content">
-                    <div class="footer-payment" style="
-                    display: flex;
-                    justify-content: space-between;
-                ">
-                       <ul class="footer-social">
-                        {{-- <li><a href="#" target="_bank"><i class="fas fa-envelope"></i></a></li> --}}
-                        <li><a href="https://www.facebook.com/profile.php?id=61565478456618" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="https://www.youtube.com/@Yakalk-g5d" target="_blank"><i class="fab fa-youtube"></i></a></li>
-                        {{-- <li><a href="#" target="_blank"><i class="fab fa-tiktok"></i></a></li> --}}
-                        <li><a href="https://www.instagram.com/yaka.lk6/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="https://wa.me/0705321321" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
-                    </ul>
-                        
+                    <div class="footer-payment" style=" display: flex; justify-content: space-between; ">
+                        <ul class="footer-social">
+                            <li><a href="https://www.facebook.com/profile.php?id=61565478456618" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="https://www.youtube.com/@Yakalk-g5d" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="https://www.instagram.com/yaka.lk6/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="https://wa.me/0705321321" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+                        </ul>
                     </div>
                     <div class="footer-app" style="display: flex;flex-wrap: wrap;">
-                        <span style="width: 100%">Coming soon</span>
+                        <span style="width: 100%">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('Coming soon', app()->getLocale())}}</span>
                         <a href="#"><img src="{{asset('web/images/play-store.png')}}" alt="play-store"></a>
                         <a href="#"><img src="{{asset('web/images/app-store.png')}}" alt="app-store"></a>
                     </div>
@@ -192,8 +186,8 @@
             </div>
         </div>
     </div>
-    <div class="footer-end">
-        <div class="container">
+    <div class="footer-end" style="background-color:rgb(47, 4, 4); ">
+        <div class="container"
             <div class="footer-end-content" style="display: flex;justify-content: center;">
                 <p>© Copyright 2024 - SATASME HOLDINGS (Pvt) Ltd , All Rights Reserved</p>
 

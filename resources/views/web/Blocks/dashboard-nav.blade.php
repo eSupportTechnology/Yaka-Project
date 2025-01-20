@@ -34,16 +34,16 @@
                 <div class="col-lg-7">
                     <div class="dash-header-right">
                         <div class="dash-focus dash-list">
-                            <h2>{{GoogleTranslate::trans('Post', app()->getLocale())}}</h2>
-                            <p>{{GoogleTranslate::trans('Your Ads', app()->getLocale())}}</p>
+                            <h2>{{Stichoza\GoogleTranslate\GoogleTranslate::trans('Post', app()->getLocale())}}</h2>
+                            <p>{{Stichoza\GoogleTranslate\GoogleTranslate::trans('Your Ads', app()->getLocale())}}</p>
                         </div>
                         <div class="dash-focus dash-book">
-                            <h2>{{GoogleTranslate::trans('Need', app()->getLocale())}}</h2>
-                            <p> {{GoogleTranslate::trans('To Buy ', app()->getLocale())}}</p>
+                            <h2>{{Stichoza\GoogleTranslate\GoogleTranslate::trans('Need', app()->getLocale())}}</h2>
+                            <p> {{Stichoza\GoogleTranslate\GoogleTranslate::trans('To Buy ', app()->getLocale())}}</p>
                         </div>
                         <div class="dash-focus dash-rev">
-                            <h2>{{GoogleTranslate::trans('Boost', app()->getLocale())}}</h2>
-                            <p>{{GoogleTranslate::trans('Your Ads', app()->getLocale())}}</p>
+                            <h2>{{Stichoza\GoogleTranslate\GoogleTranslate::trans('Boost', app()->getLocale())}}</h2>
+                            <p>{{Stichoza\GoogleTranslate\GoogleTranslate::trans('Your Ads', app()->getLocale())}}</p>
                         </div>
                     </div>
                 </div>

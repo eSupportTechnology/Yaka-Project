@@ -114,14 +114,14 @@
                 </div>
                 <div class="col-md-5 col-lg-5">
                     <div class="section-side-heading">
-                        <h2>{{ GoogleTranslate::trans('Find your needs in our best ', app()->getLocale()) }}<span>{{ GoogleTranslate::trans('Super Ads', app()->getLocale()) }}</span></h2>
-{{--                        <p>{{ GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero--}}
+                        <h2>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Find your needs in our best ', app()->getLocale()) }}<span>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Super Ads', app()->getLocale()) }}</span></h2>
+{{--                        <p>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero--}}
 {{--                            voluptatum repudiandae veniam maxime tenetur fugiat eaque alias nobis doloremque culpa--}}
 {{--                            nam.', app()->getLocale()) }}</p>--}}
 {{--                        <p>{{ GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero--}}
-{{--                            voluptatum repudiandae veniam maxime tenetur fugiat eaque alias nobis doloremque culpa--}}
+{{--                            \Stichoza\GoogleTranslate\GoogleTranslate repudiandae veniam maxime tenetur fugiat eaque alias nobis doloremque culpa--}}
 {{--                            nam.', app()->getLocale()) }}</p>--}}
-{{--                        <p>{{ GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero--}}
+{{--                        <p>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero--}}
 {{--                            voluptatum repudiandae veniam maxime tenetur fugiat eaque alias nobis doloremque culpa--}}
 {{--                            nam.', app()->getLocale()) }}</p>--}}
 
@@ -159,8 +159,8 @@
                 <div class="row">
                     <div class="col-md-5 col-lg-5">
                         <div class="section-side-heading">
-                            <h2>{{ GoogleTranslate::trans('Find your needs in our best ', app()->getLocale()) }}<span>{{ GoogleTranslate::trans('Top Ads', app()->getLocale()) }}</span></h2>
-{{--                            <p>{{ GoogleTranslate::trans('Elevate your visibility with our Top add Listings category, designed for sellers who want to stand out in the bustling marketplace of Sri Lanka. This exclusive section showcases your ads that receive enhanced exposure, ensuring your products and services reach a wider audience. Ideal for businesses and individual sellers alike, Premium Listings offer priority placement, eye-catching features, and the opportunity to attract more potential buyers. Whether you’re promoting real estate, vehicles, electronics, or unique local goods, investing in a premium listing will give you the competitive edge needed to succeed. Join us today and make your offerings shine!', app()->getLocale()) }}</p>--}}
+                            <h2>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Find your needs in our best ', app()->getLocale()) }}<span>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Top Ads', app()->getLocale()) }}</span></h2>
+{{--                            <p>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Elevate your visibility with our Top add Listings category, designed for sellers who want to stand out in the bustling marketplace of Sri Lanka. This exclusive section showcases your ads that receive enhanced exposure, ensuring your products and services reach a wider audience. Ideal for businesses and individual sellers alike, Premium Listings offer priority placement, eye-catching features, and the opportunity to attract more potential buyers. Whether you’re promoting real estate, vehicles, electronics, or unique local goods, investing in a premium listing will give you the competitive edge needed to succeed. Join us today and make your offerings shine!', app()->getLocale()) }}</p>--}}
                             <div class="col-md-6 col-lg-12" style="overflow: hidden;padding: 0px;">
                                 <figure id="zss">
                                     @php
@@ -219,7 +219,7 @@
                         <h2><span>{{ GoogleTranslate::trans('Ads', app()->getLocale()) }}</span></h2>
                         <p style="
                         width: 100%;
-                    ">{{ GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero
+                    ">{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero
                             voluptatum repudiandae veniam maxime tenetur.', app()->getLocale()) }}</p>
                     </div>
                 </div>
@@ -258,10 +258,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-center-heading">
-                        <h2>{{ GoogleTranslate::trans('Popular Trending ', app()->getLocale()) }}<span>{{ GoogleTranslate::trans('Ads', app()->getLocale()) }}</span></h2>
+                        <h2>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Popular Trending ', app()->getLocale()) }}<span>{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Ads', app()->getLocale()) }}</span></h2>
                         <p style="
                         width: 100%;
-                    ">{{ GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero
+                    ">{{ \Stichoza\GoogleTranslate\GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero
                             voluptatum repudiandae veniam maxime tenetur.', app()->getLocale()) }}</p>
                     </div>
                 </div>
