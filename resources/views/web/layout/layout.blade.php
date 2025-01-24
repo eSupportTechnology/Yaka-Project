@@ -23,7 +23,7 @@
     =======================================-->
 
     <!-- FOR WEBPAGE TITLE -->
-    <title>Home - Classicads</title>
+    <title>Home - Yaka</title>
 
     <!--=====================================
                 CSS LINK PART START

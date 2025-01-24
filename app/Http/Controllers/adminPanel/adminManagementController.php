@@ -11,10 +11,10 @@ class adminManagementController extends Controller
 {
     public function index(){
         // Fetch users with the role 'admin'
-        $users = User::where('roles', ADMIN)->select('id', 'first_name', 'last_name', 'url', 'email', 'status')->paginate(10);
+        $users = User::where('roles',  'admin')->select('id', 'first_name', 'last_name', 'url', 'email', 'status')->paginate(10);
 
         // Pass the users data to the view
-        return view('adminPanel.adminManagement.index', ['users' => $users]);
+        return view('newAdminDashboard.adminManagement.index', ['users' => $users]);
     }
 
     public function search(){
@@ -22,7 +22,7 @@ class adminManagementController extends Controller
         $users = User::where('roles', ADMIN)->select('id', 'first_name', 'last_name', 'url', 'email', 'status')->paginate(10);
 
         // Pass the users data to the view
-        return view('adminPanel.adminManagement.index', ['users' => $users]);
+        return view('newAdminDashboard.adminManagement.index', ['users' => $users]);
     }
 
     public function create()
@@ -30,14 +30,14 @@ class adminManagementController extends Controller
         // Fetch active users for potential assignment
         $users = User::where('status','1')->select('id', 'first_name', 'last_name')->get();
 
-        return view('adminPanel.adminManagement.create',['users' => $users]);
+        return view('newAdminDashboard.adminManagement.create',['users' => $users]);
     }
 
     public function view($id)
     {
         // Find the user by ID for viewing
         $user = User::find($id);
-        return view('adminPanel.adminManagement.view',['user' => $user]);
+        return view('newAdminDashboard.adminManagement.view',['user' => $user]);
     }
 
     public function store(Request $request)
@@ -71,7 +71,7 @@ class adminManagementController extends Controller
 
         $user->save();
 
-        return view('adminPanel.adminManagement.create',['users' => $users])->with('usersuccess', $request['role'].' created successfully.');
+        return view('newAdminDashboard.adminManagement.create',['users' => $users])->with('usersuccess', $request['role'].' created successfully.');
     }
 
     public function giveAccess(Request $request)
@@ -87,9 +87,9 @@ class adminManagementController extends Controller
         if ($user) {
             $user->roles = $request->role;
             $user->save();
-            return view('adminPanel.adminManagement.create',['users' => $users])->with('success', 'Role updated successfully.');
+            return view('newAdminDashboard.adminManagement.create',['users' => $users])->with('success', 'Role updated successfully.');
         } else {
-            return view('adminPanel.adminManagement.create',['users' => $users])->with('unsuccess', 'Role has Not Found.');
+            return view('newAdminDashboard.adminManagement.create',['users' => $users])->with('unsuccess', 'Role has Not Found.');
         }
     }
 
@@ -97,7 +97,7 @@ class adminManagementController extends Controller
     {
         // Find the user by ID for updating
         $user = User::find($id);
-        return view('adminPanel.adminManagement.update',['user' => $user]);
+        return view('newAdminDashboard.adminManagement.update',['user' => $user]);
     }
 
     public function updateUser(Request $request)
@@ -107,7 +107,7 @@ class adminManagementController extends Controller
 
         // If user not found, return with error message
         if (!$user) {
-            return view('adminPanel.adminManagement.update',['user' => $user])->with('unsuccess', 'User not found.');
+            return view('newAdminDashboard.adminManagement.update',['user' => $user])->with('unsuccess', 'User not found.');
         }
 
         // Validate incoming data
@@ -131,14 +131,14 @@ class adminManagementController extends Controller
         $user->phone_number = $validatedData['phone_number'];
         $user->save();
 
-        return view('adminPanel.adminManagement.update',['user' => $user])->with('success', 'User updated successfully.');
+        return view('newAdminDashboard.adminManagement.update',['user' => $user])->with('success', 'User updated successfully.');
     }
 
     public function delete($id)
     {
         // Find the user by ID for deletion
         $user = User::find($id);
-        return view('adminPanel.adminManagement.delete',['user' => $user]);
+        return view('newAdminDashboard.adminManagement.delete',['user' => $user]);
     }
 
     public function deleteUser($id)

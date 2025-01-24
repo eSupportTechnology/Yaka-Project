@@ -1,7 +1,7 @@
 <div class="col-md-6 col-lg-12">
     <div class="product-widget">
         <h6 class="product-widget-title">{{\Stichoza\GoogleTranslate\GoogleTranslate::trans('categories', app()->getLocale())}}</h6>
-        <ul class="product-widget-list product-widget-scroll">
+        <ul class="product-widget-list">
             @foreach($categories as $category)
                 <li class="product-widget-item">
                     <a href="{{route('ads',[$category->url])}}">

@@ -22,7 +22,7 @@ class subPackageManagementController extends Controller
         }
 
 
-        return view('adminPanel.packageManagement.subpackages', compact(['sub', 'package']));
+        return view('newAdminDashboard.packageManagement.subpackages', compact(['sub', 'package']));
     }
     public function update($url)
     {
@@ -30,13 +30,13 @@ class subPackageManagementController extends Controller
         $pack = Package::where('url', $url)->first();
 
 
-        return view('adminPanel.packageManagement.updatePackage', ['pack' => $pack]);
+        return view('newAdminDashboard.packageManagement.updatePackage', ['pack' => $pack]);
     }
     public function create($url)
     {
         // Retrieve main package information
         $maincategory = Package::where('url', $url)->select('id', 'url')->first();
-        return view('adminPanel.packageManagement.createSubPackage', ['maincategory' => $maincategory]);
+        return view('newAdminDashboard.packageManagement.createSubPackage', ['maincategory' => $maincategory]);
     }
     public function store(Request $request)
     {
@@ -86,7 +86,7 @@ class subPackageManagementController extends Controller
             return redirect()->route('dashboard.sub-pacages.create', ['url' => $maincategory->url])
                 ->with('success', 'Your success message here.');
         } else {
-            return view('adminPanel.packageManagement.createSubPackage')->with('success', $validatedData['name'] . ' created successfully.');
+            return view('newAdminDashboard.packageManagement.createSubPackage')->with('success', $validatedData['name'] . ' created successfully.');
         }
     }
     public function view($url)
@@ -97,7 +97,7 @@ class subPackageManagementController extends Controller
         // Retrieve main category information
         $maincategory = Package::where('id', $category->package_id)->select('id', 'url')->first();
 
-        return view('adminPanel.packageManagement.viewSubPackage', ['category' => $category, 'maincategory' => $maincategory]);
+        return view('newAdminDashboard.packageManagement.viewSubPackage', ['category' => $category, 'maincategory' => $maincategory]);
     }
     public function updatee($url)
     {
@@ -107,7 +107,7 @@ class subPackageManagementController extends Controller
         // Retrieve main category information
         $maincategory = Package::where('id', $category->package_id)->select('id', 'url')->first();
 
-        return view('adminPanel.packageManagement.updateSubPackage', ['category' => $category, 'maincategory' => $maincategory]);
+        return view('newAdminDashboard.packageManagement.updateSubPackage', ['category' => $category, 'maincategory' => $maincategory]);
     }
     public function updateSubPackage(Request $request)
     {
@@ -124,7 +124,7 @@ class subPackageManagementController extends Controller
 
         // If category not found, return with error message
         if (!$category) {
-            return view('adminPanel.categoryManagement.update', ['category' => $category])
+            return view('newAdminDashboard.categoryManagement.update', ['category' => $category])
                 ->with('unsuccess', 'Category not found.');
         }
 
@@ -162,13 +162,13 @@ class subPackageManagementController extends Controller
 
         $category->save();
 
-        return view('adminPanel.packageManagement.updateSubPackage', ['category' => $category, 'maincategory' => $maincategory])->with('success', 'Category updated successfully.');
+        return view('newAdminDashboard.packageManagement.updateSubPackage', ['category' => $category, 'maincategory' => $maincategory])->with('success', 'Category updated successfully.');
     }
     public function delete($url)
     {
         // Find the category by URL for deletion
         $category = PackageType::where('url', $url)->first();
-        return view('adminPanel.packageManagement.deleteSubPackage', ['category' => $category]);
+        return view('newAdminDashboard.packageManagement.deleteSubPackage', ['category' => $category]);
     }
     function deleteSubPackage($url)
     {

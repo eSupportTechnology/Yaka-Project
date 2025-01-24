@@ -10,9 +10,10 @@ class AdsTypes extends Model
     use HasFactory;
     protected $table='table_ad_types';
     protected $fillable=['name','url','status','catergoryId'];
+
     public function category()
     {
-        return $this->belongsTo(Category::class,'catergoryId');
+        return $this->belongsTo(Category::class,'id');
     }
 
     public function createUrl($valve)

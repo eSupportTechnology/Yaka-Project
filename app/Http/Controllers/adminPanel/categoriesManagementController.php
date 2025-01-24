@@ -12,13 +12,13 @@ class CategoriesManagementController extends Controller
     public function index()
     {
         $categories = Category::where('mainId', 0)->orderBy('id', 'DESC')->paginate(6);
-        return view('adminPanel.categoryManagement.index', ['categories' => $categories]);
+        return view('newAdminDashboard.categoryManagement.index', ['categories' => $categories]);
     }
 
     // Show the form for creating a new category
     public function create()
     {
-        return view('adminPanel.categoryManagement.create');
+        return view('newAdminDashboard.categoryManagement.create');
     }
 
     // Store a newly created category in storage
@@ -28,7 +28,7 @@ class CategoriesManagementController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required' // Assuming status is required for the category
+            'status' => 'required', // Assuming status is required for the category
         ]);
 
         // Determine image path based on whether it's a subcategory or not
@@ -67,7 +67,7 @@ class CategoriesManagementController extends Controller
             return redirect()->route('dashboard.sub-categories.create', ['url' => $maincategory->url])
                 ->with('success', 'Your success message here.');
         } else {
-            return view('adminPanel.categoryManagement.create')->with('success', $validatedData['name'].' created successfully.');
+            return view('newAdminDashboard.categoryManagement.create')->with('success', $validatedData['name'].' created successfully.');
         }
     }
 
@@ -75,7 +75,7 @@ class CategoriesManagementController extends Controller
     public function view($url)
     {
         $category = Category::where('url', $url)->first();
-        return view('adminPanel.categoryManagement.view', ['category' => $category]);
+        return view('newAdminDashboard.categoryManagement.view', ['category' => $category]);
     }
 
     // Show the form for editing the specified category
@@ -83,7 +83,7 @@ class CategoriesManagementController extends Controller
     {
         // Find the category by URL for updating
         $category = Category::where('url', $url)->first();
-        return view('adminPanel.categoryManagement.update', ['category' => $category]);
+        return view('newAdminDashboard.categoryManagement.update', ['category' => $category]);
     }
 
     // Update the specified category in storage
@@ -100,14 +100,15 @@ class CategoriesManagementController extends Controller
 
         // If category not found, return with error message
         if (!$category) {
-            return view('adminPanel.categoryManagement.update', ['category' => $category])
+            return view('newAdminDashboard.categoryManagement.update', ['category' => $category])
                 ->with('unsuccess', 'Category not found.');
         }
 
         // Define validation rules
         $rules = [
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required'
+            'status' => 'required',
+            'free_add_count' => 'nullable|integer|min:0'
         ];
 
         // Check if category name is changing and add validation rule accordingly
@@ -144,7 +145,7 @@ class CategoriesManagementController extends Controller
 
         $category->save();
 
-        return view('adminPanel.categoryManagement.update', ['category' => $category, 'maincategory' => $maincategory])->with('success', 'Category updated successfully.');
+        return view('newAdminDashboard.categoryManagement.update', ['category' => $category, 'maincategory' => $maincategory])->with('success', 'Category updated successfully.');
     }
 
     // Show the confirmation form for deleting the specified category
@@ -152,7 +153,7 @@ class CategoriesManagementController extends Controller
     {
         // Find the category by URL for deletion
         $category = Category::where('url', $url)->first();
-        return view('adminPanel.categoryManagement.delete', ['category' => $category]);
+        return view('newAdminDashboard.categoryManagement.delete', ['category' => $category]);
     }
 
     // Remove the specified category from storage

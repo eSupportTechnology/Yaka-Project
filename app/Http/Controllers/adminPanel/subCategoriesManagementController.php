@@ -22,7 +22,7 @@ class subCategoriesManagementController extends Controller
         // Retrieve subcategories related to the main category
         $subcategories = Category::where('mainId', $maincategory->id)->select('id', 'url', 'name', 'status')->paginate(6);
 
-        return view('adminPanel.categoryManagement.subCategory', ['maincategory' => $maincategory, 'subcategories' => $subcategories]);
+        return view('newAdminDashboard.categoryManagement.subCategory', ['maincategory' => $maincategory, 'subcategories' => $subcategories]);
     }
 
     /**
@@ -36,7 +36,7 @@ class subCategoriesManagementController extends Controller
         // Retrieve main category information
         $maincategory = Category::where('url', $url)->select('id', 'url')->first();
 
-        return view('adminPanel.categoryManagement.create', ['maincategory' => $maincategory]);
+        return view('newAdminDashboard.categoryManagement.create', ['maincategory' => $maincategory]);
     }
 
     /**
@@ -53,7 +53,7 @@ class subCategoriesManagementController extends Controller
         // Retrieve main category information
         $maincategory = Category::where('id', $category->mainId)->select('id', 'url')->first();
 
-        return view('adminPanel.categoryManagement.view', ['category' => $category, 'maincategory' => $maincategory]);
+        return view('newAdminDashboard.categoryManagement.view', ['category' => $category, 'maincategory' => $maincategory]);
     }
 
     /**
@@ -70,7 +70,7 @@ class subCategoriesManagementController extends Controller
         // Retrieve main category information
         $maincategory = Category::where('id', $category->mainId)->select('id', 'url')->first();
 
-        return view('adminPanel.categoryManagement.update', ['category' => $category, 'maincategory' => $maincategory]);
+        return view('newAdminDashboard.categoryManagement.update', ['category' => $category, 'maincategory' => $maincategory]);
     }
 
     /**
@@ -87,6 +87,6 @@ class subCategoriesManagementController extends Controller
         // Retrieve main category information
         $maincategory = Category::where('id', $category->mainId)->select('id', 'url')->first();
 
-        return view('adminPanel.categoryManagement.delete', ['category' => $category, 'maincategory' => $maincategory]);
+        return view('newAdminDashboard.categoryManagement.delete', ['category' => $category, 'maincategory' => $maincategory]);
     }
 }

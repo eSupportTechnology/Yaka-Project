@@ -11,7 +11,7 @@ class subpackageController extends Controller
     function index($url){
         $package=Package::where('url',$url)->first();
         $sub=PackageType::where('package_id',$package->id)->get();
-        return view('adminPanel.packageManagement.subpackages',compact(['sub','package']));
+        return view('newAdminDashboard.packageManagement.subpackages',compact(['sub','package']));
     }
     public function update($url)
     {
@@ -19,13 +19,13 @@ class subpackageController extends Controller
         $pack = Package::where('url', $url)->first();
 
 
-        return view('adminPanel.packageManagement.updatePackage', ['pack' => $pack]);
+        return view('newAdminDashboard.packageManagement.updatePackage', ['pack' => $pack]);
     }
     public function create($url)
     {
         // Retrieve main package information
         $maincategory = Package::where('url', $url)->select('id', 'url')->first();
-        return view('adminPanel.packageManagement.createSubPackage', ['maincategory' => $maincategory]);
+        return view('newAdminDashboard.packageManagement.createSubPackage', ['maincategory' => $maincategory]);
     }
     public function store(Request $request)
     {
@@ -75,7 +75,7 @@ class subpackageController extends Controller
             return redirect()->route('dashboard.package.create', ['url' => $maincategory->url])
                 ->with('success', 'Your success message here.');
         }else{
-            return view('adminPanel.packageManagement.createNewPackage')->with('success', $validatedData['name'].' created successfully.');
+            return view('newAdminDashboard.packageManagement.createNewPackage')->with('success', $validatedData['name'].' created successfully.');
         }
 
     }
@@ -87,7 +87,7 @@ class subpackageController extends Controller
         // Retrieve main category information
         $maincategory = Package::where('id', $category->package_id)->select('id', 'url')->first();
 
-        return view('adminPanel.packageManagement.viewSubPackage', ['category' => $category, 'maincategory' => $maincategory]);
+        return view('newAdminDashboard.packageManagement.viewSubPackage', ['category' => $category, 'maincategory' => $maincategory]);
     }
     public function updatee($url)
     {
@@ -97,7 +97,7 @@ class subpackageController extends Controller
         // Retrieve main category information
         $maincategory = Package::where('id', $category->package_id)->select('id', 'url')->first();
 
-        return view('adminPanel.packageManagement.updateSubPackage', ['category' => $category, 'maincategory' => $maincategory]);
+        return view('newAdminDashboard.packageManagement.updateSubPackage', ['category' => $category, 'maincategory' => $maincategory]);
     }
     public function updateSubPackage(Request $request )
     {
@@ -112,7 +112,7 @@ class subpackageController extends Controller
 
         // If category not found, return with error message
         if (!$category) {
-            return view('adminPanel.categoryManagement.update', ['category' => $category])
+            return view('newAdminDashboard.categoryManagement.update', ['category' => $category])
                 ->with('unsuccess', 'Category not found.');
         }
 
@@ -150,7 +150,7 @@ class subpackageController extends Controller
 
         $category->save();
 
-        return view('adminPanel.packageManagement.updateSubPackage', ['category' => $category ,'maincategory' => $maincategory ])->with('success', 'Category updated successfully.');
+        return view('newAdminDashboard.packageManagement.updateSubPackage', ['category' => $category ,'maincategory' => $maincategory ])->with('success', 'Category updated successfully.');
     }
     public function delete($url)
     {

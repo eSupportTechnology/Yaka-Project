@@ -95,12 +95,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/getsublocation', [userDashboardController::class, 'getSubLocation']);
 });
 
-Route::get('/dashboard', [dashboardController::class, 'index'])
-    ->middleware(['auth', 'verified', 'admin'])
-    ->name('dashboard');
+
+use App\Http\Controllers\Auth\AdminLoginController;
+
+Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
+Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 
-Route::middleware('admin')->group(function () {
+Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
+    Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
+
     //adminManagementController
     Route::get('/dashboard/admins',[adminManagementController::class ,'index'])->name('dashboard.admins');
     Route::get('/dashboard/admins/create',[adminManagementController::class ,'create'])->name('dashboard.admins.create');
@@ -121,21 +126,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/dashboard/users/delete/{id}',[adminManagementController::class ,'delete'])->name('dashboard.users.delete');
     Route::post('/dashboard/users/delete/{id}',[adminManagementController::class ,'deleteUser'])->name('dashboard.users.delete-user');
 
-    //usersManagementController
-    Route::get('/dashboard/banner',[bannerManagementController::class ,'index'])->name('dashboard.banner');
-    Route::get('/dashboard/banner/view/{id}',[bannerManagementController::class ,'view'])->name('dashboard.banner.view');
-    Route::get('/dashboard/banner/update/{id}',[bannerManagementController::class ,'update'])->name('dashboard.banner.update');
-    Route::post('/dashboard/banner/update/{id}',[bannerManagementController::class ,'updatebanner'])->name('dashboard.banner.update-banner');
-    Route::get('/dashboard/banner/create',[bannerManagementController::class ,'create'])->name('dashboard.banner.create');
-    Route::post('/dashboard/banner/create',[bannerManagementController::class ,'createBanner'])->name('dashboard.banner.create-banner');
-    Route::get('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'delete'])->name('dashboard.banner.delete');
-    Route::post('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'deletebanner'])->name('dashboard.banner.delete-banner');
-
-    //usersManagementController
-    Route::get('/dashboard/ads/{code?}',[adsManagementController::class ,'index'])->name('dashboard.ads');
-    Route::get('/dashboard/ads/{status}/{id}',[adsManagementController::class ,'status'])->name('dashboard.ads.status');
-
-    //categoryManagementController
+     //categoryManagementController
     //Main category
     Route::get('/dashboard/categories',[categoriesManagementController::class ,'index'])->name('dashboard.categories');
     Route::get('/dashboard/categories/create',[categoriesManagementController::class ,'create'])->name('dashboard.categories.create');
@@ -153,6 +144,11 @@ Route::middleware('admin')->group(function () {
     Route::get('/dashboard/sub-categories/update/{url}',[subCategoriesManagementController::class ,'update'])->name('dashboard.sub-categories.update');
     Route::get('/dashboard/sub-categories/delete/{url}',[subCategoriesManagementController::class ,'delete'])->name('dashboard.sub-categories.delete');
 
+     //usersManagementController
+     Route::get('/dashboard/ads/{code?}',[adsManagementController::class ,'index'])->name('dashboard.ads');
+     Route::get('/dashboard/ads/{status}/{id}',[adsManagementController::class ,'status'])->name('dashboard.ads.status');
+ 
+
     //brandManagementController
     Route::get('/dashboard/configuration/brands/{name?}',[brandsManagementController::class ,'index'])->name('dashboard.configuration.brands-and-models');
     Route::get('/dashboard/configuration/brands/create/brands',[brandsManagementController::class ,'create'])->name('dashboard.configuration.brands-and-models.create');
@@ -168,7 +164,6 @@ Route::middleware('admin')->group(function () {
     Route::get('/dashboard/configuration/models/create/{url}',[modlesManagementController::class ,'create'])->name('dashboard.configuration.models.create');
     Route::get('/dashboard/configuration/models/view/{url}',[modlesManagementController::class ,'view'])->name('dashboard.configuration.models.view');
     Route::get('/dashboard/configuration/models/update/{url}',[modlesManagementController::class ,'update'])->name('dashboard.configuration.models.update');
-
 
     //packageManagementController
     Route::get('/dashboard/package',[packageManagementController::class,'index'])->name('dashboard.packages');
@@ -191,6 +186,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/dashboard/sub-packages/delete/{url}',[subPackageManagementController::class ,'delete'])->name('dashboard.sub-package.delete');
     Route::post('/dashboard/sub-package/delete/{url}',[subPackageManagementController::class,'deleteSubPackage'])->name('dashboard.package.delete-subpackage');
 
+     
     //Ads Types Management
     Route::get('/dashboard/adsTypeManagement/{name?}',[adsTypesManagementController::class,'index'])->name('dashboard.adsTypes');
     Route::get('/dashboard/adsTypeManagement/type/create',[adsTypesManagementController::class,'create'])->name('dashboard.adsTypes.create');
@@ -201,10 +197,24 @@ Route::middleware('admin')->group(function () {
     Route::get('/dashboard/adsTypeManagement/delete/{url}',[adsTypesManagementController::class,'delete'])->name('dashboard.adsTypes.delete');
     Route::post('/dashboard/adsTypeManagement/delete/{url}',[adsTypesManagementController::class,'deleteType'])->name('dashboard.adsTypes.deleteType');
 
+    
 
+    //bannerManagementController
+    Route::get('/dashboard/banner',[bannerManagementController::class ,'index'])->name('dashboard.banner');
+    Route::get('/dashboard/banner/view/{id}',[bannerManagementController::class ,'view'])->name('dashboard.banner.view');
+    Route::get('/dashboard/banner/update/{id}',[bannerManagementController::class ,'update'])->name('dashboard.banner.update');
+    Route::post('/dashboard/banner/update/{id}',[bannerManagementController::class ,'updatebanner'])->name('dashboard.banner.update-banner');
+    Route::get('/dashboard/banner/create',[bannerManagementController::class ,'create'])->name('dashboard.banner.create');
+    Route::post('/dashboard/banner/create',[bannerManagementController::class ,'createBanner'])->name('dashboard.banner.create-banner');
+    Route::get('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'delete'])->name('dashboard.banner.delete');
+    Route::post('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'deletebanner'])->name('dashboard.banner.delete-banner');
 
-
+   
 
 });
+
+
+
+
 
 require __DIR__.'/auth.php';

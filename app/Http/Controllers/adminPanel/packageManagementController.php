@@ -11,12 +11,12 @@ class packageManagementController extends Controller
     public function index()
     {
         $packTypes = Package::paginate(6);
-        return view('adminPanel.packageManagement.index', ['packTypes' => $packTypes]);
+        return view('newAdminDashboard.packageManagement.index', ['packTypes' => $packTypes]);
     }
 // Show the form for creating a new categoryfindOrFail($student_id)
     public function create()
     {
-        return view('adminPanel.packageManagement.createNewPackage');
+        return view('newAdminDashboard.packageManagement.createNewPackage');
     }
 // Store a newly created category in storage
     public function store(Request $request)
@@ -54,7 +54,7 @@ class packageManagementController extends Controller
             return redirect()->route('dashboard.sub-categories.create', ['url' => $maincategory->url])
                 ->with('success', 'Your success message here.');
         }else{
-            return view('adminPanel.packageManagement.createNewPackage')->with('success', $validatedData['name'].' created successfully.');
+            return view('newAdminDashboard.packageManagement.createNewPackage')->with('success', $validatedData['name'].' created successfully.');
         }
     }
 // Display the specified category
@@ -62,7 +62,7 @@ class packageManagementController extends Controller
     {
         $packTypes = Package::where('url',$url )->first();
 
-        return view('adminPanel.packageManagement.viewpackage',['packTypes' => $packTypes]);
+        return view('newAdminDashboard.packageManagement.viewpackage',['packTypes' => $packTypes]);
     }
 // Update the specified category in storage
     public function updatePackage(Request $request,$url)
@@ -106,20 +106,20 @@ class packageManagementController extends Controller
 
         $pack->save();
 
-        return view('adminPanel.packageManagement.updatePackage', ['pack'=>$pack])->with('success', 'Category updated successfully.');
+        return view('newAdminDashboard.packageManagement.updatePackage', ['pack'=>$pack])->with('success', 'Category updated successfully.');
     }
     public function update($url)
     {
 // Find the category by URL for updating
         $pack = Package::where('url',$url )->first();
-        return view('adminPanel.packageManagement.updatePackage',['pack' => $pack]);
+        return view('newAdminDashboard.packageManagement.updatePackage',['pack' => $pack]);
     }
 // Show the confirmation form for deleting the specified category
     public function delete($url)
     {
 // Find the category by URL for deletion
         $category = Package::where('url',$url )->first();
-        return view('adminPanel.packageManagement.deletepackage',['category' => $category]);
+        return view('newAdminDashboard.packageManagement.deletepackage',['category' => $category]);
     }
     public function deleteCategory($url)
     {

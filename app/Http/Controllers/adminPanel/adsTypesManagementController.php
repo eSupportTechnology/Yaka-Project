@@ -28,7 +28,7 @@ class adsTypesManagementController extends Controller
         $packageTypes = $packageTypesQuery->get();
     
         // Pass the data to the view
-        return view('adminPanel.adsTypesManagement.index', compact('packageTypes'));
+        return view('newAdminDashboard.adsTypesManagement.index', compact('packageTypes'));
     }
     
 
@@ -38,7 +38,7 @@ class adsTypesManagementController extends Controller
             ->where('status', 1)
             ->select('id', 'name')
             ->get();
-        return view('adminPanel.adsTypesManagement.create',compact('subcategories'));
+        return view('newAdminDashboard.adsTypesManagement.create',compact('subcategories'));
     }
 
     // Store a newly created ads type
@@ -82,7 +82,7 @@ class adsTypesManagementController extends Controller
             ->paginate(6);
 
         // Redirect with success message
-        return view('adminPanel.adsTypesManagement.create',['subcategories'=> $subcategories])->with('success', $validatedData['name'].' created successfully.');
+        return view('newAdminDashboard.adsTypesManagement.create',['subcategories'=> $subcategories])->with('success', $validatedData['name'].' created successfully.');
     }
 
     // View details of a specific ads type
@@ -90,7 +90,7 @@ class adsTypesManagementController extends Controller
     {
         $data = AdsTypes::where('url', $url)->first();
         $data1=Category::where('id',$data->catergoryId)->select('mainId','name')->first();
-        return view('adminPanel.adsTypesManagement.view',['data' => $data,'data1'=>$data1]);
+        return view('newAdminDashboard.adsTypesManagement.view',['data' => $data,'data1'=>$data1]);
     }
 
     // Show form to update a specific ads type
@@ -99,7 +99,7 @@ class adsTypesManagementController extends Controller
         // Find the ads type by URL for updating
         $data = AdsTypes::where('url',$url )->first();
         $catId=Category::where('id',$data->catergoryId)->first();
-        return view('adminPanel.adsTypesManagement.update',['data' => $data,'catId'=>$catId]);
+        return view('newAdminDashboard.adsTypesManagement.update',['data' => $data,'catId'=>$catId]);
     }
 
     // Update a specific ads type
@@ -116,7 +116,7 @@ class adsTypesManagementController extends Controller
 
         // If ads type not found, return with error message
         if (! $data) {
-            return view('adminPanel.adsTypesManagement.update', ['data' => $data])
+            return view('newAdminDashboard.adsTypesManagement.update', ['data' => $data])
                 ->with('unsuccess', 'Ads type not found.');
         }
 
@@ -158,7 +158,7 @@ class adsTypesManagementController extends Controller
     // Show confirmation page to delete a specific ads type
     function delete($url){
         $category = AdsTypes::where('url', $url)->first();
-        return view('adminPanel.adsTypesManagement.delete', ['category' => $category]);
+        return view('newAdminDashboard.adsTypesManagement.delete', ['category' => $category]);
     }
 
     // Delete a specific ads type

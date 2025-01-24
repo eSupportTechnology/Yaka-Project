@@ -14,21 +14,21 @@ class bannerManagementController extends Controller
     public function index(){
 
         $banners = Banners::paginate(10); // Adjust the number per page as needed
-        return view('adminPanel.bannerManagement.index', compact('banners'));
+        return view('newAdminDashboard.bannerManagement.index', compact('banners'));
     }
 
     // Method to view details of a specific user
     public function view($id)
     {
         $user = User::find($id);
-        return view('adminPanel.bannerManagement.view',['user' => $user]);
+        return view('newAdminDashboard.bannerManagement.view',['user' => $user]);
     }
 
     public function create()
     {
         // dd('sadasd');
         // $user = User::find($id);
-        return view('adminPanel.bannerManagement.create');
+        return view('newAdminDashboard.bannerManagement.create');
     }
 
     // public function createBanner(Request $request)
@@ -109,7 +109,7 @@ class bannerManagementController extends Controller
     public function update($id)
     {
         $banner = Banners::find($id);
-        return view('adminPanel.bannerManagement.update',['banner' => $banner]);
+        return view('newAdminDashboard.bannerManagement.update',['banner' => $banner]);
     }
 
     // Method to handle updating user details

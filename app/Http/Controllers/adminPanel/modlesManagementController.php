@@ -16,14 +16,14 @@ class modlesManagementController extends Controller
 
         $models = BrandsModels::where('brandsId', $brand->id)->select('id', 'url', 'name', 'status')->paginate(6);
 
-        return view('adminPanel.brandsAndModelsManagement.models', ['brand' => $brand, 'models' => $models]);
+        return view('newAdminDashboard.brandsAndModelsManagement.models', ['brand' => $brand, 'models' => $models]);
     }
 
     public function create($url)
     {
         // Retrieve main category information
         $brand = BrandsModels::where('url', $url)->select('id', 'url')->first();
-        return view('adminPanel.brandsAndModelsManagement.create', ['brand' => $brand]);
+        return view('newAdminDashboard.brandsAndModelsManagement.create', ['brand' => $brand]);
     }
 
 
@@ -33,7 +33,7 @@ class modlesManagementController extends Controller
         // Retrieve main category information
         $brand = BrandsModels::where('id', $data->brandsId)->select('id', 'url')->first();
 
-        return view('adminPanel.brandsAndModelsManagement.view', ['data' => $data, 'brand' => $brand]);
+        return view('newAdminDashboard.brandsAndModelsManagement.view', ['data' => $data, 'brand' => $brand]);
 
     }
 
@@ -45,7 +45,7 @@ class modlesManagementController extends Controller
         // Retrieve main category information
         $brand = BrandsModels::where('id', $data->brandsId)->select('id', 'url')->first();
 
-        return view('adminPanel.brandsAndModelsManagement.update', ['data' => $data, 'brand' => $brand]);
+        return view('newAdminDashboard.brandsAndModelsManagement.update', ['data' => $data, 'brand' => $brand]);
     }
 
 }

@@ -28,7 +28,7 @@ class adsManagementController extends Controller
         $adsData = $adsQuery->paginate(100);
 
         // Pass the ads data to the view
-        return view('adminPanel.adsManagement.index', ['adsData' => $adsData]);
+        return view('newAdminDashboard.adsManagement.index', ['adsData' => $adsData]);
     }
 
 
@@ -51,7 +51,7 @@ class adsManagementController extends Controller
         $adsData = $adsQuery->paginate(9);
 
         // Pass the updated ads data to the view along with a success message
-        return view('adminPanel.adsManagement.index', ['adsData' => $adsData])->with('message', 'User updated successfully');
+        return view('newAdminDashboard.adsManagement.index', ['adsData' => $adsData])->with('message', 'User updated successfully');
     }
 
 

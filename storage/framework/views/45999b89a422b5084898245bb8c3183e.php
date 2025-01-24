@@ -20,8 +20,8 @@
     <!--=====================================
             BANNER PART END
 =======================================-->
-   <section class="inner-section" style="margin-bottom: 50px;">
-        <div class="container" style="overflow: hidden; padding: 0;">
+   <section class="inner-section" style="margin-bottom: 30px;">
+        <div class="container" style="overflow: hidden; padding: 0; width:60%; height:auto">
             <figure id="zss">
                 <?php
                     $banners = App\Models\Banners::where('type', 0)->inRandomOrder()->limit(4)->get();
@@ -41,7 +41,7 @@
     <!--=====================================
                 SUGGEST PART START
     =======================================-->
-    <section class="suggest-part" style="padding-top: 0 ;margin-top: 100px;">
+    <section class="suggest-part" style="padding-top: 0 ;margin-top: 30px;">
         <div class="container" style="display: flex;flex-wrap: wrap;justify-content: center; ">
                 <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <a href="<?php echo e(route('ads',[$category->url])); ?>" class="suggest-card" 
@@ -74,14 +74,84 @@
     =======================================-->
 
        <?php if(count($superAds)>4): ?>
-    <section class="section feature-part" style="padding-top: 0;margin-top: 100px;">
+    <section class="section feature-part" style="padding-top: 0;margin-top: 30px;">
         <div class="container">
             <div class="row">
                 <div class="col-md-7 col-lg-7">
                     <div>
                         <div class="feature-card-slider slider-arrow">
                             <?php $__currentLoopData = $superAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <?php echo $__env->make('web.components.cards.slideAdsCards', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            <div class="feature-card">
+                                
+                                <a href="#" class="feature-img" style="height: 270px;width: 380px;margin: 0 auto;background: url(<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>);background-size: cover;background-position: center">
+                                    <!--<img  src="<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>" alt="feature">-->
+                                </a>
+
+                                <?php if($ads->post_type == 0): ?>
+                                    <div class="product-type">
+                                        <span class="flat-badge booking">booking</span>
+                                    </div>
+
+                                <?php elseif($ads->post_type == 1): ?>
+                                    <div class="product-type">
+                                        <span class="flat-badge sale">sale</span>
+                                    </div>
+
+                                <?php elseif($ads->post_type == 2): ?>
+                                    <div class="product-type">
+                                        <span class="flat-badge rent">rent</span>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if($ads->ads_package == 3): ?>
+                                    <div class="cross-vertical-badge product-badge" style="">
+                                        <i style="font-size: 30px;display: block;width: 56px;">
+                                            <img src="<?php echo e(asset('01.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>top Ad</span>
+                                    </div>
+
+                                <?php elseif($ads->ads_package == 4): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;display: block;width: 56px;">
+                                            <img src="<?php echo e(asset('03.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>Urgent Ad</span>
+                                    </div>
+
+                                <?php elseif($ads->ads_package == 5): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;display: block;width: 56px;">
+                                            <img src="<?php echo e(asset('04.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>Jump up Ad</span>
+                                    </div>
+
+                                <?php elseif($ads->ads_package == 6): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;display: block;width: 56px;">
+                                            <img src="<?php echo e(asset('02.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>Super Ad</span>
+                                    </div>
+                                <?php endif; ?>
+
+                                <div class="feature-content" style="padding: 25px; position: absolute;background: none;border-radius: 0px 0px 8px 8px;" >
+                                    <ol class="breadcrumb feature-category">
+                                        <li class="breadcrumb-item"><a href="<?php echo e(route('ads',[$ads->category->url])); ?>"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->category->name, app()->getLocale())); ?></a>
+                                        </li>
+                                        <li class="breadcrumb-item active"
+                                            aria-current="page"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->subcategory->name, app()->getLocale())); ?></li>
+                                    </ol>
+                                    <h3 class="feature-title"><a href="<?php echo e(route('ads.details',['id'=>$ads->id])); ?>"><?php echo e($ads->title); ?></a>
+                                    </h3>
+                                    <div class="feature-meta">
+                                        <span class="feature-price">LKR <?php echo e($ads->price); ?></span>
+                                        <span class="feature-time"><i  class="fas fa-clock"></i><?php echo e($ads->created_at->diffForHumans()); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                         <div class="feature-thumb-slider">
@@ -90,9 +160,14 @@
                                 </div>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
+                        <p class="mt-4" style="margin-left:50px; text-align: justify;">
+                            The Super Ads section on Sri Lanka’s largest classified website yaka.lk offers premium visibility for your listings, ensuring maximum exposure and faster results. Whether you’re buying, selling, or promoting services, 
+                            Super Ads help your posts stand out with priority placement and enhanced features, connecting you to a wider audience efficiently.
+                        </p>
+
                     </div>
 
-                    <p class="mt-4">The Super Ads section on Sri Lanka’s largest classified website yaka.lk offers premium visibility for your listings, ensuring maximum exposure and faster results. Whether you’re buying, selling, or promoting services, Super Ads help your posts stand out with priority placement and enhanced features, connecting you to a wider audience efficiently.</p>
+                    
                 </div>
                 <div class="col-md-5 col-lg-5">
                     <div class="section-side-heading">
@@ -117,10 +192,10 @@
                                 <?php if($banners->count() >= 4): ?>
                                     <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="zss" >
-                                            <img style="width: 100%;" src="<?php echo e(asset('banners/' . $banner->img)); ?>" alt="">
+                                            <img style="width: 65%;" src="<?php echo e(asset('banners/' . $banner->img)); ?>" alt="">
                                         </div>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    <div class="zss" style="height: 789px;background: url('<?php echo e(asset('banners/' . $banners[0]->img)); ?>') no-repeat; background-size: cover;"></div>
+                                    <div class="zss" style="height: 600px;background: url('<?php echo e(asset('banners/' . $banners[0]->img)); ?>') no-repeat; background-size: cover;"></div>
                                 <?php endif; ?>
                             </figure>
 
@@ -136,10 +211,10 @@
                 FEATURE PART START
     =======================================-->
    <?php if(count($topAds)>5): ?>
-        <section class="section feature-part" style="padding-top: 0;margin-top: 100px;">
+        <section class="section feature-part" style="padding-top: 0;margin-top: 30px;">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-5 col-lg-5">
+                    <div class="col-md-5 col-lg-5"  style="text-align: right;">
                         <div class="section-side-heading">
                             <h2><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('Find your needs in our best ', app()->getLocale())); ?><span><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('Top Ads', app()->getLocale())); ?></span></h2>
 
@@ -153,10 +228,10 @@
                                     <?php if($banners->count() >= 4): ?>
                                         <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <div class="zss" >
-                                                <img style="width: 100%;" src="<?php echo e(asset('banners/' . $banner->img)); ?>" alt="">
+                                                <img style="width: 65%;" src="<?php echo e(asset('banners/' . $banner->img)); ?>" alt="">
                                             </div>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <div class="zss" style="height: 789px;background: url('<?php echo e(asset('banners/' . $banners[0]->img)); ?>') no-repeat; background-size: cover;"></div>
+                                        <div class="zss" style="height: 600px;background: url('<?php echo e(asset('banners/' . $banners[0]->img)); ?>') no-repeat; background-size: cover;"></div>
                                     <?php endif; ?>
                                 </figure>
 
@@ -167,7 +242,77 @@
                         <div>
                             <div class="feature-card-slider slider-arrow">
                                 <?php $__currentLoopData = $topAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <?php echo $__env->make('web.components.cards.slideAdsCards', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                <div class="feature-card">
+                                    
+                                    <a href="#" class="feature-img" style="height: 270px;width: 380px;margin: 0 auto;background: url(<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>);background-size: cover;background-position: center">
+                                        <!--<img  src="<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>" alt="feature">-->
+                                    </a>
+
+                                    <?php if($ads->post_type == 0): ?>
+                                        <div class="product-type">
+                                            <span class="flat-badge booking">booking</span>
+                                        </div>
+
+                                    <?php elseif($ads->post_type == 1): ?>
+                                        <div class="product-type">
+                                            <span class="flat-badge sale">sale</span>
+                                        </div>
+
+                                    <?php elseif($ads->post_type == 2): ?>
+                                        <div class="product-type">
+                                            <span class="flat-badge rent">rent</span>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if($ads->ads_package == 3): ?>
+                                        <div class="cross-vertical-badge product-badge" style="">
+                                            <i style="font-size: 30px;display: block;width: 56px;">
+                                                <img src="<?php echo e(asset('01.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                            </i>
+                                            <span>top Ad</span>
+                                        </div>
+
+                                    <?php elseif($ads->ads_package == 4): ?>
+                                        <div class="cross-vertical-badge product-badge">
+                                            <i style="font-size: 30px;display: block;width: 56px;">
+                                                <img src="<?php echo e(asset('03.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                            </i>
+                                            <span>Urgent Ad</span>
+                                        </div>
+
+                                    <?php elseif($ads->ads_package == 5): ?>
+                                        <div class="cross-vertical-badge product-badge">
+                                            <i style="font-size: 30px;display: block;width: 56px;">
+                                                <img src="<?php echo e(asset('04.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                            </i>
+                                            <span>Jump up Ad</span>
+                                        </div>
+
+                                    <?php elseif($ads->ads_package == 6): ?>
+                                        <div class="cross-vertical-badge product-badge">
+                                            <i style="font-size: 30px;display: block;width: 56px;">
+                                                <img src="<?php echo e(asset('02.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                            </i>
+                                            <span>Super Ad</span>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <div class="feature-content" style="padding: 25px; position: absolute;background: none;border-radius: 0px 0px 8px 8px;" >
+                                        <ol class="breadcrumb feature-category">
+                                            <li class="breadcrumb-item"><a href="<?php echo e(route('ads',[$ads->category->url])); ?>"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->category->name, app()->getLocale())); ?></a>
+                                            </li>
+                                            <li class="breadcrumb-item active"
+                                                aria-current="page"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->subcategory->name, app()->getLocale())); ?></li>
+                                        </ol>
+                                        <h3 class="feature-title"><a href="<?php echo e(route('ads.details',['id'=>$ads->id])); ?>"><?php echo e($ads->title); ?></a>
+                                        </h3>
+                                        <div class="feature-meta">
+                                            <span class="feature-price">LKR <?php echo e($ads->price); ?></span>
+                                            <span class="feature-time"><i  class="fas fa-clock"></i><?php echo e($ads->created_at->diffForHumans()); ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                             <div class="feature-thumb-slider">
@@ -178,7 +323,10 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                         </div>
-                        <p class="mt-4">The Top Ads section on Sri Lanka’s largest classified website yaka.lk guarantees your listings premium placement at the top of search results. With higher visibility and priority ranking, Top Ads ensure your products or services reach more potential buyers quickly and effectively.</p>
+                        <p class="mt-4" style="margin-left:50px; text-align: justify;">The Top Ads section on Sri Lanka’s largest 
+                            classified website yaka.lk guarantees your listings premium placement at the top of search results. 
+                            With higher visibility and priority ranking, Top Ads ensure your products or services reach more potential 
+                            buyers quickly and effectively.</p>
                     </div>
                 </div>
             </div>
@@ -193,7 +341,7 @@
                 RECOMEND PART START
     =======================================-->
     <?php if(count($recommendAds)>4): ?>
-    <section class="section recomend-part" style="padding-top: 0;margin-top: 100px;">
+    <section class="section recomend-part" style="padding-top: 0;margin-top: 30px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -211,7 +359,110 @@
                     <div class="recomend-slider slider-arrow">
                         <?php $__currentLoopData = $recommendAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                                <?php echo $__env->make('web.components.cards.adCards', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            <div class="product-card
+
+                            <?php if($ads->ads_package == 5): ?> 
+                            product-jump-up-card " onload="blinkBorder('product-jump-up-card');" 
+                            <?php elseif($ads->ads_package == 3): ?>
+                            product-top-card " onload="blinkBorder('product-top-card');" 
+                            <?php endif; ?>
+
+                            style="margin-bottom: 10px">
+                            <div style="width: 100%;margin: 0 auto;"  class="product-media">
+                                <div class="product-img" style="height: 220px;background: url(<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>);background-size: cover;background-position: center">
+                            
+                                </div>
+
+                                <?php if($ads->post_type == 0 && $ads->post_type != null): ?>
+                                    <div class="product-type">
+                                        <span class="flat-badge booking">booking</span>
+                                    </div>
+
+                                <?php elseif($ads->post_type == 1): ?>
+                                    <div class="product-type">
+                                        <span class="flat-badge sale">sale</span>
+                                    </div>
+
+                                <?php elseif($ads->post_type == 2): ?>
+                                    <div class="product-type">
+                                        <span class="flat-badge rent">rent</span>
+                                    </div>
+                                <?php endif; ?>
+
+                            
+
+                                <?php if($ads->ads_package == 3): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;"> 
+                                            <img src="<?php echo e(asset('01.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>top Ad</span>
+                                    </div>
+
+                                <?php elseif($ads->ads_package == 4): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;"> 
+                                            <img src="<?php echo e(asset('03.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>Urgent Ad</span>
+                                    </div>
+                                <?php elseif($ads->ads_package == 5): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;"> 
+                                            <img src="<?php echo e(asset('04.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>Jump up Ad</span>
+                                    </div>
+
+                                <?php elseif($ads->ads_package == 6): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;"> 
+                                            <img src="<?php echo e(asset('02.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>Super Ad</span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="product-content">
+                                <ol class="breadcrumb product-category">
+                                    <li><i class="fas fa-tags"></i></li>
+                                    <li class="breadcrumb-item"><a href="<?php echo e(route('ads',[$ads->category->url])); ?>"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->category->name, app()->getLocale())); ?></a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->subcategory->name, app()->getLocale())); ?></li>
+                                </ol>
+
+                                <h5 class="product-title">
+                                    <a href="<?php echo e(route('ads.details',['id'=>$ads->id])); ?>"><?php echo e($ads->title); ?></a>
+                            
+                                    <div class="product-meta">
+                            
+                                    
+
+                                        <span><i class="fas fa-clock"></i><?php echo e($ads->created_at->diffForHumans()); ?></span>
+                                    </div>
+                                    <?php if(isset(Session::get('user')['id']) && Session::get('user')['id'] == $ads->user->id &&  $ads->status == 1 &&  $ads->ads_package == 0 && isset($bumpUp) && $bumpUp): ?>
+                                        <a style="margin: 5px 0" href="<?php echo e(route('ads.bump-up',[$ads->id])); ?>">
+                                            <span class="flat-badge rent">Jump up</span>
+                                        </a>
+                                    <?php endif; ?>
+
+                            
+                            
+                            
+                            
+                            
+                                    <?php
+                                        $job = \App\Models\Jobs::where('adsId',$ads->adsId)->select('salary_per_month')->first();
+                                    ?>
+                                    <?php if(isset($job->salary_per_month)): ?>
+                                    <div class="product-info">
+
+                                        <h5 class="product-price"> <?php echo e($ads->category->url=='jobs' ? "salary per month ".$job->salary_per_month : "LKR ".$ads->price); ?></h5>
+                                    </div>
+                                    <?php endif; ?>
+                                </h5>
+                            </div>
+                            </div>
+
                             </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
@@ -252,7 +503,110 @@
 
                     <?php $__currentLoopData = $popular; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="col-md-11 col-lg-8 col-xl-6">
-                            <?php echo $__env->make('web.components.cards.adCards', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                        <div class="product-card
+
+                            <?php if($ads->ads_package == 5): ?> 
+                            product-jump-up-card " onload="blinkBorder('product-jump-up-card');" 
+                            <?php elseif($ads->ads_package == 3): ?>
+                            product-top-card " onload="blinkBorder('product-top-card');" 
+                            <?php endif; ?>
+
+                            style="margin-bottom: 10px">
+                            <div style="width: 100%;margin: 0 auto;"  class="product-media">
+                                <div class="product-img" style="height: 220px;background: url(<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>);background-size: cover;background-position: center">
+                            
+                                </div>
+
+                                <?php if($ads->post_type == 0 && $ads->post_type != null): ?>
+                                    <div class="product-type">
+                                        <span class="flat-badge booking">booking</span>
+                                    </div>
+
+                                <?php elseif($ads->post_type == 1): ?>
+                                    <div class="product-type">
+                                        <span class="flat-badge sale">sale</span>
+                                    </div>
+
+                                <?php elseif($ads->post_type == 2): ?>
+                                    <div class="product-type">
+                                        <span class="flat-badge rent">rent</span>
+                                    </div>
+                                <?php endif; ?>
+
+                            
+
+                                <?php if($ads->ads_package == 3): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;"> 
+                                            <img src="<?php echo e(asset('01.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>top Ad</span>
+                                    </div>
+
+                                <?php elseif($ads->ads_package == 4): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;"> 
+                                            <img src="<?php echo e(asset('03.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>Urgent Ad</span>
+                                    </div>
+                                <?php elseif($ads->ads_package == 5): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;"> 
+                                            <img src="<?php echo e(asset('04.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>Jump up Ad</span>
+                                    </div>
+
+                                <?php elseif($ads->ads_package == 6): ?>
+                                    <div class="cross-vertical-badge product-badge">
+                                        <i style="font-size: 30px;"> 
+                                            <img src="<?php echo e(asset('02.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
+                                        </i>
+                                        <span>Super Ad</span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="product-content">
+                                <ol class="breadcrumb product-category">
+                                    <li><i class="fas fa-tags"></i></li>
+                                    <li class="breadcrumb-item"><a href="<?php echo e(route('ads',[$ads->category->url])); ?>"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->category->name, app()->getLocale())); ?></a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->subcategory->name, app()->getLocale())); ?></li>
+                                </ol>
+
+                                <h5 class="product-title">
+                                    <a href="<?php echo e(route('ads.details',['id'=>$ads->id])); ?>"><?php echo e($ads->title); ?></a>
+                            
+                                    <div class="product-meta">
+                            
+                                    
+
+                                        <span><i class="fas fa-clock"></i><?php echo e($ads->created_at->diffForHumans()); ?></span>
+                                    </div>
+                                    <?php if(isset(Session::get('user')['id']) && Session::get('user')['id'] == $ads->user->id &&  $ads->status == 1 &&  $ads->ads_package == 0 && isset($bumpUp) && $bumpUp): ?>
+                                        <a style="margin: 5px 0" href="<?php echo e(route('ads.bump-up',[$ads->id])); ?>">
+                                            <span class="flat-badge rent">Jump up</span>
+                                        </a>
+                                    <?php endif; ?>
+
+                            
+                            
+                            
+                            
+                            
+                                    <?php
+                                        $job = \App\Models\Jobs::where('adsId',$ads->adsId)->select('salary_per_month')->first();
+                                    ?>
+                                    <?php if(isset($job->salary_per_month)): ?>
+                                    <div class="product-info">
+
+                                        <h5 class="product-price"> <?php echo e($ads->category->url=='jobs' ? "salary per month ".$job->salary_per_month : "LKR ".$ads->price); ?></h5>
+                                    </div>
+                                    <?php endif; ?>
+                                </h5>
+                            </div>
+                            </div>
+
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>

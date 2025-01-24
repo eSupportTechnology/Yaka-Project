@@ -8,6 +8,6 @@ class BannerController extends Controller
 {
     public function index()
     {
-        return view('adminPanel.banner.index');
+        return view('newAdminDashboard.banner.index');
     }
 }

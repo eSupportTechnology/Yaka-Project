@@ -17,7 +17,7 @@
     <div class="navbar-menu-wrapper d-flex align-items-top">
         <ul class="navbar-nav">
             <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                <h1 class="welcome-text">Hello,<span class="text-black fw-bold">{{Auth::user()->first_name}}</span></h1>
+                <h1 class="welcome-text">Hello,<span class="text-black fw-bold"></span></h1>
             </li>
         </ul>
 
@@ -42,7 +42,7 @@
                     @foreach($pendingads as $ads)
                         <a class="dropdown-item preview-item py-3">
                             <div class="preview-thumbnail">
-                                <i class="mdi mdi-alert m-auto text-primary"></i>
+                                <i class="md md-alert m-auto text-primary"></i>
                             </div>
                             <div class="preview-item-content">
                                 <h6 class="preview-subject fw-normal text-dark mb-1">{{$ads->user->first_name ." ".$ads->user->last_name}}</h6>

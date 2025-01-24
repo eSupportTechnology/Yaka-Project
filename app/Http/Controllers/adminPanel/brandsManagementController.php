@@ -28,7 +28,7 @@ class brandsManagementController extends Controller
         $brands = $brandsQuery->get();
 
         // Pass the data to the view
-        return view('adminPanel.brandsAndModelsManagement.index', ['brands' => $brands]);
+        return view('newAdminDashboard.brandsAndModelsManagement.index', ['brands' => $brands]);
     }
 
     public function Testcreate()
@@ -46,7 +46,7 @@ class brandsManagementController extends Controller
             ->where('status', 1)
             ->select('id', 'name')
             ->get();
-        return view('adminPanel.brandsAndModelsManagement.create', ['subcategories' => $subcategories]);
+        return view('newAdminDashboard.brandsAndModelsManagement.create', ['subcategories' => $subcategories]);
     }
 
     // Store a newly created brand in the database
@@ -92,10 +92,10 @@ class brandsManagementController extends Controller
 
         // Return appropriate view with success message
         if ($request['brandid'] == 0) {
-            return view('adminPanel.brandsAndModelsManagement.create', ['subcategories' => $subcategories])->with('success', $validatedData['name'] . ' created successfully.');
+            return view('newAdminDashboard.brandsAndModelsManagement.create', ['subcategories' => $subcategories])->with('success', $validatedData['name'] . ' created successfully.');
         } else {
             $brand = BrandsModels::where('id', $request['brandid'])->select('id', 'url', 'name', 'status')->first();
-            return view('adminPanel.brandsAndModelsManagement.create', ['brand' => $brand])->with('success', $validatedData['name'] . ' created successfully.');
+            return view('newAdminDashboard.brandsAndModelsManagement.create', ['brand' => $brand])->with('success', $validatedData['name'] . ' created successfully.');
         }
     }
 
@@ -103,7 +103,7 @@ class brandsManagementController extends Controller
     public function view($url)
     {
         $data = BrandsModels::where('url', $url)->with('Category')->first();
-        return view('adminPanel.brandsAndModelsManagement.view', ['data' => $data]);
+        return view('newAdminDashboard.brandsAndModelsManagement.view', ['data' => $data]);
     }
 
     // Show the form for editing the specified brand.
@@ -117,7 +117,7 @@ class brandsManagementController extends Controller
             ->where('status', 1)
             ->select('id', 'name')
             ->get();
-        return view('adminPanel.brandsAndModelsManagement.update', ['data' => $data, 'subcategories' => $subcategories]);
+        return view('newAdminDashboard.brandsAndModelsManagement.update', ['data' => $data, 'subcategories' => $subcategories]);
     }
 
     // Update the specified brand in storage.
@@ -156,10 +156,10 @@ class brandsManagementController extends Controller
 
         // Return appropriate view with success message
         if ($request['brandid'] == 0) {
-            return view('adminPanel.brandsAndModelsManagement.update', ['data' => $data, 'subcategories' => $subcategories])->with('success', $validatedData['name'] . ' updated successfully.');
+            return view('newAdminDashboard.brandsAndModelsManagement.update', ['data' => $data, 'subcategories' => $subcategories])->with('success', $validatedData['name'] . ' updated successfully.');
         } else {
             $brand = BrandsModels::where('id', $request['brandid'])->select('id', 'url', 'name', 'status')->first();
-            return view('adminPanel.brandsAndModelsManagement.update', ['data' => $data, 'brand' => $brand])->with('success', $validatedData['name'] . ' updated successfully.');
+            return view('newAdminDashboard.brandsAndModelsManagement.update', ['data' => $data, 'brand' => $brand])->with('success', $validatedData['name'] . ' updated successfully.');
         }
     }
 
@@ -168,7 +168,7 @@ class brandsManagementController extends Controller
     {
         $data = BrandsModels::where('url', $url)->first();
 
-        return view('adminPanel.brandsAndModelsManagement.delete', ['data' => $data]);
+        return view('newAdminDashboard.brandsAndModelsManagement.delete', ['data' => $data]);
     }
 
     // Remove the specified brand from storage.

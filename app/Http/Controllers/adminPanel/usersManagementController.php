@@ -15,7 +15,7 @@ class usersManagementController extends Controller
         $search = $request->get('search');
     
         // Build the query
-        $query = User::where('roles', USER);
+        $query = User::where('roles', 'user');
     
         // If there's a search term, apply the search condition
         if (!empty($search)) {
@@ -26,7 +26,7 @@ class usersManagementController extends Controller
         $users = $query->select('id', 'first_name', 'last_name', 'url', 'phone_number', 'status')->paginate(10);
     
         // Pass the users data to the view
-        return view('adminPanel.usersManagement.index', ['users' => $users]);
+        return view('newAdminDashboard.usersManagement.index', ['users' => $users]);
     }
     
 
@@ -34,14 +34,14 @@ class usersManagementController extends Controller
     public function view($id)
     {
         $user = User::find($id);
-        return view('adminPanel.usersManagement.view',['user' => $user]);
+        return view('newAdminDashboard.usersManagement.view',['user' => $user]);
     }
 
     // Method to display form for updating user details
     public function update($id)
     {
         $user = User::find($id);
-        return view('adminPanel.usersManagement.update',['user' => $user]);
+        return view('newAdminDashboard.usersManagement.update',['user' => $user]);
     }
 
     // Method to handle updating user details
@@ -50,7 +50,7 @@ class usersManagementController extends Controller
         $user = User::find($request->user);
 
         if (!$user) {
-            return view('adminPanel.usersManagement.update',['user' => $user])->with('unsuccess', 'User not found.');
+            return view('newAdminDashboard.usersManagement.update',['user' => $user])->with('unsuccess', 'User not found.');
         }
 
         // Validate the incoming data
@@ -74,14 +74,14 @@ class usersManagementController extends Controller
         $user->phone_number = $validatedData['phone_number'];
         $user->save();
 
-        return view('adminPanel.usersManagement.update',['user' => $user])->with('success', 'User updated successfully.');
+        return view('newAdminDashboard.usersManagement.update',['user' => $user])->with('success', 'User updated successfully.');
     }
 
     // Method to display confirmation for deleting a user
     public function delete($id)
     {
         $user = User::find($id);
-        return view('adminPanel.usersManagement.delete',['user' => $user]);
+        return view('newAdminDashboard.usersManagement.delete',['user' => $user]);
     }
 
     // Method to handle deleting a user
