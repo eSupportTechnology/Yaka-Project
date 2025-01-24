@@ -3,7 +3,7 @@
 @section('content')
 <?php use Stichoza\GoogleTranslate\GoogleTranslate; ?>
 <style>
-  .contact-section {
+ .contact-section {
    background-color: #fff;
    border-radius: 10px;
    padding: 20px 40px;
