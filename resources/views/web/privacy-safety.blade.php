@@ -1,77 +1,170 @@
 @extends('web.layout.layout')
 
 @section('content')
+<?php use Stichoza\GoogleTranslate\GoogleTranslate; ?>
+
+<style>
+  .contact-section {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px 40px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    width: 90%;
+  }
+
+  .contact-section h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .contact-section p {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+  }
+
+  .contact-info div {
+    flex: 1;
+    max-width: 300px;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .contact-info .icon {
+    font-size: 24px;
+    color: #700202;
+    margin-bottom: 10px;
+  }
+
+  .contact-info a {
+    color: #700202;
+    text-decoration: none;
+  }
+
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+   
+
+    .contact-section {
+      padding: 15px 20px;
+    }
+
+    .contact-info {
+      flex-direction: column;
+    }
+  }
+
+  </style>
   <div class="container">
     <div class="row">
       <div class="mt-5 col-md-12">
-        <h1 class="text-center">{{ $translations['Privacy Policy'] }}</h1>
+        <h1 class="text-center">{{ GoogleTranslate::trans('Privacy Policy', app()->getLocale()) }}</h1>
         <div class="mb-5 privacy-content">
-
-          <h2 style="font-size: 27px; margin-top: 40px">{{ $translations['Information We Collect'] }}</h2>
+          
+          <h2 style="    font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans('1. Information We Collect', app()->getLocale()) }}</h2>
           <ul>
-            <li><strong>{{ $translations['Personal Data'] }}:</strong> {{ __('Name, email address, phone number, and payment information.') }}</li>
-            <li><strong>{{ $translations['Usage Data'] }}:</strong> {{ __('IP address, browser type, and interaction history with the Website.') }}</li>
-            <li><strong>{{ $translations['Cookies'] }}:</strong> {{ __('To enhance user experience and analyze traffic. You can manage cookies through your browser settings.') }}</li>
+            <li><strong>{{ GoogleTranslate::trans('Personal Data:', app()->getLocale()) }}</strong> {{ GoogleTranslate::trans('Name, email address, phone number, and payment information.', app()->getLocale()) }}</li>
+            <li><strong>{{ GoogleTranslate::trans('Usage Data:', app()->getLocale()) }}</strong> {{ GoogleTranslate::trans('IP address, browser type, and interaction history with the Website.', app()->getLocale()) }}</li>
+            <li><strong>{{ GoogleTranslate::trans('Cookies:', app()->getLocale()) }}</strong> {{ GoogleTranslate::trans('To enhance user experience and analyze traffic. You can manage cookies through your browser settings.', app()->getLocale()) }}</li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">{{ $translations['How We Use Your Data'] }}</h2>
+          <h2 style="    font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans('2. How We Use Your Data', app()->getLocale()) }}</h2>
           <ul>
-            <li>{{ __('To manage user accounts and provide customer support.') }}</li>
-            <li>{{ __('To process payments and publish listings.') }}</li>
-            <li>{{ __('To improve Website functionality through analytics and user feedback.') }}</li>
-            <li>{{ __('To send updates, notifications, or promotional offers (only with consent).') }}</li>
+            <li>{{ GoogleTranslate::trans('To manage user accounts and provide customer support.', app()->getLocale()) }}</li>
+            <li>{{ GoogleTranslate::trans('To process payments and publish listings.', app()->getLocale()) }}</li>
+            <li>{{ GoogleTranslate::trans('To improve Website functionality through analytics and user feedback.', app()->getLocale()) }}</li>
+            <li>{{ GoogleTranslate::trans('To send updates, notifications, or promotional offers (only with consent).', app()->getLocale()) }}</li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">{{ $translations['Data Sharing and Disclosure'] }}</h2>
+          <h2 style="    font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans('3. Data Sharing and Disclosure', app()->getLocale()) }}</h2>
           <ul>
-            <li>{{ __('We do not sell your data to third parties.') }}</li>
-            <li>{{ __('Data may be shared with payment processors, law enforcement, or service providers as necessary.') }}</li>
-            <li>{{ __('In case of a merger or acquisition, your data may be transferred to the new entity.') }}</li>
+            <li>{{ GoogleTranslate::trans('We do not sell your data to third parties.', app()->getLocale()) }}</li>
+            <li>{{ GoogleTranslate::trans('Data may be shared with payment processors, law enforcement, or service providers as necessary.', app()->getLocale()) }}</li>
+            <li>{{ GoogleTranslate::trans('In case of a merger or acquisition, your data may be transferred to the new entity.', app()->getLocale()) }}</li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">{{ $translations['Data Security'] }}</h2>
+          <h2 style="    font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans('4. Data Security', app()->getLocale()) }}</h2>
           <ul>
-            <li>{{ __('We use encryption and other security measures to protect your personal data.') }}</li>
-            <li>{{ __('Despite our efforts, no online service is entirely secure. We encourage users to protect their login information.') }}</li>
+            <li>{{ GoogleTranslate::trans('We use encryption and other security measures to protect your personal data.', app()->getLocale()) }}</li>
+            <li>{{ GoogleTranslate::trans('Despite our efforts, no online service is entirely secure. We encourage users to protect their login information.', app()->getLocale()) }}</li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">{{ $translations['User Rights'] }}</h2>
+          <h2 style="    font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans('5. User Rights', app()->getLocale()) }}</h2>
           <ul>
-            <li><strong>{{ __('Access and Correction:') }}</strong> {{ __('You can access and update your personal information through your account.') }}</li>
-            <li><strong>{{ __('Data Deletion:') }}</strong> {{ __('You may request the deletion of your personal data by contacting support.') }}</li>
-            <li><strong>{{ __('Consent Withdrawal:') }}</strong> {{ __('You can opt out of marketing emails by clicking the unsubscribe link.') }}</li>
+            <li><strong>{{ GoogleTranslate::trans('Access and Correction:</strong> You can access and update your personal information through your account.', app()->getLocale()) }}</li>
+            <li><strong>{{ GoogleTranslate::trans('Data Deletion:</strong> You may request the deletion of your personal data by contacting support.', app()->getLocale()) }}</li>
+            <li><strong>{{ GoogleTranslate::trans('Consent Withdrawal:</strong> You can opt out of marketing emails by clicking the unsubscribe link.', app()->getLocale()) }}</li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">{{ $translations['Cookies Policy'] }}</h2>
+          <h2 style="    font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans('6. Cookies Policy', app()->getLocale()) }}</h2>
           <ul>
-            <li>{{ __('We use cookies to personalize content and ads, analyze traffic, and improve the user experience.') }}</li>
-            <li>{{ __('Third-party cookies (e.g., from analytics providers) may also be used.') }}</li>
+            <li>{{ GoogleTranslate::trans('We use cookies to personalize content and ads, analyze traffic, and improve the user experience.', app()->getLocale()) }}</li>
+            <li>{{ GoogleTranslate::trans('Third-party cookies (e.g., from analytics providers) may also be used.', app()->getLocale()) }}</li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">{{ $translations['Third-Party Services'] }}</h2>
+          <h2 style="    font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans('7. Third-Party Services', app()->getLocale()) }}</h2>
           <ul>
-            <li>{{ __('The Website may link to external websites. We are not responsible for their privacy practices.') }}</li>
-            <li>{{ __('Transactions involving third-party services are governed by the terms of the respective provider.') }}</li>
+            <li>{{ GoogleTranslate::trans('The Website may link to external websites. We are not responsible for their privacy practices.', app()->getLocale()) }}</li>
+            <li>{{ GoogleTranslate::trans('Transactions involving third-party services are governed by the terms of the respective provider.', app()->getLocale()) }}</li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">{{ $translations['Data Retention'] }}</h2>
+          <h2 style="    font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans('8. Data Retention', app()->getLocale()) }}</h2>
           <ul>
-            <li>{{ __('We retain personal data for as long as necessary to fulfill the purposes outlined in this policy.') }}</li>
-            <li>{{ __('User data will be deleted upon request, unless it is required for legal or regulatory purposes.') }}</li>
+            <li>{{ GoogleTranslate::trans('We retain personal data for as long as necessary to fulfill the purposes outlined in this policy.', app()->getLocale()) }}</li>
+            <li>{{ GoogleTranslate::trans('User data will be deleted upon request, unless it is required for legal or regulatory purposes.', app()->getLocale()) }}</li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">{{ $translations["Children's Privacy"] }}</h2>
+          <h2 style="    font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans("9. Children's Privacy", app()->getLocale()) }}</h2>
           <ul>
-            <li>{{ __('Our Website is not intended for children under the age of 18. We do not knowingly collect data from minors.') }}</li>
+            <li>{{ GoogleTranslate::trans('Our Website is not intended for children under the age of 18. We do not knowingly collect data from minors.', app()->getLocale()) }}</li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">{{ $translations['Changes to the Privacy Policy'] }}</h2>
+          <h2 style="    font-size: 27px;margin-top: 40px">{{ GoogleTranslate::trans('10. Changes to the Privacy Policy', app()->getLocale()) }}</h2>
           <ul>
-            <li>{{ __('We may update this policy periodically. Changes will be communicated through the Website or via email.') }}</li>
-            <li>{{ __('Continued use of the Website after changes signifies acceptance of the updated policy.') }}</li>
+            <li>{{ GoogleTranslate::trans('We may update this policy periodically. Changes will be communicated through the Website or via email.', app()->getLocale()) }}</li>
+            <li>{{ GoogleTranslate::trans('Continued use of the Website after changes signifies acceptance of the updated policy.', app()->getLocale()) }}</li>
           </ul>
-
+          
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-section">
+    <h2>Questions? Get in touch!</h2>
+    <p>If you have any problems,</p>
+    <p>May be related to the following services</p>
+    <div class="contact-info">
+      <div>
+        <div class="icon">📞</div>
+        <strong>Call us</strong>
+        <p><a href="tel:0705321321">070 5 321 321</a></p>
+      </div>
+      <div>
+        <div class="icon">📍</div>
+        <strong>Our Location</strong>
+        <p>Colombo 10, Sri Lanka</p>
+      </div>
+      <div>
+        <div class="icon">📧</div>
+        <strong>Email us</strong>
+        <p><a href="mailto:Yakalksrilanka@gmail.com">Yakalksrilanka@gmail.com</a></p>
       </div>
     </div>
   </div>
