@@ -1,749 +1,1085 @@
+
+
+
+
 <?php $__env->startSection('content'); ?>
-<style>
-    .suggest-card:hover {
-    transform: scale(1.05); /* Slightly enlarge the card */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
-}
-.suggest-card img {
-    transition: transform 0.3s ease; /* Smooth zoom effect for image */
-}
-.suggest-card:hover img {
-    transform: scale(1.1); /* Slightly zoom in the image */
-}
+        
 
-</style>
-
-    <!--=====================================
-            BANNER PART START
-=======================================-->
-<section class="banner-part" style="height:350px !important;">
-    <div class="container">
-        <div class="banner-content">
-            <?php
-                use Stichoza\GoogleTranslate\GoogleTranslate;
-
-                try {
-                    $bannerHeading = GoogleTranslate::trans(
-                        'You can #Buy, #Rent, #Booking anything from here.', 
-                        app()->getLocale()
-                    );
-                    $bannerDescription = GoogleTranslate::trans(
-                        'Buy and sell everything from used cars to mobile phones and computers, or search for property, jobs and more in Sri Lanka.', 
-                        app()->getLocale()
-                    );
-                } catch (\Exception $e) {
-                    // Fallback to the original text in case of an error
-                    $bannerHeading = 'You can #Buy, #Rent, #Booking anything from here.';
-                    $bannerDescription = 'Buy and sell everything from used cars to mobile phones and computers, or search for property, jobs and more in Sri Lanka.';
-                }
-            ?>
-            
-            <h1><?php echo e($bannerHeading); ?></h1>
-            <p><?php echo e($bannerDescription); ?></p>
-        </div>
-    </div>
-</section>
-
-    <!--=====================================
-            BANNER PART END
-=======================================-->
-   <section class="inner-section" style="margin-bottom: 30px;">
-        <div class="container" style="overflow: hidden; padding: 0; width:60%; height:auto">
-            <figure id="zss">
-                <?php
-                    $banners = App\Models\Banners::where('type', 0)->inRandomOrder()->limit(4)->get();
-                ?>
-                <?php if($banners->count() >= 4): ?>
-                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="zss" >
-                            <img style="width: 100%;" src="<?php echo e(asset('banners/' . $banner->img)); ?>" alt="">
-                        </div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <div class="zss" style="background: url('<?php echo e(asset('banners/' . $banners[0]->img)); ?>') no-repeat; background-size: cover;"></div>
-                <?php endif; ?>
-            </figure>
-        </div>
-    </section>
-
-    <!--=====================================
-                SUGGEST PART START
-    =======================================-->
-    <section class="suggest-part" style="padding-top: 0 ;margin-top: 30px;">
-        <div class="container" style="display: flex;flex-wrap: wrap;justify-content: center; ">
-                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <a href="<?php echo e(route('ads',[$category->url])); ?>" class="suggest-card" 
-                    style="width: 165px !important ;margin-bottom: 20px; background-color: white; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
-                        <img src="<?php echo e(asset('images/Category/'.$category->image)); ?>" alt="car">
-                        <h6><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($category->name, app()->getLocale())); ?></h6>
-                        <?php
-                            $adsCount = \App\Models\Ads::where('cat_id', $category->id )->where('status',1)->count();
-                        ?>
-                        <p>(<?php echo e($adsCount); ?> <?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('ads', app()->getLocale())); ?>)</p>
-                    </a>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </div>
-    </section>
-
-    <section class="intro-part" style="margin-top: 100px;padding: 55px 0;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    
-                </div>
+        <!-- banner-section -->
+        <section class="banner-section style-two style-four centred" style="background-image: url(newFrontend/Clasifico/assets/images/banner/banner-4.jpg);">
+            <div class="auto-container">
+                <div class="content-box">
+                    <div class="text">
+                        <h1>Buy, Sell, Rent & Exchange <br />in one Click</h1>
+                        <p>Amet consectetur adipisicing elit sed do eiusmod.</p>
+                    </div>
+                    <div class="form-inner">
+                        <div class="pattern-layer" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-13.png);"></div>
+                        <ul class="radio-select-box clearfix">
+                            <li>
+                                <div class="single-checkbox">
+                                    <input type="radio" name="check-box" id="check1" checked="">
+                                    <label for="check1"><span></span>All</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="single-checkbox">
+                                    <input type="radio" name="check-box" id="check2">
+                                    <label for="check2"><span></span>Education</label>    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="single-checkbox">
+                                    <input type="radio" name="check-box" id="check3">
+                                    <label for="check3"><span></span>Restaurant</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="single-checkbox">
+                                    <input type="radio" name="check-box" id="check4">
+                                    <label for="check4"><span></span>Real Estate</label>
+                                </div>
+                            </li>
+                        </ul>
+                        <form action="index.html" method="post">
+                            <div class="input-inner clearfix">
+                                <div class="form-group">
+                                    <i class="icon-2"></i>
+                                    <input type="search" name="name" placeholder="Search Keyword..." required="">
+                                </div>
+                                <div class="form-group">
+                                    <i class="icon-3"></i>
+                                    <select class="wide">
+                                       <option data-display="Select Location">Select Location</option>
+                                       <option value="1">California</option>
+                                       <option value="2">New York</option>
+                                       <option value="3">Sun Francis</option>
+                                       <option value="4">Shicago</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <i class="icon-4"></i>
+                                    <select class="wide">
+                                       <option data-display="Select Category">Select Category</option>
+                                       <option value="1">Education</option>
+                                       <option value="2">Restaurant</option>
+                                       <option value="3">Real Estate</option>
+                                       <option value="4">Home Appliances</option>
+                                    </select>
+                                </div>
+                                <div class="btn-box">
+                                    <button type="submit"><i class="icon-2"></i>Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div> 
             </div>
-        </div>
-    </section>
+        </section>
+        <!-- banner-section end -->
 
 
-    
-    <!--=====================================
-                SUGGEST PART END
-    =======================================-->
-
-       <?php if(count($superAds)>4): ?>
-    <section class="section feature-part" style="padding-top: 0;margin-top: 30px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-7 col-lg-7">
-                    <div>
-                        <div class="feature-card-slider slider-arrow">
-                            <?php $__currentLoopData = $superAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="feature-card">
-                                
-                                <a href="#" class="feature-img" style="height: 270px;width: 380px;margin: 0 auto;background: url(<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>);background-size: cover;background-position: center">
-                                    <!--<img  src="<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>" alt="feature">-->
-                                </a>
-
-                                <?php if($ads->post_type == 0): ?>
-                                    <div class="product-type">
-                                        <span class="flat-badge booking">booking</span>
-                                    </div>
-
-                                <?php elseif($ads->post_type == 1): ?>
-                                    <div class="product-type">
-                                        <span class="flat-badge sale">sale</span>
-                                    </div>
-
-                                <?php elseif($ads->post_type == 2): ?>
-                                    <div class="product-type">
-                                        <span class="flat-badge rent">rent</span>
-                                    </div>
-                                <?php endif; ?>
-
-                                <?php if($ads->ads_package == 3): ?>
-                                    <div class="cross-vertical-badge product-badge" style="">
-                                        <i style="font-size: 30px;display: block;width: 56px;">
-                                            <img src="<?php echo e(asset('01.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>top Ad</span>
-                                    </div>
-
-                                <?php elseif($ads->ads_package == 4): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;display: block;width: 56px;">
-                                            <img src="<?php echo e(asset('03.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>Urgent Ad</span>
-                                    </div>
-
-                                <?php elseif($ads->ads_package == 5): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;display: block;width: 56px;">
-                                            <img src="<?php echo e(asset('04.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>Jump up Ad</span>
-                                    </div>
-
-                                <?php elseif($ads->ads_package == 6): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;display: block;width: 56px;">
-                                            <img src="<?php echo e(asset('02.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>Super Ad</span>
-                                    </div>
-                                <?php endif; ?>
-
-                                <div class="feature-content" style="padding: 25px; position: absolute;background: none;border-radius: 0px 0px 8px 8px;" >
-                                    <ol class="breadcrumb feature-category">
-                                        <li class="breadcrumb-item"><a href="<?php echo e(route('ads',[$ads->category->url])); ?>"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->category->name, app()->getLocale())); ?></a>
-                                        </li>
-                                        <li class="breadcrumb-item active"
-                                            aria-current="page"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->subcategory->name, app()->getLocale())); ?></li>
-                                    </ol>
-                                    <h3 class="feature-title"><a href="<?php echo e(route('ads.details',['id'=>$ads->id])); ?>"><?php echo e($ads->title); ?></a>
-                                    </h3>
-                                    <div class="feature-meta">
-                                        <span class="feature-price">LKR <?php echo e($ads->price); ?></span>
-                                        <span class="feature-time"><i  class="fas fa-clock"></i><?php echo e($ads->created_at->diffForHumans()); ?></span>
-                                    </div>
-                                </div>
+        <!-- category-section -->
+        <section class="category-section centred sec-pad">
+            <div class="auto-container">
+                <div class="sec-title">
+                    <span>Categories</span>
+                    <h2>Explore by Category</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed do eiusmod tempor incididunt labore <br />dolore magna aliqua enim.</p>
+                </div>
+                <div class="inner-content clearfix">
+                    <div class="category-block-one wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-1.png);"></div>
+                                <div class="shape-2" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-2.png);"></div>
                             </div>
-
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
-                        <div class="feature-thumb-slider">
-                            <?php $__currentLoopData = $superAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <div class="feature-thumb" style="height: 160px;background: url(<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>);background-size: cover;background-position: center">
-                                </div>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
-                        <p class="mt-4" style="margin-left:50px; text-align: justify;">
-                            The Super Ads section on Sri Lanka’s largest classified website yaka.lk offers premium visibility for your listings, ensuring maximum exposure and faster results. Whether you’re buying, selling, or promoting services, 
-                            Super Ads help your posts stand out with priority placement and enhanced features, connecting you to a wider audience efficiently.
-                        </p>
-
-                    </div>
-
-                    
-                </div>
-                <div class="col-md-5 col-lg-5">
-                    <div class="section-side-heading">
-                        <h2><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('Find your needs in our best ', app()->getLocale())); ?><span><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('Super Ads', app()->getLocale())); ?></span></h2>
-
-
-
-
-
-
-
-
-
-
-                        <div class="col-md-6 col-lg-12" style="overflow: hidden;padding: 0px;">
-                            <figure id="zss">
-                                <?php
-                                    // Fetch 4 random banners with type 0 (Leaderboard)
-                                    $banners = App\Models\Banners::where('type', 1)->inRandomOrder()->limit(4)->get();
-                                ?>
-
-                                <?php if($banners->count() >= 4): ?>
-                                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <div class="zss" >
-                                            <img style="width: 65%;" src="<?php echo e(asset('banners/' . $banner->img)); ?>" alt="">
-                                        </div>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    <div class="zss" style="height: 600px;background: url('<?php echo e(asset('banners/' . $banners[0]->img)); ?>') no-repeat; background-size: cover;"></div>
-                                <?php endif; ?>
-                            </figure>
-
+                            <div class="icon-box"><i class="icon-6"></i></div>
+                            <h5>Property</h5>
+                            <span>52</span>
                         </div>
                     </div>
+                    <div class="category-block-one wow fadeInDown animated animated" data-wow-delay="100ms" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-1.png);"></div>
+                                <div class="shape-2" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-2.png);"></div>
+                            </div>
+                            <div class="icon-box"><i class="icon-7"></i></div>
+                            <h5>Home Appliances</h5>
+                            <span>20</span>
+                        </div>
+                    </div>
+                    <div class="category-block-one wow fadeInDown animated animated" data-wow-delay="200ms" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-1.png);"></div>
+                                <div class="shape-2" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-2.png);"></div>
+                            </div>
+                            <div class="icon-box"><i class="icon-8"></i></div>
+                            <h5>Electronics</h5>
+                            <span>35</span>
+                        </div>
+                    </div>
+                    <div class="category-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-1.png);"></div>
+                                <div class="shape-2" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-2.png);"></div>
+                            </div>
+                            <div class="icon-box"><i class="icon-9"></i></div>
+                            <h5>Health & Beauty</h5>
+                            <span>10</span>
+                        </div>
+                    </div>
+                    <div class="category-block-one wow fadeInDown animated animated" data-wow-delay="400ms" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-1.png);"></div>
+                                <div class="shape-2" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-2.png);"></div>
+                            </div>
+                            <div class="icon-box"><i class="icon-10"></i></div>
+                            <h5>Automotive</h5>
+                            <span>27</span>
+                        </div>
+                    </div>
+                    <div class="category-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-1.png);"></div>
+                                <div class="shape-2" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-2.png);"></div>
+                            </div>
+                            <div class="icon-box"><i class="icon-11"></i></div>
+                            <h5>Furnitures</h5>
+                            <span>52</span>
+                        </div>
+                    </div>
+                    <div class="category-block-one wow fadeInUp animated animated" data-wow-delay="100ms" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-1.png);"></div>
+                                <div class="shape-2" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-2.png);"></div>
+                            </div>
+                            <div class="icon-box"><i class="icon-12"></i></div>
+                            <h5>Real Estate</h5>
+                            <span>20</span>
+                        </div>
+                    </div>
+                    <div class="category-block-one wow fadeInUp animated animated" data-wow-delay="200ms" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-1.png);"></div>
+                                <div class="shape-2" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-2.png);"></div>
+                            </div>
+                            <div class="icon-box"><i class="icon-13"></i></div>
+                            <h5>Jobs</h5>
+                            <span>35</span>
+                        </div>
+                    </div>
+                    <div class="category-block-one wow fadeInUp animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-1.png);"></div>
+                                <div class="shape-2" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-2.png);"></div>
+                            </div>
+                            <div class="icon-box"><i class="icon-14"></i></div>
+                            <h5>Restaurants</h5>
+                            <span>10</span>
+                        </div>
+                    </div>
+                    <div class="category-block-one wow fadeInUp animated animated" data-wow-delay="400ms" data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-1.png);"></div>
+                                <div class="shape-2" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-2.png);"></div>
+                            </div>
+                            <div class="icon-box"><i class="icon-15"></i></div>
+                            <h5>Others</h5>
+                            <span>27</span>
+                        </div>
+                    </div>
                 </div>
-
+                <div class="more-btn"><a href="index.html" class="theme-btn-one">All Categories</a></div>
             </div>
-        </div>
-    </section>
-   <?php endif; ?>
-    <!--=====================================
-                FEATURE PART START
-    =======================================-->
-   <?php if(count($topAds)>5): ?>
-        <section class="section feature-part" style="padding-top: 0;margin-top: 30px;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5 col-lg-5"  style="text-align: right;">
-                        <div class="section-side-heading">
-                            <h2><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('Find your needs in our best ', app()->getLocale())); ?><span><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('Top Ads', app()->getLocale())); ?></span></h2>
+        </section>
+        <!-- category-section end -->
 
-                            <div class="col-md-6 col-lg-12" style="overflow: hidden;padding: 0px;">
-                                <figure id="zss">
-                                    <?php
-                                        // Fetch 4 random banners with type 0 (Leaderboard)
-                                        $banners = App\Models\Banners::where('type', 1)->inRandomOrder()->limit(4)->get();
-                                    ?>
 
-                                    <?php if($banners->count() >= 4): ?>
-                                        <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <div class="zss" >
-                                                <img style="width: 65%;" src="<?php echo e(asset('banners/' . $banner->img)); ?>" alt="">
-                                            </div>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <div class="zss" style="height: 600px;background: url('<?php echo e(asset('banners/' . $banners[0]->img)); ?>') no-repeat; background-size: cover;"></div>
-                                    <?php endif; ?>
-                                </figure>
-
-                            </div>
+        <!-- clients-section -->
+        <section class="clients-section">
+            <div class="pattern-layer" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-7.png);"></div>
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div class="col-lg-4 col-md-12 col-sm-12 title-column">
+                        <div class="sec-title">
+                            <span>Our Pertners</span>
+                            <h2>We’re going to Became Partners for the Long Run.</h2>
                         </div>
                     </div>
-                    <div class="col-md-7 col-lg-7">
-                        <div>
-                            <div class="feature-card-slider slider-arrow">
-                                <?php $__currentLoopData = $topAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <div class="feature-card">
-                                    
-                                    <a href="#" class="feature-img" style="height: 270px;width: 380px;margin: 0 auto;background: url(<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>);background-size: cover;background-position: center">
-                                        <!--<img  src="<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>" alt="feature">-->
-                                    </a>
-
-                                    <?php if($ads->post_type == 0): ?>
-                                        <div class="product-type">
-                                            <span class="flat-badge booking">booking</span>
-                                        </div>
-
-                                    <?php elseif($ads->post_type == 1): ?>
-                                        <div class="product-type">
-                                            <span class="flat-badge sale">sale</span>
-                                        </div>
-
-                                    <?php elseif($ads->post_type == 2): ?>
-                                        <div class="product-type">
-                                            <span class="flat-badge rent">rent</span>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <?php if($ads->ads_package == 3): ?>
-                                        <div class="cross-vertical-badge product-badge" style="">
-                                            <i style="font-size: 30px;display: block;width: 56px;">
-                                                <img src="<?php echo e(asset('01.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                            </i>
-                                            <span>top Ad</span>
-                                        </div>
-
-                                    <?php elseif($ads->ads_package == 4): ?>
-                                        <div class="cross-vertical-badge product-badge">
-                                            <i style="font-size: 30px;display: block;width: 56px;">
-                                                <img src="<?php echo e(asset('03.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                            </i>
-                                            <span>Urgent Ad</span>
-                                        </div>
-
-                                    <?php elseif($ads->ads_package == 5): ?>
-                                        <div class="cross-vertical-badge product-badge">
-                                            <i style="font-size: 30px;display: block;width: 56px;">
-                                                <img src="<?php echo e(asset('04.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                            </i>
-                                            <span>Jump up Ad</span>
-                                        </div>
-
-                                    <?php elseif($ads->ads_package == 6): ?>
-                                        <div class="cross-vertical-badge product-badge">
-                                            <i style="font-size: 30px;display: block;width: 56px;">
-                                                <img src="<?php echo e(asset('02.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                            </i>
-                                            <span>Super Ad</span>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <div class="feature-content" style="padding: 25px; position: absolute;background: none;border-radius: 0px 0px 8px 8px;" >
-                                        <ol class="breadcrumb feature-category">
-                                            <li class="breadcrumb-item"><a href="<?php echo e(route('ads',[$ads->category->url])); ?>"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->category->name, app()->getLocale())); ?></a>
-                                            </li>
-                                            <li class="breadcrumb-item active"
-                                                aria-current="page"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->subcategory->name, app()->getLocale())); ?></li>
-                                        </ol>
-                                        <h3 class="feature-title"><a href="<?php echo e(route('ads.details',['id'=>$ads->id])); ?>"><?php echo e($ads->title); ?></a>
-                                        </h3>
-                                        <div class="feature-meta">
-                                            <span class="feature-price">LKR <?php echo e($ads->price); ?></span>
-                                            <span class="feature-time"><i  class="fas fa-clock"></i><?php echo e($ads->created_at->diffForHumans()); ?></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </div>
-                            <div class="feature-thumb-slider">
-                                <?php $__currentLoopData = $topAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <div class="feature-thumb" style="height: 160px;background: url(<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>);background-size: cover;background-position: center">
-    
-                                    </div>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </div>
+                    <div class="col-lg-8 col-md-12 col-sm-12 inner-column">
+                        <div class="inner-box">
+                            <ul class="clients-logo-list clearfix">
+                                <li><figure class="clients-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/clients/clients-1.png" alt=""></a></figure></li>
+                                <li><figure class="clients-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/clients/clients-2.png" alt=""></a></figure></li>
+                                <li><figure class="clients-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/clients/clients-3.png" alt=""></a></figure></li>
+                                <li><figure class="clients-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/clients/clients-4.png" alt=""></a></figure></li>
+                                <li><figure class="clients-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/clients/clients-5.png" alt=""></a></figure></li>
+                            </ul>
                         </div>
-                        <p class="mt-4" style="margin-left:50px; text-align: justify;">The Top Ads section on Sri Lanka’s largest 
-                            classified website yaka.lk guarantees your listings premium placement at the top of search results. 
-                            With higher visibility and priority ranking, Top Ads ensure your products or services reach more potential 
-                            buyers quickly and effectively.</p>
                     </div>
                 </div>
             </div>
         </section>
-   <?php endif; ?>
-    <!--=====================================
-                FEATURE PART END
-    =======================================-->
+        <!-- clients-section end -->
 
 
-    <!--=====================================
-                RECOMEND PART START
-    =======================================-->
-    <?php if(count($recommendAds)>4): ?>
-    <section class="section recomend-part" style="padding-top: 0;margin-top: 30px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-center-heading">
-                        <h2><span><?php echo e(GoogleTranslate::trans('Ads', app()->getLocale())); ?></span></h2>
-                        <p style="
-                        width: 100%;
-                    "><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero
-                            voluptatum repudiandae veniam maxime tenetur.', app()->getLocale())); ?></p>
-                    </div>
+        <!-- feature-style-two -->
+        <section class="feature-style-two">
+            <div class="auto-container">
+                <div class="sec-title centred">
+                    <span>Features</span>
+                    <h2>Featured Ads</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed do eiusmod tempor incididunt labore <br />dolore magna aliqua enim.</p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="recomend-slider slider-arrow">
-                        <?php $__currentLoopData = $recommendAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                            <div class="product-card
-
-                            <?php if($ads->ads_package == 5): ?> 
-                            product-jump-up-card " onload="blinkBorder('product-jump-up-card');" 
-                            <?php elseif($ads->ads_package == 3): ?>
-                            product-top-card " onload="blinkBorder('product-top-card');" 
-                            <?php endif; ?>
-
-                            style="margin-bottom: 10px">
-                            <div style="width: 100%;margin: 0 auto;"  class="product-media">
-                                <div class="product-img" style="height: 220px;background: url(<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>);background-size: cover;background-position: center">
-                            
+                <div class="tabs-box">
+                    <div class="tab-btn-box centred">
+                        <ul class="tab-btns tab-buttons clearfix">
+                            <li class="tab-btn active-btn" data-tab="#tab-1">Recent Listing</li>
+                            <li class="tab-btn" data-tab="#tab-2">Popular Listing</li>
+                        </ul>
+                    </div>
+                    <div class="tabs-content">
+                        <div class="tab active-tab" id="tab-1">
+                            <div class="row clearfix">
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-1.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-1.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(32)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>1 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$3,000.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <?php if($ads->post_type == 0 && $ads->post_type != null): ?>
-                                    <div class="product-type">
-                                        <span class="flat-badge booking">booking</span>
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-2.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-2.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(25)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>2 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$2,000.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                <?php elseif($ads->post_type == 1): ?>
-                                    <div class="product-type">
-                                        <span class="flat-badge sale">sale</span>
-                                    </div>
-
-                                <?php elseif($ads->post_type == 2): ?>
-                                    <div class="product-type">
-                                        <span class="flat-badge rent">rent</span>
-                                    </div>
-                                <?php endif; ?>
-
-                            
-
-                                <?php if($ads->ads_package == 3): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;"> 
-                                            <img src="<?php echo e(asset('01.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>top Ad</span>
-                                    </div>
-
-                                <?php elseif($ads->ads_package == 4): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;"> 
-                                            <img src="<?php echo e(asset('03.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>Urgent Ad</span>
-                                    </div>
-                                <?php elseif($ads->ads_package == 5): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;"> 
-                                            <img src="<?php echo e(asset('04.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>Jump up Ad</span>
-                                    </div>
-
-                                <?php elseif($ads->ads_package == 6): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;"> 
-                                            <img src="<?php echo e(asset('02.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>Super Ad</span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            <div class="product-content">
-                                <ol class="breadcrumb product-category">
-                                    <li><i class="fas fa-tags"></i></li>
-                                    <li class="breadcrumb-item"><a href="<?php echo e(route('ads',[$ads->category->url])); ?>"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->category->name, app()->getLocale())); ?></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->subcategory->name, app()->getLocale())); ?></li>
-                                </ol>
-
-                                <h5 class="product-title">
-                                    <a href="<?php echo e(route('ads.details',['id'=>$ads->id])); ?>"><?php echo e($ads->title); ?></a>
-                            
-                                    <div class="product-meta">
-                            
-                                    
-
-                                        <span><i class="fas fa-clock"></i><?php echo e($ads->created_at->diffForHumans()); ?></span>
-                                    </div>
-                                    <?php if(isset(Session::get('user')['id']) && Session::get('user')['id'] == $ads->user->id &&  $ads->status == 1 &&  $ads->ads_package == 0 && isset($bumpUp) && $bumpUp): ?>
-                                        <a style="margin: 5px 0" href="<?php echo e(route('ads.bump-up',[$ads->id])); ?>">
-                                            <span class="flat-badge rent">Jump up</span>
-                                        </a>
-                                    <?php endif; ?>
-
-                            
-                            
-                            
-                            
-                            
-                                    <?php
-                                        $job = \App\Models\Jobs::where('adsId',$ads->adsId)->select('salary_per_month')->first();
-                                    ?>
-                                    <?php if(isset($job->salary_per_month)): ?>
-                                    <div class="product-info">
-
-                                        <h5 class="product-price"> <?php echo e($ads->category->url=='jobs' ? "salary per month ".$job->salary_per_month : "LKR ".$ads->price); ?></h5>
-                                    </div>
-                                    <?php endif; ?>
-                                </h5>
-                            </div>
-                            </div>
-
-                            </div>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="center-50">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <?php endif; ?>
-    <!--=====================================
-                RECOMEND PART START
-    =======================================-->
-
-
-    <!--=====================================
-                TREND PART START
-    =======================================-->
-    <?php if(count($popular) >5): ?>
-    <section class="section trend-part" style="padding-top: 0;margin-top: 100px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-center-heading">
-                        <h2><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('Popular Trending ', app()->getLocale())); ?><span><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('Ads', app()->getLocale())); ?></span></h2>
-                        <p style="
-                        width: 100%;
-                    "><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans('Lorem ipsum dolor sit amet consectetur adipisicing elit aspernatur illum vel sunt libero
-                            voluptatum repudiandae veniam maxime tenetur.', app()->getLocale())); ?></p>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-
-                    <?php $__currentLoopData = $popular; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="col-md-11 col-lg-8 col-xl-6">
-                        <div class="product-card
-
-                            <?php if($ads->ads_package == 5): ?> 
-                            product-jump-up-card " onload="blinkBorder('product-jump-up-card');" 
-                            <?php elseif($ads->ads_package == 3): ?>
-                            product-top-card " onload="blinkBorder('product-top-card');" 
-                            <?php endif; ?>
-
-                            style="margin-bottom: 10px">
-                            <div style="width: 100%;margin: 0 auto;"  class="product-media">
-                                <div class="product-img" style="height: 220px;background: url(<?php echo e(asset('images/Ads/'.$ads->mainImage)); ?>);background-size: cover;background-position: center">
-                            
                                 </div>
-
-                                <?php if($ads->post_type == 0 && $ads->post_type != null): ?>
-                                    <div class="product-type">
-                                        <span class="flat-badge booking">booking</span>
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one wow fadeInDown animated animated" data-wow-delay="600ms" data-wow-duration="1500ms">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-3.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-3.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(40)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>3 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$3,500.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                <?php elseif($ads->post_type == 1): ?>
-                                    <div class="product-type">
-                                        <span class="flat-badge sale">sale</span>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-4.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-4.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(28)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>4 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$3,000.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                <?php elseif($ads->post_type == 2): ?>
-                                    <div class="product-type">
-                                        <span class="flat-badge rent">rent</span>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one wow fadeInUp animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-5.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-5.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(15)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>5 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$1,800.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                <?php endif; ?>
-
-                            
-
-                                <?php if($ads->ads_package == 3): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;"> 
-                                            <img src="<?php echo e(asset('01.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>top Ad</span>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one wow fadeInUp animated animated" data-wow-delay="600ms" data-wow-duration="1500ms">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-6.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-6.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(32)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>6 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$3,200.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                <?php elseif($ads->ads_package == 4): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;"> 
-                                            <img src="<?php echo e(asset('03.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>Urgent Ad</span>
-                                    </div>
-                                <?php elseif($ads->ads_package == 5): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;"> 
-                                            <img src="<?php echo e(asset('04.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>Jump up Ad</span>
-                                    </div>
-
-                                <?php elseif($ads->ads_package == 6): ?>
-                                    <div class="cross-vertical-badge product-badge">
-                                        <i style="font-size: 30px;"> 
-                                            <img src="<?php echo e(asset('02.png')); ?>" alt="" style="width: 39px;margin-top: 4px;">
-                                        </i>
-                                        <span>Super Ad</span>
-                                    </div>
-                                <?php endif; ?>
+                                </div>
                             </div>
-                            <div class="product-content">
-                                <ol class="breadcrumb product-category">
-                                    <li><i class="fas fa-tags"></i></li>
-                                    <li class="breadcrumb-item"><a href="<?php echo e(route('ads',[$ads->category->url])); ?>"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->category->name, app()->getLocale())); ?></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($ads->subcategory->name, app()->getLocale())); ?></li>
-                                </ol>
-
-                                <h5 class="product-title">
-                                    <a href="<?php echo e(route('ads.details',['id'=>$ads->id])); ?>"><?php echo e($ads->title); ?></a>
-                            
-                                    <div class="product-meta">
-                            
-                                    
-
-                                        <span><i class="fas fa-clock"></i><?php echo e($ads->created_at->diffForHumans()); ?></span>
-                                    </div>
-                                    <?php if(isset(Session::get('user')['id']) && Session::get('user')['id'] == $ads->user->id &&  $ads->status == 1 &&  $ads->ads_package == 0 && isset($bumpUp) && $bumpUp): ?>
-                                        <a style="margin: 5px 0" href="<?php echo e(route('ads.bump-up',[$ads->id])); ?>">
-                                            <span class="flat-badge rent">Jump up</span>
-                                        </a>
-                                    <?php endif; ?>
-
-                            
-                            
-                            
-                            
-                            
-                                    <?php
-                                        $job = \App\Models\Jobs::where('adsId',$ads->adsId)->select('salary_per_month')->first();
-                                    ?>
-                                    <?php if(isset($job->salary_per_month)): ?>
-                                    <div class="product-info">
-
-                                        <h5 class="product-price"> <?php echo e($ads->category->url=='jobs' ? "salary per month ".$job->salary_per_month : "LKR ".$ads->price); ?></h5>
-                                    </div>
-                                    <?php endif; ?>
-                                </h5>
-                            </div>
-                            </div>
-
                         </div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="center-20">
+                        <div class="tab" id="tab-2">
+                            <div class="row clearfix">
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-1.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-1.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(32)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>1 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$3,000.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-2.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-2.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(25)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>2 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$2,000.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-3.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-3.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(40)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>3 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$3,500.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-4.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-4.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(28)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>4 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$3,000.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-5.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-5.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(15)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>5 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$1,800.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-6.jpg" alt=""></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-6.png" alt="">
+                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
+                                                        <span>For sell</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
+                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(32)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>6 months ago</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>$3,200.00</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
+                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <?php endif; ?>
-    <!--=====================================
-                TREND PART END
-    =======================================-->
+        </section>
+        <!-- feature-style-two end -->
 
 
-
-
-    <!--=====================================
-                CITY PART START
-    =======================================-->
-    
-    <!--=====================================
-                CITY PART END
-    =======================================-->
-
-
-    <!--=====================================
-                CATEGORY PART START
-    =======================================-->
-    <section class="section category-part" style="padding-top: 0;margin-top: 100px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    
-                </div>
+        <!-- testimonial-section -->
+        <section class="testimonial-section bg-color-1 sec-pad">
+            <figure class="image-layer"><img src="newFrontend/Clasifico/assets/images/resource/testimonial-image-1.png" alt=""></figure>
+            <div class="anim-icon">
+                <div class="icon anim-icon-1 rotate-me" style="background-image: url(assets/images/icons/anim-icon-1.png);"></div>
+                <div class="icon anim-icon-2 rotate-me" style="background-image: url(assets/images/icons/anim-icon-2.png);"></div>
+                <div class="icon anim-icon-3 rotate-me" style="background-image: url(assets/images/icons/anim-icon-2.png);"></div>
+                <div class="icon anim-icon-4 rotate-me" style="background-image: url(assets/images/icons/anim-icon-1.png);"></div>
             </div>
-            <div class="row">
-                <?php $__currentLoopData = $topcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3" style="margin-bottom:15px;">
-                        <div class="category-card" style="height: 100%; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);">
-                            
-
-                            <ul class="category-list">
-                                <?php $__currentLoopData = $topcategory->subcat; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <?php
-                                        $subadcount = \App\Models\Ads::where('sub_cat_id',$subcategory->id )->where('status',1)->count();
-                                    ?>
-                                    <?php if($key <= 4): ?>
-                                        <li><a href="<?php echo e(route('ads',[$subcategory->url])); ?>"><h6><?php echo e(\Stichoza\GoogleTranslate\GoogleTranslate::trans($subcategory->name, app()->getLocale())); ?></h6>
-                                        <p>(<?php echo e($subadcount); ?>)</p></a></li>
-                                    <?php endif; ?>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </ul>
-
+            <div class="pattern-layer">
+                <div class="pattern-1" style="background-image: url(assets/images/shape/shape-4.png);"></div>
+                <div class="pattern-2" style="background-image: url(assets/images/shape/shape-5.png);"></div>
+                <div class="pattern-3" style="background-image: url(assets/images/shape/shape-6.png);"></div>
+            </div>
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div class="col-xl-6 col-lg-12 col-md-12 inner-column">
+                        <div class="inner-box">
+                            <div class="sec-title light">
+                                <span>Testimonials</span>
+                                <h2>What client’s say?</h2>
+                            </div>
+                            <div class="single-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
+                                <div class="testimonial-content">
+                                    <div class="text">
+                                        <p>“ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. enim  minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip consequat aute ux irure dolor in reprehen.”</p>
+                                    </div>
+                                    <div class="author-box">
+                                        <figure class="author-thumb"><img src="newFrontend/Clasifico/assets/images/resource/testimonial-1.png" alt=""></figure>
+                                        <h3>Amelia Anna</h3>
+                                        <span class="designation">Senior Martketer</span>
+                                    </div>
+                                </div>
+                                <div class="testimonial-content">
+                                    <div class="text">
+                                        <p>“ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. enim  minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip consequat aute ux irure dolor in reprehen.”</p>
+                                    </div>
+                                    <div class="author-box">
+                                        <figure class="author-thumb"><img src="newFrontend/Clasifico/assets/images/resource/testimonial-1.png" alt=""></figure>
+                                        <h3>Amelia Anna</h3>
+                                        <span class="designation">Senior Martketer</span>
+                                    </div>
+                                </div>
+                                <div class="testimonial-content">
+                                    <div class="text">
+                                        <p>“ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. enim  minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip consequat aute ux irure dolor in reprehen.”</p>
+                                    </div>
+                                    <div class="author-box">
+                                        <figure class="author-thumb"><img src="newFrontend/Clasifico/assets/images/resource/testimonial-1.png" alt=""></figure>
+                                        <h3>Amelia Anna</h3>
+                                        <span class="designation">Senior Martketer</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="center-20">
+        </section>
+        <!-- testimonial-section end -->
 
 
-
-
+        <!-- place-section -->
+        <section class="place-section centred">
+            <div class="auto-container">
+                <div class="inner-content">
+                    <div class="sec-title centred">
+                        <span>Top Places</span>
+                        <h2>Most Popular Places</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing sed do eiusmod tempor incididunt labore <br />dolore magna aliqua enim.</p>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-4 col-md-6 col-sm-12 place-block">
+                            <div class="place-block-one wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                <div class="inner-box">
+                                    <figure class="image-box"><img src="newFrontend/Clasifico/assets/images/resource/place-1.jpg" alt=""></figure>
+                                    <div class="lower-content">
+                                        <div class="inner">
+                                            <h3><a href="index.html">Los Angeles</a></h3>
+                                            <span>10 Listing</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 place-block">
+                            <div class="place-block-one wow fadeInDown animated animated" data-wow-delay="200ms" data-wow-duration="1500ms">
+                                <div class="inner-box">
+                                    <figure class="image-box"><img src="newFrontend/Clasifico/assets/images/resource/place-2.jpg" alt=""></figure>
+                                    <div class="lower-content">
+                                        <div class="inner">
+                                            <h3><a href="index.html">San Francisco</a></h3>
+                                            <span>15 Listing</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 place-block">
+                            <div class="place-block-one wow fadeInDown animated animated" data-wow-delay="400ms" data-wow-duration="1500ms">
+                                <div class="inner-box">
+                                    <figure class="image-box"><img src="newFrontend/Clasifico/assets/images/resource/place-3.jpg" alt=""></figure>
+                                    <div class="lower-content">
+                                        <div class="inner">
+                                            <h3><a href="index.html">California City</a></h3>
+                                            <span>08 Listing</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 place-block">
+                            <div class="place-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                <div class="inner-box">
+                                    <figure class="image-box"><img src="newFrontend/Clasifico/assets/images/resource/place-4.jpg" alt=""></figure>
+                                    <div class="lower-content">
+                                        <div class="inner">
+                                            <h3><a href="index.html">New York City</a></h3>
+                                            <span>05 Listing</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 place-block">
+                            <div class="place-block-one wow fadeInUp animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+                                <div class="inner-box">
+                                    <figure class="image-box"><img src="newFrontend/Clasifico/assets/images/resource/place-5.jpg" alt=""></figure>
+                                    <div class="lower-content">
+                                        <div class="inner">
+                                            <h3><a href="index.html">Brooklyn City</a></h3>
+                                            <span>02 Listing</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--=====================================
-                CATEGORY PART END
-    =======================================-->
+        </section>
+        <!-- place-section end -->
 
 
-    <!--=====================================
-                INTRO PART START
-    =======================================-->
-
-    <!--=====================================
-                INTRO PART END
-    =======================================-->
-
-
-    <!--=====================================
-                 PRICE PART START
-    =======================================-->
-    
-
-    <section class="inner-section" style="margin: 100px 0 50px;">
-        <div class="container" style="overflow: hidden; padding: 0;">
-            <figure id="zss">
-                <?php
-                    // Fetch 4 random banners with type 0 (Leaderboard)
-                    $banners = App\Models\Banners::where('type', 0)->inRandomOrder()->limit(4)->get();
-                ?>
-                <?php if($banners->count() >= 4): ?>
-                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="zss" >
-                            <img style="width: 100%;" src="<?php echo e(asset('banners/' . $banner->img)); ?>" alt="">
+        <!-- download-section -->
+        <section class="download-section">
+            <div class="pattern-layer" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-8.png);"></div>
+            <div class="auto-container">
+                <div class="row align-items-center clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-12 image-column">
+                        <div class="image-box">
+                            <figure class="image image-1"><img src="newFrontend/Clasifico/assets/images/resource/laptop-1.png" alt=""></figure>
+                            <figure class="image image-2 rotate-me"><img src="newFrontend/Clasifico/assets/images/resource/ball-1.png" alt=""></figure>
                         </div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <div class="zss" style="background: url('<?php echo e(asset('banners/' . $banners[0]->img)); ?>') no-repeat; background-size: cover;"></div>
-                <?php endif; ?>
-            </figure>
-        </div>
-    </section>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 content-column">
+                        <div class="content_block_1">
+                            <div class="content-box">
+                                <span class="upper-text">Download</span>
+                                <h2>Download Our Android and IOS App for Experience</h2>
+                                <div class="download-btn">
+                                    <a href="index.html" class="app-store">
+                                        <i class="icon-23"></i>
+                                        <span>Download on</span>
+                                        <h4>App Store</h4>
+                                    </a>
+                                    <a href="index.html" class="play-store">
+                                        <i class="icon-24"></i>
+                                        <span>Get It On</span>
+                                        <h4>Google Play</h4>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- download-section end -->
 
-<?php $__env->stopSection(); ?>
 
+        <!-- news-section -->
+        <section class="news-section sec-pad">
+            <div class="auto-container">
+                <div class="sec-title centred">
+                    <span>News & Article</span>
+                    <h2>Stay Update with Docpro</h2>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-4 col-md-6 col-sm-12 news-block">
+                        <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                            <div class="inner-box">
+                                <figure class="image-box">
+                                    <img src="assets/images/news/news-1.jpg" alt="">
+                                    <a href="blog-details.html"><i class="fas fa-link"></i></a>
+                                </figure>
+                                <div class="lower-content">
+                                    <figure class="admin-thumb"><img src="newFrontend/Clasifico/assets/images/news/admin-1.png" alt=""></figure>
+                                    <span class="category">Electronics</span>
+                                    <h3><a href="blog-details.html">Including animation in your design system</a></h3>
+                                    <p>Lorem ipsum dolor sit amet consectur adipisicing sed do eiusmod tempor incididunt labore.</p>
+                                    <span class="post-info">By <a href="blog-details.html">Eva Green</a> - October 13, 2020</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 news-block">
+                        <div class="news-block-one wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                            <div class="inner-box">
+                                <figure class="image-box">
+                                    <img src="assets/images/news/news-2.jpg" alt="">
+                                    <a href="blog-details.html"><i class="fas fa-link"></i></a>
+                                </figure>
+                                <div class="lower-content">
+                                    <figure class="admin-thumb"><img src="newFrontend/Clasifico/assets/images/news/admin-2.png" alt=""></figure>
+                                    <span class="category">Electronics</span>
+                                    <h3><a href="blog-details.html">A digital prescription for the industry.</a></h3>
+                                    <p>Lorem ipsum dolor sit amet consectur adipisicing sed do eiusmod tempor incididunt labore.</p>
+                                    <span class="post-info">By <a href="blog-details.html">Eva Green</a> - October 13, 2020</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 news-block">
+                        <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                            <div class="inner-box">
+                                <figure class="image-box">
+                                    <img src="assets/images/news/news-3.jpg" alt="">
+                                    <a href="blog-details.html"><i class="fas fa-link"></i></a>
+                                </figure>
+                                <div class="lower-content">
+                                    <figure class="admin-thumb"><img src="newFrontend/Clasifico/assets/images/news/admin-3.png" alt=""></figure>
+                                    <span class="category">Electronics</span>
+                                    <h3><a href="blog-details.html">Strategic & commercial approach with issues.</a></h3>
+                                    <p>Lorem ipsum dolor sit amet consectur adipisicing sed do eiusmod tempor incididunt labore.</p>
+                                    <span class="post-info">By <a href="blog-details.html">Eva Green</a> - October 13, 2020</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- news-section end -->
+
+
+        <!-- subscribe-section -->
+        <section class="subscribe-section">
+            <div class="pattern-layer" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-9.png);"></div>
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-column">
+                        <div class="text">
+                            <div class="icon-box"><i class="icon-25"></i></div>
+                            <h2>Subscribe to Newsletter</h2>
+                            <p>and receive new ads in inbox</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-column">
+                        <form action="contact.html" method="post" class="subscribe-form">
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Inout your email address" required="">
+                                <button type="submit" class="theme-btn-one">Subscribe Now</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- subscribe-section end -->
+
+        <?php $__env->stopSection(); ?>
+
+       
+
+
+
+ 
 <?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/index.blade.php ENDPATH**/ ?>

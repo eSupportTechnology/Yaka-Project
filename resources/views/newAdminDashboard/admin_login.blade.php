@@ -40,8 +40,8 @@
         <form action="{{ route('admin.login.post') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <label for="phone_number">Phone Number</label>
+                <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -55,7 +55,6 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Login</button>
-           
         </form>
     </div>
 

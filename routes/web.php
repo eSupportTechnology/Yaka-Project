@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\web\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\adminPanel\usersManagementController;
 use App\Http\Controllers\adminPanel\adminManagementController;
@@ -15,15 +14,10 @@ use App\Http\Controllers\adminPanel\modlesManagementController;
 use App\Http\Controllers\adminPanel\subPackageManagementController;
 use App\Http\Controllers\adminPanel\adsManagementController;
 use App\Http\Controllers\adminPanel\bannerManagementController;
-use App\Http\Controllers\web\detailsController;
-use App\Http\Controllers\web\indexController;
-use App\Http\Controllers\web\adsDisplayController;
-use App\Http\Controllers\web\adsPosttController;
-use App\Http\Controllers\web\userDashboardController;
-use App\Http\Controllers\web\bumpUpController;
-use App\Http\Controllers\web\HomeController;
-use App\Http\Controllers\PaymentController;
 
+
+use App\Http\Controllers\frontend\indexController;
+use App\Http\Controllers\frontend\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,65 +29,7 @@ use App\Http\Controllers\PaymentController;
 |
 */
 
-Route::get('/',[indexController::class,'index'])->name('/');
-Route::get('lang/change', [indexController::class, 'index'])->name('changeLang');
-Route::get('/about-us', [HomeController::class,'aboutUs'])->name('about-us');
-Route::get('/contact-us',[HomeController::class,'contactUs'])->name('contact-us');
-Route::get('/privacy-safety',[HomeController::class,'privacySafety'])->name('privacy-safety');
-Route::post('/contact-submit', [HomeController::class, 'submit'])->name('contact.submit');
-Route::get('/careers',[HomeController::class,'careers'])->name('careers');
-Route::get('/tems-conditions',[HomeController::class,'temsConditions'])->name('tems-conditions');
-Route::get('/faq',[HomeController::class,'faq'])->name('faq');
-
-
-Route::get('/tips', [HomeController::class,'Tips'])->name('tips');
-Route::get('/boosting-ads', [HomeController::class,'BoostingAds'])->name('boosting-ads');
-Route::get('/ads-posting-allowances', [HomeController::class,'AdpostingAllowances'])->name('ads-posting-allowances');
-Route::get('/ad-posting-criteria', [HomeController::class,'Adpostingcriteria'])->name('ad-posting-criteria');
-Route::get('/banner-ads', [HomeController::class,'BannerAds'])->name('banner-ads');
-
-
-
-
-
-
-
-
-
-Route::get('/search', [SearchController::class,'index'])->name('search');
-
-//adsDisplayController
-    Route::get('/ads/{category}', [adsDisplayController::class,'index'])->name('ads');
-    Route::get('/ads/details/{id}', [detailsController::class,'index'])->name('ads.details');
-    Route::get('/ads/bump-up/{id}', [bumpUpController::class,'index'])->name('ads.bump-up');
-    Route::get('/ads/{category}/{location}', [adsDisplayController::class,'index'])->name('ads.location');
-    Route::post('/ads/{category}/{location}', [adsDisplayController::class,'index'])->name('ads.location');
-
-      //////payment////
-    Route::match(['get','post'],'/checkout', [PaymentController::class, 'checkout'])->name('checkout');
-    Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
-    Route::match(['get','post'],'/payment/notify', [PaymentController::class, 'paymentNotify'])->name('payment.notify');
-    Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
-    Route::get('/payment/callback', [PaymentController::class, 'handleCallback'])->name('payment.result');
-
-
-
-Route::middleware('auth')->group(function () {
-    //userDashboardController
-    Route::get('/user/dashboard', [userDashboardController::class,'index'])->name('user.dashboard');
-    Route::get('/user/payment', [userDashboardController::class,'payment'])->name('user.payment');
-    Route::post('/user/notify', [userDashboardController::class,'notify'])->name('user.notify');
-    Route::get('/user/dashboard/ad-post',[userDashboardController::class,'mainCategories'])->name('user.dashboard.ad-post.main');
-    Route::get('/user/dashboard/ad-post/{url}',[userDashboardController::class,'subCategories'])->name('user.dashboard.ad-post.sub');
-    Route::get('/user/dashboard/ad-post/{curl}/{surl}',[userDashboardController::class,'postForm'])->name('user.dashboard.ad-post.main.sub');
-    Route::post('/user/dashboard/ad-post/post',[adsPosttController::class,'mainAdsPost'])->name('user.dashboard.ad-post.post');
-    Route::get('/user/dashboard/setting/{url}',[userDashboardController::class,'setting'])->name('user.dashboard.setting');
-    Route::post('/user/dashboard/setting/{url}',[userDashboardController::class,'update'])->name('user.dashboard.setting.update');
-    Route::get('/user/dashboard/my-ads/{type}',[userDashboardController::class,'myAds'])->name('user.dashboard.my-ads');
-
-    Route::get('/branmodel', [userDashboardController::class, 'getModels']);
-    Route::get('/getsublocation', [userDashboardController::class, 'getSubLocation']);
-});
+Route::get('/',[HomeController::class,'home'])->name('/');
 
 
 use App\Http\Controllers\Auth\AdminLoginController;
