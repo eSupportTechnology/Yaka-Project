@@ -40,8 +40,8 @@
                         <div class="form-group">
                             <label for="exampleFormControlSelect2">Roles <span style="color: red">*</span></label>
                             <select class="form-control" name="role" id="exampleFormControlSelect2">
-                                <option value="{{ADMIN}}">Admin</option>
-                                <option value="{{USER}}">User</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
                             </select>
                         </div>
                         <div class="form-group">

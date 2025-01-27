@@ -364,7 +364,7 @@
                         <div class="banner-section" style="position: sticky; top: 10px;">
                             <?php
                                 // Fetch banners
-                                $banners = App\Models\Banners::where('type', 1)->inRandomOrder()->limit(2)->get();
+                                $banners = App\Models\Banners::where('type', 1)->inRandomOrder()->limit(3)->get();
                             ?>
 
                             <?php if($banners->count() > 0): ?>

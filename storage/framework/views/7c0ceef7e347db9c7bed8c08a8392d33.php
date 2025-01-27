@@ -45,7 +45,16 @@
                         src="<?php echo e(asset('storage/user_images/' . session('image', 'default-user.png'))); ?>" 
                         alt="User" />
                 </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <form id="logoutForm" method="POST" action="<?php echo e(route('admin.logout')); ?>">
+                            <?php echo csrf_field(); ?>
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </li>
+                </ul>
             </li>
+
         </ul>
     </div>
 </header>

@@ -44,7 +44,16 @@
                         src="{{ asset('storage/user_images/' . session('image', 'default-user.png')) }}" 
                         alt="User" />
                 </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <form id="logoutForm" method="POST" action="{{ route('admin.logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </li>
+                </ul>
             </li>
+
         </ul>
     </div>
 </header>
