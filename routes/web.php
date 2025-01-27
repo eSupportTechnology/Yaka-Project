@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\frontend\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\adminPanel\usersManagementController;
 use App\Http\Controllers\adminPanel\adminManagementController;
 use App\Http\Controllers\adminPanel\adsTypesManagementController;
@@ -14,23 +16,37 @@ use App\Http\Controllers\adminPanel\modlesManagementController;
 use App\Http\Controllers\adminPanel\subPackageManagementController;
 use App\Http\Controllers\adminPanel\adsManagementController;
 use App\Http\Controllers\adminPanel\bannerManagementController;
+use App\Http\Controllers\Auth\CustomAuthController;
+use App\Http\Controllers\frontend\AdsController;
 
+Route::get('/custom-login', function () {
+    return view('newFrontend.login');
+})->name('user.login');
+Route::post('/custom-login', [CustomAuthController::class, 'login'])->name('custom.login');
 
-use App\Http\Controllers\frontend\indexController;
-use App\Http\Controllers\frontend\HomeController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::post('/register', [RegisteredUserController::class, 'register']);
 
 Route::get('/',[HomeController::class,'home'])->name('/');
 
+
+
+Route::get('/browse_ads', [AdsController::class, 'browseAds']);
+Route::get('/browse_ads_details', function () {
+    return view('newFrontend.browse-ads');
+})->name('ads.details');
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth', 'role.user');
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 use App\Http\Controllers\Auth\AdminLoginController;
 
@@ -145,12 +161,6 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::get('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'delete'])->name('dashboard.banner.delete');
     Route::post('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'deletebanner'])->name('dashboard.banner.delete-banner');
 
-   
-
 });
-
-
-
-
 
 require __DIR__.'/auth.php';

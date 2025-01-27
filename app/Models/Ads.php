@@ -39,6 +39,13 @@ class Ads extends Model
     }
 
 
+
+    public function city()
+    {
+        return $this->belongsTo(Cities::class);
+    }
+
+
     public function ads_electronics() {
         return $this->hasMany(ElectronicDevices::class, 'adsId', 'adsId');
     }

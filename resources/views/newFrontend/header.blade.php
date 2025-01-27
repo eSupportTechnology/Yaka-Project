@@ -17,7 +17,14 @@
                     <li><a href="index-4.html"><i class="fab fa-google-plus-g"></i></a></li>
                     <li><a href="index-4.html"><i class="fab fa-vimeo-v"></i></a></li>
                 </ul>
-                <div class="sign-in"><a href="signup.html"><i class="fas fa-user"></i>Sign In</a></div>
+                <div class="sign-in">
+                    @auth
+                        <a href="#"><i class="fas fa-user"></i> {{ Auth::user()->first_name }}</a>
+                    @else
+                        <a href="{{ route('custom.login') }}"><i class="fas fa-user"></i> Sign In</a>
+                    @endauth
+                </div>
+
             </div>
         </div>
     </div>

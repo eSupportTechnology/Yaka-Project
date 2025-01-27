@@ -17,7 +17,14 @@
                     <li><a href="index-4.html"><i class="fab fa-google-plus-g"></i></a></li>
                     <li><a href="index-4.html"><i class="fab fa-vimeo-v"></i></a></li>
                 </ul>
-                <div class="sign-in"><a href="signup.html"><i class="fas fa-user"></i>Sign In</a></div>
+                <div class="sign-in">
+                    <?php if(auth()->guard()->check()): ?>
+                        <a href="#"><i class="fas fa-user"></i> <?php echo e(Auth::user()->first_name); ?></a>
+                    <?php else: ?>
+                        <a href="<?php echo e(route('custom.login')); ?>"><i class="fas fa-user"></i> Sign In</a>
+                    <?php endif; ?>
+                </div>
+
             </div>
         </div>
     </div>

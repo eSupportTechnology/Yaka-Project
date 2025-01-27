@@ -40,4 +40,6 @@ class Cities extends Model
     {
         return $this->hasMany(Ads::class ,'sublocation');
     }
+
+
 }

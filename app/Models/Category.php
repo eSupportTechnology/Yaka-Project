@@ -15,6 +15,18 @@ class Category extends Model
         'status'
     ];
 
+    
+
+    public function mainCategory()
+    {
+        return $this->belongsTo(Category::class, 'mainId');
+    }
+
+    public function subcategories()
+    {
+        return $this->hasMany(Category::class, 'mainId');
+    }
+
     public function ads()
     {
         return $this->hasMany(Ads::class, 'cat_id');
@@ -39,11 +51,6 @@ class Category extends Model
     }
 
 
-
-    public function mainCategory()
-    {
-        return $this->belongsTo(Category::class, 'mainId');
-    }
 
     public function brands()
     {

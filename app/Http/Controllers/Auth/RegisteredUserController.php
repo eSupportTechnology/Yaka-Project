@@ -4,36 +4,23 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use App\Services\SmsService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
 
 class RegisteredUserController extends Controller
 {
-    protected $smsService;
-
-    // Inject SmsService in the controller constructor
-    public function __construct(SmsService $smsService)
-    {
-        $this->smsService = $smsService;
-    }
     /**
      * Display the registration view.
      */
     public function create(): View
     {
-        return view('web.user.register');
-    }
-
-    public function registerOtp(){
-        return view('web.user.get-r-otp');
+        return view('newFrontend.register');
     }
 
     /**
@@ -41,103 +28,58 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
-    {
+  
 
-        
-        $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'regex:/^[0-9]{10}$/', 'unique:'.User::class,],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-
-        $url = strtolower($request['first_name'].' '.$request['last_name']);
-        $url = preg_replace('/[^a-z0-9\-]/', ' ', $url);
-        $url = preg_replace('/\s+/', '-', $url);
-
-         $user = [
-            'first_name' => $request->first_name,
-            'name' => $request->first_name." ".$request->last_name,
-            'last_name' => $request->last_name,
-            'url' => $url,
-            'email' => $request->email ?? null,
-            'status' => '1',
-            'roles' => $request->roles ?? 'user',
-            'phone_number' => $request->phone_number ?? null,
-            'location' => $request->location ?? null,
-            'sub_location' => $request->sub_location ?? null,
-            'password' => Hash::make($request->password),
-        ];
-
-        session(['registerUserDate' => $user]);
-
-        $otp = rand(100000, 999999);
-
-        // Get phone number from request
-        $phoneNumber = $request->phone_number;
-
-
-            try {
-
-                $otpMessage = "Your OTP code is: " . $otp;
+     public function store(Request $request): RedirectResponse
+     {
+         try {
+             // Add custom validation rules
+             $request->validate([
+                 'first_name' => ['required', 'string', 'max:255'],
+                 'last_name' => ['required', 'string', 'max:255'],
+                 'phone_number' => ['required', 'string', 'max:15', 'unique:users,phone_number'],
+                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
+             ]);
+     
+             // Log validation success
+             Log::info('Validation passed for user registration', [
+                 'first_name' => $request->first_name,
+                 'last_name' => $request->last_name,
+                 'email' => $request->email,
+                 'phone_number' => $request->phone_number,
+             ]);
+     
+             // Create the user with custom fields
+             $user = User::create([
+                 'first_name' => $request->first_name,
+                 'last_name' => $request->last_name,
+                 'phone_number' => $request->phone_number,
+                 'email' => $request->email,
+                 'password' => Hash::make($request->password),
+                 'roles' => 'user',
+             ]);
+     
+             Log::info('User successfully created', ['user_id' => $user->id]);
+     
+             event(new Registered($user));
+     
+             Auth::login($user);
+     
+             // Redirect to the correct login route
+             return redirect()->route('user.login');
+             
+         } catch (\Exception $e) {
+             // Log the error details
+             Log::error('Error during user registration', [
+                 'error_message' => $e->getMessage(),
+                 'trace' => $e->getTraceAsString(),
+             ]);
+     
+             // Optionally, you can return a redirect or view with error messages
+             return redirect()->back()->withErrors(['error' => 'An error occurred during registration.']);
+         }
+     }
+     
     
-           
-                $senderID = "QKSendDemo"; 
-                $to = $phoneNumber;
-                $message = $otpMessage; 
-
-                // dd($otpMessage , $to);
-    
-       
-                $response = $this->smsService->sendSingleSms($senderID, $to, $message);
-    
-                session(['otp' => Hash::make($otp)]);
-    
-                return redirect()->route('register-otp');
-    
-               
-            } catch (\Exception $e) {
-                return response()->json([
-                    'message' => 'Failed to send OTP',
-                    'error' => $e->getMessage(),
-                ], 500);
-            }
-
-        
-
-    }
-
-
-    public function storeRegister(Request $request){
-
-        $request->validate([
-            'otp' => 'required|numeric|digits:6',
-        ]);
-
-        $otp = $request->input('otp');
-
-        if (Hash::check($otp, session('otp'))) {
-
-            $user = User::create(session('registerUserDate'));
-
-            event(new Registered($user));
-
-            Auth::login($user);
-
-            $user = auth()->user();
-
-            $userAttributes = $user->getAttributes();
-            unset($userAttributes['password']); 
-
-            session(['user' => $userAttributes]);
-
-            return redirect(RouteServiceProvider::HOME);
-        } else {
-            return redirect()->route('register')->with('error', 'Invalid OTP');
-        }
-
-
-    }
 }
