@@ -4,75 +4,24 @@
 
 @section('content')
         
-
+<style>
+.banner-section {
+    background: linear-gradient(to bottom, rgb(76, 13, 13), rgb(205, 38, 8), rgb(136, 15, 15));
+    padding: 30px;
+    text-align: center;
+    color: white;
+    height: 400px;
+}
+</style>
         <!-- banner-section -->
-        <section class="banner-section style-two style-four centred" style="background-image: url(newFrontend/Clasifico/assets/images/banner/banner-4.jpg);">
+        <section class="banner-section" style="">
             <div class="auto-container">
                 <div class="content-box">
                     <div class="text">
                         <h1>Buy, Sell, Rent & Exchange <br />in one Click</h1>
                         <p>Amet consectetur adipisicing elit sed do eiusmod.</p>
                     </div>
-                    <div class="form-inner">
-                        <div class="pattern-layer" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-13.png);"></div>
-                        <ul class="radio-select-box clearfix">
-                            <li>
-                                <div class="single-checkbox">
-                                    <input type="radio" name="check-box" id="check1" checked="">
-                                    <label for="check1"><span></span>All</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="single-checkbox">
-                                    <input type="radio" name="check-box" id="check2">
-                                    <label for="check2"><span></span>Education</label>    
-                                </div>
-                            </li>
-                            <li>
-                                <div class="single-checkbox">
-                                    <input type="radio" name="check-box" id="check3">
-                                    <label for="check3"><span></span>Restaurant</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="single-checkbox">
-                                    <input type="radio" name="check-box" id="check4">
-                                    <label for="check4"><span></span>Real Estate</label>
-                                </div>
-                            </li>
-                        </ul>
-                        <form action="index.html" method="post">
-                            <div class="input-inner clearfix">
-                                <div class="form-group">
-                                    <i class="icon-2"></i>
-                                    <input type="search" name="name" placeholder="Search Keyword..." required="">
-                                </div>
-                                <div class="form-group">
-                                    <i class="icon-3"></i>
-                                    <select class="wide">
-                                       <option data-display="Select Location">Select Location</option>
-                                       <option value="1">California</option>
-                                       <option value="2">New York</option>
-                                       <option value="3">Sun Francis</option>
-                                       <option value="4">Shicago</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <i class="icon-4"></i>
-                                    <select class="wide">
-                                       <option data-display="Select Category">Select Category</option>
-                                       <option value="1">Education</option>
-                                       <option value="2">Restaurant</option>
-                                       <option value="3">Real Estate</option>
-                                       <option value="4">Home Appliances</option>
-                                    </select>
-                                </div>
-                                <div class="btn-box">
-                                    <button type="submit"><i class="icon-2"></i>Search</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    
                 </div> 
             </div>
         </section>
