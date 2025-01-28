@@ -30,7 +30,9 @@ use App\Http\Controllers\frontend\HomeController;
 */
 
 Route::get('/',[HomeController::class,'home'])->name('/');
-
+//new route quick links
+Route::get('/about-us', [HomeController::class,'aboutUs'])->name('about-us');
+Route::get('/contact-us',[HomeController::class,'contactUs'])->name('contact-us');
 
 use App\Http\Controllers\Auth\AdminLoginController;
 
