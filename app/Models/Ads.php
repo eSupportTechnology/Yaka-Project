@@ -110,6 +110,7 @@ class Ads extends Model
         return $this->belongsTo(User::class);
     }
 
+
     // Relationship with Location
     public function main_location()
     {

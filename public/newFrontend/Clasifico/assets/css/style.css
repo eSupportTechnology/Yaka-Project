@@ -3010,6 +3010,15 @@ div#mCSB_1_container{
   background-attachment: fixed;
 }
 
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 .main-footer .footer-top:before{
   position: absolute;
   content: '';

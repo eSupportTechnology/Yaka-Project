@@ -181,16 +181,17 @@
                     <li><a href="index-4.html"><i class="fab fa-youtube"></i></a></li>
                 </ul>
                 <div class="sign-in">
-                    @auth
+                    <?php if(auth()->guard()->check()): ?>
                     <div class="dropdown">
                         <a href="#" class="dropdown-toggle" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
-                            <i class="fas fa-user"></i> {{ Auth::user()->first_name }}
+                            <i class="fas fa-user"></i> <?php echo e(Auth::user()->first_name); ?>
+
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                         <li><a class="dropdown-item" href="{{ route('user.dashboard') }}" style="color: black !important; text-decoration:none">Dashboard</a></li>
+                         <li><a class="dropdown-item" href="<?php echo e(route('user.dashboard')); ?>" style="color: black !important; text-decoration:none">Dashboard</a></li>
                          <li>
-                            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                                @csrf
+                            <form action="<?php echo e(route('logout')); ?>" method="POST" style="display: inline;">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="dropdown-item" style="background: none; border: none; text-decoration: none; color: inherit;">
                                     <i class="fas fa-sign-out-alt"></i> Logout
                                 </button>
@@ -200,9 +201,9 @@
                         </ul>
                     </div>
 
-                    @else
-                        <a style="text-decoration: none;" href="{{ route('custom.login') }}"><i class="fas fa-user"></i> Sign In</a>
-                    @endauth
+                    <?php else: ?>
+                        <a style="text-decoration: none;" href="<?php echo e(route('custom.login')); ?>"><i class="fas fa-user"></i> Sign In</a>
+                    <?php endif; ?>
                 </div>
 
             </div>
@@ -216,8 +217,8 @@
         <div class="outer-box">
         <div class="container d-flex align-items-center justify-content-between">
         <!-- Logo -->
-        <a href="{{ route('/') }}"><div class="logo">
-        <img src="{{asset('Logo-re.png')}}" style="" alt="logo">
+        <a href="<?php echo e(route('/')); ?>"><div class="logo">
+        <img src="<?php echo e(asset('Logo-re.png')); ?>" style="" alt="logo">
         </div></a>
 
         <!-- Search Bar -->
@@ -236,7 +237,7 @@
     <div class="auto-container">
         <div class="outer-box">
             <div class="logo-box">
-                <figure class="logo"><a href="{{ route('/') }}"> <img src="{{asset('Logo-re.png')}}" style="" alt="logo"></a></figure>
+                <figure class="logo"><a href="<?php echo e(route('/')); ?>"> <img src="<?php echo e(asset('Logo-re.png')); ?>" style="" alt="logo"></a></figure>
             </div>
     
             <div class="search-bar">
@@ -282,3 +283,4 @@
 
 
 
+<?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/header.blade.php ENDPATH**/ ?>

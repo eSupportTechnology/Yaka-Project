@@ -1,8 +1,4 @@
-
-
-@extends ('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
         
 <style>
 .banner-section {
@@ -1075,10 +1071,11 @@
         </section>
         <!-- subscribe-section end -->
 
-        @endsection
+        <?php $__env->stopSection(); ?>
 
        
 
 
 
  
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/index.blade.php ENDPATH**/ ?>

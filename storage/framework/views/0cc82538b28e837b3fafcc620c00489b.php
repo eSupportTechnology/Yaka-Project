@@ -6,7 +6,7 @@
                         <div class="clearfix row">
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget logo-widget">
-                                    <figure class="footer-logo"><a href="index.html"><img src="{{asset('Logo-re.png')}}" alt=""></a></figure>
+                                    <figure class="footer-logo"><a href="index.html"><img src="<?php echo e(asset('Logo-re.png')); ?>" alt=""></a></figure>
                                     <div class="text">
                                         <p>Don’t miss out on the best deals in Sri Lanka’s largest marketplace! Subscribe now for exclusive offers, promotions, and updates on discounts for electronics, fashion, home goods, and more. Be the first to know and save big—sign up today!</p>
                                     </div>
@@ -26,8 +26,8 @@
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
-                                            <li><a href="{{route(name: 'about-us')}}">About Us</a></li>
-                                            <li><a href="{{route('contact-us')}}">Contact Us</a></li>
+                                            <li><a href="<?php echo e(route(name: 'about-us')); ?>">About Us</a></li>
+                                            <li><a href="<?php echo e(route('contact-us')); ?>">Contact Us</a></li>
                                             <li><a href="index.html">Privacy & Safety</a></li>
                                             <li><a href="index.html">Tems & Conditions</a></li>
                                         </ul>
@@ -89,4 +89,4 @@
                 </div>
             </div>
         </footer>
-        <!-- main-footer end -->
+        <!-- main-footer end --><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/footer.blade.php ENDPATH**/ ?>
