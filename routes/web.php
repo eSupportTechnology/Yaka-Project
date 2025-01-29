@@ -27,7 +27,9 @@ Route::post('/custom-login', [CustomAuthController::class, 'login'])->name('cust
 Route::post('/register', [RegisteredUserController::class, 'register']);
 
 Route::get('/',[HomeController::class,'home'])->name('/');
-
+//new route quick links
+Route::get('/about-us', [HomeController::class,'aboutUs'])->name('about-us');
+Route::get('/contact-us',[HomeController::class,'contactUs'])->name('contact-us');
 
 
 Route::get('/browse_ads', [AdsController::class, 'browseAds']);
