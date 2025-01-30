@@ -1,10 +1,13 @@
-
-
 @extends ('newFrontend.master')
 
 @section('content')
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
         
 <style>
+
 .banner-section {
     background: linear-gradient(to bottom, rgb(76, 13, 13), rgb(205, 38, 8), rgb(136, 15, 15));
     padding: 30px;
@@ -12,7 +15,72 @@
     color: white;
     height: 400px;
 }
+       
+.banner-container {
+    width: 100%;
+    background-color:#ffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+	margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.banner {
+    width: 80%;
+    max-width: 1000px;
+    height: 150px;
+    background: url('banner-image.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 24px;
+    padding: 20px;
+}
+
+.banner-text {
+    flex: 1;
+    text-align: left;
+}
+
+.banner-logo {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.banner-hashtags {
+    flex: 1;
+    text-align: right;
+    font-size: 18px;
+}
+
+.banner-img {
+    width: 100%; 
+    height: 150px; 
+    object-fit: cover; 
+}
+
+@media (max-width: 768px) {
+    .banner {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+                text-align: center;
+            }
+
+    .banner-text, .banner-hashtags {
+                text-align: center;
+                font-size: 16px;
+            }
+ }
+   
 </style>
+
         <!-- banner-section -->
         <section class="banner-section" style="">
             <div class="auto-container">
@@ -26,7 +94,6 @@
             </div>
         </section>
         <!-- banner-section end -->
-
 
         <!-- category-section -->
         <section class="category-section centred sec-pad">
@@ -57,35 +124,6 @@
             </div>
         </section>
         <!-- category-section end -->
-
-
-        <!-- clients-section -->
-        <section class="clients-section">
-            <div class="pattern-layer" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-7.png);"></div>
-            <div class="auto-container">
-                <div class="row clearfix">
-                    <div class="col-lg-4 col-md-12 col-sm-12 title-column">
-                        <div class="sec-title">
-                            <span>Our Pertners</span>
-                            <h2>We’re going to Became Partners for the Long Run.</h2>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-12 col-sm-12 inner-column">
-                        <div class="inner-box">
-                            <ul class="clients-logo-list clearfix">
-                                <li><figure class="clients-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/clients/clients-1.png" alt=""></a></figure></li>
-                                <li><figure class="clients-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/clients/clients-2.png" alt=""></a></figure></li>
-                                <li><figure class="clients-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/clients/clients-3.png" alt=""></a></figure></li>
-                                <li><figure class="clients-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/clients/clients-4.png" alt=""></a></figure></li>
-                                <li><figure class="clients-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/clients/clients-5.png" alt=""></a></figure></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- clients-section end -->
-
 
         <!-- feature-style-two -->
         <section class="feature-style-two">
@@ -657,279 +695,23 @@
         </section>
         <!-- feature-style-two end -->
 
-
-        <!-- testimonial-section -->
-        <section class="testimonial-section bg-color-1 sec-pad">
-            <figure class="image-layer"><img src="newFrontend/Clasifico/assets/images/resource/testimonial-image-1.png" alt=""></figure>
-            <div class="anim-icon">
-                <div class="icon anim-icon-1 rotate-me" style="background-image: url(assets/images/icons/anim-icon-1.png);"></div>
-                <div class="icon anim-icon-2 rotate-me" style="background-image: url(assets/images/icons/anim-icon-2.png);"></div>
-                <div class="icon anim-icon-3 rotate-me" style="background-image: url(assets/images/icons/anim-icon-2.png);"></div>
-                <div class="icon anim-icon-4 rotate-me" style="background-image: url(assets/images/icons/anim-icon-1.png);"></div>
-            </div>
-            <div class="pattern-layer">
-                <div class="pattern-1" style="background-image: url(assets/images/shape/shape-4.png);"></div>
-                <div class="pattern-2" style="background-image: url(assets/images/shape/shape-5.png);"></div>
-                <div class="pattern-3" style="background-image: url(assets/images/shape/shape-6.png);"></div>
-            </div>
-            <div class="auto-container">
-                <div class="row clearfix">
-                    <div class="col-xl-6 col-lg-12 col-md-12 inner-column">
-                        <div class="inner-box">
-                            <div class="sec-title light">
-                                <span>Testimonials</span>
-                                <h2>What client’s say?</h2>
-                            </div>
-                            <div class="single-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-                                <div class="testimonial-content">
-                                    <div class="text">
-                                        <p>“ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. enim  minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip consequat aute ux irure dolor in reprehen.”</p>
-                                    </div>
-                                    <div class="author-box">
-                                        <figure class="author-thumb"><img src="newFrontend/Clasifico/assets/images/resource/testimonial-1.png" alt=""></figure>
-                                        <h3>Amelia Anna</h3>
-                                        <span class="designation">Senior Martketer</span>
-                                    </div>
-                                </div>
-                                <div class="testimonial-content">
-                                    <div class="text">
-                                        <p>“ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. enim  minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip consequat aute ux irure dolor in reprehen.”</p>
-                                    </div>
-                                    <div class="author-box">
-                                        <figure class="author-thumb"><img src="newFrontend/Clasifico/assets/images/resource/testimonial-1.png" alt=""></figure>
-                                        <h3>Amelia Anna</h3>
-                                        <span class="designation">Senior Martketer</span>
-                                    </div>
-                                </div>
-                                <div class="testimonial-content">
-                                    <div class="text">
-                                        <p>“ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. enim  minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip consequat aute ux irure dolor in reprehen.”</p>
-                                    </div>
-                                    <div class="author-box">
-                                        <figure class="author-thumb"><img src="newFrontend/Clasifico/assets/images/resource/testimonial-1.png" alt=""></figure>
-                                        <h3>Amelia Anna</h3>
-                                        <span class="designation">Senior Martketer</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+       <!-- advertisement - banner-section start -->
+        <section class="banner-container"> 
+            <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                    @foreach($banners as $key => $banner)
+                        @if($banner->type == 0)  <!-- Only display banners with type 0 -->
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+                           </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </section>
-        <!-- testimonial-section end -->
-
-
-        <!-- place-section -->
-        <section class="place-section centred">
-            <div class="auto-container">
-                <div class="inner-content">
-                    <div class="sec-title centred">
-                        <span>Top Places</span>
-                        <h2>Most Popular Places</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing sed do eiusmod tempor incididunt labore <br />dolore magna aliqua enim.</p>
-                    </div>
-                    <div class="row clearfix">
-                        <div class="col-lg-4 col-md-6 col-sm-12 place-block">
-                            <div class="place-block-one wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                <div class="inner-box">
-                                    <figure class="image-box"><img src="newFrontend/Clasifico/assets/images/resource/place-1.jpg" alt=""></figure>
-                                    <div class="lower-content">
-                                        <div class="inner">
-                                            <h3><a href="index.html">Los Angeles</a></h3>
-                                            <span>10 Listing</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 place-block">
-                            <div class="place-block-one wow fadeInDown animated animated" data-wow-delay="200ms" data-wow-duration="1500ms">
-                                <div class="inner-box">
-                                    <figure class="image-box"><img src="newFrontend/Clasifico/assets/images/resource/place-2.jpg" alt=""></figure>
-                                    <div class="lower-content">
-                                        <div class="inner">
-                                            <h3><a href="index.html">San Francisco</a></h3>
-                                            <span>15 Listing</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 place-block">
-                            <div class="place-block-one wow fadeInDown animated animated" data-wow-delay="400ms" data-wow-duration="1500ms">
-                                <div class="inner-box">
-                                    <figure class="image-box"><img src="newFrontend/Clasifico/assets/images/resource/place-3.jpg" alt=""></figure>
-                                    <div class="lower-content">
-                                        <div class="inner">
-                                            <h3><a href="index.html">California City</a></h3>
-                                            <span>08 Listing</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 place-block">
-                            <div class="place-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                <div class="inner-box">
-                                    <figure class="image-box"><img src="newFrontend/Clasifico/assets/images/resource/place-4.jpg" alt=""></figure>
-                                    <div class="lower-content">
-                                        <div class="inner">
-                                            <h3><a href="index.html">New York City</a></h3>
-                                            <span>05 Listing</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 place-block">
-                            <div class="place-block-one wow fadeInUp animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
-                                <div class="inner-box">
-                                    <figure class="image-box"><img src="newFrontend/Clasifico/assets/images/resource/place-5.jpg" alt=""></figure>
-                                    <div class="lower-content">
-                                        <div class="inner">
-                                            <h3><a href="index.html">Brooklyn City</a></h3>
-                                            <span>02 Listing</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- place-section end -->
-
-
-        <!-- download-section -->
-        <section class="download-section">
-            <div class="pattern-layer" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-8.png);"></div>
-            <div class="auto-container">
-                <div class="row align-items-center clearfix">
-                    <div class="col-lg-6 col-md-6 col-sm-12 image-column">
-                        <div class="image-box">
-                            <figure class="image image-1"><img src="newFrontend/Clasifico/assets/images/resource/laptop-1.png" alt=""></figure>
-                            <figure class="image image-2 rotate-me"><img src="newFrontend/Clasifico/assets/images/resource/ball-1.png" alt=""></figure>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 content-column">
-                        <div class="content_block_1">
-                            <div class="content-box">
-                                <span class="upper-text">Download</span>
-                                <h2>Download Our Android and IOS App for Experience</h2>
-                                <div class="download-btn">
-                                    <a href="index.html" class="app-store">
-                                        <i class="icon-23"></i>
-                                        <span>Download on</span>
-                                        <h4>App Store</h4>
-                                    </a>
-                                    <a href="index.html" class="play-store">
-                                        <i class="icon-24"></i>
-                                        <span>Get It On</span>
-                                        <h4>Google Play</h4>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- download-section end -->
-
-
-        <!-- news-section -->
-        <section class="news-section sec-pad">
-            <div class="auto-container">
-                <div class="sec-title centred">
-                    <span>News & Article</span>
-                    <h2>Stay Update with Docpro</h2>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-lg-4 col-md-6 col-sm-12 news-block">
-                        <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                            <div class="inner-box">
-                                <figure class="image-box">
-                                    <img src="assets/images/news/news-1.jpg" alt="">
-                                    <a href="blog-details.html"><i class="fas fa-link"></i></a>
-                                </figure>
-                                <div class="lower-content">
-                                    <figure class="admin-thumb"><img src="newFrontend/Clasifico/assets/images/news/admin-1.png" alt=""></figure>
-                                    <span class="category">Electronics</span>
-                                    <h3><a href="blog-details.html">Including animation in your design system</a></h3>
-                                    <p>Lorem ipsum dolor sit amet consectur adipisicing sed do eiusmod tempor incididunt labore.</p>
-                                    <span class="post-info">By <a href="blog-details.html">Eva Green</a> - October 13, 2020</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 news-block">
-                        <div class="news-block-one wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                            <div class="inner-box">
-                                <figure class="image-box">
-                                    <img src="assets/images/news/news-2.jpg" alt="">
-                                    <a href="blog-details.html"><i class="fas fa-link"></i></a>
-                                </figure>
-                                <div class="lower-content">
-                                    <figure class="admin-thumb"><img src="newFrontend/Clasifico/assets/images/news/admin-2.png" alt=""></figure>
-                                    <span class="category">Electronics</span>
-                                    <h3><a href="blog-details.html">A digital prescription for the industry.</a></h3>
-                                    <p>Lorem ipsum dolor sit amet consectur adipisicing sed do eiusmod tempor incididunt labore.</p>
-                                    <span class="post-info">By <a href="blog-details.html">Eva Green</a> - October 13, 2020</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 news-block">
-                        <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                            <div class="inner-box">
-                                <figure class="image-box">
-                                    <img src="assets/images/news/news-3.jpg" alt="">
-                                    <a href="blog-details.html"><i class="fas fa-link"></i></a>
-                                </figure>
-                                <div class="lower-content">
-                                    <figure class="admin-thumb"><img src="newFrontend/Clasifico/assets/images/news/admin-3.png" alt=""></figure>
-                                    <span class="category">Electronics</span>
-                                    <h3><a href="blog-details.html">Strategic & commercial approach with issues.</a></h3>
-                                    <p>Lorem ipsum dolor sit amet consectur adipisicing sed do eiusmod tempor incididunt labore.</p>
-                                    <span class="post-info">By <a href="blog-details.html">Eva Green</a> - October 13, 2020</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- news-section end -->
-
-
-        <!-- subscribe-section -->
-        <section class="subscribe-section">
-            <div class="pattern-layer" style="background-image: url(newFrontend/Clasifico/assets/images/shape/shape-9.png);"></div>
-            <div class="auto-container">
-                <div class="row clearfix">
-                    <div class="col-lg-6 col-md-6 col-sm-12 text-column">
-                        <div class="text">
-                            <div class="icon-box"><i class="icon-25"></i></div>
-                            <h2>Subscribe to Newsletter</h2>
-                            <p>and receive new ads in inbox</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 form-column">
-                        <form action="contact.html" method="post" class="subscribe-form">
-                            <div class="form-group">
-                                <input type="email" name="email" placeholder="Inout your email address" required="">
-                                <button type="submit" class="theme-btn-one">Subscribe Now</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- subscribe-section end -->
-
-        @endsection
+        <!-- advertisement - banner-section end -->
+         
+@endsection
 
        
 
