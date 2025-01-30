@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -19,4 +20,5 @@ class HomeController extends Controller
     {
         return view('newFrontend.contact-us');
     }
+
 }
