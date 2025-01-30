@@ -78,36 +78,53 @@
         </section>
         <!-- banner-section end -->
 
-
         <!-- category-section -->
         <section class="category-section centred sec-pad">
             <div class="auto-container">
                 <div class="sec-title">
                     <span>Categories</span>
                     <h2>Explore by Category</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed do eiusmod tempor incididunt labore <br />dolore magna aliqua enim.</p>
                 </div>
-                <div class="inner-content clearfix">
-                    @foreach($categories as $category)
-                        <div class="category-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                            <div class="inner-box">
-                                <div class="shape">
-                                    <div class="shape-1" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-1.png') }}');"></div>
-                                    <div class="shape-2" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-2.png') }}');"></div>
-                                </div>
-                                <div class="icon-box">
-                                    <img src="{{ asset('images/Category/' . $category->image) }}" alt="{{ $category->name }}" style="width: 50px; height: 50px;">
-                                </div>
-                                <h5>{{ $category->name }}</h5>
-                                <span>{{ $category->free_add_count }}</span>
+                
+                <div class="inner-content clearfix" style="display: flex; flex-wrap: wrap; justify-content: center;">
+            @foreach($categories as $category)
+                <div class="category-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                    <a href="{{ route('browse-ads', ['category' => $category->id]) }}" style="text-decoration: none;">
+                        <div class="inner-box">
+                            <div class="shape">
+                                <div class="shape-1" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-1.png') }}');"></div>
+                                <div class="shape-2" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-2.png') }}');"></div>
                             </div>
+
+                            <div class="icon-box">
+                                <img src="{{ asset('images/Category/' . $category->image) }}" 
+                                    alt="{{ $category->name }}" 
+                                    style="width: 70px; height: 70px; object-fit: contain;">
+                            </div>
+
+                            <h5 style="min-height: 50px; display: -webkit-box; 
+                                    -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
+                                    overflow: hidden; text-overflow: ellipsis;">
+                                {{ $category->name }}
+                            </h5>
+
+                            <span>{{ $category->ads_count }}</span>
                         </div>
-                    @endforeach
-                </div>             
-                <div class="more-btn"><a href="index.html" class="theme-btn-one">All Categories</a></div>
-            </div>
-        </section>
-        <!-- category-section end -->
+                    </a>
+                </div>
+            @endforeach
+        </div>
+       
+
+        <!-- <div class="more-btn" style="text-align: center; margin-top: 20px;">
+            <a href="index.html" class="theme-btn-one" >
+                All Categories
+            </a>
+        </div> -->
+    </div>
+</section>
+<!-- category-section end -->
+
 
 
         <!-- clients-section -->

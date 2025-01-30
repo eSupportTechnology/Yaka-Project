@@ -1476,10 +1476,8 @@ div#mCSB_1_container{
 }
 
 .category-section .category-block-one{
-  position: relative;
-  float: left;
-  width: 20%;
-  margin-bottom: 30px;
+  width: calc(100% / 6 - 20px); 
+  margin: 10px; 
 }
 
 .category-section .inner-content{
@@ -1489,11 +1487,11 @@ div#mCSB_1_container{
 
 .category-block-one .inner-box{
   position: relative;
-  max-width: 210px;
+  max-width: 210px; 
+  padding: 25px 10px; 
   width: 100%;
   margin: 0 auto;
   background: #fff;
-  padding: 35px 15px;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0px 10px 50px 0px #e4e7ee;
@@ -1535,10 +1533,11 @@ div#mCSB_1_container{
 
 .category-block-one .inner-box h5{
   display: block;
-  font-size: 18px;
-  line-height: 26px;
   font-weight: 700;
   margin-bottom: 13px;
+  font-size: 16px; 
+  line-height: 22px;
+  min-height: 44px; 
 }
 
 .category-block-one .inner-box:hover h5{

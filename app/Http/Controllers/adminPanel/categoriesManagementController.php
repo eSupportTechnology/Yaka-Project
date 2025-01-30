@@ -185,9 +185,4 @@ class CategoriesManagementController extends Controller
         }
     }
 
-    public function showHomePage()
-    {
-        $categories = Category::where('status', 1)->get(); // Active categories only
-        return view('newFrontend.index', compact('categories'));
-    }
 }

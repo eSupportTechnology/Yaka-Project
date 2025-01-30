@@ -26,15 +26,14 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'mainId');
     }
+    
 
     public function ads()
     {
         return $this->hasMany(Ads::class, 'cat_id');
     }
-    public function subcat()
-    {
-        return $this->hasMany(Category::class, 'mainId');
-    }
+    
+
 
     public function cat()
     {

@@ -8,10 +8,20 @@ use App\Models\Category;
 
 class HomeController extends Controller
 {
-    public function home()
+   public function home()
     {
-        return view('newFrontend.index');
+        $categories = Category::where('mainId', 0)
+            ->where('status', 1)
+            ->withCount(['ads' => function ($query) {
+                $query->where('status', 1);
+            }])
+            ->get();
+
+        return view('newFrontend.index', compact('categories'));
     }
+
+    
+  
     public function aboutUs()
     {
         return view('newFrontend.about-us');

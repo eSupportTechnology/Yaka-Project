@@ -25,9 +25,12 @@
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
                                     <div class="dash-avatar">
-                                        <a href="#">
-                                            <img src="{{ asset('yaka-payment.png') }}" alt="user">
-                                        </a>
+                                        @if(Auth::check() && Auth::user()->profileImage) 
+                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
+                                            alt="user"></a>
+                                        @else
+                                            <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
+                                        @endif
                                     </div>
                                     <div class="dash-intro">
                                         <h4><a href="#">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a></h4>
@@ -72,7 +75,7 @@
                         <div class="dash-menu-list">
                             <ul>
                                 <li><a href="{{route('user.dashboard')}}">dashboard</a></li>
-                                <li><a href="">ad post</a></li>
+                                <li><a href="{{route('user.ad_posts')}}">ad post</a></li>
                                 <li><a href="">my ads</a></li>
                                 <li><a  class="active" href="{{route('user.profile')}}">Profile</a></li>
                                 <li><a href="">message</a></li>
@@ -89,11 +92,11 @@
     </section>
 
      
-<div class="setting-part"  style="margin: 50px 50px">
-    <div class="container">
+<div class="setting-part">
+    <div class="container" >
         <div class="row">
             <div class="col-lg-12">
-                <div class="account-card alert fade show">
+            <div class="account-card alert fade show p-4" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
                     <div class="account-title">
                         <h3>Edit Profile</h3>
                     </div>
@@ -132,7 +135,12 @@
                                 <input type="text" class="form-control" name="email" value="{{ old('email', $user->email) }}">
                             </div>
                         </div>
-
+                        <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-label">Company</label>
+                                    <input type="text" class="form-control" value="{{ old('company', $user->company) }}" name="company">
+                                </div>
+                            </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-label">District</label>
@@ -162,7 +170,24 @@
                                 </select>
                             </div>
                         </div>
-
+                        <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label">Post Code</label>
+                                    <input type="text" class="form-control" value="{{ old('postCode', $user->postCode) }}" name="postCode">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label">Country</label>
+                                    <input type="text" class="form-control" value="Sri Lanka" readonly name="country">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label">Website</label>
+                                    <input type="text" class="form-control" value="{{ old('website', $user->website) }}" name="website">
+                                </div>
+                            </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-label">Phone</label>
@@ -175,6 +200,15 @@
                                 <label class="form-label">Birthday</label>
                                 <input type="date" class="form-control" name="birthday" value="{{ old('birthday', $user->birthday) }}">
                             </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label">Profile Image</label>
+                                <input type="file" class="form-control" name="profileImage" accept="image/*">
+                            </div>
+                            @if($user->profileImage)
+                            <img src="{{ asset('storage/profile_images/' . $user->profileImage) }}" alt="Profile Image" class="img-fluid" width="100">
+                            @endif
                         </div>
 
                         <div class="col-lg-12">
