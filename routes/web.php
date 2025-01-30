@@ -35,6 +35,8 @@ Route::get('/',[HomeController::class,'home'])->name('/');
 
 Route::get('/about-us', [HomeController::class,'aboutUs'])->name('about-us');
 Route::get('/contact-us',[HomeController::class,'contactUs'])->name('contact-us');
+Route::get('/privacy-safety',[HomeController::class,'privacySafety'])->name('privacy-safety');
+Route::get('/terms-conditions',[HomeController::class,'termsConditions'])->name('terms-conditions');
 
 
 Route::get('/browse_ads', [AdsController::class, 'browseAds'])->name('browse-ads');

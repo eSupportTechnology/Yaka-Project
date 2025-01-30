@@ -21,4 +21,12 @@ class HomeController extends Controller
         return view('newFrontend.contact-us');
     }
 
+    public function privacySafety()
+    {
+        return view('newFrontend.privacy-safety');
+    }
+    public function termsConditions()
+    {
+        return view('newFrontend.terms-conditions');
+    }
 }
