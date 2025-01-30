@@ -32,6 +32,10 @@ Route::post('logout', [CustomAuthController::class, 'logout'])->name('logout');
 Route::post('/register', [RegisteredUserController::class, 'register']);
 
 Route::get('/',[HomeController::class,'home'])->name('/');
+ 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
 
 Route::get('/about-us', [HomeController::class,'aboutUs'])->name('about-us');
 Route::get('/contact-us',[HomeController::class,'contactUs'])->name('contact-us');
@@ -50,11 +54,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/profile/update', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
     Route::get('/user/ad_posts', [UserDashboardController::class, 'ad_posts'])->name('user.ad_posts');
     Route::post('/user/ad_posts', [UserDashboardController::class, 'ad_posts'])->name('user.ad_posts');
-
-
-
-
-
 
     
 
@@ -182,9 +181,6 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::post('/dashboard/banner/create',[bannerManagementController::class ,'createBanner'])->name('dashboard.banner.create-banner');
     Route::get('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'delete'])->name('dashboard.banner.delete');
     Route::post('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'deletebanner'])->name('dashboard.banner.delete-banner');
-
-  
-
 
 
 });
