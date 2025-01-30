@@ -70,7 +70,7 @@
 }
 </style>
 <!-- Page Title -->
-        <section class="page-title style-two" style="background-image: url(newFrontend/Clasifico/assets/images/background/page-title.jpg);">
+        <section class="page-title style-two  banner-part" style="background-image: url(newFrontend/Clasifico/assets/images/background/page-title.jpg);">
             <div class="auto-container">
                 <div class="mr-0 content-box centred">
                     <div class="title">

@@ -3,8 +3,8 @@
 
 <?php $__env->startSection('content'); ?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<!-- Stylesheets -->
+
+
 
 
 <style>
@@ -32,7 +32,7 @@
     justify-content: center;
     margin-right: 15px;
     font-size: 16px;
-    flex-shrink: 0; /* Prevents the icon from shrinking */
+    flex-shrink: 0;
 }
 
 .text-wrap {
@@ -40,11 +40,11 @@
     overflow-wrap: break-word;
     word-break: break-word;
     white-space: normal; 
-    flex-grow: 1; /* Allows the text to take the remaining space */
+    flex-grow: 1; 
 }
 
 .d-flex {
-    flex-wrap: wrap; /* Allow the text to wrap if needed */
+    flex-wrap: wrap; 
 }
 
 

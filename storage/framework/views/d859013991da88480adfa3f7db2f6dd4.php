@@ -245,7 +245,7 @@
             </div>
             
             <div class="btn-box">
-                <a href="browse-ads-details.html" class="theme-btn-one"><i class="icon-1"></i>Submit Ads</a>
+                <a href="browse-ads-details.html" class="theme-btn-one"><i class="icon-1"></i>Post Your Ads</a>
             </div>
         </div>
     </div>

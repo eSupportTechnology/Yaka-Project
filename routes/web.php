@@ -43,7 +43,9 @@ Route::get('/browse_ads_details/{ad_id}', [AdsController::class, 'show_details']
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
-    Route::get('/user/profile', [UserDashboardController::class, 'index'])->name('user.profile');
+    Route::get('/user/profile', [UserDashboardController::class, 'profile'])->name('user.profile');
+    Route::get('/get-cities', [UserDashboardController::class, 'getCities'])->name('get.cities');
+    Route::post('/user/profile/update', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
 
 });
 
