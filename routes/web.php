@@ -33,8 +33,6 @@ Route::post('/register', [RegisteredUserController::class, 'register']);
 
 Route::get('/',[HomeController::class,'home'])->name('/');
  
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
 
 
 Route::get('/about-us', [HomeController::class,'aboutUs'])->name('about-us');

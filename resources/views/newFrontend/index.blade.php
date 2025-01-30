@@ -2,7 +2,7 @@
 
 @section('content')
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
         
@@ -75,6 +75,7 @@
     padding: 10px 0;
 	margin-top: 30px;
     margin-bottom: 50px;
+    
 }
 
 .banner {
@@ -109,9 +110,17 @@
     font-size: 18px;
 }
 
-.banner-img {
-    width: 100%; 
-    height: 150px; 
+.carousel-inner {
+    height: 100%; /* Makes sure the carousel inner has a consistent height */
+}
+
+.carousel-item {
+    height: 100%; /* Ensures each carousel item matches the container's height */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
     object-fit: cover; 
 }
 
@@ -764,22 +773,23 @@
         </section>
         <!-- feature-style-two end -->
 
-       <!-- advertisement - banner-section start -->
-        <section class="banner-container"> 
-            <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-                <div class="carousel-inner">
-                    @foreach($banners as $key => $banner)
-                        @if($banner->type == 0)  <!-- Only display banners with type 0 -->
-                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
-                           </div>
-                        @endif
-                    @endforeach
-                </div>
+      <!-- advertisement - banner-section start -->
+    <section class="banner-container">
+        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                @foreach($banners as $key => $banner)
+                    @if($banner->type == 0) 
+                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <img src="{{ asset('banners/' . $banner->img) }}" 
+                                alt="Banner Image">
+                        </div>
+                    @endif
+                @endforeach
             </div>
-        </section>
-        <!-- advertisement - banner-section end -->
-         
+        </div>
+    </section>
+    <!-- advertisement - banner-section end -->
+
 @endsection
 
        

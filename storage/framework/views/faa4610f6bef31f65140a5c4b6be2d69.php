@@ -1,6 +1,4 @@
-@extends('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
    .contact-section {
     background-color: #fff;
@@ -94,7 +92,7 @@
                 <h1>Terms & Conditions</h1>
             </div>
             <ul class="clearfix bread-crumb">
-                <li><a href="{{route( '/')}}">Home</a></li>
+                <li><a href="<?php echo e(route( '/')); ?>">Home</a></li>
                 <li>Terms & Conditions</li>
             </ul>
         </div>
@@ -197,4 +195,6 @@
       </div>
     </div>
   </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/terms-conditions.blade.php ENDPATH**/ ?>

@@ -1,6 +1,4 @@
-@extends('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
   .contact-section {
@@ -89,14 +87,14 @@
   }
 </style>
    <!-- Page Title -->
-   <section class="page-title style-two banner-part" style="background-image: url(newFrontend/Clasifico/assets/images/background/page-title.jpg);">
+   <section class="page-title style-two" style="background-image: url(newFrontend/Clasifico/assets/images/background/page-title.jpg);">
     <div class="auto-container">
         <div class="mr-0 content-box centred">
             <div class="title">
                 <h1>Privacy & safety</h1>
             </div>
             <ul class="clearfix bread-crumb">
-                <li><a href="{{route( '/')}}">Home</a></li>
+                <li><a href="<?php echo e(route( '/')); ?>">Home</a></li>
                 <li>Privacy & safety</li>
             </ul>
         </div>
@@ -173,4 +171,6 @@
     </div>
   </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/privacy-safety.blade.php ENDPATH**/ ?>

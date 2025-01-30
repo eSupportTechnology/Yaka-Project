@@ -28,8 +28,8 @@
                                         <ul class="clearfix links-list">
                                             <li><a href="<?php echo e(route(name: 'about-us')); ?>">About Us</a></li>
                                             <li><a href="<?php echo e(route('contact-us')); ?>">Contact Us</a></li>
-                                            <li><a href="index.html">Privacy & Safety</a></li>
-                                            <li><a href="index.html">Tems & Conditions</a></li>
+                                            <li><a href="<?php echo e(route('privacy-safety')); ?>">Privacy & Safety</a></li>
+                                            <li><a href="<?php echo e(route('terms-conditions')); ?>">Tems & Conditions</a></li>
                                         </ul>
                                     </div>
                                 </div>

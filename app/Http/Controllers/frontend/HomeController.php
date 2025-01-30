@@ -18,10 +18,11 @@ class HomeController extends Controller
             }])
             ->get();
 
-        return view('newFrontend.index', compact('categories'));
+            $banners = \App\Models\Banners::where('type', 0)->get();
+        return view('newFrontend.index', compact('categories','banners'));
     }
 
-    
+
   
     public function aboutUs()
     {
@@ -41,14 +42,6 @@ class HomeController extends Controller
         return view('newFrontend.terms-conditions');
     }
 
-    
-    public function index()
-    {
-        $banners = Banners::all(); 
 
-        $categories = Category::all();
-        
-        return view('newFrontend.index', compact('banners','categories'));
-    }
 
 }
