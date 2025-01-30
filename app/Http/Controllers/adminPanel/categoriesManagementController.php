@@ -184,4 +184,10 @@ class CategoriesManagementController extends Controller
             return redirect()->route('dashboard.categories')->with('success', 'Category deleted successfully.');
         }
     }
+
+    public function showHomePage()
+    {
+        $categories = Category::where('status', 1)->get(); // Active categories only
+        return view('newFrontend.index', compact('categories'));
+    }
 }

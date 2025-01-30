@@ -145,7 +145,9 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::get('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'delete'])->name('dashboard.banner.delete');
     Route::post('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'deletebanner'])->name('dashboard.banner.delete-banner');
 
-   
+    Route::get('/', [categoriesManagementController::class, 'showHomePage'])->name('home');
+
+
 
 });
 
