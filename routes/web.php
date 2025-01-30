@@ -33,6 +33,8 @@ Route::get('/',[HomeController::class,'home'])->name('/');
 //new route quick links
 Route::get('/about-us', [HomeController::class,'aboutUs'])->name('about-us');
 Route::get('/contact-us',[HomeController::class,'contactUs'])->name('contact-us');
+Route::get('/privacy-safety',[HomeController::class,'privacySafety'])->name('privacy-safety');
+Route::get('/terms-conditions',[HomeController::class,'termsConditions'])->name('terms-conditions');
 
 use App\Http\Controllers\Auth\AdminLoginController;
 

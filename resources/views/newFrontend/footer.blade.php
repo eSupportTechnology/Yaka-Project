@@ -28,8 +28,8 @@
                                         <ul class="clearfix links-list">
                                             <li><a href="{{route(name: 'about-us')}}">About Us</a></li>
                                             <li><a href="{{route('contact-us')}}">Contact Us</a></li>
-                                            <li><a href="index.html">Privacy & Safety</a></li>
-                                            <li><a href="index.html">Tems & Conditions</a></li>
+                                            <li><a href="{{route('privacy-safety')}}">Privacy & Safety</a></li>
+                                            <li><a href="{{route('terms-conditions')}}">Tems & Conditions</a></li>
                                         </ul>
                                     </div>
                                 </div>
