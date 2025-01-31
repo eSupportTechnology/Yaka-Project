@@ -31,6 +31,13 @@ Route::get('/',[HomeController::class,'home'])->name('/');
 Route::get('/about-us', [HomeController::class,'aboutUs'])->name('about-us');
 Route::get('/contact-us',[HomeController::class,'contactUs'])->name('contact-us');
 
+//general links
+Route::get('/tips',[HomeController::class,'tips'])->name('tips');
+Route::get('/boosting_ads',[HomeController::class,'boosting_ads'])->name('boosting_ads');
+Route::get('/add_posting',[HomeController::class,'add_posting'])->name('add_posting');
+Route::get('/add_post',[HomeController::class,'add_post'])->name('add_post');
+
+
 
 Route::get('/browse_ads', [AdsController::class, 'browseAds']);
 Route::get('/browse_ads_details', function () {
