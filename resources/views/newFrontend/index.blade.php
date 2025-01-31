@@ -78,6 +78,40 @@
                 font-size: 16px;
             }
  }
+
+.ad-banner-container {
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 0;
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+
+.ad-banner {
+    width: 60%;  /* Reduced width */
+    max-width: 600px;  /* Smaller banner width */
+    height: 80px;  /* Reduced height */
+    background: url('banner-image.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 10px; 
+    padding: 5px;
+}
+
+.ad-carousel-item img {
+    width: 800px !important;  
+    height: 120px !important;  
+    object-fit: cover; 
+    margin: 0 auto; 
+}
    
 </style>
 
@@ -94,6 +128,22 @@
             </div>
         </section>
         <!-- banner-section end -->
+
+        <!-- ad - banner-section start -->
+        <section class="ad-banner-container"> 
+            <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                    @foreach($banners as $key => $banner)
+                        @if($banner->type == 0)
+                            <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
+                               <img src="{{ asset('banners/' . $banner->img) }}" class="d-block mx-auto" alt="Banner Image">
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        <!-- ad - banner-section end -->
 
         <!-- category-section -->
         <section class="category-section centred sec-pad">
