@@ -41,10 +41,10 @@
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
-                                            <li><a href="index.html">Tips</a></li>
-                                            <li><a href="index.html">Boosting ads</a></li>
-                                            <li><a href="index.html">Ad posting allowances</a></li>
-                                            <li><a href="index.html">Ad posting criteria</a></li>
+                                            <li><a href="{{route('tips')}}">Tips</a></li>
+                                            <li><a href="{{route('boosting_ads')}}">Boosting ads</a></li>
+                                            <li><a href="{{route('add_posting')}}">Ad posting allowances</a></li>
+                                            <li><a href="{{route('add_post')}}">Ad posting criteria</a></li>
                                         </ul>
                                     </div>
                                 </div>
