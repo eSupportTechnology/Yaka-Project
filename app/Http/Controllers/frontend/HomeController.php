@@ -19,4 +19,20 @@ class HomeController extends Controller
     {
         return view('newFrontend.contact-us');
     }
+    public function tips()
+    {
+        return view('newFrontend.tips');
+    }
+    public function boosting_ads()
+    {
+        return view('newFrontend.boosting_ads');
+    }
+    public function add_posting()
+    {
+        return view('newFrontend.add_posting');
+    }
+    public function add_post()
+    {
+        return view('newFrontend.add_post');
+    }
 }
