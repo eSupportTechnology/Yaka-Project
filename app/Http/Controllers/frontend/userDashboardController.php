@@ -83,20 +83,36 @@ class userDashboardController extends Controller
         return redirect()->route('user.profile')->with('message', 'Profile updated successfully!');
     }
     
-    public function ad_posts(Request $request)
-    {
-        // Fetch categories where status is 1 and mainId is 0
-        $categories = \App\Models\Category::where('status', 1)->where('mainId', 0)->get();
-        
-        // Fetch subcategories based on selected category (using 'id' as the foreign key)
-        $subcategories = collect();
-        if ($request->id) {
-            $subcategories = \App\Models\Category::where('mainId', $request->id)->get();
-        }
-    
-        return view('newFrontend.user.ad_posts', compact('categories', 'subcategories'));
+
+
+ public function ad_posts(Request $request)
+{
+    // Fetch main categories where status is 1 and mainId is 0
+    $categories = \App\Models\Category::where('status', 1)->where('mainId', 0)->get();
+
+    // Fetch subcategories based on selected category
+    $subcategories = collect();
+    if ($request->id) {
+        $subcategories = \App\Models\Category::where('mainId', $request->id)->get();
     }
-    
+
+    // Fetch brands if a subcategory is selected
+    $brands = collect();
+    if ($request->subcategory_id) {
+        $brands = \App\Models\BrandsModels::where('sub_cat_id', $request->subcategory_id)
+                    ->where('brandsId', 0)
+                    ->get();
+    }
+
+    // Fetch models if a brand is selected
+    $models = collect();
+    if ($request->brand) {
+        $models = \App\Models\BrandsModels::where('brandsId', $request->brand)->get();
+    }
+
+    return view('newFrontend.user.ad_posts', compact('categories', 'subcategories', 'brands', 'models'));
+}
+
 
 
 }

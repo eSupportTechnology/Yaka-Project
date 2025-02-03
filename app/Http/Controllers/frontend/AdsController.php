@@ -26,16 +26,17 @@ class AdsController extends Controller
         $districts = Districts::all();
 
         // Fetch top ads
-        $topAds = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
-            ->where('ads_package', 3)
+        $urgentAds = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
+            ->where('ads_package', 4)
             ->latest()
             ->get();
 
         $adsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
             ->orderByRaw('CASE 
-                WHEN ads_package = 4 THEN 1 
+                WHEN ads_package = 3 THEN 1 
+                WHEN ads_package = 6 THEN 2 
                 WHEN ads_package = 5 THEN 2 
-                ELSE 3 
+                ELSE 4 
             END')
             ->latest();
 
@@ -71,7 +72,7 @@ class AdsController extends Controller
         // Fetch banners
         $banners = Banners::where('type', 1)->get();
 
-        return view('newFrontend.browse-ads', compact('categories', 'topAds', 'ads', 'districts', 'banners', 'category'));
+        return view('newFrontend.browse-ads', compact('categories', 'urgentAds', 'ads', 'districts', 'banners', 'category'));
     }
 
     

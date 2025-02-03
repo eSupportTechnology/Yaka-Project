@@ -52,20 +52,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/profile/update', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
     Route::get('/user/ad_posts', [UserDashboardController::class, 'ad_posts'])->name('user.ad_posts');
     Route::post('/user/ad_posts', [UserDashboardController::class, 'ad_posts'])->name('user.ad_posts');
-
+    Route::get('/get-brands', [AdController::class, 'getBrands'])->name('get.brands');
+    Route::get('/get-models', [AdController::class, 'getModels'])->name('get.models');
     
 
+
 });
 
 
 
 
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 use App\Http\Controllers\Auth\AdminLoginController;
 

@@ -1,9 +1,7 @@
 <?php $__env->startSection('content'); ?>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-        
+       
 <style>
 
 .banner-section {
@@ -773,21 +771,21 @@
         <!-- feature-style-two end -->
 
       <!-- advertisement - banner-section start -->
-<section class="banner-container">
-    <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-        <div class="carousel-inner">
-            <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($banner->type == 0): ?> 
-                    <div class="carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
-                        <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" 
-                             alt="Banner Image">
-                    </div>
-                <?php endif; ?>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    <section class="banner-container">
+        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php if($banner->type == 0): ?> 
+                        <div class="carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                            <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" 
+                                alt="Banner Image">
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
         </div>
-    </div>
-</section>
-<!-- advertisement - banner-section end -->
+    </section>
+    <!-- advertisement - banner-section end -->
 
 <?php $__env->stopSection(); ?>
 
