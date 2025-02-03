@@ -3,7 +3,7 @@
 @section('content')
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
 
         
 <style>
@@ -163,7 +163,7 @@
                     <h2>Explore by Category</h2>
                 </div>
                 
-                <div class="inner-content clearfix" style="display: flex; flex-wrap: wrap; justify-content: center;">
+                <div class="clearfix inner-content" style="display: flex; flex-wrap: wrap; justify-content: center;">
             @foreach($categories as $category)
                 <div class="category-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                     <a href="{{ route('browse-ads', ['category' => $category->id]) }}" style="text-decoration: none;">
@@ -213,16 +213,16 @@
                 </div>
                 <div class="tabs-box">
                     <div class="tab-btn-box centred">
-                        <ul class="tab-btns tab-buttons clearfix">
+                        <ul class="clearfix tab-btns tab-buttons">
                             <li class="tab-btn active-btn" data-tab="#tab-1">Recent Listing</li>
                             <li class="tab-btn" data-tab="#tab-2">Popular Listing</li>
                         </ul>
                     </div>
                     <div class="tabs-content">
                         <div class="tab active-tab" id="tab-1">
-                            <div class="row clearfix">
+                            <div class="clearfix row">
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                                    <div class="feature-block-one wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                    <div class="feature-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box">
                                                 <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-1.jpg" alt=""></figure>
@@ -243,7 +243,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -251,7 +251,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(32)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>1 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -267,7 +267,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                                    <div class="feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+                                    <div class="feature-block-one wow fadeInDown animated" data-wow-delay="300ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box">
                                                 <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-2.jpg" alt=""></figure>
@@ -288,7 +288,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -296,7 +296,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(25)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>2 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -312,7 +312,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                                    <div class="feature-block-one wow fadeInDown animated animated" data-wow-delay="600ms" data-wow-duration="1500ms">
+                                    <div class="feature-block-one wow fadeInDown animated" data-wow-delay="600ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box">
                                                 <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-3.jpg" alt=""></figure>
@@ -333,7 +333,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -341,7 +341,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(40)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>3 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -357,7 +357,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                                    <div class="feature-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                    <div class="feature-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box">
                                                 <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-4.jpg" alt=""></figure>
@@ -378,7 +378,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -386,7 +386,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(28)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>4 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -402,7 +402,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                                    <div class="feature-block-one wow fadeInUp animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+                                    <div class="feature-block-one wow fadeInUp animated" data-wow-delay="300ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box">
                                                 <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-5.jpg" alt=""></figure>
@@ -423,7 +423,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -431,7 +431,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(15)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>5 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -447,7 +447,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                                    <div class="feature-block-one wow fadeInUp animated animated" data-wow-delay="600ms" data-wow-duration="1500ms">
+                                    <div class="feature-block-one wow fadeInUp animated" data-wow-delay="600ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box">
                                                 <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-6.jpg" alt=""></figure>
@@ -468,7 +468,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -476,7 +476,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(32)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>6 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -494,7 +494,7 @@
                             </div>
                         </div>
                         <div class="tab" id="tab-2">
-                            <div class="row clearfix">
+                            <div class="clearfix row">
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
                                     <div class="feature-block-one">
                                         <div class="inner-box">
@@ -517,7 +517,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -525,7 +525,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(32)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>1 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -562,7 +562,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -570,7 +570,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(25)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>2 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -607,7 +607,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -615,7 +615,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(40)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>3 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -652,7 +652,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -660,7 +660,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(28)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>4 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -697,7 +697,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -705,7 +705,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(15)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>5 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
@@ -742,7 +742,7 @@
                                                 </div>
                                                 <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
                                                 <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
+                                                <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -750,7 +750,7 @@
                                                     <li><i class="icon-17"></i></li>
                                                     <li><a href="index.html">(32)</a></li>
                                                 </ul>
-                                                <ul class="info clearfix">
+                                                <ul class="clearfix info">
                                                     <li><i class="far fa-clock"></i>6 months ago</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
                                                 </ul>
