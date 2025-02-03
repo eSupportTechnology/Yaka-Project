@@ -1,12 +1,12 @@
  <!-- main-footer -->
  <footer class="main-footer">
-            <div class="footer-top" style="  background:rgb(88, 12, 12) ;">
+            <div class="footer-top" >
                 <div class="auto-container">
                     <div class="widget-section">
                         <div class="clearfix row">
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget logo-widget">
-                                    <figure class="footer-logo"><a href="index.html"><img src="{{asset('Logo-re.png')}}" alt=""></a></figure>
+                                    <figure class="footer-logo"><a href="index.html"><img src="newFrontend/Clasifico/assets/images/footer-logo.png" alt=""></a></figure>
                                     <div class="text">
                                         <p>Don’t miss out on the best deals in Sri Lanka’s largest marketplace! Subscribe now for exclusive offers, promotions, and updates on discounts for electronics, fashion, home goods, and more. Be the first to know and save big—sign up today!</p>
                                     </div>
@@ -26,10 +26,10 @@
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
-                                            <li><a href="{{route(name: 'about-us')}}">About Us</a></li>
-                                            <li><a href="{{route('contact-us')}}">Contact Us</a></li>
-                                            <li><a href="{{route('privacy-safety')}}">Privacy & Safety</a></li>
-                                            <li><a href="{{route('terms-conditions')}}">Tems & Conditions</a></li>
+                                            <li><a href="<?php echo e(route(name: 'about-us')); ?>">About Us</a></li>
+                                            <li><a href="<?php echo e(route('contact-us')); ?>">Contact Us</a></li>
+                                            <li><a href="index.html">Privacy & Safety</a></li>
+                                            <li><a href="index.html">Tems & Conditions</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -41,10 +41,10 @@
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
-                                            <li><a href="{{route('tips')}}">Tips</a></li>
-                                            <li><a href="{{route('boosting_ads')}}">Boosting ads</a></li>
-                                            <li><a href="{{route('add_posting')}}">Ad posting allowances</a></li>
-                                            <li><a href="{{route('add_post')}}">Ad posting criteria</a></li>
+                                            <li><a href="<?php echo e(route('tips')); ?>">Tips</a></li>
+                                            <li><a href="<?php echo e(route('boosting_ads')); ?>">Boosting ads</a></li>
+                                            <li><a href="<?php echo e(route('add_posting')); ?>">Ad posting allowances</a></li>
+                                            <li><a href="<?php echo e(route('add_post')); ?>">Ad posting criteria</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -89,4 +89,4 @@
                 </div>
             </div>
         </footer>
-        <!-- main-footer end -->
+        <!-- main-footer end --><?php /**PATH C:\xampp1\htdocs\Yaka-Project\resources\views/newFrontend/footer.blade.php ENDPATH**/ ?>
