@@ -1,6 +1,4 @@
-@extends ('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -164,32 +162,33 @@
                 </div>
                 
                 <div class="inner-content clearfix" style="display: flex; flex-wrap: wrap; justify-content: center;">
-            @foreach($categories as $category)
+            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="category-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                    <a href="{{ route('browse-ads', ['category' => $category->id]) }}" style="text-decoration: none;">
+                    <a href="<?php echo e(route('browse-ads', ['category' => $category->id])); ?>" style="text-decoration: none;">
                         <div class="inner-box">
                             <div class="shape">
-                                <div class="shape-1" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-1.png') }}');"></div>
-                                <div class="shape-2" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-2.png') }}');"></div>
+                                <div class="shape-1" style="background-image: url('<?php echo e(asset('newFrontend/Clasifico/assets/images/shape/shape-1.png')); ?>');"></div>
+                                <div class="shape-2" style="background-image: url('<?php echo e(asset('newFrontend/Clasifico/assets/images/shape/shape-2.png')); ?>');"></div>
                             </div>
 
                             <div class="icon-box">
-                                <img src="{{ asset('images/Category/' . $category->image) }}" 
-                                    alt="{{ $category->name }}" 
+                                <img src="<?php echo e(asset('images/Category/' . $category->image)); ?>" 
+                                    alt="<?php echo e($category->name); ?>" 
                                     style="width: 70px; height: 70px; object-fit: contain;">
                             </div>
 
                             <h5 style="min-height: 50px; display: -webkit-box; 
                                     -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
                                     overflow: hidden; text-overflow: ellipsis;">
-                                {{ $category->name }}
+                                <?php echo e($category->name); ?>
+
                             </h5>
 
-                            <span>{{ $category->ads_count }}</span>
+                            <span><?php echo e($category->ads_count); ?></span>
                         </div>
                     </a>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
        
 
@@ -774,26 +773,27 @@
         <!-- feature-style-two end -->
 
       <!-- advertisement - banner-section start -->
-    <section class="banner-container">
-        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-            <div class="carousel-inner">
-                @foreach($banners as $key => $banner)
-                    @if($banner->type == 0) 
-                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                            <img src="{{ asset('banners/' . $banner->img) }}" 
-                                alt="Banner Image">
-                        </div>
-                    @endif
-                @endforeach
-            </div>
+<section class="banner-container">
+    <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-inner">
+            <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($banner->type == 0): ?> 
+                    <div class="carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                        <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" 
+                             alt="Banner Image">
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
-    </section>
-    <!-- advertisement - banner-section end -->
+    </div>
+</section>
+<!-- advertisement - banner-section end -->
 
-@endsection
+<?php $__env->stopSection(); ?>
 
        
 
 
 
  
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/index.blade.php ENDPATH**/ ?>

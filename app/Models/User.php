@@ -35,6 +35,7 @@ class User extends Authenticatable
         'web_roles',
         'key',
         'status',
+        'profileImage'
     ];
 
     public function ads()

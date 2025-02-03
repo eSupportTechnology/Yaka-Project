@@ -65,6 +65,16 @@
 <!-- main-js -->
 <script src="{{ asset('newFrontend/Clasifico/assets/js/script.js') }}"></script>
 
+    <script src="{{ asset('newFrontend/Clasifico/assets/popper.min.js') }}"></script>
+    <script src="{{ asset('newFrontend/Clasifico/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('newFrontend/Clasifico/assets/js/owl.js') }}"></script>
+    <script src="{{ asset('newFrontend/Clasifico/assets/js/jquery.fancybox.js') }}"></script>
+    <script src="{{ asset('newFrontend/Clasifico/assets/js/appear.js') }}"></script>
+    <script src="{{ asset('newFrontend/Clasifico/assets/js/scrollbar.js') }}"></script>
+    <script src="{{ asset('newFrontend/Clasifico/assets/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ asset('newFrontend/Clasifico/assets/js/bxslider.js') }}"></script>
+    <!-- main-js -->
 
+    <script src="{{ asset('newFrontend/Clasifico/assets/js/script.js') }}"></script>
 </body><!-- End of .page_wrapper -->
 </html>

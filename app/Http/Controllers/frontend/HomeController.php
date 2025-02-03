@@ -4,13 +4,26 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Banners;
 
 class HomeController extends Controller
 {
-    public function home()
+   public function home()
     {
-        return view('newFrontend.index');
+        $categories = Category::where('mainId', 0)
+            ->where('status', 1)
+            ->withCount(['ads' => function ($query) {
+                $query->where('status', 1);
+            }])
+            ->get();
+
+            $banners = \App\Models\Banners::where('type', 0)->get();
+        return view('newFrontend.index', compact('categories','banners'));
     }
+
+
+  
     public function aboutUs()
     {
         return view('newFrontend.about-us');
@@ -19,6 +32,7 @@ class HomeController extends Controller
     {
         return view('newFrontend.contact-us');
     }
+
     public function tips()
     {
         return view('newFrontend.tips');
@@ -35,4 +49,16 @@ class HomeController extends Controller
     {
         return view('newFrontend.add_post');
     }
+
+    public function privacySafety()
+    {
+        return view('newFrontend.privacy-safety');
+    }
+    public function termsConditions()
+    {
+        return view('newFrontend.terms-conditions');
+    }
+
 }
+
+

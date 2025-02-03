@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
+
 use App\Http\Controllers\adminPanel\usersManagementController;
 use App\Http\Controllers\adminPanel\adminManagementController;
 use App\Http\Controllers\adminPanel\adsTypesManagementController;
@@ -17,19 +18,27 @@ use App\Http\Controllers\adminPanel\subPackageManagementController;
 use App\Http\Controllers\adminPanel\adsManagementController;
 use App\Http\Controllers\adminPanel\bannerManagementController;
 use App\Http\Controllers\Auth\CustomAuthController;
+
+use App\Http\Controllers\frontend\UserDashboardController;
 use App\Http\Controllers\frontend\AdsController;
 
 Route::get('/custom-login', function () {
     return view('newFrontend.login');
 })->name('user.login');
 Route::post('/custom-login', [CustomAuthController::class, 'login'])->name('custom.login');
+Route::post('logout', [CustomAuthController::class, 'logout'])->name('logout');
+
 
 Route::post('/register', [RegisteredUserController::class, 'register']);
 
 Route::get('/',[HomeController::class,'home'])->name('/');
-//new route quick links
+ 
+
+
 Route::get('/about-us', [HomeController::class,'aboutUs'])->name('about-us');
 Route::get('/contact-us',[HomeController::class,'contactUs'])->name('contact-us');
+Route::get('/privacy-safety',[HomeController::class,'privacySafety'])->name('privacy-safety');
+Route::get('/terms-conditions',[HomeController::class,'termsConditions'])->name('terms-conditions');
 
 //general links
 Route::get('/tips',[HomeController::class,'tips'])->name('tips');
@@ -39,15 +48,23 @@ Route::get('/add_post',[HomeController::class,'add_post'])->name('add_post');
 
 
 
-Route::get('/browse_ads', [AdsController::class, 'browseAds']);
-Route::get('/browse_ads_details', function () {
-    return view('newFrontend.browse-ads');
-})->name('ads.details');
+Route::get('/browse_ads', [AdsController::class, 'browseAds'])->name('browse-ads');
+Route::get('/browse_ads_details/{ad_id}', [AdsController::class, 'show_details'])->name('ads.details');
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth', 'role.user');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
+    Route::get('/user/profile', [UserDashboardController::class, 'profile'])->name('user.profile');
+    Route::get('/get-cities', [UserDashboardController::class, 'getCities'])->name('get.cities');
+    Route::post('/user/profile/update', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
+    Route::get('/user/ad_posts', [UserDashboardController::class, 'ad_posts'])->name('user.ad_posts');
+    Route::post('/user/ad_posts', [UserDashboardController::class, 'ad_posts'])->name('user.ad_posts');
+
+    
+
+});
+
+
 
 
 
@@ -170,6 +187,8 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::get('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'delete'])->name('dashboard.banner.delete');
     Route::post('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'deletebanner'])->name('dashboard.banner.delete-banner');
 
+
 });
+
 
 require __DIR__.'/auth.php';

@@ -184,4 +184,5 @@ class CategoriesManagementController extends Controller
             return redirect()->route('dashboard.categories')->with('success', 'Category deleted successfully.');
         }
     }
+
 }
