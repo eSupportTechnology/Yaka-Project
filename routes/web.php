@@ -18,6 +18,7 @@ use App\Http\Controllers\adminPanel\bannerManagementController;
 
 use App\Http\Controllers\frontend\indexController;
 use App\Http\Controllers\frontend\HomeController;
+use App\Http\Controllers\frontend\AdsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -148,6 +149,12 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::get('/', [categoriesManagementController::class, 'showHomePage'])->name('home');
  
     Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/ads/{id}', [AdController::class, 'show'])->name('ads.details');
+
+    Route::get('/top-ads', [adsManagementController::class, 'getTopAds']);
+
+
 
 
 

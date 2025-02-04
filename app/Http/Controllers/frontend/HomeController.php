@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Banners;
+use App\Models\Ads;
 
 class HomeController extends Controller
 {
@@ -19,8 +20,13 @@ class HomeController extends Controller
         $banners = Banners::all(); 
 
         $categories = Category::all();
-        
-        return view('newFrontend.index', compact('banners','categories'));
-    }
 
+        $topAds = Ads::with(['category', 'subcategory'])
+        ->where('ads_package', 3)  // Filter only top ads
+        ->latest()
+        ->take(5)  // Show 5 ads in the slideshow
+        ->get();
+
+    return view('newFrontend.index', compact('banners', 'categories', 'topAds'));
+}
 }
