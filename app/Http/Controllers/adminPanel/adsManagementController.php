@@ -54,5 +54,17 @@ class adsManagementController extends Controller
         return view('newAdminDashboard.adsManagement.index', ['adsData' => $adsData])->with('message', 'User updated successfully');
     }
 
+    public function getTopAds()
+   {
+    // Fetch only top ads that are approved (status = 1)
+    $topAds = Ads::with('category', 'subcategory', 'main_location', 'sub_location')
+                ->where('is_top_ad', 1) // Filtering only top ads
+                ->where('status', 1) // Only approved ads
+                ->orderBy('id', 'DESC')
+                ->take(10) // Limit to 10 ads for the slideshow
+                ->get();
+
+    return response()->json($topAds);
+    }
 
 }

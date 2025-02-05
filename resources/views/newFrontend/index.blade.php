@@ -7,6 +7,9 @@
 <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
 
         
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     
 <style>
 
 .banner-section {
@@ -138,7 +141,187 @@
                 font-size: 16px;
             }
  }
-   
+
+.ad-banner-container {
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 0;
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+
+.ad-banner {
+    width: 60%;  /* Reduced width */
+    max-width: 600px;  /* Smaller banner width */
+    height: 80px;  /* Reduced height */
+    background: url('banner-image.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 10px; 
+    padding: 5px;
+}
+
+.ad-carousel-item img {
+    width: 800px !important;  
+    height: 120px !important;  
+    object-fit: cover; 
+    margin: 0 auto; 
+}
+
+.top-banner .left .carousel-item img {
+    max-width: 80%; /* Adjust the width percentage as needed */
+    max-height: 50%; /* Ensure the aspect ratio is maintained */
+    margin: 20px; /* Center the image horizontally */
+    margin-left:-40px;
+    margin-top:-25px;
+}
+
+.cont{
+    max-width: 1200px;
+    margin: 20px auto;
+    
+}
+
+.heading {
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.heading span {
+    color: red;
+    font-weight: bold;
+    font-size: 32px;  /* Font size increased */
+    display: inline-block;
+    padding: 5px 10px; 
+    font-style: italic;
+}
+
+.top-banner { 
+    display: flex;
+    align-items: center; /* Align content to the top */
+    justify-content: flex-start; /* Align everything to the left */
+    padding: 20px; /* Increased padding */
+}
+
+.top-banner .left { 
+    flex: 1; /* Adjust size */
+    padding: 20px;
+}
+
+.top-banner .left img { 
+    max-width: 100%; 
+    max-height: 400px; 
+    border-radius: 10px;
+}
+
+.top-banner .right { 
+    flex: 2; 
+    padding: 20px;
+    text-align: left;
+}
+
+
+.top-banner p { 
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.top-banner .ad-box { 
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+
+}
+
+.top-banner .ad-box h3 { 
+    color: #222;
+    font-size: 18px;
+}
+
+.top-banner .ad-box p { 
+    font-size: 14px;
+    color: #444;
+}
+
+.top-banner .ad-box .price { 
+    color: blue;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.carousel-item .ad-box {
+    background: white;
+    padding-top: 10px; /* Reduced padding */
+    margin-top: -90px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    max-width: 99%;
+    margin: auto;
+
+}
+
+.carousel-control-prev, 
+.carousel-control-next {
+    filter: invert(100%);
+}
+
+#topAdsCarousel {
+    margin-bottom: 30px; /* Space between the carousel and the cards */
+    }
+
+    /* Style for each ad card */
+.ad-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: right;
+    margin-bottom: 10px;
+    }
+
+.ad-card h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.ad-card p {
+    margin: 5px 0;
+}
+
+.price {
+    font-size: 1.1rem;
+    color: #d9534f;
+    font-weight: bold;
+ }
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    align-items: right;
+    gap: 20px;
+    margin-top: 30px;
+ }
+
+    /* Card image styling if needed */
+.ad-card img {
+    max-width: 50%;
+    border-radius: 8px;
+}
+
 </style>
 
         <!-- banner-section -->
@@ -155,6 +338,22 @@
             </div>
         </section>
         <!-- banner-section end -->
+
+        <!-- ad - banner-section start -->
+        <section class="ad-banner-container"> 
+            <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                    @foreach($banners as $key => $banner)
+                        @if($banner->type == 0)
+                            <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
+                               <img src="{{ asset('banners/' . $banner->img) }}" class="d-block mx-auto" alt="Banner Image">
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        <!-- ad - banner-section end -->
 
         <!-- category-section -->
         <section class="category-section centred sec-pad">
@@ -203,6 +402,53 @@
 </section>
 <!-- category-section end -->
 
+
+        <!-- top add-section start -->
+        <div class="cont">
+            <h2 class="heading"><b>Find your needs in our <br> 
+                 best <span>Top Ads</span></b></h2>
+        
+                <div class="top-banner"> <!-- Updated class reference here -->
+                    <div class="left">
+                        @foreach($banners as $key => $banner)
+                            @if($banner->type == 1)  <!-- Only display banners with type 0 -->
+                                <div class="carousel-item {{ $key == 1 ? 'active' : '' }}">
+                                   <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+
+                    <div class="right">
+                        <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach($topAds as $index => $ad)
+                                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                        <div class="ad-box">
+                                            <h3>{{ $ad->title }}</h3>
+                                            <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                            <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
+                                            <p>{{ $ad->created_at->diffForHumans() }}</p>
+                                       </div>
+                                    </div>
+                               @endforeach
+                           </div>
+
+                           <div class="card-container">
+                                @foreach($topAds as $ad)
+                                    <div class="ad-card">
+                                        <h3>{{ $ad->title }}</h3>
+                                        <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                        <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
+                                        <p>{{ $ad->created_at->diffForHumans() }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                            <p>The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.</p>
+                </div>
+        </div>
+        <!-- top add-section end -->
 
         <!-- feature-style-two -->
         <section class="feature-style-two">
@@ -791,6 +1037,9 @@
     </section>
     <!-- advertisement - banner-section end -->
 
+   
+        
+         
 @endsection
 
        

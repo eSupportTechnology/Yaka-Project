@@ -31,8 +31,17 @@ Route::post('logout', [CustomAuthController::class, 'logout'])->name('logout');
 
 Route::post('/register', [RegisteredUserController::class, 'register']);
 
+
 Route::get('/',[HomeController::class,'home'])->name('/');
  
+Route::get('/', [categoriesManagementController::class, 'showHomePage'])->name('home');
+ 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/ads/{id}', [AdController::class, 'show'])->name('ads.details');
+
+Route::get('/top-ads', [adsManagementController::class, 'getTopAds']);
+
 
 
 Route::get('/about-us', [HomeController::class,'aboutUs'])->name('about-us');
