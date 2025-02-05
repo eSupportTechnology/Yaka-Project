@@ -22,8 +22,9 @@ class Districts extends Model
     }
     public function cities()
     {
-        return $this->hasMany(Cities::class);
+        return $this->hasMany(Cities::class, 'district_id'); 
     }
+    
     public function ads()
     {
         return $this->hasMany(Ads::class);

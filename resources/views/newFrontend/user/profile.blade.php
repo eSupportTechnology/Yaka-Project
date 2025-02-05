@@ -76,7 +76,7 @@
                             <ul>
                                 <li><a href="{{route('user.dashboard')}}">dashboard</a></li>
                                 <li><a href="{{route('user.ad_posts')}}">ad post</a></li>
-                                <li><a href="">my ads</a></li>
+                                <li><a href="{{route('user.my_ads')}}" >my ads</a></li>
                                 <li><a  class="active" href="{{route('user.profile')}}">Profile</a></li>
                                 <li><a href="">message</a></li>
                                 <li>

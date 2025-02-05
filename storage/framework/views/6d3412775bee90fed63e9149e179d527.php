@@ -74,9 +74,9 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a  class="active" href="<?php echo e(route('user.dashboard')); ?>">dashboard</a></li>
+                                <li><a href="<?php echo e(route('user.dashboard')); ?>">dashboard</a></li>
                                 <li><a href="<?php echo e(route('user.ad_posts')); ?>">ad post</a></li>
-                                <li><a href="<?php echo e(route('user.my_ads')); ?>" >my ads</a></li>
+                                <li><a  class="active" href="<?php echo e(route('user.my_ads')); ?>" >my ads</a></li>
                                 <li><a href="<?php echo e(route('user.profile')); ?>">Profile</a></li>
                                 <li><a href="">message</a></li>
                                 <li>
@@ -90,41 +90,66 @@
             </div>
         </div>
     </section>
-    <section class="dashboard-part mt-4 mb-4">
-        <div class="container mb-4">
+   
+    <section class="dashboard-part mt-4">
+    <div class="container mb-4">
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs" id="adsTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="active-ads-tab" data-bs-toggle="tab" href="#active-ads" role="tab" aria-controls="active-ads" aria-selected="true">Active Ads</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pending-ads-tab" data-bs-toggle="tab" href="#pending-ads" role="tab" aria-controls="pending-ads" aria-selected="false">Pending Ads</a>
+            </li>
+        </ul>
 
-            <?php if(session('success')): ?>  
-                <div class="alert alert-success" role="alert" style="margin-top: 20px;padding: 18px;0border-radius: 6px;">
-                    <?php echo e(session('success')); ?>
-
-                </div>
-            <?php endif; ?>
-            <?php if(session('error')): ?>
-                <div class="alert alert-danger" role="alert" style="margin-top: 20px;padding: 18px;0border-radius: 6px;">
-                    <?php echo e(session('error')); ?>
-
-                </div>
-            <?php endif; ?>
-            
-            <div class="row mt-5 " >
-              
-                <div class="col-lg-4">
-                    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
-                    <dotlottie-player src="https://lottie.host/07462177-04f3-4b21-93c1-8455179693c0/EUCuUmDPlB.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
-                </div>
-                <div class="col-lg-8">
-                    <h1>Hello, <?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?></h1>
-                    <h1>Welcome to Yaka.lk</h1>
-                    <p style="text-align:justify">   We're thrilled to have you here. As a valued member of our community, you now have access to the largest online marketplace in Sri Lanka, where countless opportunities await you.
-                        Explore an extensive range of categories, from real estate and vehicles to electronics and fashion. Our platform connects you with local sellers and unique products, making it easier than ever to find exactly what you need. With user-friendly features, advanced search options, and exclusive offers, shopping has never been more convenient.
-                        Thank you for joining yaka.lk —dive in and start discovering the best deals and services </p>
+        <!-- Tabs Content -->
+        <div class="tab-content mt-3" id="adsTabsContent">
+            <!-- Active Ads Tab -->
+            <div class="tab-pane fade show active" id="active-ads" role="tabpanel" aria-labelledby="active-ads-tab">
+                <div class="row">
+                    <?php $__empty_1 = true; $__currentLoopData = $activeAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <img src="<?php echo e(asset('images/Ads/' . $ad->mainImage)); ?>" class="card-img-top" alt="Ad Image">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo e($ad->title); ?></h5>
+                                    <p class="card-text">Price: Rs <?php echo e(number_format($ad->price, 2)); ?></p>
+                                    <p class="card-text text-muted">Location: <?php echo e($ad->location); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                        <p class="text-center">No active ads found.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
-            
-
+            <!-- Pending Ads Tab -->
+            <div class="tab-pane fade" id="pending-ads" role="tabpanel" aria-labelledby="pending-ads-tab">
+                <div class="row">
+                    <?php $__empty_1 = true; $__currentLoopData = $pendingAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <img src="<?php echo e(asset('images/Ads/' . $ad->mainImage)); ?>" class="card-img-top" alt="Ad Image">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo e($ad->title); ?></h5>
+                                    <p class="card-text">Price: Rs <?php echo e(number_format($ad->price, 2)); ?></p>
+                                    <p class="card-text text-muted">Location: <?php echo e($ad->location); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                        <p class="text-center">No pending ads found.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
-    </section>
+    </div> 
+</section>
+
+
+
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/user/dashboard.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/user/my_ads.blade.php ENDPATH**/ ?>

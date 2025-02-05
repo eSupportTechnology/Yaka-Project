@@ -34,13 +34,11 @@ Route::post('/register', [RegisteredUserController::class, 'register']);
 
 Route::get('/',[HomeController::class,'home'])->name('/');
  
-Route::get('/', [categoriesManagementController::class, 'showHomePage'])->name('home');
- 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
-Route::get('/ads/{id}', [AdController::class, 'show'])->name('ads.details');
+Route::get('/ads/{id}', [AdsController::class, 'show'])->name('ads.details');
 
 Route::get('/top-ads', [adsManagementController::class, 'getTopAds']);
+Route::get('/ads/boost/{ad_id}', [AdsController::class, 'ads_boost'])->name('ads.boost');
+
 
 
 
@@ -68,9 +66,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/profile/update', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
     Route::get('/user/ad_posts', [UserDashboardController::class, 'ad_posts'])->name('user.ad_posts');
     Route::post('/user/ad_posts', [UserDashboardController::class, 'ad_posts'])->name('user.ad_posts');
-    Route::get('/get-brands', [AdController::class, 'getBrands'])->name('get.brands');
-    Route::get('/get-models', [AdController::class, 'getModels'])->name('get.models');
-    
+    Route::get('/get-brands', [AdsController::class, 'getBrands'])->name('get.brands');
+    Route::get('/get-models', [AdsController::class, 'getModels'])->name('get.models');
+    Route::get('/user/my_ads', [UserDashboardController::class, 'my_ads'])->name('user.my_ads');
 
 
 });

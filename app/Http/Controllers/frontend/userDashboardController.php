@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cities;
+use App\Models\Ads;
 use App\Models\Category;
 use App\Models\Districts;
 use Illuminate\Http\Request;
@@ -17,6 +18,15 @@ class userDashboardController extends Controller
         return view('newFrontend.user.dashboard');
     }
 
+    public function my_ads()
+    {
+        $user = auth()->user(); 
+        $activeAds = Ads::where('user_id', $user->id)->where('status', 1)->get();
+        $pendingAds = Ads::where('user_id', $user->id)->whereIn('status', [0, 10])->get();
+    
+        return view('newFrontend.user.my_ads', compact('activeAds', 'pendingAds'));
+    }
+    
     public function profile()
     {
         $user = auth()->user(); 
@@ -85,33 +95,33 @@ class userDashboardController extends Controller
     
 
 
- public function ad_posts(Request $request)
-{
-    // Fetch main categories where status is 1 and mainId is 0
-    $categories = \App\Models\Category::where('status', 1)->where('mainId', 0)->get();
-
-    // Fetch subcategories based on selected category
-    $subcategories = collect();
-    if ($request->id) {
-        $subcategories = \App\Models\Category::where('mainId', $request->id)->get();
+    public function ad_posts(Request $request)
+    {
+        $categories = \App\Models\Category::where('status', 1)->where('mainId', 0)->get();
+        
+        $subcategories = collect();
+        if ($request->id) {
+            $subcategories = \App\Models\Category::where('mainId', $request->id)->get();
+        }
+    
+        $brands = collect();
+        if ($request->subcategory_id) {
+            $brands = \App\Models\BrandsModels::where('sub_cat_id', $request->subcategory_id)
+                        ->where('brandsId', 0)
+                        ->get();
+        }
+    
+        $models = collect();
+        if ($request->brand) {
+            $models = \App\Models\BrandsModels::where('brandsId', $request->brand)->get();
+        }
+    
+        // Retrieve all districts and cities
+        $districts = \App\Models\Districts::with('cities')->get();
+    
+        return view('newFrontend.user.ad_posts', compact('categories', 'subcategories', 'brands', 'models', 'districts'));
     }
-
-    // Fetch brands if a subcategory is selected
-    $brands = collect();
-    if ($request->subcategory_id) {
-        $brands = \App\Models\BrandsModels::where('sub_cat_id', $request->subcategory_id)
-                    ->where('brandsId', 0)
-                    ->get();
-    }
-
-    // Fetch models if a brand is selected
-    $models = collect();
-    if ($request->brand) {
-        $models = \App\Models\BrandsModels::where('brandsId', $request->brand)->get();
-    }
-
-    return view('newFrontend.user.ad_posts', compact('categories', 'subcategories', 'brands', 'models'));
-}
+    
 
 
 

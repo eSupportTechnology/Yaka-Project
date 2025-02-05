@@ -1,15 +1,7 @@
 @extends ('newFrontend.master')
 
 @section('content')
-
-
-       
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
-
-        
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-     
+  
 <style>
 
 .banner-section {
@@ -29,14 +21,7 @@
     margin: auto;
 }
 
-.text h1 {
-    font-size: 45px;
-    line-height: 1.2;
-}
 
-.text p {
-    font-size: 18px;
-}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -340,7 +325,7 @@
         <!-- banner-section end -->
 
         <!-- ad - banner-section start -->
-        <section class="ad-banner-container"> 
+        <section class="ad-banner-container mb-0"> 
             <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
                 <div class="carousel-inner">
                     @foreach($banners as $key => $banner)
@@ -356,7 +341,7 @@
         <!-- ad - banner-section end -->
 
         <!-- category-section -->
-        <section class="category-section centred sec-pad">
+        <section class="category-section centred sec-pad mt-0">
             <div class="auto-container">
                 <div class="sec-title">
                     <span>Categories</span>
@@ -381,7 +366,7 @@
 
                             <h5 style="min-height: 50px; display: -webkit-box; 
                                     -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
-                                    overflow: hidden; text-overflow: ellipsis;">
+                                    overflow: hidden; text-overflow: ellipsis; ">
                                 {{ $category->name }}
                             </h5>
 
@@ -391,64 +376,59 @@
                 </div>
             @endforeach
         </div>
-       
-
-        <!-- <div class="more-btn" style="text-align: center; margin-top: 20px;">
-            <a href="index.html" class="theme-btn-one" >
-                All Categories
-            </a>
-        </div> -->
-    </div>
 </section>
 <!-- category-section end -->
 
+<!-- top add-section start -->
+<div class="cont">
+    <h2 class="heading"><b>Find your needs in our <br> 
+        best <span>Top Ads</span></b></h2>
 
-        <!-- top add-section start -->
-        <div class="cont">
-            <h2 class="heading"><b>Find your needs in our <br> 
-                 best <span>Top Ads</span></b></h2>
-        
-                <div class="top-banner"> <!-- Updated class reference here -->
-                    <div class="left">
-                        @foreach($banners as $key => $banner)
-                            @if($banner->type == 1)  <!-- Only display banners with type 0 -->
-                                <div class="carousel-item {{ $key == 1 ? 'active' : '' }}">
-                                   <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
-                                </div>
-                            @endif
-                        @endforeach
+    <div class="top-banner"> <!-- Updated class reference here -->
+        <div class="left">
+            @foreach($banners as $key => $banner)
+                @if($banner->type == 1)  <!-- Only display banners with type 1 -->
+                    <div class="carousel-item {{ $key == 1 ? 'active' : '' }}">
+                        <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
                     </div>
+                @endif
+            @endforeach
+        </div>
 
-                    <div class="right">
-                        <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                @foreach($topAds as $index => $ad)
-                                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                        <div class="ad-box">
-                                            <h3>{{ $ad->title }}</h3>
-                                            <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                            <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
-                                            <p>{{ $ad->created_at->diffForHumans() }}</p>
-                                       </div>
-                                    </div>
-                               @endforeach
-                           </div>
-
-                           <div class="card-container">
-                                @foreach($topAds as $ad)
-                                    <div class="ad-card">
-                                        <h3>{{ $ad->title }}</h3>
-                                        <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                        <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
-                                        <p>{{ $ad->created_at->diffForHumans() }}</p>
-                                    </div>
-                                @endforeach
+        <div class="right">
+            <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach($topAds as $index => $ad)
+                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                            <div class="ad-box">
+                                <h3>{{ $ad->title }}</h3>
+                                <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
+                                <p>{{ $ad->created_at->diffForHumans() }}</p>
                             </div>
                         </div>
-                            <p>The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.</p>
+                    @endforeach
                 </div>
-        </div>
-        <!-- top add-section end -->
+            </div>
+
+            <div class="card-container">
+                @foreach($topAds as $ad)
+                    <div class="ad-card">
+                        <h3>{{ $ad->title }}</h3>
+                        <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                        <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
+                        <p>{{ $ad->created_at->diffForHumans() }}</p>
+                    </div>
+                @endforeach
+            </div>
+
+            <p>The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.</p>
+        </div> <!-- Closing right div -->
+
+    </div> <!-- Closing top-banner div -->
+</div> <!-- Closing cont div -->
+<!-- top add-section end -->
+
 
         <!-- feature-style-two -->
         <section class="feature-style-two">
@@ -1037,7 +1017,7 @@
     </section>
     <!-- advertisement - banner-section end -->
 
-   
+      
         
          
 @endsection

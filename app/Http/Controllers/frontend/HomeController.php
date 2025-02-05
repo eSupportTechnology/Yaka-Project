@@ -20,7 +20,6 @@ class HomeController extends Controller
             ->get();
 
             $banners = \App\Models\Banners::where('type', 0)->get();
-            $categories = Category::all();
 
             $topAds = Ads::with(['category', 'subcategory'])
             ->where('ads_package', 3)  // Filter only top ads

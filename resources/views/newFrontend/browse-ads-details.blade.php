@@ -131,27 +131,36 @@
                         <div class="default-sidebar category-sidebar">
                             <div class="sidebar-search sidebar-widget">
                             <div class="widget-content">
-                                <div class="dropdown">
-                                    <button class="btn btn-light dropdown-toggle" type="button" id="shareDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-share-alt"></i> Share
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="shareDropdown">
-                                        <li>
-                                            <a class="dropdown-item" 
-                                               href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('ads.details', ['ad_id' => $ad->id])) }}" 
-                                               target="_blank">
-                                                <i class="fab fa-facebook"></i> Facebook
-                                            </a>
-                                        </li>
-                                        
-                                            <a class="dropdown-item" 
-                                               href="https://api.whatsapp.com/send?text={{ urlencode($ad->title) }}%0A%0A{{ urlencode($ad->description) }}%0A%0A🔗 {{ route('ads.details', ['ad_id' => $ad->id]) }}" 
-                                               target="_blank">
-                                                <i class="fab fa-whatsapp"></i> WhatsApp
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Share Dropdown -->
+                                    <div class="dropdown">
+                                        <button class="btn btn-light dropdown-toggle" type="button" id="shareDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-share-alt"></i> Share
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="shareDropdown">
+                                            <li>
+                                                <a class="dropdown-item" 
+                                                href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('ads.details', ['ad_id' => $ad->id])) }}" 
+                                                target="_blank">
+                                                    <i class="fab fa-facebook"></i> Facebook
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" 
+                                                href="https://api.whatsapp.com/send?text={{ urlencode($ad->title) }}%0A%0A{{ urlencode($ad->description) }}%0A%0A🔗 {{ route('ads.details', ['ad_id' => $ad->id]) }}" 
+                                                target="_blank">
+                                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Boost Ad Button -->
+                                    <a href="{{ route('ads.boost', ['ad_id' => $ad->id]) }}" class="btn btn-warning align-items-center">
+                                        <i class="fas fa-rocket"></i> Boost this ad
+                                    </a>
                                 </div>
+
                                 <div class="p-3 mt-3 user-details">
                                     <h5 class="mb-3 text-primary fw-bold">Posted by:</h5>
 

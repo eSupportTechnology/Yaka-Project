@@ -50,7 +50,7 @@
         <!-- browse-add-details -->
     
         <div class="auto-container">
-            <div class="col-md-12 mb-4 mt-3 d-flex justify-content-center">
+            <div class="mt-3 mb-4 col-md-12 d-flex justify-content-center">
                 <?php
                 $banner = $banners->isNotEmpty() ? $banners->random() : null; 
                 ?>
@@ -63,7 +63,7 @@
             </div>
 
 
-                <div class="row clearfix">
+                <div class="clearfix row">
                     <div class="col-lg-8 col-md-12 col-sm-12 content-side">
                         <div class="add-details-content">
                         <div class="content-one single-box">
@@ -96,7 +96,7 @@
                                         </div>
                                         <?php if(!empty($subImages) && is_array($subImages)): ?>
                                             <div class="slider-pager">
-                                                <ul class="thumb-box clearfix">
+                                                <ul class="clearfix thumb-box">
                                                     <?php $__currentLoopData = $subImages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $subImage): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <li>
                                                             <a data-slide-index="<?php echo e($index); ?>" href="#">
@@ -128,28 +128,41 @@
                         <div class="default-sidebar category-sidebar">
                             <div class="sidebar-search sidebar-widget">
                             <div class="widget-content">
-                                <div class="dropdown">
-                                    <button class="btn btn-light dropdown-toggle" type="button" id="shareDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-share-alt"></i> Share
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="shareDropdown">
-                                        <li>
-                                            <a class="dropdown-item" href="" target="_blank">
-                                                <i class="fab fa-facebook"></i> Facebook
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="" target="_blank">
-                                                <i class="fab fa-whatsapp"></i> WhatsApp
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Share Dropdown -->
+                                    <div class="dropdown">
+                                        <button class="btn btn-light dropdown-toggle" type="button" id="shareDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-share-alt"></i> Share
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="shareDropdown">
+                                            <li>
+                                                <a class="dropdown-item" 
+                                                href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(urlencode(route('ads.details', ['ad_id' => $ad->id]))); ?>" 
+                                                target="_blank">
+                                                    <i class="fab fa-facebook"></i> Facebook
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" 
+                                                href="https://api.whatsapp.com/send?text=<?php echo e(urlencode($ad->title)); ?>%0A%0A<?php echo e(urlencode($ad->description)); ?>%0A%0A🔗 <?php echo e(route('ads.details', ['ad_id' => $ad->id])); ?>" 
+                                                target="_blank">
+                                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Boost Ad Button -->
+                                    <a href="<?php echo e(route('ads.boost', ['ad_id' => $ad->id])); ?>" class="btn btn-warning align-items-center">
+                                        <i class="fas fa-rocket"></i> Boost this ad
+                                    </a>
                                 </div>
-                                <div class="user-details mt-3 p-3">
+
+                                <div class="p-3 mt-3 user-details">
                                     <h5 class="mb-3 text-primary fw-bold">Posted by:</h5>
 
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="icon-circle bg-danger text-white">
+                                    <div class="mb-3 d-flex align-items-center">
+                                        <div class="text-white icon-circle bg-danger">
                                             <i class="fas fa-user"></i>
                                         </div>
                                         <strong class="w-25">Name:</strong> 
@@ -157,8 +170,8 @@
                                     </div>
                                     <hr class="my-2">
 
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="icon-circle bg-success text-white">
+                                    <div class="mb-3 d-flex align-items-center">
+                                        <div class="text-white icon-circle bg-success">
                                             <i class="fas fa-envelope"></i>
                                         </div>
                                         <strong class="w-25">Email:</strong> 
@@ -168,7 +181,7 @@
                                     <hr class="my-2">
 
                                     <div class="d-flex align-items-center">
-                                        <div class="icon-circle bg-primary text-white">
+                                        <div class="text-white icon-circle bg-primary">
                                             <i class="fas fa-phone"></i>
                                         </div>
                                         <strong class="w-25">Phone:</strong> 
@@ -182,7 +195,7 @@
 
                             </div>
                         </div>
-                        <div class="col-md-12 mb-4 mt-3 d-flex justify-content-center">
+                        <div class="mt-3 mb-4 col-md-12 d-flex justify-content-center">
                             <?php
                             $otherbanners = $otherbanners->isNotEmpty() ? $otherbanners->random() : null; 
                             ?>
@@ -231,7 +244,7 @@
                             <div class="lower-content" style="flex-grow: 1;">
                                 <div class="category"><i class="fas fa-tags"></i> <p><?php echo e($relatedAd->category->name ?? 'N/A'); ?></p></div>
                                 <h4><?php echo e($relatedAd->title); ?></h4>
-                                <ul class="info clearfix">
+                                <ul class="clearfix info">
                                     <li><i class="far fa-clock"></i><?php echo e($relatedAd->created_at->diffForHumans()); ?></li>
                                     <li>
                                         <i class="fas fa-map-marker-alt"></i>

@@ -114,5 +114,11 @@ class AdsController extends Controller
     
 
 
+    public function ads_boost($ad_id)
+    {
+        $ad = Ads::findOrFail($ad_id); 
+        return view('newFrontend.ads_boost_plans', compact('ad'));
+    }
+
     
 }

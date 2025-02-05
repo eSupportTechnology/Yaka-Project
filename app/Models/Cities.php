@@ -30,8 +30,9 @@ class Cities extends Model
      */
     public function district()
     {
-        return $this->belongsTo(Districts::class, 'district_id');
+        return $this->belongsTo(Districts::class, 'district_id'); 
     }
+    
 
     /**
      * Get the ads for the city.

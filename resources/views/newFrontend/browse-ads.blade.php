@@ -53,6 +53,35 @@
         width: 70px;
         height: auto;
     }
+
+    
+
+    /* Blinking Border Animation */
+    @keyframes blinking-border {
+        0% { border-color: transparent; }
+        50% { border-color: rgba(0, 255, 0, 0.8); } /* Green */
+        100% { border-color: transparent; }
+    }
+
+    @keyframes blinking-border-blue {
+        0% { border-color: transparent; }
+        50% { border-color: rgba(0, 0, 255, 0.8); } /* Blue */
+        100% { border-color: transparent; }
+    }
+
+    /* Apply Blinking Borders */
+    .top-ad {
+        animation: blinking-border 1.5s infinite;
+        border: 3px solid transparent;
+        border-radius: 10px;
+    }
+
+    .super-ad {
+        animation: blinking-border-blue 1.5s infinite;
+        border: 3px solid transparent;
+        border-radius: 10px;
+    }
+
 </style>
 
 
@@ -247,58 +276,66 @@
                             </div>
 
 
-                              <!-- Grid Items -->
-                            <div class="grid-item feature-style-two four-column pd-0" style="display: flex; flex-wrap: wrap;">
-                                <div class="row clearfix" style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between;">
-                                @foreach($ads as $ad)
-                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block" style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
-                                    <!-- Wrap the entire card content with the <a> tag -->
-                                    <a href="{{ route('ads.details', ['ad_id' => $ad->id]) }}" style="display: block; height: 100%; text-decoration: none;">
-                                        <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                                            <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
-                                                <div class="image-box" style="flex-grow: 0;">
-                                                    <figure class="image">
-                                                        <img src="{{ asset('images/Ads/' . $ad->mainImage) }}" 
-                                                        style="height: 150px; object-fit: cover;" alt="{{ $ad->title }}">
-                                                    </figure>
 
-                                                    @if($ad->ads_package == 3)
-                                                        <!-- top tag for ads with package = 3 -->
-                                                         <div class="icon">
-                                                            <div class="icon-shape"></div>
-                                                            <i class=""> <img src="{{ asset('01.png') }}" alt="Top Ad"></i>
-                                                        </div>
-                                                    @elseif($ad->ads_package == 6)
-                                                        <!-- super ads icon for ads with package = 6 -->
-                                                        <div class="icon">
-                                                            <div class="icon-shape"></div>
-                                                            <i class=""> <img src="{{ asset('02.png') }}" alt="Super Ad"></i>
-                                                        </div>
-                                                    @endif
-                                                </div>
+<!-- Grid Items -->
+<div class="grid-item feature-style-two four-column pd-0" style="display: flex; flex-wrap: wrap;">
+    <div class="row clearfix" style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between;">
+        @foreach($ads as $ad)
+            <div class="col-lg-4 col-md-6 col-sm-12 feature-block" 
+                style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
+                    <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
+                    <a href="{{ route('ads.details', ['ad_id' => $ad->id]) }}" 
+                    class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}"
+                    style="display: block; height: 100%; text-decoration: none;">
 
-                                                <div class="lower-content" style="flex-grow: 1;">
-                                                    <div class="category"><i class="fas fa-tags"></i><p>{{ $ad->category->name }}</p></div>
-                                                    <h4>{{ $ad->title }}</h4>
-                                                    <ul class="info clearfix">
-                                                        <li><i class="far fa-clock"></i>{{ $ad->created_at->diffForHumans() }}</li>
-                                                        <li>
-                                                            <i class="fas fa-map-marker-alt"></i>
-                                                            {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }}
-                                                        </li>
-                                                    </ul>
-                                                    <div class="lower-box" style="margin-top: auto;">
-                                                        <h5>Rs {{ number_format($ad->price, 2) }}</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
+                        <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
+                            
+                            <div class="image-box" style="flex-grow: 0;">
+                                <figure class="image">
+                                    <img src="{{ asset('images/Ads/' . $ad->mainImage) }}" 
+                                        style="height: 150px; object-fit: cover;" alt="{{ $ad->title }}">
+                                </figure>
 
+                                @if($ad->ads_package == 3)
+                                    <!-- Top Ad Badge -->
+                                    <div class="icon">
+                                        <div class="icon-shape"></div>
+                                        <i class=""> <img src="{{ asset('01.png') }}" alt="Top Ad"></i>
+                                    </div>
+                                @elseif($ad->ads_package == 6)
+                                    <!-- Super Ad Badge -->
+                                    <div class="icon">
+                                        <div class="icon-shape"></div>
+                                        <i class=""> <img src="{{ asset('02.png') }}" alt="Super Ad"></i>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="lower-content" style="flex-grow: 1;">
+                                <div class="category"><i class="fas fa-tags"></i><p>{{ $ad->category->name }}</p></div>
+                                <h4>{{ $ad->title }}</h4>
+                                <ul class="info clearfix">
+                                    <li><i class="far fa-clock"></i>{{ $ad->created_at->diffForHumans() }}</li>
+                                    <li>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }}
+                                    </li>
+                                </ul>
+                                <div class="lower-box" style="margin-top: auto;">
+                                    <h5>Rs {{ number_format($ad->price, 2) }}</h5>
                                 </div>
                             </div>
+
+                        </div>
+                        </a>
+                    </div>
+               
+
+            </div>
+        @endforeach
+    </div>
+</div>
+
 
                             </div>
 
@@ -342,4 +379,4 @@
     });
 </script>
 
-        @endsection
+@endsection
