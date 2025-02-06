@@ -1000,7 +1000,7 @@
         </section>
         <!-- feature-style-two end -->
 
-      <!-- advertisement - banner-section start -->
+      <!-- advertisement - banner-section start 
     <section class="banner-container">
         <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
             <div class="carousel-inner">
@@ -1015,9 +1015,23 @@
             </div>
         </div>
     </section>
-    <!-- advertisement - banner-section end -->
+ advertisement - banner-section end -->
 
-      
+           <!-- ad - banner-section start -->
+           <section class="ad-banner-container mb-0"> 
+            <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                    @foreach($banners as $key => $banner)
+                        @if($banner->type == 0)
+                            <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
+                               <img src="{{ asset('banners/' . $banner->img) }}" class="d-block mx-auto" alt="Banner Image">
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        <!-- ad - banner-section end -->
         
          
 @endsection
