@@ -402,52 +402,53 @@
 
 <!-- top add-section start -->
 <div class="cont">
-            <h2 class="heading"><b>Find your needs in our <br> 
-                 best <span>Top Ads</span></b></h2>
-        
-                <div class="top-banner"> <!-- Updated class reference here -->
-                    <div class="left">
-                        <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php if($banner->type == 1): ?>  <!-- Only display banners with type 0 -->
-                                <div class="carousel-item <?php echo e($key == 1 ? 'active' : ''); ?>">
-                                   <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="d-block w-100" alt="Banner Image">
-                                </div>
-                            <?php endif; ?>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    <h2 class="heading"><b>Find your needs in our <br> 
+        best <span>Top Ads</span></b></h2>
+
+    <div class="top-banner"> <!-- Updated class reference here -->
+        <div class="left">
+            <?php $__currentLoopData = $topbanners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($banner->type == 1): ?>  <!-- Only display banners with type 1 -->
+                    <div class="carousel-item <?php echo e($key == 1 ? 'active' : ''); ?>">
+                        <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="d-block w-100" alt="Banner Image">
                     </div>
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
 
-                    <div class="right">
-                        <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <?php $__currentLoopData = $topAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <div class="carousel-item <?php echo e($index == 0 ? 'active' : ''); ?>">
-                                        <div class="ad-box">
-                                            <h3><?php echo e($ad->title); ?></h3>
-                                            <p><?php echo e($ad->category->name ?? 'Uncategorized'); ?> &raquo; <?php echo e($ad->subcategory->name ?? ''); ?></p>
-                                            <p class="price">LKR <?php echo e(number_format($ad->price, 2)); ?></p>
-                                            <p><?php echo e($ad->created_at->diffForHumans()); ?></p>
-                                       </div>
-                                    </div>
-                               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                           </div>
-
-                        <div class="slider-container">
-                            <div class="card-container">
-                                <?php $__currentLoopData = $topAds->take(1000); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
-                                    <div class="ad-card">
-                                        <h3><?php echo e($ad->title); ?></h3>
-                                        <p><?php echo e($ad->category->name ?? 'Uncategorized'); ?> &raquo; <?php echo e($ad->subcategory->name ?? ''); ?></p>
-                                        <p class="price">LKR <?php echo e(number_format($ad->price, 2)); ?></p>
-                                        <p><?php echo e($ad->created_at->diffForHumans()); ?></p>
-                                    </div>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <div class="right">
+            <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <?php $__currentLoopData = $topAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="carousel-item <?php echo e($index == 0 ? 'active' : ''); ?>">
+                            <div class="ad-box">
+                                <h3><?php echo e($ad->title); ?></h3>
+                                <p><?php echo e($ad->category->name ?? 'Uncategorized'); ?> &raquo; <?php echo e($ad->subcategory->name ?? ''); ?></p>
+                                <p class="price">LKR <?php echo e(number_format($ad->price, 2)); ?></p>
+                                <p><?php echo e($ad->created_at->diffForHumans()); ?></p>
                             </div>
                         </div>
-                    </div>
-                        <p>The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.</p>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
-        </div>
-        <!-- top add-section end -->
+            </div>
+
+            <div class="card-container">
+                <?php $__currentLoopData = $topAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="ad-card">
+                        <h3><?php echo e($ad->title); ?></h3>
+                        <p><?php echo e($ad->category->name ?? 'Uncategorized'); ?> &raquo; <?php echo e($ad->subcategory->name ?? ''); ?></p>
+                        <p class="price">LKR <?php echo e(number_format($ad->price, 2)); ?></p>
+                        <p><?php echo e($ad->created_at->diffForHumans()); ?></p>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
+
+            <p>The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.</p>
+        </div> <!-- Closing right div -->
+
+    </div> <!-- Closing top-banner div -->
+</div> <!-- Closing cont div -->
+<!-- top add-section end -->
 
 
         <!-- feature-style-two -->
@@ -1020,22 +1021,7 @@
         </section>
         <!-- feature-style-two end -->
 
-      <!-- advertisement - banner-section start 
-    <section class="banner-container">
-        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-            <div class="carousel-inner">
-                <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <?php if($banner->type == 0): ?> 
-                        <div class="carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
-                            <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" 
-                                alt="Banner Image">
-                        </div>
-                    <?php endif; ?>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
-        </div>
-    </section>
- advertisement - banner-section end -->
+    
 
            <!-- ad - banner-section start -->
            <section class="ad-banner-container mb-0"> 
