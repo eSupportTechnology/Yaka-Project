@@ -21,13 +21,15 @@ class HomeController extends Controller
 
             $banners = \App\Models\Banners::where('type', 0)->get();
 
+            $topbanners = \App\Models\Banners::where('type', 1)->get();
+
             $topAds = Ads::with(['category', 'subcategory'])
             ->where('ads_package', 3)  // Filter only top ads
             ->latest()
             ->take(5)  // Show 5 ads in the slideshow
             ->get();
     
-        return view('newFrontend.index', compact('banners', 'categories', 'topAds'));
+        return view('newFrontend.index', compact('banners', 'categories', 'topAds','topbanners'));
     }
 
 

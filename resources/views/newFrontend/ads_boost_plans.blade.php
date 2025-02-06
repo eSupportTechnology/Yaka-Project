@@ -2,74 +2,89 @@
 
 @section('content')
 
-<div class="container mt-4">
-    <h2>Boost Your Ad</h2>
+<div class="container mt-4 mb-4" style="width:50%">
+    <div class="card p-4" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;">   
+        <h2 class="text-center">Boost Your Ad</h2>
 
-    <!-- Step-wise Navigation -->
-    <ul class="nav nav-pills justify-content-center mb-4">
-        <li class="nav-item">
-            <span class="nav-link active">Ad Boost</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link disabled">Summary</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link disabled">Payment</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link disabled">Done</span>
-        </li>
-    </ul>
+        <!-- Step-wise Navigation -->
+        <ul class="nav nav-pills justify-content-center mb-4 mt-4">
+            <li class="nav-item">
+                <span class="nav-link active">Ad Boost</span>
+            </li>
+            <li class="nav-item">
+                <span class="nav-link disabled">Summary</span>
+            </li>
+            <li class="nav-item">
+                <span class="nav-link disabled">Payment</span>
+            </li>
+            <li class="nav-item">
+                <span class="nav-link disabled">Done</span>
+            </li>
+        </ul>
 
-    <!-- Ad Details -->
-    <div class="card mb-4">
-        <img src="{{ asset($ad->mainImage) }}" class="card-img-top" alt="Ad Image">
-        <div class="card-body">
-            <h5 class="card-title">{{ $ad->title }}</h5>
-            <p class="card-text">Price: Rs {{ number_format($ad->price, 2) }}</p>
-            <p class="card-text text-muted">Location: {{ $ad->location }}</p>
+        <!-- Ad Details -->
+        <div class="text-center p-3 mb-4">
+            <img src="{{ asset('images/Ads/' . $ad->mainImage) }}" class="card-img-top mx-auto" style="width: 40%;" alt="Ad Image">
+            <div class="card-body">
+                <h5 class="card-title">{{ $ad->title }}</h5>
+                <p class="card-text">Price: Rs {{ number_format($ad->price, 2) }}</p>
+                <p class="card-text text-muted">Location: {{ $ad->location }}</p>
+            </div>
         </div>
+
+        <!-- Boost Options -->
+        <h4 class="mb-3">Make your ad stand out!</h4>
+        <p>Get up to 10 times more responses by boosting your ad. Select one or more options.</p>
+
+        <div class="boost-options">
+            <!-- Bump Up Plan -->
+            <div class="boost-option card p-3 mb-3 border">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5><i class="fas fa-arrow-up text-warning"></i> Bump Up</h5>
+                        <p class="mb-1">Get a fresh start every day and get up to 10 times more responses!</p>
+                        <strong>Rs 2,000</strong> <span class="badge bg-dark">7 days</span>
+                    </div>
+                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#bumpUpModal">-</button>
+                </div>
+            </div>
+
+            <!-- Urgent Plan -->
+            <div class="boost-option card p-3 mb-3 border">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5><span class="badge bg-danger text-white">URGENT</span> Urgent</h5>
+                        <p class="mb-1">Stand out from the rest by showing a bright red marker on the ad!</p>
+                        <strong>From Rs 700</strong>
+                    </div>
+                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#urgentModal">+</button>
+                </div>
+            </div>
+
+            <!-- Spotlight Plan -->
+            <div class="boost-option card p-3 mb-3 border">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5><i class="fas fa-star text-primary"></i> Spotlight</h5>
+                        <p class="mb-1">Boost sales by showing your ad in this premium slot.</p>
+                        <strong>From Rs 2,400</strong>
+                    </div>
+                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#spotlightModal">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Amount Summary -->
+        <div class="summary-box p-3 mt-3 bg-light border">
+            <h5>Amount: <span id="totalAmount" class="text-success">Rs 0</span></h5>
+            <p id="selectedPlans">No plans selected</p>
+        </div>
+
+        <!-- Continue Button -->
+        <button id="continueButton" class="btn btn-success mt-3 w-100" disabled>Continue</button>
     </div>
-
-    <!-- Boost Options -->
-    <h4>Make your ad stand out!</h4>
-    <p>Get up to 10 times more responses by boosting your ad. Select one or more options.</p>
-
-    <div class="boost-options">
-        <!-- Bump Up Plan -->
-        <div class="boost-option card p-3 mb-3">
-            <h5><i class="fas fa-arrow-up text-warning"></i> Bump Up</h5>
-            <p>Get a fresh start every day and get up to 10 times more responses!</p>
-            <strong>Rs 2,000</strong> <span class="badge bg-dark">7 days</span>
-            <button class="btn btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#bumpUpModal">+</button>
-        </div>
-
-        <!-- Urgent Plan -->
-        <div class="boost-option card p-3 mb-3">
-            <h5><i class="fas fa-exclamation-circle text-danger"></i> Urgent</h5>
-            <p>Stand out from the rest by showing a bright red marker on the ad!</p>
-            <strong>From Rs 700</strong>
-            <button class="btn btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#urgentModal">+</button>
-        </div>
-
-        <!-- Spotlight Plan -->
-        <div class="boost-option card p-3 mb-3">
-            <h5><i class="fas fa-star text-primary"></i> Spotlight</h5>
-            <p>Boost sales by showing your ad in this premium slot.</p>
-            <strong>From Rs 2,400</strong>
-            <button class="btn btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#spotlightModal">+</button>
-        </div>
-    </div>
-
-    <!-- Amount Summary -->
-    <div class="summary-box p-3 mt-3 bg-light border">
-        <h5>Amount: <span id="totalAmount" class="text-success">Rs 0</span></h5>
-        <p id="selectedPlans">No plans selected</p>
-    </div>
-
-    <!-- Continue Button -->
-    <button id="continueButton" class="btn btn-success mt-3" disabled>Continue</button>
 </div>
+
 
 <!-- Bump Up Modal -->
 <div class="modal fade" id="bumpUpModal" tabindex="-1" aria-labelledby="bumpUpModalLabel" aria-hidden="true">

@@ -305,6 +305,28 @@
     border-radius: 8px;
 }
 
+.slider-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-container {
+    display: flex;
+    width: 200%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.ad-card {
+    width: 20%;
+    padding: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex-shrink: 0;
+    }
+
 </style>
 
         <!-- banner-section -->
@@ -385,13 +407,18 @@
 
     <div class="top-banner"> <!-- Updated class reference here -->
         <div class="left">
-            <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($banner->type == 1): ?>  <!-- Only display banners with type 1 -->
-                    <div class="carousel-item <?php echo e($key == 1 ? 'active' : ''); ?>">
+        <?php if($topbanners->isNotEmpty()): ?>
+            <?php $__currentLoopData = $topbanners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($banner->type == 1): ?>  
+                    <div class="carousel-item <?php echo e($loop->first ? 'active' : ''); ?>">
                         <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="d-block w-100" alt="Banner Image">
                     </div>
                 <?php endif; ?>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php else: ?>
+            <p>No banners available</p>
+        <?php endif; ?>
+
         </div>
 
         <div class="right">
@@ -1030,8 +1057,39 @@
                 </div>
             </div>
         </section>
-        <!-- ad - banner-section end -->
-        
+        <!-- advertisement - banner-section end -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let slider = document.querySelector(".card-container");
+        let cards = document.querySelectorAll(".ad-card");
+        let prevBtn = document.querySelector(".prev");
+        let nextBtn = document.querySelector(".next");
+        let index = 0;
+
+        function slide() {
+            index = (index + 1) % cards.length;
+            let moveAmount = -index * 50; // Moves each card by 50% (2 cards per row)
+            slider.style.transform = `translateX(${moveAmount}%)`;
+        }
+
+        let autoSlide = setInterval(slide, 3000); // Auto slide every 3 sec
+
+        nextBtn.addEventListener("click", function() {
+            clearInterval(autoSlide); // Stop auto-slide
+            slide();
+            autoSlide = setInterval(slide, 3000); // Restart auto-slide
+        });
+
+        prevBtn.addEventListener("click", function() {
+            clearInterval(autoSlide);
+            index = (index - 1 + cards.length) % cards.length;
+            let moveAmount = -index * 50;
+            slider.style.transform = `translateX(${moveAmount}%)`;
+            autoSlide = setInterval(slide, 3000);
+        });
+    });
+</script>
          
 <?php $__env->stopSection(); ?>
 

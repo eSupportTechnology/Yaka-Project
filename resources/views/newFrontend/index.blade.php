@@ -408,13 +408,18 @@
 
     <div class="top-banner"> <!-- Updated class reference here -->
         <div class="left">
-            @foreach($banners as $key => $banner)
-                @if($banner->type == 1)  <!-- Only display banners with type 1 -->
-                    <div class="carousel-item {{ $key == 1 ? 'active' : '' }}">
+        @if($topbanners->isNotEmpty())
+            @foreach($topbanners as $key => $banner)
+                @if($banner->type == 1)  
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                         <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
                     </div>
                 @endif
             @endforeach
+        @else
+            <p>No banners available</p>
+        @endif
+
         </div>
 
         <div class="right">
