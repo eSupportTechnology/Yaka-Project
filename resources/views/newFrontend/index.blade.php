@@ -403,58 +403,52 @@
 
 <!-- top add-section start -->
 <div class="cont">
-    <h2 class="heading"><b>Find your needs in our <br> 
-        best <span>Top Ads</span></b></h2>
-
-    <div class="top-banner"> <!-- Updated class reference here -->
-        <div class="left">
-        @if($topbanners->isNotEmpty())
-            @foreach($topbanners as $key => $banner)
-                @if($banner->type == 1)  
-                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                        <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+            <h2 class="heading"><b>Find your needs in our <br> 
+                 best <span>Top Ads</span></b></h2>
+        
+                <div class="top-banner"> <!-- Updated class reference here -->
+                    <div class="left">
+                        @foreach($banners as $key => $banner)
+                            @if($banner->type == 1)  <!-- Only display banners with type 0 -->
+                                <div class="carousel-item {{ $key == 1 ? 'active' : '' }}">
+                                   <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
-                @endif
-            @endforeach
-        @else
-            <p>No banners available</p>
-        @endif
 
-        </div>
+                    <div class="right">
+                        <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach($topAds as $index => $ad)
+                                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                        <div class="ad-box">
+                                            <h3>{{ $ad->title }}</h3>
+                                            <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                            <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
+                                            <p>{{ $ad->created_at->diffForHumans() }}</p>
+                                       </div>
+                                    </div>
+                               @endforeach
+                           </div>
 
-        <div class="right">
-            <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    @foreach($topAds as $index => $ad)
-                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                            <div class="ad-box">
-                                <h3>{{ $ad->title }}</h3>
-                                <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
-                                <p>{{ $ad->created_at->diffForHumans() }}</p>
+                        <div class="slider-container">
+                            <div class="card-container">
+                                @foreach($topAds->take(1000) as $ad) 
+                                    <div class="ad-card">
+                                        <h3>{{ $ad->title }}</h3>
+                                        <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                        <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
+                                        <p>{{ $ad->created_at->diffForHumans() }}</p>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="card-container">
-                @foreach($topAds as $ad)
-                    <div class="ad-card">
-                        <h3>{{ $ad->title }}</h3>
-                        <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                        <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
-                        <p>{{ $ad->created_at->diffForHumans() }}</p>
                     </div>
-                @endforeach
-            </div>
-
-            <p>The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.</p>
-        </div> <!-- Closing right div -->
-
-    </div> <!-- Closing top-banner div -->
-</div> <!-- Closing cont div -->
-<!-- top add-section end -->
+                        <p>The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.</p>
+                </div>
+        </div>
+        <!-- top add-section end -->
 
 
         <!-- feature-style-two -->
