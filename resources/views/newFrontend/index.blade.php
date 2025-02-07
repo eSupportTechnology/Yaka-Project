@@ -7,7 +7,67 @@
 
         
 <style>
+.feature-block-one {
+    position: relative;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
 
+.feature-block-one:hover {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+.inner-box {
+    padding: 15px;
+    text-align: center;
+}
+
+.image-box {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lower-content {
+    padding: 15px;
+}
+
+.lower-content h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.lower-content p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.lower-content h5 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff5722;
+}
+
+@media screen and (max-width: 768px) {
+    .feature-block-one {
+        margin-bottom: 20px;
+    }
+}
 .banner-section {
     background: linear-gradient(to bottom, rgb(102, 17, 17), rgb(171, 18, 18), rgb(253, 6, 6));
     padding: 30px;
@@ -221,9 +281,60 @@
                     <div class="tabs-content">
                         <div class="tab active-tab" id="tab-1">
                             <div class="row clearfix">
+                                @if(isset($ads)&& count($ads)>0)
+                                <pre>{{print_r($ads)}}</pre>
+                                @dd($ads);
+                                @foreach($ads as $ad)
+                                
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
                                     <div class="feature-block-one wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><img src="{{asset('images/Ads'. $ad->mainImage)}}" alt="{{$ad->title}}"></figure>
+                                                <div class="shape"></div>
+                                                <div class="feature">Featured</div>
+                                                <div class="icon">
+                                                    <div class="icon-shape"></div>
+                                                    <i class="icon-16"></i>
+                                                </div>
+                                            </div>
+                                            <div class="lower-content">
+                                                <div class="author-box">
+                                                    <div class="inner">
+                                                        <img src="{{asset('images/Ads/'.$ad->subImage)}}" alt="{{$ad->author}}">
+                                                        <h6>{{$ad->author}}<i class="icon-18"></i></h6>
+                                                        <span>{{$ad->status}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>{{$ad->cat_id}}</p></div>
+                                                <h3><a href="{{url('browse-ad-details/'.$ad->id)}}">{{$ad->description}}</a></h3>
+                                                <ul class="rating clearfix">
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><i class="icon-17"></i></li>
+                                                    <li><a href="index.html">(25)</a></li>
+                                                </ul>
+                                                <ul class="info clearfix">
+                                                    <li><i class="far fa-clock"></i>{{$ad->created_at->diffForHumans()}}</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>{{$ad->location}}</li>
+                                                </ul>
+                                                <div class="lower-box">
+                                                    <h5><span>Start From:</span>${{number_format($ads->price,2)}}</h5>
+                                                    <ul class="react-box">
+                                                        <li><a href="{{url('add-to-cart/'.$ad->id)}}"><i class="icon-21"></i></a></li>
+                                                        <li><a href="{{url('add-to-wishlist/'.$ad->id)}}"><i class="icon-22"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               <!--
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                    <div class="feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
+                                                                             <div class="inner-box">
                                             <div class="image-box">
                                                 <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-1.jpg" alt=""></figure>
                                                 <div class="shape"></div>
@@ -260,107 +371,19 @@
                                                     <ul class="react-box">
                                                         <li><a href="index.html"><i class="icon-21"></i></a></li>
                                                         <li><a href="index.html"><i class="icon-22"></i></a></li>
-                                                    </ul>
+                                                </ul>
+                                                
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                                    <div class="feature-block-one wow fadeInDown animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
-                                        <div class="inner-box">
-                                            <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-2.jpg" alt=""></figure>
-                                                <div class="shape"></div>
-                                                <div class="feature">Featured</div>
-                                                <div class="icon">
-                                                    <div class="icon-shape"></div>
-                                                    <i class="icon-16"></i>
-                                                </div>
-                                            </div>
-                                            <div class="lower-content">
-                                                <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-2.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
-                                                    </div>
-                                                </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
-                                                    <li><i class="icon-17"></i></li>
-                                                    <li><i class="icon-17"></i></li>
-                                                    <li><i class="icon-17"></i></li>
-                                                    <li><i class="icon-17"></i></li>
-                                                    <li><i class="icon-17"></i></li>
-                                                    <li><a href="index.html">(25)</a></li>
-                                                </ul>
-                                                <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>2 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                                </ul>
-                                                <div class="lower-box">
-                                                    <h5><span>Start From:</span>$2,000.00</h5>
-                                                    <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                                    <div class="feature-block-one wow fadeInDown animated animated" data-wow-delay="600ms" data-wow-duration="1500ms">
-                                        <div class="inner-box">
-                                            <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-3.jpg" alt=""></figure>
-                                                <div class="shape"></div>
-                                                <div class="feature">Featured</div>
-                                                <div class="icon">
-                                                    <div class="icon-shape"></div>
-                                                    <i class="icon-16"></i>
-                                                </div>
-                                            </div>
-                                            <div class="lower-content">
-                                                <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-3.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
-                                                    </div>
-                                                </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
-                                                <ul class="rating clearfix">
-                                                    <li><i class="icon-17"></i></li>
-                                                    <li><i class="icon-17"></i></li>
-                                                    <li><i class="icon-17"></i></li>
-                                                    <li><i class="icon-17"></i></li>
-                                                    <li><i class="icon-17"></i></li>
-                                                    <li><a href="index.html">(40)</a></li>
-                                                </ul>
-                                                <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>3 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                                </ul>
-                                                <div class="lower-box">
-                                                    <h5><span>Start From:</span>$3,500.00</h5>
-                                                    <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!--
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
                                     <div class="feature-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-4.jpg" alt=""></figure>
+                                                <figure class="image"><img src="{{asset('storage/'.$ad->mainImage)}}" alt="{{$ad->title}}"></figure>
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
                                                 <div class="icon">
@@ -370,14 +393,14 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-4.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
+                                                <div class="inner">
+                                                        <img src="{{asset('storage/'.$ad->subImage)}}" alt="{{$ad->author}}">
+                                                        <h6>{{$ad->author}}<i class="icon-18"></i></h6>
+                                                        <span>{{$ad->status}}</span>
                                                     </div>
                                                 </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <div class="category"><i class="fas fa-tags"></i><p>{{$ad->category}}</p></div>
+                                                <h3><a href="{{url('browse-ad-details/'.$ad->id)}}">{{$ad->title}}</a></h3>
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -387,14 +410,14 @@
                                                     <li><a href="index.html">(28)</a></li>
                                                 </ul>
                                                 <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>4 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                <li><i class="far fa-clock"></i>{{$ad->created_at->diffForHumans()}}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{$ad->location}}</li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Start From:</span>$3,000.00</h5>
+                                                <h5><span>Start From:</span>${{number_format($ad->price,2)}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                        <li><a href="{{url('add-to-cart/'.$ad->id)}}"><i class="icon-21"></i></a></li>
+                                                        <li><a href="{{url('add-to-wishlist/'.$ad->id)}}"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -405,7 +428,7 @@
                                     <div class="feature-block-one wow fadeInUp animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-5.jpg" alt=""></figure>
+                                                <figure class="image"><img src="{{asset('storage/'.$ad->mainImage)}}" alt="{{$ad->title}}"></figure>
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
                                                 <div class="icon">
@@ -415,14 +438,14 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-5.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
+                                                <div class="inner">
+                                                        <img src="{{asset('storage/'.$ad->subImage)}}" alt="{{$ad->author}}">
+                                                        <h6>{{$ad->author}}<i class="icon-18"></i></h6>
+                                                        <span>{{$ad->status}}</span>
                                                     </div>
                                                 </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <div class="category"><i class="fas fa-tags"></i><p>{{$ad->category}}</p></div>
+                                                <h3><a href="{{url('browse-ad-details/'.$ad->id)}}">{{$ad->title}}</a></h3>
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -432,14 +455,14 @@
                                                     <li><a href="index.html">(15)</a></li>
                                                 </ul>
                                                 <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>5 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                <li><i class="far fa-clock"></i>{{$ad->created_at->diffForHumans()}}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{$ad->location}}</li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Start From:</span>$1,800.00</h5>
+                                                <h5><span>Start From:</span>${{number_format($ad->price,2)}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                        <li><a href="{{url('add-to-cart/'.$ad->id)}}"><i class="icon-21"></i></a></li>
+                                                        <li><a href="{{url('add-to-wishlist/'.$ad->id)}}"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -450,7 +473,7 @@
                                     <div class="feature-block-one wow fadeInUp animated animated" data-wow-delay="600ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-6.jpg" alt=""></figure>
+                                                <figure class="image"><img src="{{asset('storage/'.$ad->mainImage)}}" alt="{{$ad->title}}"></figure>
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
                                                 <div class="icon">
@@ -460,14 +483,14 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-6.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
-                                                    </div>
+                                                <div class="inner">
+                                                        <img src="{{asset('storage/'.$ad->subImage)}}" alt="{{$ad->author}}">
+                                                        <h6>{{$ad->author}}<i class="icon-18"></i></h6>
+                                                        <span>{{$ad->status}}</span>
                                                 </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                </div>
+                                                <div class="category"><i class="fas fa-tags"></i><p>{{$ad->category}}</p></div>
+                                                <h3><a href="{{url('browse-ad-details/'.$ad->id)}}">{{$ad->title}}</a></h3>
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -477,29 +500,31 @@
                                                     <li><a href="index.html">(32)</a></li>
                                                 </ul>
                                                 <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>6 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                <li><i class="far fa-clock"></i>{{$ad->created_at->diffForHumans()}}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{$ad->location}}</li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Start From:</span>$3,200.00</h5>
+                                                <h5><span>Start From:</span>${{number_format($ad->price,2)}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                        <li><a href="{{url('add-to-cart/'.$ad->id)}}"><i class="icon-21"></i></a></li>
+                                                        <li><a href="{{url('add-to-wishlist/'.$ad->id)}}"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="tab" id="tab-2">
                             <div class="row clearfix">
+                
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
                                     <div class="feature-block-one">
                                         <div class="inner-box">
                                             <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-1.jpg" alt=""></figure>
+                                                <figure class="image"><img src="{{asset('storage/'.$ad->mainImage)}}" alt="{{$ad->title}}"></figure>
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
                                                 <div class="icon">
@@ -509,14 +534,14 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-1.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
+                                                <div class="inner">
+                                                        <img src="{{asset('storage/'.$ad->subImage)}}" alt="{{$ad->author}}">
+                                                        <h6>{{$ad->author}}<i class="icon-18"></i></h6>
+                                                        <span>{{$ad->status}}</span>
                                                     </div>
                                                 </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <div class="category"><i class="fas fa-tags"></i><p>{{$ad->category}}</p></div>
+                                                <h3><a href="{{url('browse-ad-details/'.$ad->id)}}">{{$ad->title}}</a></h3>
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -526,14 +551,14 @@
                                                     <li><a href="index.html">(32)</a></li>
                                                 </ul>
                                                 <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>1 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                <li><i class="far fa-clock"></i>{{$ad->created_at->diffForHumans()}}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{$ad->location}}</li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Start From:</span>$3,000.00</h5>
+                                                <h5><span>Start From:</span>${{number_format($ad->price,2)}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                        <li><a href="{{url('add-to-cart/'.$ad->id)}}"><i class="icon-21"></i></a></li>
+                                                        <li><a href="{{url('add-to-wishlist/'.$ad->id)}}"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -543,8 +568,8 @@
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
                                     <div class="feature-block-one">
                                         <div class="inner-box">
-                                            <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-2.jpg" alt=""></figure>
+                                            <div class="image-box">  
+                                                <figure class="image"><img src="{{asset('ads/'.$ad->mainImage)}}" alt="{{$ad->title}}"></figure>
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
                                                 <div class="icon">
@@ -554,14 +579,14 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-2.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
+                                                <div class="inner">
+                                                        <img src="{{asset('ads/'.$ad->subImage)}}" alt="{{$ad->author}}">
+                                                        <h6>{{$ad->author}}<i class="icon-18"></i></h6>
+                                                        <span>{{$ad->status}}</span>
                                                     </div>
                                                 </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <div class="category"><i class="fas fa-tags"></i><p>{{$ad->cat_id}}, {{$ad->sub_cat_id}}</p></div>
+                                                <h3><a href="{{url('browse-ads-details/'.$ads->id)}}">{{$ad->title}}</a></h3>
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -571,14 +596,14 @@
                                                     <li><a href="index.html">(25)</a></li>
                                                 </ul>
                                                 <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>2 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                <li><i class="far fa-clock"></i>{{$ad->created_at->diffForHumans()}}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{$ad->location}}</li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Start From:</span>$2,000.00</h5>
+                                                <h5><span>Start From:</span>${{number_format($ad->price,2)}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                        <li><a href="{{url('add-to-cart/'.$ad->id)}}"><i class="icon-21"></i></a></li>
+                                                        <li><a href="{{url('add-to-wishlist/'.$ad->id)}}"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -589,7 +614,7 @@
                                     <div class="feature-block-one">
                                         <div class="inner-box">
                                             <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-3.jpg" alt=""></figure>
+                                                <figure class="image"><img src="{{asset('storage/'.$ad->mainImage)}}" alt="{{$ad->title}}"></figure>
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
                                                 <div class="icon">
@@ -599,14 +624,14 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-3.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
+                                                <div class="inner">
+                                                        <img src="{{asset('storage/'.$ad->subImage)}}" alt="{{$ad->author}}">
+                                                        <h6>{{$ad->author}}<i class="icon-18"></i></h6>
+                                                        <span>{{$ad->status}}</span>
                                                     </div>
                                                 </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <div class="category"><i class="fas fa-tags"></i><p>{{$ad->category}}</p></div>
+                                                <h3><a href="{{url('browse-ad-details/'.$ads->id)}}">{{$ad->title}}</a></h3>
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -616,14 +641,14 @@
                                                     <li><a href="index.html">(40)</a></li>
                                                 </ul>
                                                 <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>3 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                <li><i class="far fa-clock"></i>{{$ad->created_at->diffForHumans()}}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{$ad->location}}</li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Start From:</span>$3,500.00</h5>
+                                                <h5><span>Start From:</span>${{number_format($ad->price,2)}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                        <li><a href="{{url('add-to-cart/'.$ad->id)}}"><i class="icon-21"></i></a></li>
+                                                        <li><a href="{{url('add-to-wishlist/'.$ad->id)}}"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -634,7 +659,7 @@
                                     <div class="feature-block-one">
                                         <div class="inner-box">
                                             <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-4.jpg" alt=""></figure>
+                                                <figure class="image"><img src="{{asset('storage/'.$ad->mainImage)}}" alt="{{$ad->title}}"></figure>
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
                                                 <div class="icon">
@@ -644,14 +669,14 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-4.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
+                                                <div class="inner">
+                                                        <img src="{{asset('storage/'.$ad->subImage)}}" alt="{{$ad->author}}">
+                                                        <h6>{{$ad->author}}<i class="icon-18"></i></h6>
+                                                        <span>{{$ad->status}}</span>
                                                     </div>
                                                 </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <div class="category"><i class="fas fa-tags"></i><p>{{$ad->category}}</p></div>
+                                                <h3><a href="{{url('browse-ad-details/'.$ad->id)}}">{{$ad->title}}</a></h3>
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -661,14 +686,14 @@
                                                     <li><a href="index.html">(28)</a></li>
                                                 </ul>
                                                 <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>4 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                <li><i class="far fa-clock"></i>{{$ad->created_at->diffForHumans()}}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{$ad->location}}</li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Start From:</span>$3,000.00</h5>
+                                                <h5><span>Start From:</span>${{number_format($ad->price,2)}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                        <li><a href="{{url('add-to-cart/'.$ad->id)}}"><i class="icon-21"></i></a></li>
+                                                        <li><a href="{{url('add-to-wishlist/'.$ad->id)}}"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -679,7 +704,7 @@
                                     <div class="feature-block-one">
                                         <div class="inner-box">
                                             <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-5.jpg" alt=""></figure>
+                                                <figure class="image"><img src="{{asset('storage/'.$ad->mainImage)}}" alt="{{$ad->title}}"></figure>
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
                                                 <div class="icon">
@@ -689,14 +714,14 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-5.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
+                                                <div class="inner">
+                                                        <img src="{{asset('storage/'.$ad->subImage)}}" alt="{{$ad->author}}">
+                                                        <h6>{{$ad->author}}<i class="icon-18"></i></h6>
+                                                        <span>{{$ad->status}}</span>
                                                     </div>
                                                 </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <div class="category"><i class="fas fa-tags"></i><p>{{$ad->category}}</p></div>
+                                                <h3><a href="{{url('browse-ad-details/'.$ad->id)}}">{{$ad->title}}</a></h3>
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -706,14 +731,14 @@
                                                     <li><a href="index.html">(15)</a></li>
                                                 </ul>
                                                 <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>5 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                <li><i class="far fa-clock"></i>{{$ad->created_at->diffForHumans()}}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{$ad->location}}</li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Start From:</span>$1,800.00</h5>
+                                                    <h5><span>Start From:</span>${{number_format($ad->price,2)}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                        <li><a href="{{url('add-to-cart/'.$ad->id)}}"><i class="icon-21"></i></a></li>
+                                                        <li><a href="{{url('add-to-wishlist/'.$ad->id)}}"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -724,7 +749,7 @@
                                     <div class="feature-block-one">
                                         <div class="inner-box">
                                             <div class="image-box">
-                                                <figure class="image"><img src="newFrontend/Clasifico/assets/images/resource/feature-6.jpg" alt=""></figure>
+                                                <figure class="image"><img src="{{asset('storage/'.$ad->mainImage)}}" alt="{{$ad->title}}"></figure>
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
                                                 <div class="icon">
@@ -734,14 +759,14 @@
                                             </div>
                                             <div class="lower-content">
                                                 <div class="author-box">
-                                                    <div class="inner">
-                                                        <img src="newFrontend/Clasifico/assets/images/resource/author-6.png" alt="">
-                                                        <h6>Michael Bean<i class="icon-18"></i></h6>
-                                                        <span>For sell</span>
+                                                <div class="inner">
+                                                        <img src="{{asset('storage/'.$ad->subImage)}}" alt="{{$ad->author}}">
+                                                        <h6>{{$ad->author}}<i class="icon-18"></i></h6>
+                                                        <span>{{$ad->status}}</span>
                                                     </div>
                                                 </div>
-                                                <div class="category"><i class="fas fa-tags"></i><p>Electronics</p></div>
-                                                <h3><a href="browse-ads-details.html">Villa on Grand Avenue</a></h3>
+                                                <div class="category"><i class="fas fa-tags"></i><p>{{$ad->category}}</p></div>
+                                                <h3><a href="{{url('browse-ad-details/'.$ad->id)}}">{{$ad->title}}</a></h3>
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -751,20 +776,22 @@
                                                     <li><a href="index.html">(32)</a></li>
                                                 </ul>
                                                 <ul class="info clearfix">
-                                                    <li><i class="far fa-clock"></i>6 months ago</li>
-                                                    <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+                                                <li><i class="far fa-clock"></i>{{$ad->created_at->diffForHumans()}}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{$ad->location}}</li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Start From:</span>$3,200.00</h5>
+                                                    <<h5><span>Start From:</span>${{number_format($ad->price,2)}}</h5>
                                                     <ul class="react-box">
-                                                        <li><a href="index.html"><i class="icon-21"></i></a></li>
-                                                        <li><a href="index.html"><i class="icon-22"></i></a></li>
+                                                        <li><a href="{{url('add-to-cart/'.$ad->id)}}"><i class="icon-21"></i></a></li>
+                                                        <li><a href="{{url('add-to-wishlist/'.$ad->id)}}"><i class="icon-22"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
+                                @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
