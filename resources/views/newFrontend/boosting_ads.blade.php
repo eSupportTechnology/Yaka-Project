@@ -129,7 +129,7 @@
 .plan-cards {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 50px;
     margin-top: 20px;
 }
 .plan {
@@ -142,6 +142,7 @@
 }
 .plan h3 {
     font-size: 1.5rem;
+    font-weight: bold;
 }
 .plan span {
     font-size: 1.2rem;
@@ -158,7 +159,7 @@
     transform: scale(1.1);
 }
 /* Testimonials */
-.testimonials {
+/*.testimonials {
     text-align: center;
     padding: 50px 20px;
 }
@@ -177,7 +178,7 @@
 }
 .testimonial:hover {
     transform: translateY(-10px);
-}
+}*/
 /* Stats Section */
 .stats {
     text-align: center;
@@ -335,7 +336,7 @@
                         <h1>Boosting Ads</h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{route( '/')}}">Home</a></li>
                         <li>Boosting Ads</li>
                     </ul>
                 </div>
@@ -348,7 +349,40 @@
         <div class="hero-content">
             <h1>Boost Your Ads & Reach More Customers!</h1>
             <p>Don't miss out on the best deals in Sri Lanka’s largest marketplace!<br> Subscribe now for exclusive offers and discounts.</p>
-            <a href="#" class="btn">Sign Up Today</a>
+            <a href="{{route( '/')}}" class="btn">Sign Up Today</a>
+        </div>
+    </section>
+     <!-- Plans Section -->
+     <section class="plans">
+        <h2>Boosting Adds</h2>
+        <br>
+        <p class="mb-4 text-center" style="font-size: 20px">Our boosting methods are powered by a fully sophisticated AI-generated algorithm, ensuring quicker results.</p>
+        <br>
+        <div class="plan-cards">
+            <div class="plan">
+                <h3>1.Jump up ads</h3>
+                <br>
+                <p>Boost your ad to the top instantly!</p>
+                
+            </div>
+            <div class="plan popular">
+                <h3>2.Top ads</h3>
+                <br>
+                <p>Get premium visibility above all ads!</p>
+                
+            </div>
+            <div class="plan popular">
+                <h3>3.Urgent ads</h3>
+                <br>
+                <p>Highlight urgency and sell faster!</p>
+                
+            </div>
+            <div class="plan">
+                <h3>4.Super ad</h3>
+                <br>
+                <p>Maximum exposure for top results!</p>
+                
+            </div>
         </div>
     </section>
 
@@ -370,22 +404,7 @@
     </div>
 </section>
 
-<div class="container">
-    <div class="row">
-      <div class="pt-5 pb-5 col-md-12">
-        <h2 class="mt-5 mb-4 text-center">Boosting Ads</h2>
-        <p class="mb-4 text-center">Our boosting methods are powered by a fully sophisticated AI-generated algorithm, ensuring quicker results.</p>
-        <ul class="text-center boosting-list">
-          <li class="mb-2">1. Jump up ads</li>
-          <li class="mb-2">2. Top ads</li>
-          <li class="mb-2">3. Urgent ads</li>
-          <li class="mb-2">4. Super ad</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-    <!-- Steps Section -->
+<!-- Steps Section -->
     <section class="steps">
         <h2>How to Boost Your Ad?</h2>
         <div class="step-container">
@@ -419,33 +438,8 @@
         </div>
     </section>
 
-    <!-- Plans Section -->
-    <section class="plans">
-        <h2>Boosting Plans</h2>
-        <div class="plan-cards">
-            <div class="plan">
-                <h3>Basic Plan</h3>
-                <span>Rs. 500</span>
-                <p>Boost your ad for 7 days.</p>
-                <a href="#" class="btn">Choose Plan</a>
-            </div>
-            <div class="plan popular">
-                <h3>Premium Plan</h3>
-                <span>Rs. 1200</span>
-                <p>Boost your ad for 14 days with premium visibility.</p>
-                <a href="#" class="btn">Choose Plan</a>
-            </div>
-            <div class="plan">
-                <h3>Ultimate Plan</h3>
-                <span>Rs. 2500</span>
-                <p>Boost your ad for 30 days with top ranking.</p>
-                <a href="#" class="btn">Choose Plan</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Customer Testimonials -->
-    <section class="testimonials">
+ <!-- Customer Testimonials -->
+    <!--<section class="testimonials">
         <h2>What Our Customers Say</h2>
         <div class="testimonial">
             <p>"Boosting my ad helped me sell my product within 2 days! Highly recommended."</p>
@@ -455,7 +449,7 @@
             <p>"Amazing service! My business got 3x more leads after using the premium boost plan."</p>
             <h4>- Shalini, Kandy</h4>
         </div>
-    </section>
+    </section>-->
 
     <!-- Stats Section 
     <section class="stats">
@@ -478,7 +472,7 @@
     <section class="cta">
         <h2>Start Boosting Your Ads Today!</h2>
         <p>Get more views, more customers, and better sales.</p>
-        <a href="#" class="btn">Get Started</a>
+        <a href="{{route( '/')}}" class="btn">Get Started</a>
     </section>
 
 @endsection

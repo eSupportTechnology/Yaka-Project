@@ -65,9 +65,37 @@ h2 {
     max-width: 600px;
     border-radius: 5px;
 }
+/* posting allowance section */
+.posting-allowances-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.posting-allowances-list li {
+    background: linear-gradient(135deg, #9e3846, hsl(0, 67%, 78%));
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 250px;
+    text-align: center;
+}
+
+.posting-allowances-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
 
 /* Plans Section */
-.plan-container {
+/*.plan-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -105,7 +133,7 @@ h2 {
 .plan button:hover {
     background:rgb(0, 0, 0);
     color: white;
-}
+}*/
 
 /* How It Works */
 .how-it-works {
@@ -129,7 +157,7 @@ h2 {
 }
 
 /* Reviews */
-.reviews {
+/*.reviews {
     background:rgb(255, 255, 255);
 }
 
@@ -146,7 +174,7 @@ h2 {
 .review h4 {
     color: #a50034;
     margin-top: 10px;
-}
+}*/
 
 /* FAQ */
 .faq-item {
@@ -164,18 +192,18 @@ h2 {
         font-size: 2rem;
     }
 
-    .plan-container {
+    /*.plan-container {
         flex-direction: column;
         align-items: center;
     }
 
     .plan {
         width: 80%;
-    }
+    }*/
 
-    .review {
+    /*.review {
         width: 80%;
-    }
+    }*/
 }
 
 @media (max-width: 768px) {
@@ -195,9 +223,9 @@ h2 {
         width: 80%;
     }
 
-    .review {
+    /*.review {
         width: 90%;
-    }
+    }*/
 }
 
 @media (max-width: 480px) {
@@ -214,13 +242,13 @@ h2 {
         padding: 10px 18px;
     }
 
-    .plan {
+    /*.plan {
         width: 100%;
-    }
+    }*/
 
-    .review {
+    /*.review {
         width: 95%;
-    }
+    }*/
 }
 </style>
 
@@ -232,7 +260,7 @@ h2 {
                         <h1>Ad Posting Allowances</h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{route( '/')}}">Home</a></li>
                         <li>Ad Posting Alloances</li>
                     </ul>
                 </div>
@@ -243,7 +271,7 @@ h2 {
         <div class="hero-content">
             <h1>Enhance Your Ad Posting Experience</h1>
             <p>Post your ads with premium visibility and get more engagement instantly. Choose the best plan to maximize your reach.</p>
-            <button class="cta-button">Get Started</button>
+            <button class="cta-button"onclick="window.location.href='/';">Get Started</button>
         </div>
     </section>
 
@@ -263,7 +291,7 @@ h2 {
         </ul>
     </section>
 
-    <section class="plans">
+    <!--<section class="plans">
         <h2>Choose Your Plan</h2>
         <div class="plan-container">
             <div class="plan">
@@ -291,7 +319,7 @@ h2 {
                 <button>Contact Us</button>
             </div>
         </div>
-    </section>
+    </section>-->
 
     <!-- New Section: How It Works -->
     <section class="how-it-works">
@@ -317,7 +345,7 @@ h2 {
     </section>
 
     <!-- New Section: Customer Reviews -->
-    <section class="reviews">
+    <!--<section class="reviews">
         <h2>What Our Customers Say</h2>
         <div class="review">
             <p>"My business grew rapidly after using the premium ad service. Highly recommended!"</p>
@@ -331,7 +359,7 @@ h2 {
             <p>"Fantastic service! My ad stayed at the top for weeks, bringing in more customers."</p>
             <h4>– Emily D.</h4>
         </div>
-    </section>
+    </section>-->
 
     <section class="faq">
         <h2>Frequently Asked Questions</h2>
@@ -353,8 +381,8 @@ h2 {
         <div class="row">
             <div class="pt-5 pb-5 col-md-12">
                 <h2 class="mt-5 mb-4 text-center">Ads Posting Allowances</h2>
-                <p class="mb-4 text-center">Free ad posting is available in every category. Contact us to become a Yaka.lk subscriber and own your stall today.</p>
-                
+                <p class="mb-4 text-center"style="font-size:20px;">Free ad posting is available in every category. Contact us to become a Yaka.lk subscriber and own your stall today.</p>
+                <br>
                 <ul class="posting-allowances-list">
                     @php
                         $categories = \App\Models\Category::where('mainId', 0)->where('status', 1)->get();

@@ -8,7 +8,7 @@
 /* Sections */
 .criteria-section1 {
     max-width: 1000px;
-    height: 500px;
+    height: 300px;
     justify-content: center;
     align-items: center;
     margin: 50px auto;
@@ -30,6 +30,43 @@
     opacity: 0;
     transform: translateY(50px);
     transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+/* posting-criteria-list  */
+.posting-criteria-list {
+    list-style: none;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+}
+
+.posting-criteria-list li {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.posting-criteria-list li:hover {
+    background: rgb(136, 30, 35);
+    color: white;
+    transform: scale(1.05);
+}
+
+.posting-criteria-list li::before {
+    content: "✔";
+    color: #28a745;
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 12px;
 }
 
 /* Typography */
@@ -70,7 +107,7 @@ p {
     text-align: center;
 }
 
-.left-align {
+/*.left-align {
     text-align: left;
     transform: translateX(-50px);
 }
@@ -78,10 +115,10 @@ p {
 .right-align {
     text-align: right;
     transform: translateX(50px);
-}
+}*/
 
 /* Steps */
-.steps {
+/*.steps {
     display: flex;
     justify-content: center;
     padding: 20px;
@@ -113,10 +150,10 @@ p {
 .step p{
     font-size: 22px;
     color: black;
-}
+}*/
 
 /* Pricing Table */
-.pricing-table {
+/*.pricing-table {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -135,7 +172,7 @@ p {
 
 .price-card:hover {
     transform: scale(1.1);
-}
+}*/
 
 .premium { background: gold; }
 .vip { background:rgb(185, 2, 2); color:rgb(255, 255, 255); }
@@ -175,7 +212,7 @@ p {
                         <h1>Ad Posting Criteria</h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{route( '/')}}">Home</a></li>
                         <li>Ad Posting Criteria</li>
                     </ul>
                 </div>
@@ -187,30 +224,31 @@ p {
         <h1>Ad Posting Criteria</h1>
         <p>Welcome to our advertising platform!</p>
         <p> Please ensure your ad meets the following standards for a smooth experience.</p>
-        <br>
-        <ul class="text-center posting-criteria-list">
-            <li class="mb-2">1. Use correct quality pictures regarding the item.</li>
-            <li class="mb-2">2. Strictly only legal items.</li>
-            <li class="mb-2">3. Photos should match the item or service.</li>
-            <li class="mb-2">4. Do not post alcohol, tobacco, or related drugs.</li>
-            <li class="mb-2">5. Use correct contact numbers.</li>
-            <li class="mb-2">6. Do not post prohibited items.</li>
-            <li class="mb-2">7. Do not post several items in a single ad.</li>
-          </ul>
     </section>
-
+    <div class="pt-5 pb-5 col-md-12">
+        <h2 class="mt-5 mb-4 text-center" style="margin-bottom: 30px;font-size:35px">Essential Guidelines for Posting Ads</h2>
+    <ul class="text-center posting-criteria-list" style="margin-bottom: 30px;margin-top:50px">
+        <li class="mb-2">1. Use correct quality pictures regarding the item.</li>
+        <li class="mb-2">2. Strictly only legal items.</li>
+        <li class="mb-2">3. Photos should match the item or service.</li>
+        <li class="mb-2">4. Do not post alcohol, tobacco, or related drugs.</li>
+        <li class="mb-2">5. Use correct contact numbers.</li>
+        <li class="mb-2">6. Do not post prohibited items.</li>
+        <li class="mb-2">7. Do not post several items in a single ad.</li>
+      </ul>
+    </div>
     <!-- Section: General Guidelines -->
-    <section class="criteria-section slide-in left-align">
+    <!--<section class="criteria-section slide-in left-align">
         <h2>General Guidelines</h2>
         <p>
             Every advertisement posted on our platform should be *clear, concise, and accurate*. Misleading or inappropriate content will not be tolerated.  
             Ensure your ads contain *proper grammar and formatting* to provide the best user experience.  
             *Contact details must be valid* to avoid ad rejection.  
         </p>
-    </section>
+    </section>-->
 
     <!--  Section: Approval Process -->
-    <section class="criteria-section fade-in right-align">
+    <!--<section class="criteria-section fade-in right-align">
         <h2>Ad Approval Process</h2>
         <p>
             Once you submit an ad, it goes through a *4-step approval process* to maintain quality. Ads are reviewed based on their content, legitimacy, and compliance with our policies.
@@ -221,20 +259,20 @@ p {
             <div class="step"><span>3</span><p>Approval</p></div>
             <div class="step"><span>4</span><p>Live</p></div>
         </div>
-    </section>
+    </section>-->
 
     <!-- Section: Expiry & Renewal -->
-    <section class="criteria-section slide-in left-align">
+    <!--<section class="criteria-section slide-in left-align">
         <h2>Ad Expiry & Renewal</h2>
         <p>
             Each ad remains active for *30 days*. To continue visibility, renew the ad before expiration.  
             Expired ads will be removed automatically from search results.  
             Our system sends notifications before expiration so you never miss a renewal deadline.  
         </p>
-    </section>
+    </section>-->
 
     <!-- Section: Pricing Plans -->
-    <section class="criteria-section fade-in right-align">
+    <!--<section class="criteria-section fade-in right-align">
         <h2>Pricing & Featured Ads</h2>
         <p>
             We offer *multiple pricing plans* based on your advertising needs. Featured ads gain *higher visibility and premium exposure*, helping businesses reach potential customers faster.
@@ -253,6 +291,6 @@ p {
                 <p>$25 - 60 Days</p>
             </div>
         </div>
-    </section>
+    </section>-->
     @endsection
 
