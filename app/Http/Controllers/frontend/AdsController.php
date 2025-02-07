@@ -12,6 +12,17 @@ use Illuminate\Http\Request;
 
 class AdsController extends Controller
 {
+    //show ads
+    public function adshow()
+    {
+        $ads = Ads::latest()->take(6)->get();
+        return view('newFrontend.index', compact('ads'));
+    }
+
+    public function someFunction(){
+        $adsCount = Ad::count();
+        echo "Total ads:";
+    }
   
 
     public function browseAds(Request $request)
