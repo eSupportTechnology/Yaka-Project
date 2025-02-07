@@ -6,7 +6,7 @@
 /* Sections */
 .criteria-section1 {
     max-width: 1000px;
-    height: 400px;
+    height: 500px;
     justify-content: center;
     align-items: center;
     margin: 50px auto;
@@ -185,6 +185,16 @@ p {
         <h1>Ad Posting Criteria</h1>
         <p>Welcome to our advertising platform!</p>
         <p> Please ensure your ad meets the following standards for a smooth experience.</p>
+        <br>
+        <ul class="text-center posting-criteria-list">
+            <li class="mb-2">1. Use correct quality pictures regarding the item.</li>
+            <li class="mb-2">2. Strictly only legal items.</li>
+            <li class="mb-2">3. Photos should match the item or service.</li>
+            <li class="mb-2">4. Do not post alcohol, tobacco, or related drugs.</li>
+            <li class="mb-2">5. Use correct contact numbers.</li>
+            <li class="mb-2">6. Do not post prohibited items.</li>
+            <li class="mb-2">7. Do not post several items in a single ad.</li>
+          </ul>
     </section>
 
     <!-- Section: General Guidelines -->

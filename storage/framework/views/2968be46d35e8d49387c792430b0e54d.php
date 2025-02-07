@@ -347,6 +347,26 @@ h2 {
         </div>
     </section>
 
+    <div class="container">
+        <div class="row">
+            <div class="pt-5 pb-5 col-md-12">
+                <h2 class="mt-5 mb-4 text-center">Ads Posting Allowances</h2>
+                <p class="mb-4 text-center">Free ad posting is available in every category. Contact us to become a Yaka.lk subscriber and own your stall today.</p>
+                
+                <ul class="posting-allowances-list">
+                    <?php
+                        $categories = \App\Models\Category::where('mainId', 0)->where('status', 1)->get();
+                    ?>
+    
+                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li class="mb-2"><?php echo e($key+1); ?>. - <?php echo e($cat->name); ?> - <?php echo e($cat->free_add_count); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+
     <?php $__env->stopSection(); ?>
 
 

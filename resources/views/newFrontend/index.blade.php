@@ -551,40 +551,7 @@
 
 
 
-        <!-- supper add-section start -->
-        <main>
-            <section class="super-section">
-                <div id="superAdsSlideshow" class="ad-box">
-                    @foreach($superAds as $ad)
-                        <div class="slide">
-                            <h3>{{ $ad->title }}</h3>
-                            <p>{{ $ad->category->name ?? '' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                            <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
-                            <p>{{ $ad->created_at->diffForHumans() }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </section>
-        
-            <aside class="premium-ads">
-                <h2 class="heading"><b>Find your needs in our <br> 
-                 best <span>Super Ads</span></b></h2>
-            
-                <div class="super-banner">
-                    <div id="superAdsSlideshow" class="ad-box">
-                        @foreach($superAds as $ad)
-                            <div class="slide">
-                                <h3>{{ $ad->title }}</h3>
-                                <p>{{ $ad->category->name ?? '' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
-                                <p>{{ $ad->created_at->diffForHumans() }}</p>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </aside>
-        </main>
-        <!-- supper add-section end -->
+       
 
         <!-- feature-style-two -->
         <section class="feature-style-two">

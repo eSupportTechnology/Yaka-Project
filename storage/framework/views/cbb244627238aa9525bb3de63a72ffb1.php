@@ -230,6 +230,22 @@
     </div>
     </section>
 
+    <div class="container-new">
+        <div class="row">
+            <div class="pt-5 pb-5 col-md-12">
+                <h2 class="mb-4 text-center">Tips for Better Ads</h2>
+                <ul class="text-center tips-list">
+                    <li class="mb-2">1. Upload clear photos from different angles.</li>
+                    <li class="mb-2">2. Upload real photos.</li>
+                    <li class="mb-2">3. Add actual and clear details to impress customers.</li>
+                    <li class="mb-2">4. Add working contact numbers.</li>
+                    <li class="mb-2">5. Choose a competitive price.</li>
+                    <li class="mb-2">6. Select the negotiable option for a better response.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <!-- Customer Trust & Security Section -->
 <section class="content-section">
     <div class="container">
@@ -263,6 +279,7 @@
         <a href="#" class="animated-button">Get Started</a>
     </div>
 </section>
+
 <?php $__env->stopSection(); ?>
 
 
