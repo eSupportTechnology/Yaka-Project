@@ -50,6 +50,7 @@ Route::get('/add_post',[HomeController::class,'add_post'])->name('add_post');
 
 Route::get('/browse_ads', [AdsController::class, 'browseAds'])->name('browse-ads');
 Route::get('/browse_ads_details/{ad_id}', [AdsController::class, 'show_details'])->name('ads.details');
+Route::get('/ads', [AdsController::class, 'adshow'])->name('ads.adShow');
 
 
 Route::middleware(['auth'])->group(function () {
