@@ -1,6 +1,4 @@
-@extends ('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
   
 <style>
 
@@ -351,13 +349,13 @@
         <section class="ad-banner-container mb-0"> 
             <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
                 <div class="carousel-inner">
-                    @foreach($banners as $key => $banner)
-                        @if($banner->type == 0)
-                            <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                               <img src="{{ asset('banners/' . $banner->img) }}" class="d-block mx-auto" alt="Banner Image">
+                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($banner->type == 0): ?>
+                            <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                               <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="d-block mx-auto" alt="Banner Image">
                             </div>
-                        @endif
-                    @endforeach
+                        <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
         </section>
@@ -372,32 +370,33 @@
                 </div>
                 
                 <div class="clearfix inner-content" style="display: flex; flex-wrap: wrap; justify-content: center;">
-            @foreach($categories as $category)
+            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="category-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                    <a href="{{ route('browse-ads', ['category' => $category->id]) }}" style="text-decoration: none;">
+                    <a href="<?php echo e(route('browse-ads', ['category' => $category->id])); ?>" style="text-decoration: none;">
                         <div class="inner-box">
                             <div class="shape">
-                                <div class="shape-1" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-1.png') }}');"></div>
-                                <div class="shape-2" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-2.png') }}');"></div>
+                                <div class="shape-1" style="background-image: url('<?php echo e(asset('newFrontend/Clasifico/assets/images/shape/shape-1.png')); ?>');"></div>
+                                <div class="shape-2" style="background-image: url('<?php echo e(asset('newFrontend/Clasifico/assets/images/shape/shape-2.png')); ?>');"></div>
                             </div>
 
                             <div class="icon-box">
-                                <img src="{{ asset('images/Category/' . $category->image) }}" 
-                                    alt="{{ $category->name }}" 
+                                <img src="<?php echo e(asset('images/Category/' . $category->image)); ?>" 
+                                    alt="<?php echo e($category->name); ?>" 
                                     style="width: 70px; height: 70px; object-fit: contain;">
                             </div>
 
                             <h5 style="min-height: 50px; display: -webkit-box; 
                                     -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
                                     overflow: hidden; text-overflow: ellipsis; ">
-                                {{ $category->name }}
+                                <?php echo e($category->name); ?>
+
                             </h5>
 
-                            <span>{{ $category->ads_count }}</span>
+                            <span><?php echo e($category->ads_count); ?></span>
                         </div>
                     </a>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
 </section>
 <!-- category-section end -->
@@ -409,40 +408,40 @@
 
     <div class="top-banner"> <!-- Updated class reference here -->
         <div class="left">
-            @foreach($topbanners as $key => $banner)
-                @if($banner->type == 1)  <!-- Only display banners with type 1 -->
-                    <div class="carousel-item {{ $key == 1 ? 'active' : '' }}">
-                        <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+            <?php $__currentLoopData = $topbanners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($banner->type == 1): ?>  <!-- Only display banners with type 1 -->
+                    <div class="carousel-item <?php echo e($key == 1 ? 'active' : ''); ?>">
+                        <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="d-block w-100" alt="Banner Image">
                     </div>
-                @endif
-            @endforeach
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
 
         <div class="right">
             <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    @foreach($topAds as $index => $ad)
-                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                    <?php $__currentLoopData = $topAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="carousel-item <?php echo e($index == 0 ? 'active' : ''); ?>">
                             <div class="ad-box">
-                                <h3>{{ $ad->title }}</h3>
-                                <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
-                                <p>{{ $ad->created_at->diffForHumans() }}</p>
+                                <h3><?php echo e($ad->title); ?></h3>
+                                <p><?php echo e($ad->category->name ?? 'Uncategorized'); ?> &raquo; <?php echo e($ad->subcategory->name ?? ''); ?></p>
+                                <p class="price">LKR <?php echo e(number_format($ad->price, 2)); ?></p>
+                                <p><?php echo e($ad->created_at->diffForHumans()); ?></p>
                             </div>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
 
             <div class="card-container">
-                @foreach($topAds as $ad)
+                <?php $__currentLoopData = $topAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="ad-card">
-                        <h3>{{ $ad->title }}</h3>
-                        <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                        <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
-                        <p>{{ $ad->created_at->diffForHumans() }}</p>
+                        <h3><?php echo e($ad->title); ?></h3>
+                        <p><?php echo e($ad->category->name ?? 'Uncategorized'); ?> &raquo; <?php echo e($ad->subcategory->name ?? ''); ?></p>
+                        <p class="price">LKR <?php echo e(number_format($ad->price, 2)); ?></p>
+                        <p><?php echo e($ad->created_at->diffForHumans()); ?></p>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
             <p>The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.</p>
@@ -473,12 +472,12 @@
                         <div class="tab active-tab" id="tab-1">
 
                             <div class="clearfix row">
-                            @foreach($latestAds as $ads)
+                            <?php $__currentLoopData = $latestAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
                                     <div class="feature-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box" >
-                                                <figure class="image"><img src="{{ asset('images/Ads/' . $ads->mainImage) }}" alt="" style="width: 370px; height: 220px; object-fit: cover;"></figure>
+                                                <figure class="image"><img src="<?php echo e(asset('images/Ads/' . $ads->mainImage)); ?>" alt="" style="width: 370px; height: 220px; object-fit: cover;"></figure>
                                                 <div class="shape"></div>
                                                 <div class="feature">Featured</div>
                                                 <div class="icon">
@@ -489,7 +488,7 @@
                                             <div class="lower-content">
                                             
                                               
-                                                <h3 style="margin-top:20px;"><a href="browse-ads-details.html">{{$ads ->title}}</a></h3>
+                                                <h3 style="margin-top:20px;"><a href="browse-ads-details.html"><?php echo e($ads ->title); ?></a></h3>
                                                 <ul class="clearfix rating">
                                                     <li><i class="icon-17"></i></li>
                                                     <li><i class="icon-17"></i></li>
@@ -500,10 +499,10 @@
                                                 </ul>
                                                 <ul class="clearfix info">
                                                     
-                                                    <li><i class="fas fa-map-marker-alt"></i>{{$ads -> location}}</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i><?php echo e($ads -> location); ?></li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Price:</span>{{$ads -> price}}</h5>
+                                                    <h5><span>Price:</span><?php echo e($ads -> price); ?></h5>
                                                     <ul class="react-box">
                                                         <li><a href="index.html"><i class="icon-21"></i></a></li>
                                                         <li><a href="index.html"><i class="icon-22"></i></a></li>
@@ -514,7 +513,7 @@
                                     </div>
                                 </div>
                               
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                             </div>
                         </div>
@@ -530,13 +529,13 @@
            <section class="ad-banner-container mb-0"> 
             <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
                 <div class="carousel-inner">
-                    @foreach($banners as $key => $banner)
-                        @if($banner->type == 0)
-                            <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                               <img src="{{ asset('banners/' . $banner->img) }}" class="d-block mx-auto" alt="Banner Image">
+                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($banner->type == 0): ?>
+                            <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                               <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="d-block mx-auto" alt="Banner Image">
                             </div>
-                        @endif
-                    @endforeach
+                        <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
         </section>
@@ -574,10 +573,11 @@
     });
 </script>
          
-@endsection
+<?php $__env->stopSection(); ?>
 
        
 
 
 
  
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\pennn\Yaka-Project\resources\views/newFrontend/index.blade.php ENDPATH**/ ?>
