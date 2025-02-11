@@ -30,6 +30,7 @@ class HomeController extends Controller
             ->get();
 
             $latestAds = Ads::latest()
+            ->where('ads_package', 4)
             ->take(6)
             ->get();
     
