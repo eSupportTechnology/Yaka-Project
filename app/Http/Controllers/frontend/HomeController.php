@@ -28,15 +28,22 @@ class HomeController extends Controller
             ->latest()
             ->take(5)  // Show 5 ads in the slideshow
             ->get();
+
+            $latestAds = Ads::latest()
+            ->take(6)
+            ->get();
     
             $superAds = Ads::with(['category', 'subcategory'])
             ->where('ads_package', 4) 
             ->latest()
             ->take(5)  // Limit the number of Super Ads
             ->get();
-        return view('newFrontend.index', compact('banners', 'categories', 'topAds','superAds','topbanners'));
+        return view('newFrontend.index', compact('banners', 'categories', 'topAds','topbanners','latestAds','superAds'));
     }
 
+    public function index(){
+
+    }
 
   
     public function aboutUs()
@@ -75,6 +82,9 @@ class HomeController extends Controller
     {
         return view('newFrontend.add_post');
     }
+    
+   
+ 
       
        
 }

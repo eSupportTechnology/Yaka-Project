@@ -28,8 +28,10 @@ Route::get('/custom-login', function () {
 Route::post('/custom-login', [CustomAuthController::class, 'login'])->name('custom.login');
 Route::post('logout', [CustomAuthController::class, 'logout'])->name('logout');
 
+Route::get('/', [HomeController::class, 'index'])->name('/');
 
 Route::post('/register', [RegisteredUserController::class, 'register']);
+
 
 
 Route::get('/',[HomeController::class,'home'])->name('/');
