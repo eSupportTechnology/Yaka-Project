@@ -102,11 +102,15 @@
                                 <li><a class="active" href="<?php echo e(route('user.ad_posts')); ?>">ad post</a></li>
                                 <li><a href="<?php echo e(route('user.my_ads')); ?>" >my ads</a></li>
                                 <li><a href="<?php echo e(route('user.profile')); ?>">Profile</a></li>
-                                <li><a href="">message</a></li>
+                                <li><a href="#">Message</a></li>
                                 <li>
-                                    <a href="<?php echo e(route('logout')); ?>" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                        <?php echo csrf_field(); ?>
+                                    </form>
                                 </li>
-                                
                             </ul>
                         </div>
                     </div>

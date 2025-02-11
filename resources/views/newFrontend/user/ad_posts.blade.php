@@ -104,11 +104,15 @@
                                 <li><a class="active" href="{{route('user.ad_posts')}}">ad post</a></li>
                                 <li><a href="{{route('user.my_ads')}}" >my ads</a></li>
                                 <li><a href="{{route('user.profile')}}">Profile</a></li>
-                                <li><a href="">message</a></li>
+                                <li><a href="#">Message</a></li>
                                 <li>
-                                    <a href="{{route('logout')}}" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                                 </li>
-                                
                             </ul>
                         </div>
                     </div>
