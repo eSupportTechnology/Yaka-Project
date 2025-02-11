@@ -29,7 +29,12 @@ class HomeController extends Controller
             ->take(5)  // Show 5 ads in the slideshow
             ->get();
     
-        return view('newFrontend.index', compact('banners', 'categories', 'topAds','topbanners'));
+            $superAds = Ads::with(['category', 'subcategory'])
+            ->where('ads_package', 4) 
+            ->latest()
+            ->take(5)  // Limit the number of Super Ads
+            ->get();
+        return view('newFrontend.index', compact('banners', 'categories', 'topAds','superAds','topbanners'));
     }
 
 

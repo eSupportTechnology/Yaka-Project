@@ -324,109 +324,11 @@
     padding: 15px;
     background: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgb(255, 255, 255);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
     flex-shrink: 0;
- }
-
- main {
-            display: flex;
-            padding: 20px;
-}
-
-.super-section {
-            flex: 3;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 254, 254, 0.89);
-            margin-top: 110px;
-}
-.super-card {
-            position: relative;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background: #fff;
-}
-.sale-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: red;
-            color: white;
-            padding: 5px;
-            font-size: 12px;
-            border-radius: 5px;
-}
-.price {
-            font-weight: bold;
-            color: #333;
-}
-.date {
-            font-size: 12px;
-            color: gray;
-}
-        .premium-ads {
-            flex: 2;
-            text-align: center;
-            margin-left: 10px;
-            width: 300px;
-            height: 400px;
-            transform: translateX(125px);
-        }
-        .highlight {
-            color: red;
-        }
-        .super-banner {
-            background: black;
-            color: orange;
-            padding: 50px;
-            border-radius: 10px;
-            text-align: center;
-            width: 300px;
-            height: 500px;
-            
-        }
-        .book-now {
-            background: orange;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .ad-box {
-        position: relative;
-        width: 100%;
-        max-width: 600px;
-        height: 250px;
-        overflow: hidden;
-        margin: auto;
     }
 
-    .slide {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        background: rgba(249, 249, 249, 0.93);
-        color: #fff;
-        padding: 20px;
-        box-sizing: border-box;
-        border-radius: 10px;
-    }
-
-    .slide.active {
-        opacity: 1;
-    }
 </style>
 
         <!-- banner-section -->
@@ -506,13 +408,18 @@
 
     <div class="top-banner"> <!-- Updated class reference here -->
         <div class="left">
+        @if($topbanners->isNotEmpty())
             @foreach($topbanners as $key => $banner)
-                @if($banner->type == 1)  <!-- Only display banners with type 1 -->
-                    <div class="carousel-item {{ $key == 1 ? 'active' : '' }}">
+                @if($banner->type == 1)  
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                         <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
                     </div>
                 @endif
             @endforeach
+        @else
+            <p>No banners available</p>
+        @endif
+
         </div>
 
         <div class="right">
@@ -548,10 +455,6 @@
     </div> <!-- Closing top-banner div -->
 </div> <!-- Closing cont div -->
 <!-- top add-section end -->
-
-
-
-       
 
         <!-- feature-style-two -->
         <section class="feature-style-two">
@@ -1123,7 +1026,22 @@
         </section>
         <!-- feature-style-two end -->
 
-    
+      <!-- advertisement - banner-section start 
+    <section class="banner-container">
+        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                @foreach($banners as $key => $banner)
+                    @if($banner->type == 0) 
+                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <img src="{{ asset('banners/' . $banner->img) }}" 
+                                alt="Banner Image">
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </section>
+ advertisement - banner-section end -->
 
            <!-- ad - banner-section start -->
            <section class="ad-banner-container mb-0"> 
@@ -1170,22 +1088,6 @@
             slider.style.transform = `translateX(${moveAmount}%)`;
             autoSlide = setInterval(slide, 3000);
         });
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let slides = document.querySelectorAll("#superAdsSlideshow .slide");
-        let index = 0;
-
-        function showSlide() {
-            slides.forEach(slide => slide.classList.remove("active"));
-            slides[index].classList.add("active");
-            index = (index + 1) % slides.length;
-        }
-
-        showSlide();
-        setInterval(showSlide, 3000);
     });
 </script>
          

@@ -183,7 +183,7 @@
                                         <h3>Create Account</h3>
                                         <p>To create an account on Yaka.lk, visit the website, click on the "Sign Up" button, fill in your details, and submit the registration form.</p>
                                     </div>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 process-block">
