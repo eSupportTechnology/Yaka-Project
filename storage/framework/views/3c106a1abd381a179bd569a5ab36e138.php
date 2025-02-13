@@ -409,18 +409,13 @@
 
     <div class="top-banner"> <!-- Updated class reference here -->
         <div class="left">
-        <?php if($topbanners->isNotEmpty()): ?>
             <?php $__currentLoopData = $topbanners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($banner->type == 1): ?>  
-                    <div class="carousel-item <?php echo e($loop->first ? 'active' : ''); ?>">
+                <?php if($banner->type == 1): ?>  <!-- Only display banners with type 1 -->
+                    <div class="carousel-item <?php echo e($key == 1 ? 'active' : ''); ?>">
                         <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="d-block w-100" alt="Banner Image">
                     </div>
                 <?php endif; ?>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        <?php else: ?>
-            <p>No banners available</p>
-        <?php endif; ?>
-
         </div>
 
         <div class="right">
@@ -464,28 +459,34 @@
 </div> <!-- Closing cont div -->
 <!-- top add-section end -->
 
+
         <!-- feature-style-two -->
         <section class="feature-style-two">
             <div class="auto-container">
                 <div class="sec-title centred">
                     <span>Urgents</span>
                     <h2>Urgent Ads</h2>
-                    <p>We have some special promotion for sell urgently<br>
-Urgent badge which is great advantage to get more attention quickly. <br /></p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed do eiusmod tempor incididunt labore <br />dolore magna aliqua enim.</p>
                 </div>
                 <div class="tabs-box">
-                    
+                    <div class="tab-btn-box centred">
+                        
+                        <ul class="clearfix tab-btns tab-buttons">
+                            <li class="tab-btn active-btn" data-tab="#tab-1">Recent Listing</li>
+                            <li class="tab-btn" data-tab="#tab-2">Popular Listing</li>
+                        </ul>
+                    </div>
                     <div class="tabs-content">
                         <div class="tab active-tab" id="tab-1">
 
-                            <div class="clearfix row justify-content-center">
+                            <div class="clearfix row">
                             <?php $__currentLoopData = $latestAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <div class="col-lg-3 col-md-5 col-sm-12 feature-block justify-content-center">
+                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
                                     <div class="feature-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box" >
                                                 <figure class="image"><img src="<?php echo e(asset('images/Ads/' . $ads->mainImage)); ?>" alt="" style="width: 370px; height: 220px; object-fit: cover;"></figure>
-                                               
+                                                <div class="shape"></div>
                                                 <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent</div>
                                             
                                             </div>
@@ -518,22 +519,7 @@ Urgent badge which is great advantage to get more attention quickly. <br /></p>
         </section>
         <!-- feature-style-two end -->
 
-      <!-- advertisement - banner-section start 
-    <section class="banner-container">
-        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-            <div class="carousel-inner">
-                <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <?php if($banner->type == 0): ?> 
-                        <div class="carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
-                            <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" 
-                                alt="Banner Image">
-                        </div>
-                    <?php endif; ?>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
-        </div>
-    </section>
- advertisement - banner-section end -->
+    
 
            <!-- ad - banner-section start -->
            <section class="ad-banner-container mb-0"> 
@@ -606,4 +592,4 @@ Urgent badge which is great advantage to get more attention quickly. <br /></p>
 
 
  
-<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\pennn\Yaka-Project\resources\views/newFrontend/index.blade.php ENDPATH**/ ?>

@@ -81,6 +81,8 @@ class AdsController extends Controller
     {
         // Fetch the ad by its ID and eager load related models
         $ad = Ads::with(['main_location', 'sub_location', 'user', 'category'])->findOrFail($ad_id);
+
+       
     
         $mainImage = $ad->main_image;
         $subImages = $ad->sub_images;
@@ -120,5 +122,6 @@ class AdsController extends Controller
         return view('newFrontend.ads_boost_plans', compact('ad'));
     }
 
-    
+ 
+ 
 }
