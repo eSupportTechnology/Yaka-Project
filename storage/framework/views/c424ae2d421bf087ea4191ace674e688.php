@@ -336,7 +336,7 @@
                             <?php $__currentLoopData = $packageTypes->filter(fn($type) => $type->package_id == $package->id); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($type->price); ?>" data-duration="<?php echo e($type->duration); ?>" 
                                     style="padding: 5px; font-size: 16px; color: #333; background-color: #f8f9fa;">
-                                    Name: <?php echo e($type->name); ?> | Duration: <?php echo e($type->duration); ?> days | Rs- <?php echo e($type->price); ?>
+                                    <?php echo e($type->duration); ?> days | Rs- <?php echo e($type->price); ?>
 
                                 </option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

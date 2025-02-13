@@ -337,7 +337,7 @@
                             @foreach($packageTypes->filter(fn($type) => $type->package_id == $package->id) as $type)
                                 <option value="{{ $type->price }}" data-duration="{{ $type->duration }}" 
                                     style="padding: 5px; font-size: 16px; color: #333; background-color: #f8f9fa;">
-                                    Name: {{ $type->name }} | Duration: {{ $type->duration }} days | Rs- {{ $type->price }}
+                                    {{ $type->duration }} days | Rs- {{ $type->price }}
                                 </option>
                             @endforeach
                         </select>
