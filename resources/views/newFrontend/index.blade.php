@@ -471,21 +471,22 @@
                 <div class="sec-title centred">
                     <span>Urgents</span>
                     <h2>Urgent Ads</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed do eiusmod tempor incididunt labore <br />dolore magna aliqua enim.</p>
+                    <p>We have some special promotion for sell urgently<br>
+Urgent badge which is great advantage to get more attention quickly. <br /></p>
                 </div>
                 <div class="tabs-box">
                     
                     <div class="tabs-content">
                         <div class="tab active-tab" id="tab-1">
 
-                            <div class="clearfix row">
+                            <div class="clearfix row justify-content-center">
                             @foreach($latestAds as $ads)
-                                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                                <div class="col-lg-3 col-md-5 col-sm-12 feature-block justify-content-center">
                                     <div class="feature-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box" >
                                                 <figure class="image"><img src="{{ asset('images/Ads/' . $ads->mainImage) }}" alt="" style="width: 370px; height: 220px; object-fit: cover;"></figure>
-                                                <div class="shape"></div>
+                                               
                                                 <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent</div>
                                             
                                             </div>
