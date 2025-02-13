@@ -180,6 +180,7 @@
     color: #333;
     margin-bottom: 15px;
     text-align: left;
+    margin-left:124px;
 }
 
 .heading span {
@@ -193,28 +194,31 @@
 
 .top-banner { 
     display: flex;
-    align-items: center; /* Align content to the top */
+    align-items: flex-start; /* Align content to the top */
     justify-content: flex-start; /* Align everything to the left */
-    padding: 20px; /* Increased padding */
+    padding: 20px;
+    position: relative; /* Ensure proper placement */
 }
 
 .top-banner .left { 
     flex: 1; /* Adjust size */
-    padding: 20px;
+    margin-left: 150px; /* Adjust spacing without negative margins */
 }
 
 .top-banner .left img { 
-    max-width: 100%; 
-    max-height: 400px; 
+    max-width: 400px; 
+    max-height: 600px; 
     border-radius: 10px;
 }
 
 .top-banner .right { 
     flex: 2; 
-    padding: 20px;
+    margin-left: -50px; /* Replacing the negative margin */
     text-align: left;
+    position: relative;
+    top: 0;
+    margin-top:210px; /* Adjust height properly */
 }
-
 
 .top-banner p { 
     color: #555;
@@ -227,8 +231,7 @@
     padding: 50px;
     border-radius: 10px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
-
+    margin-top: 20px; /* Instead of negative margins */
 }
 
 .top-banner .ad-box h3 { 
@@ -250,13 +253,11 @@
 .carousel-item .ad-box {
     background: white;
     padding-top: 10px; /* Reduced padding */
-    margin-top: -90px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     text-align: left;
     max-width: 99%;
     margin: auto;
-
 }
 
 .carousel-control-prev, 
@@ -266,9 +267,9 @@
 
 #topAdsCarousel {
     margin-bottom: 30px; /* Space between the carousel and the cards */
-    }
+}
 
-    /* Style for each ad card */
+/* Style for each ad card */
 .ad-card {
     background: white;
     border-radius: 10px;
@@ -276,7 +277,7 @@
     padding: 20px;
     text-align: right;
     margin-bottom: 10px;
-    }
+}
 
 .ad-card h3 {
     font-size: 1.2rem;
@@ -291,21 +292,20 @@
     font-size: 1.1rem;
     color: #d9534f;
     font-weight: bold;
- }
+}
 
 .card-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    align-items: right;
+    align-items: center;
     gap: 20px;
     margin-top: 30px;
- }
+}
 
-    /* Card image styling if needed */
+/* Card image styling if needed */
 .ad-card img {
     max-width: 50%;
     border-radius: 8px;
-    
 }
 
 .slider-container {
@@ -328,7 +328,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
     flex-shrink: 0;
-    }
+}
+
 
 </style>
 
@@ -424,33 +425,40 @@
         </div>
 
         <div class="right">
-            <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-top:-320px;margin-left:-200px;">
                 <div class="carousel-inner">
                     @foreach($topAds as $index => $ad)
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                            <div class="ad-box">
-                                <h3>{{ $ad->title }}</h3>
-                                <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
-                                <p>{{ $ad->created_at->diffForHumans() }}</p>
+                        <div class="ad-box" style="width: 470px; height: 220px; background: url('{{ asset('images/Ads/' . $ad->mainImage) }}') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
+                        <!-- Shadow Overlay -->
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
+
+                        <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+    Sale
+</button>
+                                <p style="color:white;">{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                <h3 style="color:white;font-weight:bold;">{{ $ad->title }}</h3>
+                                
+                                <p class="price" style="color:rgb(130, 128, 226);">LKR {{ number_format($ad->price, 2) }}</p>
+                                <p style="color:white;"><i class="fas fa-clock"></i>
+                                {{ $ad->created_at->diffForHumans() }}</p>
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>
 
-            <div class="card-container">
-                @foreach($topAds as $ad)
-                    <div class="ad-card">
-                        <h3>{{ $ad->title }}</h3>
-                        <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                        <p class="price">LKR {{ number_format($ad->price, 2) }}</p>
-                        <p>{{ $ad->created_at->diffForHumans() }}</p>
-                    </div>
-                @endforeach
-            </div>
+            <div class="small-carousel-wrapper" style="overflow: hidden; width: 580px; margin-top: -50px;">
+        <div class="card-container d-flex" style="display: flex; transition: transform 0.5s ease-in-out;">
+            @foreach($topAds as $index => $ad)
+                <div class="ad-card" data-index="{{ $index }}" style="background: url('{{ asset('images/Ads/' . $ad->mainImage) }}') no-repeat center center/cover; height: 100px; width: 100px; margin: -2px; border: 3px solid transparent; transition: border 0.3s;">
+                </div>
+            @endforeach
+        </div>
 
-            <p>The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.</p>
+            <p style="margin-top:14px;font-size:14px;">The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.
+                with higher visibility and priority ranking.Top ads ensure your products or services reach more potential buyers quickly and effectively.
+            </p>
         </div> <!-- Closing right div -->
 
     </div> <!-- Closing top-banner div -->
@@ -461,9 +469,9 @@
         <section class="feature-style-two">
             <div class="auto-container">
                 <div class="sec-title centred">
-                   
-                    <h2>Featured Ads</h2>
-                  
+                    <span>Urgents</span>
+                    <h2>Urgent Ads</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed do eiusmod tempor incididunt labore <br />dolore magna aliqua enim.</p>
                 </div>
                 <div class="tabs-box">
                     
@@ -478,21 +486,17 @@
                                             <div class="image-box" >
                                                 <figure class="image"><img src="{{ asset('images/Ads/' . $ads->mainImage) }}" alt="" style="width: 370px; height: 220px; object-fit: cover;"></figure>
                                                 <div class="shape"></div>
-                                                <div class="feature">Featured</div>
-                                                <div class="icon">
-                                                    <div class="icon-shape"></div>
-                                                    <i class="icon-16"></i>
-                                                </div>
+                                                <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent</div>
+                                            
                                             </div>
                                             <div class="lower-content">
                                             
                                               
-                                                <h3 style="margin-top:20px;"><a href="{{ route('ads.details', ['ad_id' => $ad->id]) }}">{{$ads ->title}}</a></h3>
-                                               
+                                                <h3 style="margin-top:20px;"><a href="browse-ads-details.html">{{$ads ->title}}</a></h3>
+                                           
                                                 <ul class="clearfix info">
                                                     
-                                                    <li><i class="fas fa-map-marker-alt"></i> 
-                                                    {{ $ad->sub_location ? $ad->sub_location->name_en : 'N/A' }},
+                                                    <li><i class="fas fa-map-marker-alt"></i>{{ $ad->sub_location ? $ad->sub_location->name_en : 'N/A' }},
                                                     {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }}</li>
                                                 </ul>
                                                 <div class="lower-box">
@@ -547,37 +551,53 @@
         </section>
         <!-- advertisement - banner-section end -->
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let slider = document.querySelector(".card-container");
-        let cards = document.querySelectorAll(".ad-card");
-        let prevBtn = document.querySelector(".prev");
-        let nextBtn = document.querySelector(".next");
-        let index = 0;
+        <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var carousel = document.getElementById("topAdsCarousel");
+        var adCards = document.querySelectorAll(".ad-card");
+        var cardContainer = document.querySelector(".card-container");
+        var wrapperWidth = document.querySelector(".small-carousel-wrapper").offsetWidth;
+        var cardWidth = 110; // Adjust this based on actual card width + margin
 
-        function slide() {
-            index = (index + 1) % cards.length;
-            let moveAmount = -index * 50; // Moves each card by 50% (2 cards per row)
-            slider.style.transform = `translateX(${moveAmount}%)`;
+        // Function to update active border and slide small ads
+        function updateActiveAd(index) {
+            adCards.forEach(card => card.style.border = "3px solid transparent"); // Remove border
+            let activeCard = document.querySelector(`.ad-card[data-index="${index}"]`);
+            if (activeCard) {
+                activeCard.style.border = "3px solid red"; // Highlight active ad
+                let offset = Math.max(0, (index * cardWidth) - (wrapperWidth / 2) + (cardWidth / 2)); // Keep ads centered
+                cardContainer.style.transform = `translateX(-${offset}px)`;
+            }
         }
 
-        let autoSlide = setInterval(slide, 3000); // Auto slide every 3 sec
-
-        nextBtn.addEventListener("click", function() {
-            clearInterval(autoSlide); // Stop auto-slide
-            slide();
-            autoSlide = setInterval(slide, 3000); // Restart auto-slide
+        // Bootstrap Carousel Event Listener
+        carousel.addEventListener("slid.bs.carousel", function (event) {
+            let activeIndex = event.to;
+            updateActiveAd(activeIndex);
         });
 
-        prevBtn.addEventListener("click", function() {
-            clearInterval(autoSlide);
-            index = (index - 1 + cards.length) % cards.length;
-            let moveAmount = -index * 50;
-            slider.style.transform = `translateX(${moveAmount}%)`;
-            autoSlide = setInterval(slide, 3000);
-        });
+        // Initially highlight the first ad
+        updateActiveAd(0);
+
+        // **New Slideshow Script for .top-banner**
+        let bannerItems = document.querySelectorAll('.top-banner .carousel-item');
+        
+        // Check if there are any banners
+        if (bannerItems.length > 0) {
+            let currentIndex = 0;
+
+            function showNextBanner() {
+                bannerItems[currentIndex].classList.remove('active'); // Hide current banner
+                currentIndex = (currentIndex + 1) % bannerItems.length; // Move to next (wrap around to the first one)
+                bannerItems[currentIndex].classList.add('active'); // Show next banner
+            }
+
+            // Start the slideshow if there are banners
+            setInterval(showNextBanner, 5000); // Change slide every 3 seconds
+        }
     });
 </script>
+
          
 @endsection
 
