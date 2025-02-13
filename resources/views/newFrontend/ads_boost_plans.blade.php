@@ -3,23 +3,44 @@
 @section('content')
 
 <style>
-
-.step-nav .nav-link {
-    background: none !important;
-    border: none;
-    color: black; 
-    font-weight: 500;
-    padding-bottom: 5px;
+    /* General Container Styling */
+/* General Container Styling */
+.custom-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
+.custom-card {
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
 
-.step-nav .nav-link.active {
+/* Step Navigation Styling */
+.custom-step-nav {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 0;
+}
+
+.custom-step-nav .custom-nav-link {
+    background: none;
+    border: none;
+    color: gray;
+    font-weight: 500;
+    padding-bottom: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.custom-step-nav .custom-nav-link.active {
     position: relative;
-    color: black; 
+    color: black;
     font-weight: bold;
 }
 
-.step-nav .nav-link.active::after {
+.custom-step-nav .custom-nav-link.active::after {
     content: "";
     display: block;
     width: 100%;
@@ -30,244 +51,440 @@
     left: 0;
 }
 
-.step-nav .nav-link.disabled {
+.custom-step-nav .custom-nav-link.disabled {
     color: gray;
     pointer-events: none;
 }
+
+/* Boost Option Styling */
+.custom-boost-options {
+    margin-top: 20px;
+}
+
+.custom-boost-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.custom-boost-option h5 {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.custom-boost-option img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.custom-boost-option select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.custom-boost-option select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Modern Summary Box Styling */
+.modern-summary-box {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.modern-summary-box:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.summary-details {
+    margin-bottom: 20px;
+}
+
+.summary-text {
+    color: #555;
+    font-weight: 500;
+}
+
+.summary-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.summary-buttons button {
+    width: 48%;
+}
+
+.custom-btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 600;
+}
+
+.custom-btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-btn-secondary {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: 600;
+    border: 1px solid #ccc;
+}
+
+.custom-btn-secondary:hover {
+    background-color: #e9ecef;
+    border-color: #ddd;
+}
+.custom-text-success {
+    color: #28a745;
+    font-weight: 600;
+}
+
+/* Button Styles */
+.custom-button {
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.custom-btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.custom-btn-success:hover {
+    background-color: #218838;
+}
+
+.custom-btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.custom-btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.custom-btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.remove-plan:hover {
+    color: darkred;
+    cursor: pointer;
+}
+
+.dropdown-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .custom-container {
+        padding: 15px;
+    }
+
+    .custom-card {
+        padding: 15px;
+    }
+
+    /* Boost Option Styling */
+    .custom-boost-option {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .custom-boost-option select {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .custom-step-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .custom-step-nav .custom-nav-link {
+        margin: 5px 0;
+    }
+
+    /* Make buttons stack in two rows */
+    .summary-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .summary-buttons button {
+        width: 100%;
+    }
+
+    /* Hide remove icon by default */
+    .remove-plan {
+        display: none;
+    }
+
+    /* Adjust for summary box and buttons on mobile */
+    .custom-summary-box {
+        padding: 20px;
+    }
+
+    .custom-boost-options {
+        margin-top: 10px;
+    }
+
+    .custom-btn-primary {
+        width: 100%;
+    }
+
+    .form-select option {
+        padding: 5px;
+        font-size: 16px;
+        color: #333;
+        background-color: #f8f9fa;
+        width: 25%
+    }
+
+
+   
+
+}
+
 </style>
 
-<div class="container mt-4 mb-4" style="max-width :900px;width:100%">
-    <div class="card p-4" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important; padding:20px 150px !important">   
+<div class="custom-container mt-4 mb-4">
+    <div class="custom-card p-4">
 
-       <!-- Step-wise Navigation -->
-        <ul class="nav justify-content-center mb-4 mt-4 step-nav">
+        <!-- Step-wise Navigation -->
+        <ul class="custom-step-nav">
             <li class="nav-item">
-                <span class="nav-link active">Ad Boost</span>
+                <span class="custom-nav-link active">Ad Boost</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link disabled">Summary</span>
+                <span class="custom-nav-link disabled" id="summaryStep">Summary</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link disabled">Payment</span>
+                <span class="custom-nav-link disabled">Payment</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link disabled">Done</span>
+                <span class="custom-nav-link disabled">Done</span>
             </li>
         </ul>
 
-        <!-- Ad Details 
-        <div class="text-center p-3 mb-1">
-            <img src="{{ asset('images/Ads/' . $ad->mainImage) }}" class="card-img-top mx-auto" style="width: 40%;" alt="Ad Image">
-            <div class="card-body">
-                <h5 class="card-title">{{ $ad->title }}</h5>
-                <p class="card-text">Price: Rs {{ number_format($ad->price, 2) }}</p>
-                <p class="card-text text-muted">Location: {{ $ad->location }}</p>
-            </div>
-        </div>-->
-
-       
-        <div class="boost-options mt-2">
+        <!-- Main Plan Section -->
+        <div class="custom-boost-options">
             <h4 class="mb-0 text-center">Make your ad stand out!</h4>
-            <p class="mb-1 text-center">Get up to 10 times more responses by boosting your ad. Select one or more options.</p>
+            <p class="mb-1 text-center">Get up to 10 times more responses by boosting your ad. Select one plan.</p>
 
-            <!-- Bump Up Plan -->
-            <div class="boost-option card p-3 mb-3 border">
-                <div class="d-flex justify-content-between align-items-center">
+            @foreach($packages as $package)
+                <?php
+                    $filteredTypes = $packageTypes->filter(function($type) use ($package) {
+                        return $type->package_id == $package->id;
+                    });
+
+                    $minPrice = $filteredTypes->min('price');
+
+                    // Mapping package names to image filenames
+                    $imageMap = [
+                        'Jump up' => '4.png',
+                        'Urgent' => '3.png',
+                        'Top Ad' => '2.png',
+                        'Super' => '1.png'
+                    ];
+
+                    // Set the image based on package name, default to 'default.png' if not found
+                    $imageFile = $imageMap[$package->name] ?? 'default.png';
+                ?>
+
+                <div class="custom-boost-option">
                     <div>
                         <h5>
-                            <img src="{{ asset('4.png') }}" alt="Jump Up" style="width: 50px; height: auto"> 
-                            Jump Up
+                            <img src="{{ asset($imageFile) }}" alt="{{ $package->name }}"> 
+                            {{ $package->name }}
                         </h5>
-                        <p class="mb-1">Get a fresh start every day and get up to 10 times more responses!</p>
-                        <strong>From Rs 700</strong>
+                        <p class="mb-1">Boost your ad with the "{{ $package->name }}" package!</p>
+                        <strong>From Rs {{ number_format($minPrice, 2) }}</strong>
                     </div>
-                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#bumpUpModal">+</button>
-                </div>
-            </div>
-
-           <!-- Urgent Plan Card -->
-            <div class="boost-option card p-3 mb-3 border">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>
-                            <img src="{{ asset('3.png') }}" alt="Urgent" style="width: 50px; height: auto"> 
-                            Urgent
-                        </h5>
-                        <p class="mb-1">Stand out from the rest by showing a bright red marker on the ad!</p>
-                        <strong>From Rs 1,900</strong>
+                    <div class="dropdown-wrapper">
+                        <select class="form-select" id="packageSelect{{ $package->id }}" onchange="selectPlanDropdown({{ $package->id }}, '{{ $package->name }}', this)">
+                            <option value="">Select Plan</option>
+                            @foreach($packageTypes->filter(fn($type) => $type->package_id == $package->id) as $type)
+                                <option value="{{ $type->price }}" data-duration="{{ $type->duration }}" 
+                                    style="padding: 5px; font-size: 16px; color: #333; background-color: #f8f9fa;">
+                                    Name: {{ $type->name }} | Duration: {{ $type->duration }} days | Rs- {{ $type->price }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <span class="remove-plan" id="removeIcon{{ $package->id }}" onclick="removePlan({{ $package->id }})" style="display: none;">❌</span>
                     </div>
-                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#urgentModal">+</button>
                 </div>
-            </div>
-
-            <!-- Top ad Plan -->
-            <div class="boost-option card p-3 mb-3 border">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>
-                            <img src="{{ asset('1.png') }}" alt="Top ad" style="width: 50px; height: auto"> 
-                            Top ad
-                        </h5>
-                        <p class="mb-1">Boost sales by showing your ad in this premium slot.</p>
-                        <strong>From Rs 2,400</strong>
-                    </div>
-                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#topadModal">+</button>
-                </div>
-            </div>
-
-            <!-- Super ad Plan -->
-            <div class="boost-option card p-3 mb-3 border">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>
-                            <img src="{{ asset('2.png') }}" alt="Top ad" style="width: 50px; height: auto"> 
-                            Super ad
-                        </h5>
-                        <p class="mb-1">Boost sales by showing your ad in this premium slot.</p>
-                        <strong>From Rs 2,400</strong>
-                    </div>
-                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#SuperModal">+</button>
-                </div>
-            </div>
-
+            @endforeach
         </div>
 
-
-      <!-- Amount Summary -->
-    <div class="summary-box p-3 mt-3 bg-light border">
-        <h5>Amount: <span id="totalAmount" class="text-success">Rs 0</span></h5>
-        <p id="selectedPlans">No plans selected</p>
-    </div>
+        <!-- Amount Summary -->
+        <div class="custom-summary-box">
+            <h5>Amount: <span id="totalAmount" class="custom-text-success">Rs 0</span></h5>
+            <p id="selectedPlans">No plans selected</p>
+        </div>
 
         <!-- Continue Button -->
-        <button id="continueButton" class="btn btn-success mt-3 w-100" disabled>Continue</button>
-    </div>
-</div>
+        <button id="continueButton" class="custom-button custom-btn-success" disabled onclick="showSummary()">Continue</button>
 
+        <!-- Summary Section -->
+        <div id="summarySection" style="display: none;">
+            <div class="custom-summary-box modern-summary-box">
+                <div class="summary-details">
+                    <p><strong>Title:</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
+                    <p><strong>Description:</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
+                    <p id="summarySelectedPlans">No plans selected</p>
+                    <h5>Total Amount: <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
+                </div>
 
-<!-- Bump Up Modal -->
-<div class="modal fade" id="bumpUpModal" tabindex="-1" aria-labelledby="bumpUpModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Bump Up Plan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Get a fresh start every day for 7 days and get up to 10 times more responses!</p>
-                <strong>Rs 2,000</strong>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="selectPlan('Bump Up', 2000)">Add</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Urgent Modal -->
-<div class="modal fade" id="urgentModal" tabindex="-1" aria-labelledby="urgentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <span class="badge bg-danger text-white">URGENT</span> Urgent
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Stand out from the rest by showing a bright red marker on the ad! <a href="#">Learn more</a></p>
-                
-                <!-- Plan Selection -->
-                <div class="list-group">
-                    <label class="list-group-item d-flex justify-content-between align-items-center">
-                        <input type="radio" name="urgentPlan" value="1900" onclick="selectPlan('Urgent 3 Days', 1900)">
-                        <span>3 days</span>
-                        <strong class="text-success">Rs 1,900</strong>
-                    </label>
-                    <label class="list-group-item d-flex justify-content-between align-items-center">
-                        <input type="radio" name="urgentPlan" value="2300" onclick="selectPlan('Urgent 7 Days', 2300)">
-                        <span>7 days</span>
-                        <strong class="text-success">Rs 2,300</strong>
-                    </label>
-                    <label class="list-group-item d-flex justify-content-between align-items-center">
-                        <input type="radio" name="urgentPlan" value="2800" onclick="selectPlan('Urgent 15 Days', 2800)">
-                        <span>15 days</span>
-                        <strong class="text-success">Rs 2,800</strong>
-                    </label>
+                <div class="summary-buttons">
+                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">Back to Ad Boost</button>
+                    <button id="proceedToPayment" class="custom-button custom-btn-primary">Proceed to Payment</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" id="continueButton2" disabled data-bs-dismiss="modal">Continue</button>
-            </div>
         </div>
+
     </div>
 </div>
 
-
-
-
-
-<!-- Top Modal -->
-<div class="modal fade" id="topadModal" tabindex="-1" aria-labelledby="topadModallLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Top Ad Plan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Boost sales by showing your ad in a premium slot!</p>
-                <strong>Rs 2,400</strong>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="selectPlan('Top Ad', 2400)">Add</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Super Modal  -->
-<div class="modal fade" id="SuperModal" tabindex="-1" aria-labelledby="SuperModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Top Ad Plan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Boost sales by showing your ad in a premium slot!</p>
-                <strong>Rs 2,400</strong>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="selectPlan('Super Ad', 2400)">Add</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
+    let ad = @json($ad);
     let selectedPlans = [];
     let totalAmount = 0;
 
-    function selectPlan(name, price) {
-        // Replace any previous urgent selection
-        selectedPlans = selectedPlans.filter(plan => !plan.name.startsWith("Urgent"));
-        selectedPlans.push({ name, price });
-        
-        totalAmount = selectedPlans.reduce((sum, plan) => sum + plan.price, 0);
-        updateSummary();
+    function selectPlanDropdown(packageId, packageName, selectElement) {
+    let planName = selectElement.options[selectElement.selectedIndex].text;
+    let price = parseFloat(selectElement.value);
 
-        // Enable continue button
-        document.getElementById("continueButton2").disabled = false;
+    // Clear previous selection
+    selectedPlans = [];
+
+    if (price > 0) {
+        selectedPlans.push({ package: packageName, name: planName, price: price });
     }
 
-    function updateSummary() {
-        document.getElementById("totalAmount").innerText = "Rs " + totalAmount;
-        document.getElementById("selectedPlans").innerText = selectedPlans.map(plan => plan.name).join(", ");
+    totalAmount = selectedPlans.length > 0 ? selectedPlans[0].price : 0;
+
+    document.getElementById("totalAmount").innerText = `Rs ${totalAmount}`;
+    document.getElementById("selectedPlans").innerHTML = selectedPlans.length
+        ? `<strong>${selectedPlans[0].package}:</strong> ${selectedPlans[0].name}`
+        : "No plans selected";
+
+    // Show remove icon next to the dropdown if a plan is selected
+    let removeIcon = document.getElementById(`removeIcon${packageId}`);
+    if (price > 0) {
+        removeIcon.style.display = "inline-block";
+    } else {
+        removeIcon.style.display = "none";
+    }
+
+    document.getElementById("continueButton").disabled = selectedPlans.length === 0;
+
+    // Reset all dropdowns except the current one
+    document.querySelectorAll("select").forEach(select => {
+        if (select !== selectElement) {
+            select.selectedIndex = 0;
+        }
+    });
+}
+
+function removePlan(packageId) {
+    // Reset the selected plan for the corresponding dropdown
+    let selectElement = document.getElementById(`packageSelect${packageId}`);
+    selectElement.selectedIndex = 0;
+
+    // Hide the remove icon
+    document.getElementById(`removeIcon${packageId}`).style.display = "none";
+
+    // Clear selection and reset UI
+    selectedPlans = [];
+    totalAmount = 0;
+    document.getElementById("totalAmount").innerText = `Rs ${totalAmount}`;
+    document.getElementById("selectedPlans").innerHTML = "No plans selected";
+    document.getElementById("continueButton").disabled = true;
+
+    // Reload the page after a short delay to allow changes to take effect
+    setTimeout(function() {
+        location.reload();
+    }, 200); // Adjust the timeout as needed
+}
+
+
+
+
+
+
+    function backToAdBoost() {
+        document.getElementById("summarySection").style.display = "none";
+        document.querySelector(".custom-boost-options").style.display = "block";
+        document.querySelector(".custom-summary-box").style.display = "block";
+        document.getElementById("continueButton").style.display = "inline-block";
+        document.getElementById("backToAdBoost").style.display = "none";
+
+        document.querySelectorAll(".custom-step-nav .custom-nav-link").forEach(link => {
+            link.classList.remove("active");
+            link.classList.add("disabled");
+        });
+
+        let adBoostStep = document.querySelector(".custom-step-nav .custom-nav-link:first-child");
+        adBoostStep.classList.add("active");
+        adBoostStep.classList.remove("disabled");
+    }
+
+    function showSummary() {
+        document.getElementById("summaryTotalAmount").innerText = `Rs ${totalAmount}`;
+        document.getElementById("summarySelectedPlans").innerHTML = selectedPlans.length 
+            ? selectedPlans.map(plan => `<strong>${plan.package}:</strong> ${plan.name} `).join("<br>") 
+            : "No plans selected";
+
+        document.getElementById("summaryAdTitle").innerText = ad.title;
+        document.getElementById("summaryAdDescription").innerText = ad.description;
+
+        document.querySelector(".custom-boost-options").style.display = "none";
+        document.querySelector(".custom-summary-box").style.display = "none";
+        document.getElementById("continueButton").style.display = "none";
+
+        document.getElementById("summarySection").style.display = "block";
+        document.getElementById("backToAdBoost").style.display = "inline-block";
+
+        document.querySelectorAll(".custom-step-nav .custom-nav-link").forEach(link => {
+            link.classList.remove("active");
+            link.classList.add("disabled");
+        });
+
+        let summaryStep = document.getElementById("summaryStep");
+        summaryStep.classList.add("active");
+        summaryStep.classList.remove("disabled");
     }
 </script>
 
