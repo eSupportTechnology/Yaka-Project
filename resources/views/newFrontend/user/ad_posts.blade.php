@@ -139,56 +139,6 @@
 
                     <div class="row">
                         
-
-                     <!-- category Information -->
-                     <div class="col-lg-12 mb-3">
-                        <div class="section-box">
-                            <div class="d-flex flex-wrap gap-3">
-                                <!-- Brand -->
-                                <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-label text-dark"><strong>Brand</strong></label>
-                                            <select id="brand" name="brand" class="form-control custom-select" onchange="this.form.submit()">
-                                                <option value="">Select Brand</option>
-                                                @foreach($brands as $brand)
-                                                    <option value="{{ $brand->id }}" @if(request()->brand == $brand->id) selected @endif>
-                                                        {{ $brand->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Model -->
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-label text-dark"><strong>Model</strong></label>
-                                            <select id="model" name="model" class="form-control custom-select">
-                                                <option value="">Select Model</option>
-                                                @foreach($models as $model)
-                                                    <option value="{{ $model->id }}" @if(request()->model == $model->id) selected @endif>
-                                                        {{ $model->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="section-box">
-                            <label class="form-label text-dark"><strong>Product Condition</strong></label>
-                            <div class="d-flex">
-                                @foreach(['New', 'Used'] as $option)
-                                    <div class="form-check me-3">
-                                        <input class="form-check-input" type="radio" name="condition" value="{{ $option }}" required>
-                                        <label class="form-check-label"  style="margin-right:15px">{{ $option }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    
-
                     <!-- Product Details -->
                     <div class="col-lg-12 mb-3">
                     <div class="section-box">
@@ -227,6 +177,56 @@
                         </div>
                         </div>
                         </div>
+
+                     <!-- category Information -->
+                     <div class="col-lg-12 mb-3">
+                        <div class="section-box">
+                            <div class="d-flex flex-wrap gap-3">
+                               <!-- Brand -->
+<div class="col-lg-6 mb-3">
+    <div class="form-group">
+        <label class="form-label text-dark"><strong>Brand</strong></label>
+        <select id="brand" name="brand" class="form-control custom-select">
+            <option value="">Select Brand</option>
+            @foreach($brands as $brand)
+                <option value="{{ $brand->id }}" @if(request()->brand == $brand->id) selected @endif>
+                    {{ $brand->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<!-- Model -->
+<div class="col-lg-6 mb-3">
+    <div class="form-group">
+        <label class="form-label text-dark"><strong>Model</strong></label>
+        <select id="model" name="model" class="form-control custom-select">
+            <option value="">Select Model</option>
+            @foreach($models as $model)
+                <option value="{{ $model->id }}" @if(request()->model == $model->id) selected @endif>
+                    {{ $model->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+
+                            </div>
+                            <div class="section-box">
+                            <label class="form-label text-dark"><strong>Product Condition</strong></label>
+                            <div class="d-flex">
+                                @foreach(['New', 'Used'] as $option)
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="condition" value="{{ $option }}" required>
+                                        <label class="form-check-label"  style="margin-right:15px">{{ $option }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        </div>
+                    </div>
 
               <!-- Pricing Type -->
                 <div class="col-lg-12 mb-3">
@@ -438,57 +438,80 @@
 
 
 <script>
-  $(document).ready(function() {
-    // Fetch Brands when Subcategory is selected
-    $('#subcategory').change(function() {
-        let subcategoryId = $(this).val();
-        if (subcategoryId) {
+ $(document).ready(function() {
+    let urlParams = new URLSearchParams(window.location.search);
+    let catId = urlParams.get('cat_id');
+    let subCatId = urlParams.get('sub_cat_id');
+    let selectedBrandId = "{{ request()->brand }}"; // Get pre-selected brand from request
+    let selectedModelId = "{{ request()->model }}"; // Get pre-selected model from request
+
+    // Function to Fetch Brands
+    function fetchBrands(subCatId) {
+        if (subCatId) {
             $.ajax({
                 url: "{{ route('get.brands') }}",
                 type: "GET",
-                data: { subcategory_id: subcategoryId },
+                data: { subcategory_id: subCatId },
                 success: function(data) {
                     $('#brand').html('<option value="">Select Brand</option>');
                     $.each(data, function(key, value) {
-                        $('#brand').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        let selected = selectedBrandId == value.id ? "selected" : "";
+                        $('#brand').append('<option value="' + value.id + '" ' + selected + '>' + value.name + '</option>');
                     });
-                    $('#model').html('<option value="">Select Model</option>'); // Reset models
+
+                    // If a brand is pre-selected, fetch models for it
+                    if (selectedBrandId) {
+                        fetchModels(selectedBrandId);
+                    }
                 }
             });
-        } else {
-            $('#brand').html('<option value="">Select Brand</option>');
-            $('#model').html('<option value="">Select Model</option>');
         }
-    });
+    }
+
+    function fetchModels(brandId, subCatId) {
+    if (brandId && subCatId) {
+        $.ajax({
+            url: "{{ route('get.models') }}",
+            type: "GET",
+            data: { brand_id: brandId, sub_cat_id: subCatId },
+            success: function(data) {
+                $('#model').html('<option value="">Select Model</option>');
+                $.each(data, function(key, value) {
+                    let selected = selectedModelId == value.id ? "selected" : "";
+                    $('#model').append('<option value="' + value.id + '" ' + selected + '>' + value.name + '</option>');
+                });
+            },
+            error: function(response) {
+                console.log('Error:', response);
+            }
+        });
+    }
+}
+
+
+
+
+    // Auto-fetch brands if category and subcategory exist in URL
+    if (subCatId) {
+        fetchBrands(subCatId);
+    }
 
     // Fetch Models when Brand is selected
     $('#brand').change(function() {
         let brandId = $(this).val();
-        if (brandId) {
-            $.ajax({
-                url: "{{ route('get.models') }}",
-                type: "GET",
-                data: { brand_id: brandId },
-                success: function(data) {
-                    $('#model').html('<option value="">Select Model</option>');
-                    $.each(data, function(key, value) {
-                        $('#model').append('<option value="' + value.id + '">' + value.name + '</option>');
-                    });
-                }
-            });
-        } else {
-            $('#model').html('<option value="">Select Model</option>');
-        }
+        fetchModels(brandId);
     });
+
+    // If brand is already selected (from request), fetch its models
+    if (selectedBrandId) {
+        fetchModels(selectedBrandId);
+    }
 });
 
 
+
 </script>
-<script>
-function filterCities() {
-    document.getElementById("district").form.submit();
-}
-</script>
+
 
 @endsection
 

@@ -78,7 +78,29 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/ad_posts', [UserAdsController::class, 'ad_posts'])->name('user.ad_posts');
 
     Route::get('/get-brands', [AdsController::class, 'getBrands'])->name('get.brands');
-    Route::get('/get-models', [AdsController::class, 'getModels'])->name('get.models');
+
+    Route::get('/get-models', function(Request $request) {
+        \Log::debug('Request data for get-models:', $request->all());
+    
+        $brandId = $request->brand_id;
+        $subCatId = $request->sub_cat_id;
+    
+        if (!$brandId || !$subCatId) {
+            return response()->json(['error' => 'Brand ID and Subcategory ID are required.'], 400);
+        }
+    
+        // Fetch models based on the brand and subcategory IDs
+        $models = \App\Models\BrandsModels::where('brandsId', $brandId)
+            ->where('sub_cat_id', $subCatId)
+            ->get();
+    
+        return response()->json($models);
+    })->name('get.models');
+    
+    
+    
+    
+    
     Route::get('/user/my_ads', [UserDashboardController::class, 'my_ads'])->name('user.my_ads');
 
 

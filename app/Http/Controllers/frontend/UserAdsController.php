@@ -58,26 +58,27 @@ class UserAdsController extends Controller
         $categories = \App\Models\Category::where('status', 1)->where('mainId', 0)->get();
         
         $subcategories = collect();
-        if ($request->id) {
-            $subcategories = \App\Models\Category::where('mainId', $request->id)->get();
+        if ($request->cat_id) {
+            $subcategories = \App\Models\Category::where('mainId', $request->cat_id)->get();
         }
     
         $brands = collect();
-        if ($request->subcategory_id) {
-            $brands = \App\Models\BrandsModels::where('sub_cat_id', $request->subcategory_id)
-                        ->where('brandsId', 0)
+        if ($request->sub_cat_id) {
+            $brands = \App\Models\BrandsModels::where('sub_cat_id', $request->sub_cat_id)
+                        ->where('brandsId', 0) // Only fetch brands
                         ->get();
         }
     
         $models = collect();
         if ($request->brand) {
-            $models = \App\Models\BrandsModels::where('brandsId', $request->brand)->get();
+            $models = \App\Models\BrandsModels::where('brandsId', $request->brand)
+                        ->where('sub_cat_id', $request->sub_cat_id) // Ensure correct subcategory
+                        ->get();
         }
     
-        // Retrieve districts
-        $districts = \App\Models\Districts::with('cities')->get();
-    
-        return view('newFrontend.user.ad_posts', compact('categories', 'subcategories', 'brands', 'models', 'districts'));
+        return view('newFrontend.user.ad_posts', compact('categories', 'subcategories', 'brands', 'models'));
     }
+    
+    
     
 }

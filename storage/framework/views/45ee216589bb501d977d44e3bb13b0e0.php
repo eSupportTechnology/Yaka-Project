@@ -266,17 +266,24 @@
     }
 
     function submitSelection() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const catId = urlParams.get('cat_id');
-        const subCatId = urlParams.get('sub_cat_id');
+    const urlParams = new URLSearchParams(window.location.search);
+    const catId = urlParams.get('cat_id');
+    const subCatId = urlParams.get('sub_cat_id');
 
-        if (selectedDistrictId && selectedCityId) {
-            // Redirect with the selected district and city IDs along with existing cat_id and sub_cat_id
-            window.location.href = `/user/ad_posts?cat_id=${catId}&sub_cat_id=${subCatId}&location=${selectedDistrictId}&sublocation=${selectedCityId}`;
-        } else {
-            alert('Please select both a district and a city.');
-        }
+    // If no cities are available, set sublocation (city) to null
+    const subcategorySection = document.getElementById('subcategory-section');
+    if (!subcategorySection || subcategorySection.innerHTML.includes('No cities found.')) {
+        selectedCityId = null;
     }
+
+    if (selectedDistrictId) {
+        // Redirect with the selected district and city IDs along with existing cat_id and sub_cat_id
+        window.location.href = `/user/ad_posts?cat_id=${catId}&sub_cat_id=${subCatId}&location=${selectedDistrictId}&sublocation=${selectedCityId ?? ''}`;
+    } else {
+        alert('Please select a district.');
+    }
+}
+
 </script>
 
 
