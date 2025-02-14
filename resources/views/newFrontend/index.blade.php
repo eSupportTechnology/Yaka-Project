@@ -168,6 +168,12 @@
     margin-left:-40px;
     margin-top:-25px;
 }
+.super-banner .right .carousel-item img {
+    max-width: 57%; /* Adjust the width percentage as needed */
+    max-height: 140%; /* Ensure the aspect ratio is maintained */
+    margin-left: 20px; /* Center the image horizontally */
+    
+}
 
 .cont{
     max-width: 1200px;
@@ -208,6 +214,11 @@
 .top-banner .left img { 
     max-width: 400px; 
     max-height: 600px; 
+    border-radius: 10px;
+}
+.super-banner .right img { 
+    max-width: 50px; 
+    max-height: 300px; 
     border-radius: 10px;
 }
 
@@ -329,6 +340,17 @@
     text-align: center;
     flex-shrink: 0;
 }
+.badge {
+            position: absolute;
+            top: 10px;
+            left:10px;
+            background: red;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            clip-path: polygon(100% 0%, 100% 100%, 50% 80%, 0 100%, 0 0);
+        }
 
 
 </style>
@@ -432,6 +454,9 @@
                         <div class="ad-box" style="width: 470px; height: 220px; background: url('{{ asset('images/Ads/' . $ad->mainImage) }}') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
                         <!-- Shadow Overlay -->
     <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
+    <div class="badge">
+        <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
+    </div>
 
                         <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
     Sale
@@ -461,9 +486,72 @@
             </p>
         </div> <!-- Closing right div -->
 
-    </div> <!-- Closing top-banner div -->
+    </div>
+    
+    <!-- Closing top-banner div -->
+
+    
 </div> <!-- Closing cont div -->
 <!-- top add-section end -->
+
+<!--Super Ads Section>-->
+<div class="cont">
+   
+    <div class="super-banner" style="display: flex; flex-direction: row-reverse;"> <!-- Reverse layout -->
+        <div class="right" style="flex: 1;margin-top:180px;margin-left:-324px;"> <!-- Heading and Banner on the Right -->
+            @foreach($superbanners as $key => $banner)
+                @if($banner->type == 6)  <!-- Only display banners with type 1 -->
+                    <div class="carousel-item {{ $key == 6 ? 'active' : '' }}">
+                        <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+                    </div>
+                @endif
+            @endforeach
+        </div>
+        <h2 class="heading" style="margin-top:90px;margin-left:0px;"><b>Find your needs in our <br> 
+        best <span>Super Ads</span></b></h2>
+
+        <div class="left" style="flex: 1;"> <!-- Ads on the Left -->
+            <div id="superAdsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach($superAds as $index => $adss)
+                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                            <div class="ad-box" style="margin-left:150px;margin-top:100px;width: 470px; height: 220px; background: url('{{ asset('images/Ads/' . $adss->mainImage) }}') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
+                                <!-- Shadow Overlay -->
+                                <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
+                                <div class="badge">
+                                <img src="{{ asset('02.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
+                                </div>
+
+                                <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                    Sale
+                                </button>
+                                <p style="color:white;">{{ $adss->category->name ?? 'Uncategorized' }} &raquo; {{ $adss->subcategory->name ?? '' }}</p>
+                                <h3 style="color:white;font-weight:bold;font-size:1.1rem;">{{ $adss->title }}</h3>
+                                <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;">LKR {{ number_format($adss->price, 2) }}</p>
+                                <p style="color:white;"><i class="fas fa-clock"></i> {{ $adss->created_at->diffForHumans() }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="small-carousel-wrapper" style="overflow: hidden; width: 580px; margin-top: -21px;margin-left:124px;">
+                <div class="card-container d-flex" style="display: flex; transition: transform 0.5s ease-in-out;">
+                    @foreach($superAds as $index => $adss)
+                        <div class="ad-card" data-index="{{ $index }}" style="background: url('{{ asset('images/Ads/' . $adss->mainImage) }}') no-repeat center center/cover; height: 100px; width: 100px; margin: -2px; border: 3px solid transparent; transition: border 0.3s;">
+                        </div>
+                    @endforeach
+                </div>
+                <p style="margin-top:14px;font-size:14px;">The Super Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.
+                    With higher visibility and priority ranking, super ads ensure your products or services reach more potential buyers quickly and effectively.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
 
         <!-- feature-style-two -->
         <section class="feature-style-two">
@@ -553,50 +641,98 @@ Urgent badge which is great advantage to get more attention quickly. <br /></p>
         <!-- advertisement - banner-section end -->
 
         <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var carousel = document.getElementById("topAdsCarousel");
-        var adCards = document.querySelectorAll(".ad-card");
-        var cardContainer = document.querySelector(".card-container");
-        var wrapperWidth = document.querySelector(".small-carousel-wrapper").offsetWidth;
-        var cardWidth = 110; // Adjust this based on actual card width + margin
+document.addEventListener("DOMContentLoaded", function () {
+    function initializeCarousel(wrapperSelector, containerSelector, cardSelector, carouselSelector, smallCarouselSelector) {
+        var adCards = document.querySelectorAll(wrapperSelector + " " + cardSelector);
+        var cardContainer = document.querySelector(wrapperSelector + " " + containerSelector);
+        var carouselItems = document.querySelectorAll(wrapperSelector + " " + carouselSelector + " .carousel-item");
+        var smallCarousel = document.querySelector(wrapperSelector + " " + smallCarouselSelector);
+        var wrapperWidth = cardContainer?.offsetWidth || 0;
+        var cardWidth = 110; // Adjust based on actual card width + margin
+        var currentIndex = 0;
 
-        // Function to update active border and slide small ads
         function updateActiveAd(index) {
-            adCards.forEach(card => card.style.border = "3px solid transparent"); // Remove border
-            let activeCard = document.querySelector(`.ad-card[data-index="${index}"]`);
+            // Remove previous red borders from small ads
+            adCards.forEach(card => card.style.border = "3px solid transparent");
+
+            let activeCard = document.querySelector(wrapperSelector + ` ${cardSelector}[data-index="${index}"]`);
             if (activeCard) {
                 activeCard.style.border = "3px solid red"; // Highlight active ad
-                let offset = Math.max(0, (index * cardWidth) - (wrapperWidth / 2) + (cardWidth / 2)); // Keep ads centered
-                cardContainer.style.transform = `translateX(-${offset}px)`;
+
+                // Scroll the small ads container to bring active ad into view
+                let offset = Math.max(0, (index * cardWidth) - (wrapperWidth / 2) + (cardWidth / 2));
+                if (cardContainer) cardContainer.style.transform = `translateX(-${offset}px)`;
             }
+
+            // Update the large ad to match
+            carouselItems.forEach((item, i) => {
+                item.classList.remove("active");
+                if (i === index) item.classList.add("active");
+            });
+
+            currentIndex = index; // Store current index for autoplay
         }
 
-        // Bootstrap Carousel Event Listener
-        carousel.addEventListener("slid.bs.carousel", function (event) {
-            let activeIndex = event.to;
-            updateActiveAd(activeIndex);
+        // Clicking on a large ad should highlight the small ad
+        carouselItems.forEach((item, index) => {
+            item.addEventListener("click", function () {
+                updateActiveAd(index);
+            });
         });
 
-        // Initially highlight the first ad
-        updateActiveAd(0);
+        // Clicking on a small ad should update the large ad
+        adCards.forEach((card, index) => {
+            card.addEventListener("click", function () {
+                updateActiveAd(index);
+            });
+        });
 
-        // **New Slideshow Script for .top-banner**
-        let bannerItems = document.querySelectorAll('.top-banner .carousel-item');
-        
-        // Check if there are any banners
+        // Automatic sliding for the small ad box
+        function slideSmallAds() {
+            currentIndex = (currentIndex + 1) % adCards.length;
+            updateActiveAd(currentIndex);
+            setTimeout(slideSmallAds, 3000); // Adjust delay as needed
+        }
+
+        setTimeout(slideSmallAds, 3000); // Start the auto-slide
+
+        // Set initial active ad
+        updateActiveAd(0);
+    }
+
+    // Initialize for both Top Ads and Super Ads
+    initializeCarousel(".top-banner", ".card-container", ".ad-card", "#topAdsCarousel", ".small-carousel-wrapper");
+    initializeCarousel(".super-banner", ".card-container", ".ad-card", "#superAdsCarousel", ".small-carousel-wrapper");
+
+
+
+
+
+
+
+    // Function to start a slideshow for a given banner section
+    function startSlideshow(bannerItems) {
         if (bannerItems.length > 0) {
             let currentIndex = 0;
 
             function showNextBanner() {
                 bannerItems[currentIndex].classList.remove('active'); // Hide current banner
-                currentIndex = (currentIndex + 1) % bannerItems.length; // Move to next (wrap around to the first one)
+                currentIndex = (currentIndex + 1) % bannerItems.length; // Move to next (wrap around to first)
                 bannerItems[currentIndex].classList.add('active'); // Show next banner
             }
 
-            // Start the slideshow if there are banners
-            setInterval(showNextBanner, 5000); // Change slide every 3 seconds
+            setInterval(showNextBanner, 5000); // Change slide every 5 seconds
         }
-    });
+    }
+
+    // Start slideshows for both .top-banner and .super-banner
+    let topBannerItems = document.querySelectorAll('.top-banner .carousel-item');
+    let superBannerItems = document.querySelectorAll('.super-banner .carousel-item');
+
+    startSlideshow(topBannerItems);
+    startSlideshow(superBannerItems);
+});
+
 </script>
 
          
