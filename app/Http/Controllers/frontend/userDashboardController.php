@@ -116,7 +116,7 @@ class userDashboardController extends Controller
             $models = \App\Models\BrandsModels::where('brandsId', $request->brand)->get();
         }
     
-        // Retrieve all districts and cities
+        // Retrieve districts
         $districts = \App\Models\Districts::with('cities')->get();
     
         return view('newFrontend.user.ad_posts', compact('categories', 'subcategories', 'brands', 'models', 'districts'));

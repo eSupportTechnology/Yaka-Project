@@ -22,7 +22,7 @@ class HomeController extends Controller
             $banners = \App\Models\Banners::where('type', 0)->get();
 
             $topbanners = \App\Models\Banners::where('type', 1)->get();
-            $superbanners = \App\Models\Banners::where('type', 6)->get();
+            $superbanners = \App\Models\Banners::where('type', 1)->get();
 
             
             $superAds = Ads::with(['category', 'subcategory'])
@@ -42,6 +42,11 @@ class HomeController extends Controller
             ->take(6)
             ->get();
     
+            $superAds = Ads::with(['category', 'subcategory'])
+            ->where('ads_package', 4) 
+            ->latest()
+            ->take(5)  // Limit the number of Super Ads
+            ->get();
         return view('newFrontend.index', compact('banners', 'categories', 'topAds','topbanners','latestAds','superbanners','superAds'));
     }
 
@@ -90,4 +95,5 @@ class HomeController extends Controller
    
  
       
+       
 }

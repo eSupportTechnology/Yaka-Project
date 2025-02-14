@@ -1,6 +1,4 @@
-@extends ('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     /* General Container Styling */
@@ -302,7 +300,7 @@
             <h4 class="mb-0 text-center">Make your ad stand out!</h4>
             <p class="mb-1 text-center">Get up to 10 times more responses by boosting your ad. Select one plan.</p>
 
-            @foreach($packages as $package)
+            <?php $__currentLoopData = $packages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php
                     $filteredTypes = $packageTypes->filter(function($type) use ($package) {
                         return $type->package_id == $package->id;
@@ -325,26 +323,28 @@
                 <div class="custom-boost-option">
                     <div>
                         <h5>
-                            <img src="{{ asset($imageFile) }}" alt="{{ $package->name }}"> 
-                            {{ $package->name }}
+                            <img src="<?php echo e(asset($imageFile)); ?>" alt="<?php echo e($package->name); ?>"> 
+                            <?php echo e($package->name); ?>
+
                         </h5>
-                        <p class="mb-1">Boost your ad with the "{{ $package->name }}" package!</p>
-                        <strong>From Rs {{ number_format($minPrice, 2) }}</strong>
+                        <p class="mb-1">Boost your ad with the "<?php echo e($package->name); ?>" package!</p>
+                        <strong>From Rs <?php echo e(number_format($minPrice, 2)); ?></strong>
                     </div>
                     <div class="dropdown-wrapper">
-                        <select class="form-select" id="packageSelect{{ $package->id }}" onchange="selectPlanDropdown({{ $package->id }}, '{{ $package->name }}', this)">
+                        <select class="form-select" id="packageSelect<?php echo e($package->id); ?>" onchange="selectPlanDropdown(<?php echo e($package->id); ?>, '<?php echo e($package->name); ?>', this)">
                             <option value="">Select Plan</option>
-                            @foreach($packageTypes->filter(fn($type) => $type->package_id == $package->id) as $type)
-                                <option value="{{ $type->price }}" data-duration="{{ $type->duration }}" 
+                            <?php $__currentLoopData = $packageTypes->filter(fn($type) => $type->package_id == $package->id); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($type->price); ?>" data-duration="<?php echo e($type->duration); ?>" 
                                     style="padding: 5px; font-size: 16px; color: #333; background-color: #f8f9fa;">
-                                    {{ $type->duration }} days | Rs- {{ $type->price }}
+                                    <?php echo e($type->duration); ?> days | Rs- <?php echo e($type->price); ?>
+
                                 </option>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
-                        <span class="remove-plan" id="removeIcon{{ $package->id }}" onclick="removePlan({{ $package->id }})" style="display: none;">❌</span>
+                        <span class="remove-plan" id="removeIcon<?php echo e($package->id); ?>" onclick="removePlan(<?php echo e($package->id); ?>)" style="display: none;">❌</span>
                     </div>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
 
         <!-- Amount Summary -->
@@ -378,7 +378,7 @@
 
 
 <script>
-    let ad = @json($ad);
+    let ad = <?php echo json_encode($ad, 15, 512) ?>;
     let selectedPlans = [];
     let totalAmount = 0;
 
@@ -488,4 +488,6 @@ function removePlan(packageId) {
     }
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/ads_boost_plans.blade.php ENDPATH**/ ?>

@@ -9,6 +9,8 @@ use App\Models\Cities;
 use App\Models\Districts;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Package;
+use App\Models\PackageType;
 
 class AdsController extends Controller
 {
@@ -115,13 +117,22 @@ class AdsController extends Controller
     }
     
 
-
     public function ads_boost($ad_id)
     {
         $ad = Ads::findOrFail($ad_id); 
-        return view('newFrontend.ads_boost_plans', compact('ad'));
+        $packages = Package::all(); // Fetch all packages
+        $packageTypes = PackageType::all(); // Fetch all package types
+    
+        return view('newFrontend.ads_boost_plans', compact('ad', 'packages', 'packageTypes'));
     }
 
  
  
+    
+    
+
+    
+    
+
+    
 }
