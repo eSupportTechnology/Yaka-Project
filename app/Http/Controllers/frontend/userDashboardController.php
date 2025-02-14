@@ -95,34 +95,6 @@ class userDashboardController extends Controller
     
 
 
-    public function ad_posts(Request $request)
-    {
-        $categories = \App\Models\Category::where('status', 1)->where('mainId', 0)->get();
-        
-        $subcategories = collect();
-        if ($request->id) {
-            $subcategories = \App\Models\Category::where('mainId', $request->id)->get();
-        }
-    
-        $brands = collect();
-        if ($request->subcategory_id) {
-            $brands = \App\Models\BrandsModels::where('sub_cat_id', $request->subcategory_id)
-                        ->where('brandsId', 0)
-                        ->get();
-        }
-    
-        $models = collect();
-        if ($request->brand) {
-            $models = \App\Models\BrandsModels::where('brandsId', $request->brand)->get();
-        }
-    
-        // Retrieve districts
-        $districts = \App\Models\Districts::with('cities')->get();
-    
-        return view('newFrontend.user.ad_posts', compact('categories', 'subcategories', 'brands', 'models', 'districts'));
-    }
-    
-
 
 
 }

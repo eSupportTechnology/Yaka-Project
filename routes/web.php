@@ -19,6 +19,7 @@ use App\Http\Controllers\adminPanel\adsManagementController;
 use App\Http\Controllers\adminPanel\bannerManagementController;
 use App\Http\Controllers\Auth\CustomAuthController;
 
+use App\Http\Controllers\frontend\UserAdsController;
 use App\Http\Controllers\frontend\UserDashboardController;
 use App\Http\Controllers\frontend\AdsController;
 
@@ -66,8 +67,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/profile', [UserDashboardController::class, 'profile'])->name('user.profile');
     Route::get('/get-cities', [UserDashboardController::class, 'getCities'])->name('get.cities');
     Route::post('/user/profile/update', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
-    Route::get('/user/ad_posts', [UserDashboardController::class, 'ad_posts'])->name('user.ad_posts');
-    Route::post('/user/ad_posts', [UserDashboardController::class, 'ad_posts'])->name('user.ad_posts');
+
+    Route::get('/user/ad_posts/categories', [UserAdsController::class, 'ad_posts_categories'])->name('user.ad_posts.categories');
+    Route::get('/fetch-subcategories/{categoryId}', [UserAdsController::class, 'fetchSubcategories']);
+
+    Route::get('/user/ad_posts/location', [UserAdsController::class, 'ad_posts_location'])->name('user.ad_posts.location');
+    Route::get('/fetch-cities/{districtId}', [UserAdsController::class, 'fetchCities']);
+
+    Route::get('/user/ad_posts', [UserAdsController::class, 'ad_posts'])->name('user.ad_posts');
+    Route::post('/user/ad_posts', [UserAdsController::class, 'ad_posts'])->name('user.ad_posts');
+
     Route::get('/get-brands', [AdsController::class, 'getBrands'])->name('get.brands');
     Route::get('/get-models', [AdsController::class, 'getModels'])->name('get.models');
     Route::get('/user/my_ads', [UserDashboardController::class, 'my_ads'])->name('user.my_ads');

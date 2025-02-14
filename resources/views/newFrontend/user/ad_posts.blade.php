@@ -138,43 +138,14 @@
                     <input type="hidden" name="userId" value="">
 
                     <div class="row">
-                        <div class="col-lg-12 mb-3">
-                            <div class="section-box">
-                                <h4>Product Categories</h4>
+                        
 
-                                <!-- Main Category -->
-                                <div class="col-lg-12 mb-3">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>Main Category</strong></label>
-                                        <select id="category" name="id" class="form-control custom-select" onchange="this.form.submit()">
-                                            <option value="">Select Category</option>
-                                            @foreach($categories as $category)
-                                                <option value="{{ $category->id }}" @if(request()->id == $category->id) selected @endif>
-                                                    {{ $category->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- Sub Category -->
-                                <div class="col-lg-12 mb-3">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>Sub Category</strong></label>
-                                        <select id="subcategory" name="subcategory_id" class="form-control custom-select" onchange="this.form.submit()">
-                                            <option value="">Select Subcategory</option>
-                                            @foreach($subcategories as $subcategory)
-                                                <option value="{{ $subcategory->id }}" @if(request()->subcategory_id == $subcategory->id) selected @endif>
-                                                    {{ $subcategory->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <!-- Brand -->
-                                    <div class="col-lg-6 mb-3">
+                     <!-- category Information -->
+                     <div class="col-lg-12 mb-3">
+                        <div class="section-box">
+                            <div class="d-flex flex-wrap gap-3">
+                                <!-- Brand -->
+                                <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="form-label text-dark"><strong>Brand</strong></label>
                                             <select id="brand" name="brand" class="form-control custom-select" onchange="this.form.submit()">
@@ -202,55 +173,22 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-
+                            </div>
+                            <div class="section-box">
+                            <label class="form-label text-dark"><strong>Product Condition</strong></label>
+                            <div class="d-flex">
+                                @foreach(['New', 'Used'] as $option)
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="condition" value="{{ $option }}" required>
+                                        <label class="form-check-label"  style="margin-right:15px">{{ $option }}</label>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-
-                     <!-- Location Information -->
-                     <div class="col-lg-12 mb-3">
-                        <div class="section-box">
-                            <h4>Location Information</h4>
-                            <div class="d-flex flex-wrap gap-3">
-                                <!-- District Dropdown -->
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>District</strong></label>
-                                        <select id="district" name="district" class="form-control custom-select custom-dropdown" onchange="this.form.submit()">
-                                            <option value="">Select District</option>
-                                            @foreach($districts as $district)
-                                                <option value="{{ $district->id }}" {{ request('district') == $district->id ? 'selected' : '' }}>
-                                                    {{ $district->name_en }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- City Dropdown -->
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>City</strong></label>
-                                        <select id="city" name="city" class="form-control custom-select custom-dropdown">
-                                            <option value="">Select City</option>
-                                            @if(request('district'))
-                                                @php
-                                                    $selectedDistrict = $districts->firstWhere('id', request('district'));
-                                                @endphp
-                                                @if($selectedDistrict)
-                                                    @foreach($selectedDistrict->cities as $city)
-                                                        <option value="{{ $city->id }}" {{ request('city') == $city->id ? 'selected' : '' }}>
-                                                            {{ $city->name_en }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     
+
                     <!-- Product Details -->
                     <div class="col-lg-12 mb-3">
                     <div class="section-box">
@@ -321,26 +259,6 @@
                             </div>
                             </div>
                         </div>
-                    
-                    <!-- Product Condition -->
-                        <div class="col-lg-12 mb-3">
-                        <div class="section-box">
-                            <label class="form-label text-dark"><strong>Product Condition</strong></label>
-                            <div class="d-flex">
-                                @foreach(['New', 'Used'] as $option)
-                                    <div class="form-check me-3">
-                                        <input class="form-check-input" type="radio" name="condition" value="{{ $option }}" required>
-                                        <label class="form-check-label"  style="margin-right:15px">{{ $option }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        </div>
-                  
-                       
-
-                   
-
 
                     <div class="col-lg-12 mb-3">
                         <div class="section-box">

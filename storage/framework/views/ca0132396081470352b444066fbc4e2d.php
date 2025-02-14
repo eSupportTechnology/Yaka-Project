@@ -137,45 +137,14 @@
                     <input type="hidden" name="userId" value="">
 
                     <div class="row">
-                        <div class="col-lg-12 mb-3">
-                            <div class="section-box">
-                                <h4>Product Categories</h4>
+                        
 
-                                <!-- Main Category -->
-                                <div class="col-lg-12 mb-3">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>Main Category</strong></label>
-                                        <select id="category" name="id" class="form-control custom-select" onchange="this.form.submit()">
-                                            <option value="">Select Category</option>
-                                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($category->id); ?>" <?php if(request()->id == $category->id): ?> selected <?php endif; ?>>
-                                                    <?php echo e($category->name); ?>
-
-                                                </option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- Sub Category -->
-                                <div class="col-lg-12 mb-3">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>Sub Category</strong></label>
-                                        <select id="subcategory" name="subcategory_id" class="form-control custom-select" onchange="this.form.submit()">
-                                            <option value="">Select Subcategory</option>
-                                            <?php $__currentLoopData = $subcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($subcategory->id); ?>" <?php if(request()->subcategory_id == $subcategory->id): ?> selected <?php endif; ?>>
-                                                    <?php echo e($subcategory->name); ?>
-
-                                                </option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <!-- Brand -->
-                                    <div class="col-lg-6 mb-3">
+                     <!-- category Information -->
+                     <div class="col-lg-12 mb-3">
+                        <div class="section-box">
+                            <div class="d-flex flex-wrap gap-3">
+                                <!-- Brand -->
+                                <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="form-label text-dark"><strong>Brand</strong></label>
                                             <select id="brand" name="brand" class="form-control custom-select" onchange="this.form.submit()">
@@ -205,57 +174,22 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-
+                            </div>
+                            <div class="section-box">
+                            <label class="form-label text-dark"><strong>Product Condition</strong></label>
+                            <div class="d-flex">
+                                <?php $__currentLoopData = ['New', 'Used']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="condition" value="<?php echo e($option); ?>" required>
+                                        <label class="form-check-label"  style="margin-right:15px"><?php echo e($option); ?></label>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                         </div>
-
-                     <!-- Location Information -->
-                     <div class="col-lg-12 mb-3">
-                        <div class="section-box">
-                            <h4>Location Information</h4>
-                            <div class="d-flex flex-wrap gap-3">
-                                <!-- District Dropdown -->
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>District</strong></label>
-                                        <select id="district" name="district" class="form-control custom-select custom-dropdown" onchange="this.form.submit()">
-                                            <option value="">Select District</option>
-                                            <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($district->id); ?>" <?php echo e(request('district') == $district->id ? 'selected' : ''); ?>>
-                                                    <?php echo e($district->name_en); ?>
-
-                                                </option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- City Dropdown -->
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>City</strong></label>
-                                        <select id="city" name="city" class="form-control custom-select custom-dropdown">
-                                            <option value="">Select City</option>
-                                            <?php if(request('district')): ?>
-                                                <?php
-                                                    $selectedDistrict = $districts->firstWhere('id', request('district'));
-                                                ?>
-                                                <?php if($selectedDistrict): ?>
-                                                    <?php $__currentLoopData = $selectedDistrict->cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <option value="<?php echo e($city->id); ?>" <?php echo e(request('city') == $city->id ? 'selected' : ''); ?>>
-                                                            <?php echo e($city->name_en); ?>
-
-                                                        </option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     
+
                     <!-- Product Details -->
                     <div class="col-lg-12 mb-3">
                     <div class="section-box">
@@ -326,26 +260,6 @@
                             </div>
                             </div>
                         </div>
-                    
-                    <!-- Product Condition -->
-                        <div class="col-lg-12 mb-3">
-                        <div class="section-box">
-                            <label class="form-label text-dark"><strong>Product Condition</strong></label>
-                            <div class="d-flex">
-                                <?php $__currentLoopData = ['New', 'Used']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <div class="form-check me-3">
-                                        <input class="form-check-input" type="radio" name="condition" value="<?php echo e($option); ?>" required>
-                                        <label class="form-check-label"  style="margin-right:15px"><?php echo e($option); ?></label>
-                                    </div>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </div>
-                        </div>
-                        </div>
-                  
-                       
-
-                   
-
 
                     <div class="col-lg-12 mb-3">
                         <div class="section-box">
