@@ -207,6 +207,49 @@
                             </div>
                         </div>
 
+                     <!-- Location Information -->
+                     <div class="col-lg-12 mb-3">
+                        <div class="section-box">
+                            <h4>Location Information</h4>
+                            <div class="d-flex flex-wrap gap-3">
+                                <!-- District Dropdown -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label text-dark"><strong>District</strong></label>
+                                        <select id="district" name="district" class="form-control custom-select custom-dropdown" onchange="this.form.submit()">
+                                            <option value="">Select District</option>
+                                            @foreach($districts as $district)
+                                                <option value="{{ $district->id }}" {{ request('district') == $district->id ? 'selected' : '' }}>
+                                                    {{ $district->name_en }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- City Dropdown -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label text-dark"><strong>City</strong></label>
+                                        <select id="city" name="city" class="form-control custom-select custom-dropdown">
+                                            <option value="">Select City</option>
+                                            @if(request('district'))
+                                                @php
+                                                    $selectedDistrict = $districts->firstWhere('id', request('district'));
+                                                @endphp
+                                                @if($selectedDistrict)
+                                                    @foreach($selectedDistrict->cities as $city)
+                                                        <option value="{{ $city->id }}" {{ request('city') == $city->id ? 'selected' : '' }}>
+                                                            {{ $city->name_en }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <!-- Product Details -->
                     <div class="col-lg-12 mb-3">
@@ -294,40 +337,9 @@
                         </div>
                         </div>
                   
-                        <!-- Location Information -->
-                        <div class="col-lg-12 mb-3">
-                        <div class="section-box">
-                            <h4>Location Information</h4>
-                            <div class="d-flex flex-wrap gap-3">
-                                <!-- District Dropdown -->
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>District</strong></label>
-                                        <select id="district" name="district" class="form-control custom-select" onchange="filterCities()">
-                                            <option value="">Select District</option>
-                                            @foreach($districts as $district)
-                                                <option value="{{ $district->id }}">{{ $district->name_en }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- City Dropdown -->
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>City</strong></label>
-                                        <select id="city" name="city" class="form-control custom-select">
-                                            <option value="">Select City</option>
-                                            @foreach($districts as $district)
-                                                @foreach($district->cities as $city)
-                                                    <option data-district="{{ $district->id }}" value="{{ $city->id }}">{{ $city->name_en }}</option>
-                                                @endforeach
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                       
+
+                   
 
 
                     <div class="col-lg-12 mb-3">
@@ -556,20 +568,7 @@
 </script>
 <script>
 function filterCities() {
-    var selectedDistrict = document.getElementById("district").value;
-    var cityDropdown = document.getElementById("city");
-
-    // Show only cities that belong to the selected district
-    Array.from(cityDropdown.options).forEach(option => {
-        if (option.getAttribute("data-district") === selectedDistrict || option.value === "") {
-            option.style.display = "block";
-        } else {
-            option.style.display = "none";
-        }
-    });
-
-    // Reset the city selection
-    cityDropdown.value = "";
+    document.getElementById("district").form.submit();
 }
 </script>
 

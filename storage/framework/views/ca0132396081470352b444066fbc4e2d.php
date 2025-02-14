@@ -210,6 +210,51 @@
                             </div>
                         </div>
 
+                     <!-- Location Information -->
+                     <div class="col-lg-12 mb-3">
+                        <div class="section-box">
+                            <h4>Location Information</h4>
+                            <div class="d-flex flex-wrap gap-3">
+                                <!-- District Dropdown -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label text-dark"><strong>District</strong></label>
+                                        <select id="district" name="district" class="form-control custom-select custom-dropdown" onchange="this.form.submit()">
+                                            <option value="">Select District</option>
+                                            <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($district->id); ?>" <?php echo e(request('district') == $district->id ? 'selected' : ''); ?>>
+                                                    <?php echo e($district->name_en); ?>
+
+                                                </option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- City Dropdown -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label text-dark"><strong>City</strong></label>
+                                        <select id="city" name="city" class="form-control custom-select custom-dropdown">
+                                            <option value="">Select City</option>
+                                            <?php if(request('district')): ?>
+                                                <?php
+                                                    $selectedDistrict = $districts->firstWhere('id', request('district'));
+                                                ?>
+                                                <?php if($selectedDistrict): ?>
+                                                    <?php $__currentLoopData = $selectedDistrict->cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($city->id); ?>" <?php echo e(request('city') == $city->id ? 'selected' : ''); ?>>
+                                                            <?php echo e($city->name_en); ?>
+
+                                                        </option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <!-- Product Details -->
                     <div class="col-lg-12 mb-3">
@@ -297,40 +342,9 @@
                         </div>
                         </div>
                   
-                        <!-- Location Information -->
-                        <div class="col-lg-12 mb-3">
-                        <div class="section-box">
-                            <h4>Location Information</h4>
-                            <div class="d-flex flex-wrap gap-3">
-                                <!-- District Dropdown -->
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>District</strong></label>
-                                        <select id="district" name="district" class="form-control custom-select" onchange="filterCities()">
-                                            <option value="">Select District</option>
-                                            <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($district->id); ?>"><?php echo e($district->name_en); ?></option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- City Dropdown -->
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark"><strong>City</strong></label>
-                                        <select id="city" name="city" class="form-control custom-select">
-                                            <option value="">Select City</option>
-                                            <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <?php $__currentLoopData = $district->cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option data-district="<?php echo e($district->id); ?>" value="<?php echo e($city->id); ?>"><?php echo e($city->name_en); ?></option>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                       
+
+                   
 
 
                     <div class="col-lg-12 mb-3">
@@ -559,20 +573,7 @@
 </script>
 <script>
 function filterCities() {
-    var selectedDistrict = document.getElementById("district").value;
-    var cityDropdown = document.getElementById("city");
-
-    // Show only cities that belong to the selected district
-    Array.from(cityDropdown.options).forEach(option => {
-        if (option.getAttribute("data-district") === selectedDistrict || option.value === "") {
-            option.style.display = "block";
-        } else {
-            option.style.display = "none";
-        }
-    });
-
-    // Reset the city selection
-    cityDropdown.value = "";
+    document.getElementById("district").form.submit();
 }
 </script>
 

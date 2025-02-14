@@ -22,7 +22,7 @@ class HomeController extends Controller
             $banners = \App\Models\Banners::where('type', 0)->get();
 
             $topbanners = \App\Models\Banners::where('type', 1)->get();
-            $superbanners = \App\Models\Banners::where('type', 6)->get();
+            $superbanners = \App\Models\Banners::where('type', 1)->get();
 
             
             $superAds = Ads::with(['category', 'subcategory'])

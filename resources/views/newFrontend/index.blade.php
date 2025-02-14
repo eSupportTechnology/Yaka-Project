@@ -451,7 +451,7 @@
                 <div class="carousel-inner">
                     @foreach($topAds as $index => $ad)
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                        <div class="ad-box" style="width: 470px; height: 220px; background: url('{{ asset('images/Ads/' . $ad->mainImage) }}') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
+                        <div class="ad-box" style="margin-right:150px; width: 560px; height: 300px; background: url('{{ asset('images/Ads/' . $ad->mainImage) }}') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
                         <!-- Shadow Overlay -->
     <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
     <div class="badge">
@@ -474,14 +474,14 @@
             </div>
 
             <div class="small-carousel-wrapper" style="overflow: hidden; width: 580px; margin-top: -50px;">
-        <div class="card-container d-flex" style="display: flex; transition: transform 0.5s ease-in-out;">
-            @foreach($topAds as $index => $ad)
-                <div class="ad-card" data-index="{{ $index }}" style="background: url('{{ asset('images/Ads/' . $ad->mainImage) }}') no-repeat center center/cover; height: 100px; width: 100px; margin: -2px; border: 3px solid transparent; transition: border 0.3s;">
+                <div class="card-container d-flex" style="display: flex; transition: transform 0.5s ease-in-out;">
+                    @foreach($topAds as $index => $ad)
+                        <div class="ad-card" data-index="{{ $index }}" style="background: url('{{ asset('images/Ads/' . $ad->mainImage) }}') no-repeat center center/cover; height: 100px; width: 100px; margin: -2px; border: 3px solid transparent; transition: border 0.3s;">
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
 
-            <p style="margin-top:14px;font-size:14px;">The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.
+            <p style="margin-top:18px;font-size:16px; text-align:justify; width: 560px;">The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.
                 with higher visibility and priority ranking.Top ads ensure your products or services reach more potential buyers quickly and effectively.
             </p>
         </div> <!-- Closing right div -->
@@ -500,8 +500,8 @@
     <div class="super-banner" style="display: flex; flex-direction: row-reverse;"> <!-- Reverse layout -->
         <div class="right" style="flex: 1;margin-top:180px;margin-left:-324px;"> <!-- Heading and Banner on the Right -->
             @foreach($superbanners as $key => $banner)
-                @if($banner->type == 6)  <!-- Only display banners with type 1 -->
-                    <div class="carousel-item {{ $key == 6 ? 'active' : '' }}">
+                @if($banner->type == 1)  <!-- Only display banners with type 1 -->
+                    <div class="carousel-item {{ $key == 1 ? 'active' : '' }}">
                         <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
                     </div>
                 @endif
@@ -515,7 +515,7 @@
                 <div class="carousel-inner">
                     @foreach($superAds as $index => $adss)
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                            <div class="ad-box" style="margin-left:150px;margin-top:100px;width: 470px; height: 220px; background: url('{{ asset('images/Ads/' . $adss->mainImage) }}') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
+                            <div class="ad-box" style="margin-left:124px;margin-top:100px;width: 560px; height: 300px; background: url('{{ asset('images/Ads/' . $adss->mainImage) }}') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
                                 <!-- Shadow Overlay -->
                                 <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
                                 <div class="badge">
@@ -542,7 +542,7 @@
                         </div>
                     @endforeach
                 </div>
-                <p style="margin-top:14px;font-size:14px;">The Super Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.
+                <p style="margin-top:18px;font-size:16px; text-align:justify; width: 550px;">The Super Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.
                     With higher visibility and priority ranking, super ads ensure your products or services reach more potential buyers quickly and effectively.
                 </p>
             </div>
