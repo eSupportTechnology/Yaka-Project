@@ -115,7 +115,7 @@
 }
 
 .summary-text {
-    color: #555;
+    color:black;
     font-weight: 500;
 }
 
@@ -127,6 +127,7 @@
 
 .summary-buttons button {
     width: 48%;
+    margin-top:10px
 }
 
 .custom-btn-primary {
@@ -241,6 +242,10 @@
         gap: 10px;
     }
 
+    .summary-details {
+        flex-direction: column;
+        gap: 10px;
+    }
     .summary-buttons button {
         width: 100%;
     }
@@ -290,7 +295,7 @@
                 <span class="custom-nav-link disabled" id="summaryStep">Summary</span>
             </li>
             <li class="nav-item">
-                <span class="custom-nav-link disabled">Payment</span>
+                <span class="custom-nav-link disabled" id="paymentStep">Payment</span>
             </li>
             <li class="nav-item">
                 <span class="custom-nav-link disabled">Done</span>
@@ -347,6 +352,8 @@
             @endforeach
         </div>
 
+
+
         <!-- Amount Summary -->
         <div class="custom-summary-box">
             <h5>Amount: <span id="totalAmount" class="custom-text-success">Rs 0</span></h5>
@@ -359,22 +366,76 @@
         <!-- Summary Section -->
         <div id="summarySection" style="display: none;">
             <div class="custom-summary-box modern-summary-box">
-                <div class="summary-details">
-                    <p><strong>Title:</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
-                    <p><strong>Description:</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
-                    <p id="summarySelectedPlans">No plans selected</p>
-                    <h5>Total Amount: <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
+                <div class="summary-details" style="display: flex; align-items: center; gap: 20px;">
+                    <img src="{{ asset('images/Ads/' . $ad->mainImage) }}" alt="Main Image" 
+                         style="width: 150px; height: auto; border-radius: 8px; object-fit: cover;">
+        
+                    <div>
+                        <p style="color: black"><strong>Title:</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
+                        <p style="color: black"><strong>Price:</strong> <span id="summaryAdPrice" class="summary-text"></span></p>
+                        <p style="color: black"><strong>Description:</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
+                    </div>
                 </div>
-
+        
+                <p style="color: black" id="summarySelectedPlans">No plans selected</p>
+                <h5>Total Amount: <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
+        
                 <div class="summary-buttons">
                     <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">Back to Ad Boost</button>
-                    <button id="proceedToPayment" class="custom-button custom-btn-primary">Proceed to Payment</button>
+                    <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary">Proceed to Payment</button>
                 </div>
             </div>
         </div>
 
+                <!-- Payment Form Section -->
+        <div id="paymentSection" style="display: none;">
+            <div class="custom-summary-box modern-summary-box">
+                <h4>Payment Details</h4>
+                <form id="paymentForm" action="YOUR_PAYMENT_PROCESSING_URL" method="POST">
+                    <!-- User Name Field -->
+                    <div class="form-group">
+                        <label for="name" class="form-label"> Name On Card</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name On Card" required>
+                    </div>
+
+                    <!-- Card Number Field -->
+                    <div class="form-group">
+                        <label for="cardNumber" class="form-label">Card Number</label>
+                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Enter your card number" required>
+                    </div>
+
+                    <!-- Expiry Date -->
+                    <div class="form-group">
+                        <label for="expiryDate" class="form-label">Expiry Date</label>
+                        <input type="month" class="form-control" id="expiryDate" name="expiryDate" required>
+                    </div>
+
+                    <!-- CVV Field -->
+                    <div class="form-group">
+                        <label for="cvv" class="form-label">CVV</label>
+                        <input type="password" class="form-control" id="cvv" name="cvv" placeholder="Enter CVV" required>
+                    </div>
+
+                      <!-- Display Total Amount -->
+                    <h5>Total Amount: <span class="custom-text-success" id="paymentTotalAmount">Rs 0</span></h5>
+
+                    <!-- Payment Button -->
+                    <div class="form-group ">
+                        <button type="submit" class="custom-button custom-btn-primary">Pay</button>
+                    </div>
+                    <div class="form-group ">
+                        <button type="button" class="custom-button custom-btn-secondary" onclick="backToSummary()">Back to Summary</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        
+
     </div>
 </div>
+
+
 
 
 <script>
@@ -462,6 +523,9 @@ function removePlan(packageId) {
     }
 
     function showSummary() {
+
+        console.log("Ad Image Path:", ad.mainImage);
+
         document.getElementById("summaryTotalAmount").innerText = `Rs ${totalAmount}`;
         document.getElementById("summarySelectedPlans").innerHTML = selectedPlans.length 
             ? selectedPlans.map(plan => `<strong>${plan.package}:</strong> ${plan.name} `).join("<br>") 
@@ -469,6 +533,7 @@ function removePlan(packageId) {
 
         document.getElementById("summaryAdTitle").innerText = ad.title;
         document.getElementById("summaryAdDescription").innerText = ad.description;
+        document.getElementById("summaryAdPrice").innerText = "Rs " + ad.price;  // Set the price
 
         document.querySelector(".custom-boost-options").style.display = "none";
         document.querySelector(".custom-summary-box").style.display = "none";
@@ -485,7 +550,65 @@ function removePlan(packageId) {
         let summaryStep = document.getElementById("summaryStep");
         summaryStep.classList.add("active");
         summaryStep.classList.remove("disabled");
+
+         
     }
+
+    // Show Payment Form (triggered when Proceed to Payment button is clicked)
+    function showPaymentForm() {
+
+         // Get the total amount from the summary section
+         let totalAmount = document.getElementById("summaryTotalAmount").innerText;
+
+         // Set the total amount in the payment section
+          document.getElementById("paymentTotalAmount").innerText = totalAmount;
+
+        // Hide summary and Proceed to Payment button
+        document.getElementById("summarySection").style.display = "none";
+    
+
+        // Show payment form
+        document.getElementById("paymentSection").style.display = "block";
+        
+        // Update step navigation for payment step
+        document.querySelectorAll(".custom-step-nav .custom-nav-link").forEach(link => {
+            link.classList.remove("active");
+            link.classList.add("disabled");
+        });
+
+        let paymentStep = document.getElementById("paymentStep");
+        paymentStep.classList.add("active");
+        paymentStep.classList.remove("disabled");
+
+        // let paymentStep = document.querySelector(".custom-step-nav .custom-nav-link:nth-child(3)");
+        // paymentStep.classList.add("active");
+        // paymentStep.classList.remove("disabled");
+    }
+
+    function backToSummary() {
+
+       
+        // Hide the Payment Section
+        document.getElementById("paymentSection").style.display = "none";
+
+        // Show the Summary Section
+        document.getElementById("summarySection").style.display = "block";
+
+        // Optionally show the Proceed to Payment button again
+        document.getElementById("proceedToPayment").style.display = "inline-block";
+
+        // Update step navigation to reflect the summary step
+        document.querySelectorAll(".custom-step-nav .custom-nav-link").forEach(link => {
+            link.classList.remove("active");
+            link.classList.add("disabled");
+        });
+
+       
+        let summaryStep = document.getElementById("summaryStep");
+        summaryStep.classList.add("active");
+        summaryStep.classList.remove("disabled");
+    }
+
 </script>
 
 @endsection
