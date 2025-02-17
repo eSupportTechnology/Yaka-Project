@@ -580,7 +580,7 @@ Urgent badge which is great advantage to get more attention quickly. <br /></p>
                                             <div class="lower-content">
                                             
                                               
-                                                <h3 style="margin-top:20px;"><a href="browse-ads-details.html"><?php echo e($ads ->title); ?></a></h3>
+                                                <h3 style="margin-top:20px;"><a href="<?php echo e(route('ads.details', ['ad_id' => $ad->id])); ?>"><?php echo e($ads ->title); ?></a></h3>
                                            
                                                 <ul class="clearfix info">
                                                     

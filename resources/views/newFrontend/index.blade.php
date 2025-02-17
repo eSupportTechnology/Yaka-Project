@@ -581,7 +581,7 @@ Urgent badge which is great advantage to get more attention quickly. <br /></p>
                                             <div class="lower-content">
                                             
                                               
-                                                <h3 style="margin-top:20px;"><a href="browse-ads-details.html">{{$ads ->title}}</a></h3>
+                                                <h3 style="margin-top:20px;"><a href="{{ route('ads.details', ['ad_id' => $ad->id]) }}">{{$ads ->title}}</a></h3>
                                            
                                                 <ul class="clearfix info">
                                                     
