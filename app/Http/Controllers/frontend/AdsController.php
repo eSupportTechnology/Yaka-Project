@@ -122,8 +122,10 @@ class AdsController extends Controller
         $ad = Ads::findOrFail($ad_id); 
         $packages = Package::all(); // Fetch all packages
         $packageTypes = PackageType::all(); // Fetch all package types
+
+        $mainImage = $ad->main_image;
     
-        return view('newFrontend.ads_boost_plans', compact('ad', 'packages', 'packageTypes'));
+        return view('newFrontend.ads_boost_plans', compact('ad', 'mainImage', 'packages', 'packageTypes'));
     }
 
  
