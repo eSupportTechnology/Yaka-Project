@@ -1,7 +1,5 @@
-@extends ('newFrontend.master')
-
-@section('content')
-<link href="{{ asset('newFrontend/Clasifico/assets/css/userdashboard.css') }}" rel="stylesheet">
+<?php $__env->startSection('content'); ?>
+<link href="<?php echo e(asset('newFrontend/Clasifico/assets/css/userdashboard.css')); ?>" rel="stylesheet">
 <!-- Page Title -->
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
@@ -10,7 +8,7 @@
                     <h1>Dashboard</h1>
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="{{ route('/') }}">Home</a></li>
+                    <li><a href="<?php echo e(route('/')); ?>">Home</a></li>
                     <li>Dashboard</li>
                 </ul>
             </div>
@@ -25,25 +23,25 @@
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
                                     <div class="dash-avatar">
-                                        @if(Auth::check() && Auth::user()->profileImage) 
-                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
+                                        <?php if(Auth::check() && Auth::user()->profileImage): ?> 
+                                            <a href="#"><img src="<?php echo e(asset('storage/profile_images/' . Auth::user()->profileImage)); ?>" 
                                             alt="user"></a>
-                                        @else
-                                            <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
-                                        @endif
+                                        <?php else: ?>
+                                            <a href="#"><img src="<?php echo e(asset('web/images/user.png')); ?>" alt="user"></a>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="dash-intro">
-                                        <h4><a href="#">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a></h4>
-                                        <h5>{{ Auth::user()->email }}</h5>
+                                        <h4><a href="#"><?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?></a></h4>
+                                        <h5><?php echo e(Auth::user()->email); ?></h5>
 
                                         <ul class="dash-meta">
                                             <li>
                                                 <i class="fas fa-phone"></i>
-                                                <span>{{ Auth::user()->phone_number }}</span>
+                                                <span><?php echo e(Auth::user()->phone_number); ?></span>
                                             </li>
                                             <li>
                                                 <i class="fas fa-envelope"></i>
-                                                <span>{{ Auth::user()->email }}</span>
+                                                <span><?php echo e(Auth::user()->email); ?></span>
                                             </li>
                                         </ul>
                                     </div>
@@ -74,13 +72,13 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a href="{{route('user.dashboard')}}">dashboard</a></li>
-                                <li><a href="{{route('user.ad_posts.categories')}}">ad post</a></li>
-                                <li><a href="{{route('user.my_ads')}}" >my ads</a></li>
-                                <li><a  class="active" href="{{route('user.profile')}}">Profile</a></li>
+                                <li><a href="<?php echo e(route('user.dashboard')); ?>">dashboard</a></li>
+                                <li><a href="<?php echo e(route('user.ad_posts.categories')); ?>">ad post</a></li>
+                                <li><a href="<?php echo e(route('user.my_ads')); ?>" >my ads</a></li>
+                                <li><a  class="active" href="<?php echo e(route('user.profile')); ?>">Profile</a></li>
                                 <li><a href="">message</a></li>
                                 <li>
-                                    <a href="{{route('logout')}}" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+                                    <a href="<?php echo e(route('logout')); ?>" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
                                 </li>
                                 
                             </ul>
@@ -101,44 +99,45 @@
                         <h3>Edit Profile</h3>
                     </div>
 
-                    @if(isset($message))
+                    <?php if(isset($message)): ?>
                         <div class="alert alert-success" role="alert" style="padding: 12px 12px;margin-bottom: 24px;">
-                            {{ $message }}
+                            <?php echo e($message); ?>
+
                         </div>
-                    @endif
+                    <?php endif; ?>
 
                 
-                    <form class="setting-form" method="post" action="{{ route('user.profile.update') }}" enctype="multipart/form-data">
-                    @csrf
-                    @method('POST')
+                    <form class="setting-form" method="post" action="<?php echo e(route('user.profile.update')); ?>" enctype="multipart/form-data">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('POST'); ?>
 
-                    <input type="hidden" name="userId" value="{{ $user->id }}">
+                    <input type="hidden" name="userId" value="<?php echo e($user->id); ?>">
 
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-label">First Name</label>
-                                <input type="text" class="form-control" name="first_name" value="{{ old('first_name', $user->first_name) }}">
+                                <input type="text" class="form-control" name="first_name" value="<?php echo e(old('first_name', $user->first_name)); ?>">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-label">Last Name</label>
-                                <input type="text" class="form-control" name="last_name" value="{{ old('last_name', $user->last_name) }}">
+                                <input type="text" class="form-control" name="last_name" value="<?php echo e(old('last_name', $user->last_name)); ?>">
                             </div>
                         </div>
 
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="text" class="form-control" name="email" value="{{ old('email', $user->email) }}">
+                                <input type="text" class="form-control" name="email" value="<?php echo e(old('email', $user->email)); ?>">
                             </div>
                         </div>
                         <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-label">Company</label>
-                                    <input type="text" class="form-control" value="{{ old('company', $user->company) }}" name="company">
+                                    <input type="text" class="form-control" value="<?php echo e(old('company', $user->company)); ?>" name="company">
                                 </div>
                             </div>
                         <div class="col-lg-6">
@@ -146,11 +145,12 @@
                                 <label class="form-label">District</label>
                                 <select id="district" name="location" class="form-control custom-select">
                                     <option value="">Select District</option>
-                                    @foreach($districts as $district)
-                                        <option value="{{ $district->id }}" {{ $user->location == $district->id ? 'selected' : '' }}>
-                                            {{ $district->name_en }}
+                                    <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($district->id); ?>" <?php echo e($user->location == $district->id ? 'selected' : ''); ?>>
+                                            <?php echo e($district->name_en); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                         </div>
@@ -160,20 +160,21 @@
                                 <label class="form-label">City</label>
                                 <select id="cities" name="sublocation" class="form-control custom-select">
                                     <option value="">Select City</option>
-                                    @if($user->location)
-                                        @foreach(App\Models\Cities::where('district_id', $user->location)->get() as $city)
-                                            <option value="{{ $city->id }}" {{ $user->sub_location == $city->id ? 'selected' : '' }}>
-                                                {{ $city->name_en }}
+                                    <?php if($user->location): ?>
+                                        <?php $__currentLoopData = App\Models\Cities::where('district_id', $user->location)->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($city->id); ?>" <?php echo e($user->sub_location == $city->id ? 'selected' : ''); ?>>
+                                                <?php echo e($city->name_en); ?>
+
                                             </option>
-                                        @endforeach
-                                    @endif
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endif; ?>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-label">Post Code</label>
-                                    <input type="text" class="form-control" value="{{ old('postCode', $user->postCode) }}" name="postCode">
+                                    <input type="text" class="form-control" value="<?php echo e(old('postCode', $user->postCode)); ?>" name="postCode">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -185,20 +186,20 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-label">Website</label>
-                                    <input type="text" class="form-control" value="{{ old('website', $user->website) }}" name="website">
+                                    <input type="text" class="form-control" value="<?php echo e(old('website', $user->website)); ?>" name="website">
                                 </div>
                             </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-label">Phone</label>
-                                <input type="text" class="form-control" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}">
+                                <input type="text" class="form-control" name="phone_number" value="<?php echo e(old('phone_number', $user->phone_number)); ?>">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-label">Birthday</label>
-                                <input type="date" class="form-control" name="birthday" value="{{ old('birthday', $user->birthday) }}">
+                                <input type="date" class="form-control" name="birthday" value="<?php echo e(old('birthday', $user->birthday)); ?>">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -206,9 +207,9 @@
                                 <label class="form-label">Profile Image</label>
                                 <input type="file" class="form-control" name="profileImage" accept="image/*">
                             </div>
-                            @if($user->profileImage)
-                            <img src="{{ asset('storage/profile_images/' . $user->profileImage) }}" alt="Profile Image" class="img-fluid" width="100">
-                            @endif
+                            <?php if($user->profileImage): ?>
+                            <img src="<?php echo e(asset('storage/profile_images/' . $user->profileImage)); ?>" alt="Profile Image" class="img-fluid" width="100">
+                            <?php endif; ?>
                         </div>
 
                         <div class="col-lg-12">
@@ -236,7 +237,7 @@
             var district_id = $(this).val();
             if (district_id) {
                 $.ajax({
-                    url: '{{ route("get.cities") }}',
+                    url: '<?php echo e(route("get.cities")); ?>',
                     type: "GET",
                     data: { district_id: district_id },
                     dataType: "json",
@@ -257,5 +258,7 @@
     });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/user/profile.blade.php ENDPATH**/ ?>

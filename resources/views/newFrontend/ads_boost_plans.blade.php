@@ -101,13 +101,8 @@
     background-color: #ffffff;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     border: 1px solid #e0e0e0;
     transition: all 0.3s ease;
-}
-
-.modern-summary-box:hover {
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .summary-details {
@@ -342,7 +337,7 @@
                             @foreach($packageTypes->filter(fn($type) => $type->package_id == $package->id) as $type)
                                 <option value="{{ $type->price }}" data-duration="{{ $type->duration }}" 
                                     style="padding: 5px; font-size: 16px; color: #333; background-color: #f8f9fa;">
-                                    Name: {{ $type->name }} | Duration: {{ $type->duration }} days | Rs- {{ $type->price }}
+                                    {{ $type->duration }} days | Rs- {{ $type->price }}
                                 </option>
                             @endforeach
                         </select>
@@ -381,7 +376,7 @@
                 <h5>Total Amount: <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
         
                 <div class="summary-buttons">
-                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">Back to Ad Boost</button>
+                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">Back</button>
                     <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary">Proceed to Payment</button>
                 </div>
             </div>
@@ -420,7 +415,7 @@
                     <h5>Total Amount: <span class="custom-text-success" id="paymentTotalAmount">Rs 0</span></h5>
 
                     <!-- Payment Button -->
-                    <div class="form-group ">
+                    <div class="form-group mt-2">
                         <button type="submit" class="custom-button custom-btn-primary">Pay</button>
                     </div>
                     <div class="form-group ">

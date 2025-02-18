@@ -225,7 +225,7 @@
             <input type="text" class="form-control" placeholder="Search, Category Name, Sub Category Name, District You Need...">
         </div>
             <div class="btn-box mt-2">
-                <a href="{{ route('user.ad_posts') }}" class="theme-btn-one"><i class="icon-1"></i>Post Your Ads</a>
+                <a href="{{ route('user.ad_posts.categories') }}" class="theme-btn-one"><i class="icon-1"></i>Post Your Ads</a>
             </div>
         </div>
     </div>
@@ -244,7 +244,7 @@
             </div>
             
             <div class="btn-box">
-                <a href="{{ route('user.ad_posts') }}" class="theme-btn-one"><i class="icon-1"></i>Post Your Ads</a>
+                <a href="{{ route('user.ad_posts.categories') }}" class="theme-btn-one"><i class="icon-1"></i>Post Your Ads</a>
             </div>
         </div>
     </div>

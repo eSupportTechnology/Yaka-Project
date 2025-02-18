@@ -77,7 +77,7 @@
                         <div class="dash-menu-list">
                             <ul>
                                 <li><a  class="active" href="{{route('user.dashboard')}}">dashboard</a></li>
-                                <li><a href="{{route('user.ad_posts')}}">ad post</a></li>
+                                <li><a href="{{route('user.ad_posts.categories')}}">ad post</a></li>
                                 <li><a href="{{route('user.my_ads')}}" >my ads</a></li>
                                 <li><a href="{{route('user.profile')}}">Profile</a></li>
                                 <li><a href="">message</a></li>
