@@ -233,9 +233,34 @@
                         </div>
                         </div>
                     </div>
+                    
+              <div class="col-lg-12 mb-3">
+                 @if($cat_id == 1)
+                        <x-additiona-electronicl-information :cat_id="$cat_id" :sub_cat_id="$sub_cat_id" />
+                    @elseif($cat_id == 4)
+                        <x-additional-vehicles-information />
+                    @elseif($cat_id == 20)
+                        <x-additional-home-and-land-information />
+                    @elseif($cat_id == 35)
+                        <x-additional-home-and-garden-information />
+                    @elseif($cat_id == 43)
+                        <x-additional-pet-information />
+                    @elseif($cat_id == 50)
+                        <x-additional-services-information />    
+                    @elseif($cat_id == 57)
+                        <x-additional-business-and-industry-information />
+                    @elseif($cat_id == 65)
+                        <x-additional-leisure-kids-information />       
+                    @elseif($cat_id == 74)
+                        <x-additional-fancy-and-cosmetics-information /> 
+                    @elseif($cat_id == 84)
+                        <x-additional-daily-essentials-information />     
+                    @elseif($cat_id == 93)
+                        <x-additional-education-information />             
+                    @endif
 
-                    <x-additiona-electronicl-information :cat_id="$cat_id" :sub_cat_id="$sub_cat_id" />
-
+              </div>
+                   
               <!-- Pricing Type -->
                 <div class="col-lg-12 mb-3">
                     <div class="section-box">

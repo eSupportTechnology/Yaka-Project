@@ -234,8 +234,10 @@
                         </div>
                         </div>
                     </div>
-
-                    <?php if (isset($component)) { $__componentOriginalb1a05082315ff853f6fd2bc732a34502 = $component; } ?>
+                    
+              <div class="col-lg-12 mb-3">
+                 <?php if($cat_id == 1): ?>
+                        <?php if (isset($component)) { $__componentOriginalb1a05082315ff853f6fd2bc732a34502 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalb1a05082315ff853f6fd2bc732a34502 = $attributes; } ?>
 <?php $component = App\View\Components\AdditionaElectroniclInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('additiona-electronicl-information'); ?>
@@ -255,7 +257,220 @@
 <?php $component = $__componentOriginalb1a05082315ff853f6fd2bc732a34502; ?>
 <?php unset($__componentOriginalb1a05082315ff853f6fd2bc732a34502); ?>
 <?php endif; ?>
+                    <?php elseif($cat_id == 4): ?>
+                        <?php if (isset($component)) { $__componentOriginalbebab527d3d69ec2f3e7c53e46d7f6a6 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalbebab527d3d69ec2f3e7c53e46d7f6a6 = $attributes; } ?>
+<?php $component = App\View\Components\AdditionalVehiclesInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additional-vehicles-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionalVehiclesInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalbebab527d3d69ec2f3e7c53e46d7f6a6)): ?>
+<?php $attributes = $__attributesOriginalbebab527d3d69ec2f3e7c53e46d7f6a6; ?>
+<?php unset($__attributesOriginalbebab527d3d69ec2f3e7c53e46d7f6a6); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalbebab527d3d69ec2f3e7c53e46d7f6a6)): ?>
+<?php $component = $__componentOriginalbebab527d3d69ec2f3e7c53e46d7f6a6; ?>
+<?php unset($__componentOriginalbebab527d3d69ec2f3e7c53e46d7f6a6); ?>
+<?php endif; ?>
+                    <?php elseif($cat_id == 20): ?>
+                        <?php if (isset($component)) { $__componentOriginal0966d50e939274fec53bed6db04a35fe = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal0966d50e939274fec53bed6db04a35fe = $attributes; } ?>
+<?php $component = App\View\Components\AdditionalHomeAndLandInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additional-home-and-land-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionalHomeAndLandInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal0966d50e939274fec53bed6db04a35fe)): ?>
+<?php $attributes = $__attributesOriginal0966d50e939274fec53bed6db04a35fe; ?>
+<?php unset($__attributesOriginal0966d50e939274fec53bed6db04a35fe); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal0966d50e939274fec53bed6db04a35fe)): ?>
+<?php $component = $__componentOriginal0966d50e939274fec53bed6db04a35fe; ?>
+<?php unset($__componentOriginal0966d50e939274fec53bed6db04a35fe); ?>
+<?php endif; ?>
+                    <?php elseif($cat_id == 35): ?>
+                        <?php if (isset($component)) { $__componentOriginala582f321ec8ddc8f8c9fe00ec50c96e4 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginala582f321ec8ddc8f8c9fe00ec50c96e4 = $attributes; } ?>
+<?php $component = App\View\Components\AdditionalHomeAndGardenInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additional-home-and-garden-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionalHomeAndGardenInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginala582f321ec8ddc8f8c9fe00ec50c96e4)): ?>
+<?php $attributes = $__attributesOriginala582f321ec8ddc8f8c9fe00ec50c96e4; ?>
+<?php unset($__attributesOriginala582f321ec8ddc8f8c9fe00ec50c96e4); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginala582f321ec8ddc8f8c9fe00ec50c96e4)): ?>
+<?php $component = $__componentOriginala582f321ec8ddc8f8c9fe00ec50c96e4; ?>
+<?php unset($__componentOriginala582f321ec8ddc8f8c9fe00ec50c96e4); ?>
+<?php endif; ?>
+                    <?php elseif($cat_id == 43): ?>
+                        <?php if (isset($component)) { $__componentOriginal929dd540b381a4241484fe02f00171cf = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal929dd540b381a4241484fe02f00171cf = $attributes; } ?>
+<?php $component = App\View\Components\AdditionalPetInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additional-pet-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionalPetInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal929dd540b381a4241484fe02f00171cf)): ?>
+<?php $attributes = $__attributesOriginal929dd540b381a4241484fe02f00171cf; ?>
+<?php unset($__attributesOriginal929dd540b381a4241484fe02f00171cf); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal929dd540b381a4241484fe02f00171cf)): ?>
+<?php $component = $__componentOriginal929dd540b381a4241484fe02f00171cf; ?>
+<?php unset($__componentOriginal929dd540b381a4241484fe02f00171cf); ?>
+<?php endif; ?>
+                    <?php elseif($cat_id == 50): ?>
+                        <?php if (isset($component)) { $__componentOriginalf3a7e84930c43275afae25449f6acc77 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalf3a7e84930c43275afae25449f6acc77 = $attributes; } ?>
+<?php $component = App\View\Components\AdditionalServicesInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additional-services-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionalServicesInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalf3a7e84930c43275afae25449f6acc77)): ?>
+<?php $attributes = $__attributesOriginalf3a7e84930c43275afae25449f6acc77; ?>
+<?php unset($__attributesOriginalf3a7e84930c43275afae25449f6acc77); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalf3a7e84930c43275afae25449f6acc77)): ?>
+<?php $component = $__componentOriginalf3a7e84930c43275afae25449f6acc77; ?>
+<?php unset($__componentOriginalf3a7e84930c43275afae25449f6acc77); ?>
+<?php endif; ?>    
+                    <?php elseif($cat_id == 57): ?>
+                        <?php if (isset($component)) { $__componentOriginal54d9fbf215fd1e69aa0567eea759bd25 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal54d9fbf215fd1e69aa0567eea759bd25 = $attributes; } ?>
+<?php $component = App\View\Components\AdditionalBusinessAndIndustryInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additional-business-and-industry-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionalBusinessAndIndustryInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal54d9fbf215fd1e69aa0567eea759bd25)): ?>
+<?php $attributes = $__attributesOriginal54d9fbf215fd1e69aa0567eea759bd25; ?>
+<?php unset($__attributesOriginal54d9fbf215fd1e69aa0567eea759bd25); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal54d9fbf215fd1e69aa0567eea759bd25)): ?>
+<?php $component = $__componentOriginal54d9fbf215fd1e69aa0567eea759bd25; ?>
+<?php unset($__componentOriginal54d9fbf215fd1e69aa0567eea759bd25); ?>
+<?php endif; ?>
+                    <?php elseif($cat_id == 65): ?>
+                        <?php if (isset($component)) { $__componentOriginal285efd2c99167888d8554656673e2df6 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal285efd2c99167888d8554656673e2df6 = $attributes; } ?>
+<?php $component = App\View\Components\AdditionalLeisureKidsInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additional-leisure-kids-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionalLeisureKidsInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal285efd2c99167888d8554656673e2df6)): ?>
+<?php $attributes = $__attributesOriginal285efd2c99167888d8554656673e2df6; ?>
+<?php unset($__attributesOriginal285efd2c99167888d8554656673e2df6); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal285efd2c99167888d8554656673e2df6)): ?>
+<?php $component = $__componentOriginal285efd2c99167888d8554656673e2df6; ?>
+<?php unset($__componentOriginal285efd2c99167888d8554656673e2df6); ?>
+<?php endif; ?>       
+                    <?php elseif($cat_id == 74): ?>
+                        <?php if (isset($component)) { $__componentOriginal472b4ff51dffa7cccb3969725f91524f = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal472b4ff51dffa7cccb3969725f91524f = $attributes; } ?>
+<?php $component = App\View\Components\AdditionalFancyAndCosmeticsInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additional-fancy-and-cosmetics-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionalFancyAndCosmeticsInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal472b4ff51dffa7cccb3969725f91524f)): ?>
+<?php $attributes = $__attributesOriginal472b4ff51dffa7cccb3969725f91524f; ?>
+<?php unset($__attributesOriginal472b4ff51dffa7cccb3969725f91524f); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal472b4ff51dffa7cccb3969725f91524f)): ?>
+<?php $component = $__componentOriginal472b4ff51dffa7cccb3969725f91524f; ?>
+<?php unset($__componentOriginal472b4ff51dffa7cccb3969725f91524f); ?>
+<?php endif; ?> 
+                    <?php elseif($cat_id == 84): ?>
+                        <?php if (isset($component)) { $__componentOriginale155920dc7a390c884a615935de8db29 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale155920dc7a390c884a615935de8db29 = $attributes; } ?>
+<?php $component = App\View\Components\AdditionalDailyEssentialsInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additional-daily-essentials-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionalDailyEssentialsInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale155920dc7a390c884a615935de8db29)): ?>
+<?php $attributes = $__attributesOriginale155920dc7a390c884a615935de8db29; ?>
+<?php unset($__attributesOriginale155920dc7a390c884a615935de8db29); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale155920dc7a390c884a615935de8db29)): ?>
+<?php $component = $__componentOriginale155920dc7a390c884a615935de8db29; ?>
+<?php unset($__componentOriginale155920dc7a390c884a615935de8db29); ?>
+<?php endif; ?>     
+                    <?php elseif($cat_id == 93): ?>
+                        <?php if (isset($component)) { $__componentOriginalae91af77194b99e8bf6595782a388e33 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalae91af77194b99e8bf6595782a388e33 = $attributes; } ?>
+<?php $component = App\View\Components\AdditionalEducationInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additional-education-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionalEducationInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalae91af77194b99e8bf6595782a388e33)): ?>
+<?php $attributes = $__attributesOriginalae91af77194b99e8bf6595782a388e33; ?>
+<?php unset($__attributesOriginalae91af77194b99e8bf6595782a388e33); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalae91af77194b99e8bf6595782a388e33)): ?>
+<?php $component = $__componentOriginalae91af77194b99e8bf6595782a388e33; ?>
+<?php unset($__componentOriginalae91af77194b99e8bf6595782a388e33); ?>
+<?php endif; ?>             
+                    <?php endif; ?>
 
+              </div>
+                   
               <!-- Pricing Type -->
                 <div class="col-lg-12 mb-3">
                     <div class="section-box">
