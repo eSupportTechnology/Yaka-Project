@@ -28,6 +28,12 @@
 
 </style>
 
+@php
+    $cat_id = request()->get('cat_id');
+    $sub_cat_id = request()->get('sub_cat_id');
+   
+@endphp
+
 <!-- Page Title -->
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
@@ -227,6 +233,8 @@
                         </div>
                         </div>
                     </div>
+
+                    <x-additiona-electronicl-information :cat_id="$cat_id" :sub_cat_id="$sub_cat_id" />
 
               <!-- Pricing Type -->
                 <div class="col-lg-12 mb-3">

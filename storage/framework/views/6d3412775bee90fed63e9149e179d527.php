@@ -75,7 +75,7 @@
                         <div class="dash-menu-list">
                             <ul>
                                 <li><a href="<?php echo e(route('user.dashboard')); ?>">dashboard</a></li>
-                                <li><a href="<?php echo e(route('user.ad_posts')); ?>">ad post</a></li>
+                                <li><a href="<?php echo e(route('user.ad_posts.categories')); ?>">ad post</a></li>
                                 <li><a  class="active" href="<?php echo e(route('user.my_ads')); ?>" >my ads</a></li>
                                 <li><a href="<?php echo e(route('user.profile')); ?>">Profile</a></li>
                                 <li><a href="">message</a></li>

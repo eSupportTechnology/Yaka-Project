@@ -26,6 +26,12 @@
 
 </style>
 
+<?php
+    $cat_id = request()->get('cat_id');
+    $sub_cat_id = request()->get('sub_cat_id');
+   
+?>
+
 <!-- Page Title -->
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
@@ -228,6 +234,27 @@
                         </div>
                         </div>
                     </div>
+
+                    <?php if (isset($component)) { $__componentOriginalb1a05082315ff853f6fd2bc732a34502 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalb1a05082315ff853f6fd2bc732a34502 = $attributes; } ?>
+<?php $component = App\View\Components\AdditionaElectroniclInformation::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('additiona-electronicl-information'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AdditionaElectroniclInformation::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['cat_id' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($cat_id),'sub_cat_id' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($sub_cat_id)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalb1a05082315ff853f6fd2bc732a34502)): ?>
+<?php $attributes = $__attributesOriginalb1a05082315ff853f6fd2bc732a34502; ?>
+<?php unset($__attributesOriginalb1a05082315ff853f6fd2bc732a34502); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalb1a05082315ff853f6fd2bc732a34502)): ?>
+<?php $component = $__componentOriginalb1a05082315ff853f6fd2bc732a34502; ?>
+<?php unset($__componentOriginalb1a05082315ff853f6fd2bc732a34502); ?>
+<?php endif; ?>
 
               <!-- Pricing Type -->
                 <div class="col-lg-12 mb-3">
