@@ -1,7 +1,8 @@
 <div>
     <div >
         <div class="section-box">
-            <h4>Additional Information (Category ID: <?php echo e($cat_id); ?>, Sub-Category ID: <?php echo e($sub_cat_id); ?>)</h4>
+            <h4>Additional Information </h4>
+            
             <div class="col-lg-12 mb-3">
                 <div class="form-group">
                     <label class="form-label text-dark"><strong>Edition</strong></label>

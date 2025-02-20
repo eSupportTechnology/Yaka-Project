@@ -189,34 +189,41 @@
                         <div class="section-box">
                             <div class="d-flex flex-wrap gap-3">
                                <!-- Brand -->
-<div class="col-lg-6 mb-3">
-    <div class="form-group">
-        <label class="form-label text-dark"><strong>Brand</strong></label>
-        <select id="brand" name="brand" class="form-control custom-select">
-            <option value="">Select Brand</option>
-            @foreach($brands as $brand)
-                <option value="{{ $brand->id }}" @if(request()->brand == $brand->id) selected @endif>
-                    {{ $brand->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-</div>
-
-<!-- Model -->
-<div class="col-lg-6 mb-3">
-    <div class="form-group">
-        <label class="form-label text-dark"><strong>Model</strong></label>
-        <select id="model" name="model" class="form-control custom-select">
-            <option value="">Select Model</option>
-            @foreach($models as $model)
-                <option value="{{ $model->id }}" @if(request()->model == $model->id) selected @endif>
-                    {{ $model->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-</div>
+                               @php
+                               $cat_id = request()->get('cat_id');
+                           @endphp
+                           
+                           @if($cat_id == 1 || $cat_id == 4)
+                               <div class="col-lg-6 mb-3">
+                                   <div class="form-group">
+                                       <label class="form-label text-dark"><strong>Brand</strong></label>
+                                       <select id="brand" name="brand" class="form-control custom-select">
+                                           <option value="">Select Brand</option>
+                                           @foreach($brands as $brand)
+                                               <option value="{{ $brand->id }}" @if(request()->brand == $brand->id) selected @endif>
+                                                   {{ $brand->name }}
+                                               </option>
+                                           @endforeach
+                                       </select>
+                                   </div>
+                               </div>
+                           
+                               <!-- Model -->
+                               <div class="col-lg-6 mb-3">
+                                   <div class="form-group">
+                                       <label class="form-label text-dark"><strong>Model</strong></label>
+                                       <select id="model" name="model" class="form-control custom-select">
+                                           <option value="">Select Model</option>
+                                           @foreach($models as $model)
+                                               <option value="{{ $model->id }}" @if(request()->model == $model->id) selected @endif>
+                                                   {{ $model->name }}
+                                               </option>
+                                           @endforeach
+                                       </select>
+                                   </div>
+                               </div>
+                           @endif
+                           
 
 
                             </div>

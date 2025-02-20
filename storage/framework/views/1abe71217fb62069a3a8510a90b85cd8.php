@@ -1,7 +1,7 @@
 <div>
-    <div class="col-lg-12 mb-3">
+    <div >
         <div class="section-box">
-            <h4>Vehicles Information </h4>
+            <h4>Additional Information</h4>
             
             <div class="col-lg-12 mb-3">
                 <div class="form-group">
