@@ -415,7 +415,7 @@
                     <h5>Total Amount: <span class="custom-text-success" id="paymentTotalAmount">Rs 0</span></h5>
 
                     <!-- Payment Button -->
-                    <div class="form-group ">
+                    <div class="form-group mt-2">
                         <button type="submit" class="custom-button custom-btn-primary">Pay</button>
                     </div>
                     <div class="form-group ">

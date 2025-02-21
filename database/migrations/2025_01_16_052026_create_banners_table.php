@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('banners', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('img');
             $table->string('type');
             $table->timestamps();

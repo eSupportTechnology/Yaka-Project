@@ -5,6 +5,7 @@ use App\Http\Controllers\frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
+use App\Http\Controllers\adminPanel\FormFieldsController;
 use App\Http\Controllers\adminPanel\usersManagementController;
 use App\Http\Controllers\adminPanel\adminManagementController;
 use App\Http\Controllers\adminPanel\adsTypesManagementController;
@@ -75,13 +76,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-cities/{districtId}', [UserAdsController::class, 'fetchCities']);
 
     Route::get('/user/ad_posts', [UserAdsController::class, 'ad_posts'])->name('user.ad_posts');
-    Route::post('/user/ad_posts', [UserAdsController::class, 'ad_posts'])->name('user.ad_posts');
+    Route::post('/user/ad-posts', [UserAdsController::class, 'store'])->name('user.ad_posts.store');
+
+    Route::get('/user/my_ads', [UserDashboardController::class, 'my_ads'])->name('user.my_ads');
+ 
 
     Route::get('/get-brands', [AdsController::class, 'getBrands'])->name('get.brands');
 
     Route::get('/get-models', function(Request $request) {
-        \Log::debug('Request data for get-models:', $request->all());
-    
         $brandId = $request->brand_id;
         $subCatId = $request->sub_cat_id;
     
@@ -97,13 +99,7 @@ Route::middleware(['auth'])->group(function () {
         return response()->json($models);
     })->name('get.models');
     
-    
-    
-    
-    
-    Route::get('/user/my_ads', [UserDashboardController::class, 'my_ads'])->name('user.my_ads');
-
-
+  
 });
 
 
@@ -158,9 +154,16 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::get('/dashboard/sub-categories/update/{url}',[subCategoriesManagementController::class ,'update'])->name('dashboard.sub-categories.update');
     Route::get('/dashboard/sub-categories/delete/{url}',[subCategoriesManagementController::class ,'delete'])->name('dashboard.sub-categories.delete');
 
-     //usersManagementController
-     Route::get('/dashboard/ads/{code?}',[adsManagementController::class ,'index'])->name('dashboard.ads');
-     Route::get('/dashboard/ads/{status}/{id}',[adsManagementController::class ,'status'])->name('dashboard.ads.status');
+    //form fields
+    Route::get('/form_fields',[FormFieldsController::class ,'index'])->name('dashboard.form_fields');
+    Route::get('/form_fields/create',[FormFieldsController::class ,'create'])->name('dashboard.formfields.create');
+    Route::get('/get-subcategories/{mainCategoryId}', [FormFieldsController::class, 'getSubcategories']);
+    Route::post('/store-form-fields', [FormFieldsController::class, 'store'])->name('dashboard.formfields.store');
+    Route::delete('/form_fields/{id}', [FormFieldsController::class, 'destroy'])->name('dashboard.formfields.destroy');
+
+    //usersManagementController
+    Route::get('/dashboard/ads/{code?}',[adsManagementController::class ,'index'])->name('dashboard.ads');
+    Route::get('/dashboard/ads/{status}/{id}',[adsManagementController::class ,'status'])->name('dashboard.ads.status');
  
 
     //brandManagementController

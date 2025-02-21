@@ -59,6 +59,13 @@
                 </a>
             </li>
 
+            <li class="menu-item <?php echo e(request()->routeIs('dashboard.form_fields') ? 'active' : ''); ?>">
+                <a class="menu-link" href="<?php echo e(route('dashboard.form_fields')); ?>">
+                    <i class="icon material-icons md-description"></i>
+                    <span class="text">Form Fields for catgories</span>
+                </a>
+            </li>
+
             <li class="menu-item <?php echo e(request()->routeIs('dashboard.ads') ? 'active' : ''); ?>">
                 <a class="menu-link" href="<?php echo e(route('dashboard.ads')); ?>">
                     <i class="icon material-icons md-folder"></i>

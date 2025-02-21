@@ -59,6 +59,13 @@
                 </a>
             </li>
 
+            <li class="menu-item {{ request()->routeIs('dashboard.form_fields') ? 'active' : '' }}">
+                <a class="menu-link" href="{{route('dashboard.form_fields')}}">
+                    <i class="icon material-icons md-description"></i>
+                    <span class="text">Form Fields for catgories</span>
+                </a>
+            </li>
+
             <li class="menu-item {{ request()->routeIs('dashboard.ads') ? 'active' : '' }}">
                 <a class="menu-link" href="{{route('dashboard.ads')}}">
                     <i class="icon material-icons md-folder"></i>
