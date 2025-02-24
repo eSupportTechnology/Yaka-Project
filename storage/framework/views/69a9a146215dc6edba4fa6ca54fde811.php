@@ -50,16 +50,17 @@
                                     <td>
                                         <div class="template-demo d-flex  flex-nowrap">
                                             
-                                            <a href="<?php echo e(route('ads.details',[$ads->id])); ?>" class="btn btn-view btn-sm me-2">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
+                                        <a href="<?php echo e(route('ads.details', [$ads->adsId])); ?>" class="btn btn-view btn-sm me-2">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+
                                             <?php if($ads->status == 1): ?>
-                                                <a href="<?php echo e(route('dashboard.ads.status',['disapprove',$ads->id])); ?>" class="btn btn-primary">
-                                                    Disapprove <!-- Assuming you want to use a "View" icon, change "ti-home" to the appropriate icon class -->
-                                                </a>
+                                            <a href="<?php echo e(route('dashboard.ads.status', ['status' => 'disapprove', 'id' => $ads->adsId])); ?>" class="btn btn-danger btn-sm">
+                                                Disapprove
+                                            </a>
                                             <?php else: ?>
-                                                <a href="<?php echo e(route('dashboard.ads.status',['approve',$ads->id])); ?>" class="btn btn-primary">
-                                                    Approve <!-- Assuming you want to use a "View" icon, change "ti-home" to the appropriate icon class -->
+                                                <a href="<?php echo e(route('dashboard.ads.status', ['status' => 'approve', 'id' => $ads->adsId])); ?>" class="btn btn-success btn-sm">
+                                                    Approve
                                                 </a>
                                             <?php endif; ?>
 

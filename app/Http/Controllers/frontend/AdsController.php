@@ -79,26 +79,22 @@ class AdsController extends Controller
 
     
     
-    public function show_details($ad_id)
+    public function show_details($adsId)
     {
-        // Fetch the ad by its ID and eager load related models
-        $ad = Ads::with(['main_location', 'sub_location', 'user', 'category'])->findOrFail($ad_id);
-
-       
+        $ad = Ads::where('adsId', $adsId)->with(['main_location', 'sub_location', 'user', 'category'])->firstOrFail();
     
         $mainImage = $ad->main_image;
         $subImages = $ad->sub_images;
     
-        // Increment view count
-        $ad->view_counr += 1;
-        $ad->save();  
+        $ad->view_count += 1; 
+        $ad->save();
     
         // Fetch banners
         $banners = Banners::where('type', 0)->get();
         $otherbanners = Banners::where('type', 1)->get();
     
-        // Fetch related ads with the same category and location
-        $relatedAds = Ads::where('id', '!=', $ad->id)
+        // Fetch related ads
+        $relatedAds = Ads::where('adsId', '!=', $ad->adsId)
             ->where('cat_id', $ad->cat_id)
             ->where('location', $ad->location)
             ->latest()
@@ -106,7 +102,7 @@ class AdsController extends Controller
             ->get();
     
         if ($relatedAds->isEmpty()) {
-            $relatedAds = Ads::where('id', '!=', $ad->id)
+            $relatedAds = Ads::where('adsId', '!=', $ad->adsId)
                 ->where('cat_id', $ad->cat_id)
                 ->latest()
                 ->take(12)
