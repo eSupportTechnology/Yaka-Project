@@ -62,7 +62,7 @@ class HomeController extends Controller
     
         // Get Super Ads again but make sure they are not expired and active
         $superAds = Ads::with(['category', 'subcategory'])
-            ->where('ads_package', 4) 
+            ->where('ads_package', 6) 
             ->where('status', 1) 
             ->where(function($query) {
                 $query->whereNull('package_expire_at') 

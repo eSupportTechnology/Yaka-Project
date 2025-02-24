@@ -1,7 +1,5 @@
-@extends ('newFrontend.master')
-
-@section('content')
-<link href="{{ asset('newFrontend/Clasifico/assets/css/userdashboard.css') }}" rel="stylesheet">
+<?php $__env->startSection('content'); ?>
+<link href="<?php echo e(asset('newFrontend/Clasifico/assets/css/userdashboard.css')); ?>" rel="stylesheet">
 <style>
     /* Add these styles to ensure consistent card sizing */
 .ad-card {
@@ -63,7 +61,7 @@
                     <h1>Dashboard</h1>
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="{{ route('/') }}">Home</a></li>
+                    <li><a href="<?php echo e(route('/')); ?>">Home</a></li>
                     <li>Dashboard</li>
                 </ul>
             </div>
@@ -78,26 +76,26 @@
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
                                   <div class="dash-avatar">
-                                        @if(Auth::check() && Auth::user()->profileImage) 
-                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
+                                        <?php if(Auth::check() && Auth::user()->profileImage): ?> 
+                                            <a href="#"><img src="<?php echo e(asset('storage/profile_images/' . Auth::user()->profileImage)); ?>" 
                                             alt="user"></a>
-                                        @else
-                                            <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
-                                        @endif
+                                        <?php else: ?>
+                                            <a href="#"><img src="<?php echo e(asset('web/images/user.png')); ?>" alt="user"></a>
+                                        <?php endif; ?>
                                     </div>
 
                                     <div class="dash-intro">
-                                        <h4><a href="#">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a></h4>
-                                        <h5>{{ Auth::user()->email }}</h5>
+                                        <h4><a href="#"><?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?></a></h4>
+                                        <h5><?php echo e(Auth::user()->email); ?></h5>
 
                                         <ul class="dash-meta">
                                             <li>
                                                 <i class="fas fa-phone"></i>
-                                                <span>{{ Auth::user()->phone_number }}</span>
+                                                <span><?php echo e(Auth::user()->phone_number); ?></span>
                                             </li>
                                             <li>
                                                 <i class="fas fa-envelope"></i>
-                                                <span>{{ Auth::user()->email }}</span>
+                                                <span><?php echo e(Auth::user()->email); ?></span>
                                             </li>
                                         </ul>
                                     </div>
@@ -128,13 +126,13 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a href="{{route('user.dashboard')}}">dashboard</a></li>
-                                <li><a href="{{route('user.ad_posts.categories')}}">ad post</a></li>
-                                <li><a  class="active" href="{{route('user.my_ads')}}" >my ads</a></li>
-                                <li><a href="{{route('user.profile')}}">Profile</a></li>
+                                <li><a href="<?php echo e(route('user.dashboard')); ?>">dashboard</a></li>
+                                <li><a href="<?php echo e(route('user.ad_posts.categories')); ?>">ad post</a></li>
+                                <li><a  class="active" href="<?php echo e(route('user.my_ads')); ?>" >my ads</a></li>
+                                <li><a href="<?php echo e(route('user.profile')); ?>">Profile</a></li>
                                 <li><a href="">message</a></li>
                                 <li>
-                                    <a href="{{route('logout')}}" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+                                    <a href="<?php echo e(route('logout')); ?>" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
                                 </li>
                                 
                             </ul>
@@ -162,40 +160,40 @@
             <!-- Active Ads Tab -->
             <div class="tab-pane fade show active" id="active-ads" role="tabpanel" aria-labelledby="active-ads-tab">
                 <div class="row">
-                    @forelse($activeAds as $ad)
+                    <?php $__empty_1 = true; $__currentLoopData = $activeAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <div class="col-md-4 mb-4">
                             <div class="card ad-card">
-                                <img src="{{ asset('storage/' . $ad->mainImage) }}" class="card-img-top" alt="Ad Image">
+                                <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>" class="card-img-top" alt="Ad Image">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $ad->title }}</h5>
-                                    <p class="card-text">Price: Rs {{ number_format($ad->price, 2) }}</p>
-                                    <p class="card-text text-muted">Location: {{ $ad->location }}</p>
+                                    <h5 class="card-title"><?php echo e($ad->title); ?></h5>
+                                    <p class="card-text">Price: Rs <?php echo e(number_format($ad->price, 2)); ?></p>
+                                    <p class="card-text text-muted">Location: <?php echo e($ad->location); ?></p>
                                 </div>
                             </div>
                         </div>
-                    @empty
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <p class="text-center">No active ads found.</p>
-                    @endforelse
+                    <?php endif; ?>
                 </div>
             </div>
 
             <!-- Pending Ads Tab -->
             <div class="tab-pane fade" id="pending-ads" role="tabpanel" aria-labelledby="pending-ads-tab">
                 <div class="row">
-                    @forelse($pendingAds as $ad)
+                    <?php $__empty_1 = true; $__currentLoopData = $pendingAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <div class="col-md-4 mb-4">
                             <div class="card ad-card">
-                                <img src="{{ asset('storage/' . $ad->mainImage) }}" class="card-img-top" alt="Ad Image">
+                                <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>" class="card-img-top" alt="Ad Image">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $ad->title }}</h5>
-                                    <p class="card-text">Price: Rs {{ number_format($ad->price, 2) }}</p>
-                                    <p class="card-text text-muted">Location: {{ $ad->location }}</p>
+                                    <h5 class="card-title"><?php echo e($ad->title); ?></h5>
+                                    <p class="card-text">Price: Rs <?php echo e(number_format($ad->price, 2)); ?></p>
+                                    <p class="card-text text-muted">Location: <?php echo e($ad->location); ?></p>
                                 </div>
                             </div>
                         </div>
-                    @empty
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <p class="text-center">No pending ads found.</p>
-                    @endforelse
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -205,4 +203,6 @@
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/user/my_ads.blade.php ENDPATH**/ ?>

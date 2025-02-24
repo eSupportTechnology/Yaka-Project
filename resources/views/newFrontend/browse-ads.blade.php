@@ -65,7 +65,7 @@
 
     @keyframes blinking-border-blue {
         0% { border-color: transparent; }
-        50% { border-color: rgba(0, 0, 255, 0.8); } /* Blue */
+        50% { border-color: rgba(0, 159, 245, 0.8); } /* Blue */
         100% { border-color: transparent; }
     }
 

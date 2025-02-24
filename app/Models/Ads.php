@@ -8,6 +8,7 @@ class Ads extends Model
 {
     protected $table = 'ads'; 
     protected $primaryKey = 'adsId'; 
+    public $incrementing = false;
 
     protected $fillable = [
         'adsId',

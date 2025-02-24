@@ -139,6 +139,10 @@ class UserAdsController extends Controller
             foreach ($formFields as $field) {
                 $dynamicRules['field_' . $field->id] = 'nullable';
             }
+
+            if ($request->boosting_option == '0') {
+                $request->merge(['package_type' => '0']);
+            }            
         
             // Merge validation rules
             $validationRules = array_merge([
@@ -172,16 +176,27 @@ class UserAdsController extends Controller
                             $fail('The package type must be 0 when selecting a Free Ad.');
                         }
                     },
-                    'exists:table_package_typess,id'
+                    function ($attribute, $value, $fail) {
+                        if (request('boosting_option') != '0' && !\App\Models\PackageType::where('id', $value)->exists()) {
+                            $fail('The selected package type is invalid.');
+                        }
+                    }
                 ],
+
             ], $dynamicRules);
             
             // Validate the request data
             $validated = $request->validate($validationRules);
     
             // Get the package type duration
-            $packageType = \App\Models\PackageType::find($validated['package_type']);
-            $packageExpireAt = Carbon::now()->addDays($packageType->duration); 
+            $packageExpireAt = null; // Default null value
+
+            if ($request->boosting_option != '0') {
+                $packageType = \App\Models\PackageType::find($validated['package_type']);
+                if ($packageType) {
+                    $packageExpireAt = Carbon::now()->addDays($packageType->duration);
+                }
+            }
     
             $mainImagePath = $request->file('main_image')->storeAs('ads/main_images', 
             $request->file('main_image')->getClientOriginalName(), 'public');
@@ -210,7 +225,7 @@ class UserAdsController extends Controller
                 'condition'     => $validated['condition'] ?? null,
                 'ads_package'   => $request->boosting_option,
                 'package_type'  => $request->package_type,
-                'package_expire_at' => $packageExpireAt, // Store the expiration date
+                'package_expire_at' => $packageExpireAt, 
                 'cat_id'        => $cat_id,        
                 'sub_cat_id'    => $sub_cat_id,    
                 'location'      => $location,      
