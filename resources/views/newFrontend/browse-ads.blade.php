@@ -275,7 +275,7 @@
                                 </div>
                             </div>
 
-
+ 
 
 <!-- Grid Items -->
 <div class="grid-item feature-style-two four-column pd-0" style="display: flex; flex-wrap: wrap;">
@@ -284,7 +284,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12 feature-block" 
                 style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
                     <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                    <a href="{{ route('ads.details', ['ad_id' => $ad->id]) }}" 
+                    <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" 
                     class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}"
                     style="display: block; height: 100%; text-decoration: none;">
 

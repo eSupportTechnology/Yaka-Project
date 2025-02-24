@@ -137,14 +137,14 @@
                                         <ul class="dropdown-menu" aria-labelledby="shareDropdown">
                                             <li>
                                                 <a class="dropdown-item" 
-                                                href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(urlencode(route('ads.details', ['adsId' => $ad->id]))); ?>" 
+                                                href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(urlencode(route('ads.details', ['adsId' => $ad->adsId]))); ?>" 
                                                 target="_blank">
                                                     <i class="fab fa-facebook"></i> Facebook
                                                 </a>
                                             </li>
                                             <li>
                                             <a class="dropdown-item" 
-                                                href="https://api.whatsapp.com/send?text=<?php echo e(urlencode($ad->title)); ?>%0A%0A<?php echo e(urlencode($ad->description)); ?>%0A%0A🔗 <?php echo e(urlencode(route('ads.details', ['adsId' => $ad->id]))); ?>" 
+                                                href="https://api.whatsapp.com/send?text=<?php echo e(urlencode($ad->title)); ?>%0A%0A<?php echo e(urlencode($ad->description)); ?>%0A%0A🔗 <?php echo e(urlencode(route('ads.details', ['adsId' => $ad->adsId]))); ?>" 
                                                 target="_blank">
                                                     <i class="fab fa-whatsapp"></i> WhatsApp
                                                 </a>
@@ -153,7 +153,7 @@
                                     </div>
 
                                     <!-- Boost Ad Button -->
-                                    <a href="<?php echo e(route('ads.boost', ['ad_id' => $ad->id])); ?>" class="btn btn-warning align-items-center">
+                                    <a href="<?php echo e(route('ads.boost', ['ad_id' => $ad->adsId])); ?>" class="btn btn-warning align-items-center">
                                         <i class="fas fa-rocket"></i> Boost this ad
                                     </a>
                                 </div>
@@ -220,7 +220,7 @@
         </div>
         <div class="four-item-carousel owl-carousel owl-theme owl-nav-none dots-style-one">
             <?php $__currentLoopData = $relatedAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $relatedAd): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <a href="<?php echo e(route('ads.details', ['ad_id' => $relatedAd->id])); ?>" style="display: block; height: 100%; text-decoration: none;">
+                <a href="<?php echo e(route('ads.details', ['adsId' => $relatedAd->adsId])); ?>" style="display: block; height: 100%; text-decoration: none;">
                     <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
                         <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
                             <div class="image-box" style="flex-grow: 0;">

@@ -81,10 +81,16 @@ class AdsController extends Controller
     
     public function show_details($adsId)
     {
+
+        
         $ad = Ads::where('adsId', $adsId)->with(['main_location', 'sub_location', 'user', 'category'])->firstOrFail();
+
+        
     
         $mainImage = $ad->main_image;
         $subImages = $ad->sub_images;
+
+        
     
         $ad->view_count += 1; 
         $ad->save();
@@ -108,6 +114,8 @@ class AdsController extends Controller
                 ->take(12)
                 ->get();
         }
+
+        
     
         return view('newFrontend.browse-ads-details', compact('ad', 'banners', 'mainImage', 'subImages', 'otherbanners', 'relatedAds'));
     }
