@@ -44,6 +44,13 @@
     flex-wrap: wrap; 
 }
 
+.thumb-item {
+    cursor: pointer;
+}
+
+.thumb-item:hover img {
+    opacity: 0.7; /* Optional: Add opacity effect on hover for better UX */
+}
 
 </style>
 
@@ -84,35 +91,34 @@
 
                         </div>
 
-
                         <div class="content-two single-box">
                             <div class="bxslider">
-                                   
-                                    <div class="slider-content">
-                                        <div class="product-image">
+                                <div class="slider-content">
+                                    <div class="product-image">
                                         <figure class="image">
-                                            <img src="<?php echo e(asset('images/Ads/' . $ad->mainImage)); ?>" alt="Main Image">
+                                            <img id="mainImage" src="<?php echo e(asset('storage/' . $mainImage)); ?>" alt="Main Image" style="height: 500px; width: 100%; object-fit: cover;">
                                         </figure>
-                                        </div>
-                                        <?php if(!empty($subImages) && is_array($subImages)): ?>
-                                            <div class="slider-pager">
-                                                <ul class="clearfix thumb-box">
-                                                    <?php $__currentLoopData = $subImages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $subImage): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <li>
-                                                            <a data-slide-index="<?php echo e($index); ?>" href="#">
-                                                                <figure>
-                                                                    <img src="<?php echo e(asset('images/' . $subImage)); ?>" alt="Thumbnail <?php echo e($index + 1); ?>">
-                                                                </figure>
-                                                            </a>
-                                                        </li>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                </ul>
-                                            </div>
-                                        <?php endif; ?>
                                     </div>
-                                   
+
+                                    <?php if(!empty($subImages) && is_array($subImages)): ?>
+                                        <div class="slider-pager">
+                                            <ul class="clearfix thumb-box">
+                                                <?php $__currentLoopData = $subImages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $subImage): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <li class="thumb-item">
+                                                        <a data-slide-index="<?php echo e($index); ?>" href="#" class="thumbnail">
+                                                            <figure>
+                                                                <img src="<?php echo e(asset('storage/' . $subImage)); ?>" alt="Thumbnail <?php echo e($index + 1); ?>" style="height: 150px; width: auto; object-fit: contain;">
+                                                            </figure>
+                                                        </a>
+                                                    </li>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </ul>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
+                        </div>
+
                             <div class="content-one single-box">
                                 <div class="text">
                                     <h3 style="color:rgb(176, 5, 5)">Rs <?php echo e($ad->price); ?></h3>
@@ -137,14 +143,14 @@
                                         <ul class="dropdown-menu" aria-labelledby="shareDropdown">
                                             <li>
                                                 <a class="dropdown-item" 
-                                                href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(urlencode(route('ads.details', ['adsId' => $ad->id]))); ?>" 
+                                                href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(urlencode(route('ads.details', ['adsId' => $ad->adsId]))); ?>" 
                                                 target="_blank">
                                                     <i class="fab fa-facebook"></i> Facebook
                                                 </a>
                                             </li>
                                             <li>
                                             <a class="dropdown-item" 
-                                                href="https://api.whatsapp.com/send?text=<?php echo e(urlencode($ad->title)); ?>%0A%0A<?php echo e(urlencode($ad->description)); ?>%0A%0A🔗 <?php echo e(urlencode(route('ads.details', ['adsId' => $ad->id]))); ?>" 
+                                                href="https://api.whatsapp.com/send?text=<?php echo e(urlencode($ad->title)); ?>%0A%0A<?php echo e(urlencode($ad->description)); ?>%0A%0A🔗 <?php echo e(urlencode(route('ads.details', ['adsId' => $ad->adsId]))); ?>" 
                                                 target="_blank">
                                                     <i class="fab fa-whatsapp"></i> WhatsApp
                                                 </a>
@@ -153,7 +159,7 @@
                                     </div>
 
                                     <!-- Boost Ad Button -->
-                                    <a href="<?php echo e(route('ads.boost', ['ad_id' => $ad->id])); ?>" class="btn btn-warning align-items-center">
+                                    <a href="<?php echo e(route('ads.boost', ['adsId' => $ad->adsId])); ?>" class="btn btn-warning align-items-center">
                                         <i class="fas fa-rocket"></i> Boost this ad
                                     </a>
                                 </div>
@@ -220,12 +226,12 @@
         </div>
         <div class="four-item-carousel owl-carousel owl-theme owl-nav-none dots-style-one">
             <?php $__currentLoopData = $relatedAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $relatedAd): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <a href="<?php echo e(route('ads.details', ['ad_id' => $relatedAd->id])); ?>" style="display: block; height: 100%; text-decoration: none;">
+                <a href="<?php echo e(route('ads.details', ['adsId' => $relatedAd->adsId])); ?>" style="display: block; height: 100%; text-decoration: none;">
                     <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
                         <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
                             <div class="image-box" style="flex-grow: 0;">
                                 <figure class="image">
-                                    <img src="<?php echo e(asset('images/Ads/' . $relatedAd->main_image)); ?>" 
+                                    <img src="<?php echo e(asset('storage/' . $relatedAd->mainImage)); ?>" 
                                     style="height: 150px; object-fit: cover;" alt="<?php echo e($relatedAd->title); ?>">
                                 </figure>
 
@@ -266,6 +272,25 @@
 <!-- Related Ads End -->
 
 
+<script>
+// JavaScript (vanilla)
+
+// Get the original main image src (for reset on mouseout)
+const originalMainImageSrc = document.getElementById('mainImage').src;
+
+// Add event listeners for mouseover (to change image) and mouseout (to reset the image)
+document.querySelectorAll('.thumbnail').forEach(function (thumbnail) {
+    thumbnail.addEventListener('mouseover', function () {
+        const subImageSrc = this.querySelector('img').src;
+        document.getElementById('mainImage').src = subImageSrc;
+    });
+    
+    // Reset the main image when mouse leaves the thumbnail
+    thumbnail.addEventListener('mouseout', function () {
+        document.getElementById('mainImage').src = originalMainImageSrc;
+    });
+});
+</script>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/browse-ads-details.blade.php ENDPATH**/ ?>

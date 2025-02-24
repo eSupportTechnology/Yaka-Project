@@ -450,7 +450,7 @@
                 <div class="carousel-inner">
                     <?php $__currentLoopData = $topAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="carousel-item <?php echo e($index == 0 ? 'active' : ''); ?>">
-                        <div class="ad-box" style="margin-right:150px; width: 560px; height: 300px; background: url('<?php echo e(asset('images/Ads/' . $ad->mainImage)); ?>') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
+                        <div class="ad-box" style="margin-right:150px; width: 560px; height: 300px; background: url('<?php echo e(asset('storage/' . $ad->mainImage)); ?>') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
                         <!-- Shadow Overlay -->
     <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
     <div class="badge">
@@ -475,7 +475,7 @@
             <div class="small-carousel-wrapper" style="overflow: hidden; width: 580px; margin-top: -50px;">
                 <div class="card-container d-flex" style="display: flex; transition: transform 0.5s ease-in-out;">
                     <?php $__currentLoopData = $topAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="ad-card" data-index="<?php echo e($index); ?>" style="background: url('<?php echo e(asset('images/Ads/' . $ad->mainImage)); ?>') no-repeat center center/cover; height: 100px; width: 100px; margin: -2px; border: 3px solid transparent; transition: border 0.3s;">
+                        <div class="ad-card" data-index="<?php echo e($index); ?>" style="background: url('<?php echo e(asset('storage/' . $ad->mainImage)); ?>') no-repeat center center/cover; height: 100px; width: 100px; margin: -2px; border: 3px solid transparent; transition: border 0.3s;">
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
@@ -514,7 +514,7 @@
                 <div class="carousel-inner">
                     <?php $__currentLoopData = $superAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $adss): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="carousel-item <?php echo e($index == 0 ? 'active' : ''); ?>">
-                            <div class="ad-box" style="margin-left:124px;margin-top:100px;width: 560px; height: 300px; background: url('<?php echo e(asset('images/Ads/' . $adss->mainImage)); ?>') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
+                            <div class="ad-box" style="margin-left:124px;margin-top:100px;width: 560px; height: 300px; background: url('<?php echo e(asset('storage/' . $adss->mainImage)); ?>') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
                                 <!-- Shadow Overlay -->
                                 <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
                                 <div class="badge">
@@ -537,7 +537,7 @@
             <div class="small-carousel-wrapper" style="overflow: hidden; width: 580px; margin-top: -21px;margin-left:124px;">
                 <div class="card-container d-flex" style="display: flex; transition: transform 0.5s ease-in-out;">
                     <?php $__currentLoopData = $superAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $adss): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="ad-card" data-index="<?php echo e($index); ?>" style="background: url('<?php echo e(asset('images/Ads/' . $adss->mainImage)); ?>') no-repeat center center/cover; height: 100px; width: 100px; margin: -2px; border: 3px solid transparent; transition: border 0.3s;">
+                        <div class="ad-card" data-index="<?php echo e($index); ?>" style="background: url('<?php echo e(asset('storage/' . $adss->mainImage)); ?>') no-repeat center center/cover; height: 100px; width: 100px; margin: -2px; border: 3px solid transparent; transition: border 0.3s;">
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
@@ -572,7 +572,7 @@ Urgent badge which is great advantage to get more attention quickly. <br /></p>
                                     <div class="feature-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                                         <div class="inner-box">
                                             <div class="image-box" >
-                                                <figure class="image"><img src="<?php echo e(asset('images/Ads/' . $ads->mainImage)); ?>" alt="" style="width: 370px; height: 220px; object-fit: cover;"></figure>
+                                                <figure class="image"><img src="<?php echo e(asset('storage/' . $ads->mainImage)); ?>" alt="" style="width: 370px; height: 220px; object-fit: cover;"></figure>
                                                
                                                 <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent</div>
                                             
@@ -580,7 +580,7 @@ Urgent badge which is great advantage to get more attention quickly. <br /></p>
                                             <div class="lower-content">
                                             
                                               
-                                                <h3 style="margin-top:20px;"><a href="<?php echo e(route('ads.details', ['ad_id' => $ad->id])); ?>"><?php echo e($ads ->title); ?></a></h3>
+                                                <h3 style="margin-top:20px;"><a href="<?php echo e(route('ads.details', ['adsId' => $ad->adsId])); ?>"><?php echo e($ads ->title); ?></a></h3>
                                            
                                                 <ul class="clearfix info">
                                                     

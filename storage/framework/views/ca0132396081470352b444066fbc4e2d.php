@@ -24,6 +24,11 @@
     transform: scale(1.1); 
 }
 
+    .equal-height {
+        min-height: 220px; 
+    }
+
+
 </style>
 
 <?php
@@ -298,48 +303,85 @@
                         </div>
 
                         <div class="col-lg-12 mb-3">
-                            <div class="section-box">
-                                <h4>Boosting Option</h4>
-                                
-                                <!-- Package Selection -->
-                                <div class="mb-3">
-                                    <h5 class="mb-2">Select a Package:</h5>
-                                    
-                                    <!-- Free Ad Option -->
-                                    <div class="form-check mt-2">
-                                        <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
-                                        <label class="form-check-label text-dark" for="package_free">
-                                            <h5>Free Ad</h5>
-                                        </label>
-                                    </div>
+    <div class="section-box">
+        <h4>Boosting Option</h4>
 
-                                    <?php $__currentLoopData = $packages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="radio" name="boosting_option" id="package_<?php echo e($package->id); ?>" value="<?php echo e($package->id); ?>">
-                                            <label class="form-check-label text-dark" for="package_<?php echo e($package->id); ?>">
-                                                <h5><?php echo e($package->name); ?></h5>
-                                            </label>
-                                        </div>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </div>
+        <!-- Top Ads, Super Ads, Urgent Ads Section -->
+        <div class="row mt-4">
+            <!-- Top Ads Box -->
+            <div class="col-md-4 mb-3">
+                <div class="box p-3 border border-success rounded equal-height">
+                    <h5 class="text-success">Top Ads</h5>
+                    <p class="text-muted">At every page, there are 4 top slots available for top ads. If you apply for top ads, your ad will appear on top of those slots, increasing responses. Top ads are bigger than free ads, with a green blinking border for more visibility.</p>
+                </div>
+            </div>
 
-                                <div id="package-types" class="d-none">
-                                    <h4>Select Package Type:</h4>
-                                    <?php $__currentLoopData = $packages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <div class="package-types-for-<?php echo e($package->id); ?> d-none">
-                                            <?php $__currentLoopData = $package->packageTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $packageType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="radio" name="package_type" id="packageType_<?php echo e($packageType->id); ?>" value="<?php echo e($packageType->id); ?>">
-                                                    <label class="form-check-label text-dark" for="packageType_<?php echo e($packageType->id); ?>">
-                                                        <?php echo e($packageType->duration); ?> (LKR <?php echo e(number_format($packageType->price, 2)); ?>)
-                                                    </label>
-                                                </div>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </div>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </div>
-                            </div>
+            <!-- Super Ads Box -->
+            <div class="col-md-4 mb-3">
+                <div class="box p-3 border border-primary rounded equal-height">
+                    <h5 class="text-primary">Super Ads</h5>
+                    <p class="text-muted">Super ads are designed to grab immediate attention, featuring a premium slot at the top with a blue blinking border and rocket symbol. They stand out as soon as they're promoted and also appear as free ads for extra visibility.</p>
+                </div>
+            </div>
+
+            <!-- Urgent Ads Box -->
+            <div class="col-md-4 mb-3">
+                <div class="box p-3 border border-danger rounded equal-height">
+                    <h5 class="text-danger">Urgent Ads</h5>
+                    <p class="text-muted">We have some special promotions for selling urgently. Urgent ads have a blinking red border and an urgent badge, which is a great advantage to get more attention quickly.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Package and Package Type Selection Section -->
+        <div class="row mt-4">
+            <!-- Package Selection Column -->
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <h5 class="mb-2">Select a Package:</h5>
+                    
+                    <!-- Free Ad Option -->
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
+                        <label class="form-check-label text-dark" for="package_free">
+                            <h5>Free Ad</h5>
+                        </label>
+                    </div>
+
+                    <?php $__currentLoopData = $packages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="boosting_option" id="package_<?php echo e($package->id); ?>" value="<?php echo e($package->id); ?>">
+                            <label class="form-check-label text-dark" for="package_<?php echo e($package->id); ?>">
+                                <h5><?php echo e($package->name); ?></h5>
+                            </label>
                         </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            </div>
+
+            <!-- Package Type Selection Column -->
+            <div class="col-md-4">
+                <div id="package-types" class="d-none">
+                    <h4>Select Package Type:</h4>
+                    <?php $__currentLoopData = $packages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="package-types-for-<?php echo e($package->id); ?> d-none">
+                            <?php $__currentLoopData = $package->packageTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $packageType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="radio" name="package_type" id="packageType_<?php echo e($packageType->id); ?>" value="<?php echo e($packageType->id); ?>">
+                                    <label class="form-check-label text-dark" for="packageType_<?php echo e($packageType->id); ?>">
+                                        <?php echo e($packageType->duration); ?> (LKR <?php echo e(number_format($packageType->price, 2)); ?>)
+                                    </label>
+                                </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 
                     <div class="col-lg-12 mt-4">

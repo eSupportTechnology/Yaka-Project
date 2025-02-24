@@ -72,16 +72,32 @@
     /* Apply Blinking Borders */
     .top-ad {
         animation: blinking-border 1.5s infinite;
-        border: 3px solid transparent;
+        border: 2px solid transparent;
         border-radius: 10px;
     }
 
     .super-ad {
         animation: blinking-border-blue 1.5s infinite;
-        border: 3px solid transparent;
+        border: 2px solid transparent;
         border-radius: 10px;
     }
 
+    @keyframes blink {
+        0% {
+            border-color: red;
+        }
+        50% {
+            border-color: transparent;
+        }
+        100% {
+            border-color: red;
+        }
+    }
+
+    .blink-border {
+        border: 2px solid red;
+        animation: blink 1s infinite;
+    }
 </style>
 
 
@@ -213,7 +229,7 @@
                                         <!-- Indicators -->
                                         <div class="carousel-indicators">
                                             @foreach($urgentAds as $key => $ad)
-                                                @if($ad->ads_package == 4) <!-- Filter ads with ads_package = 3 -->
+                                                @if($ad->ads_package == 4) <!-- Filter ads with ads_package = 4 -->
                                                     <button type="button" data-bs-target="#adsCarousel" data-bs-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : '' }}" aria-current="{{ $key === 0 ? 'true' : '' }}" aria-label="Slide {{ $key + 1 }}"></button>
                                                 @endif
                                             @endforeach
@@ -222,19 +238,19 @@
                                         <!-- Carousel Items -->
                                         <div class="carousel-inner">
                                             @foreach($urgentAds as $key => $ad)
-                                                @if($ad->ads_package == 4) <!-- Filter ads with ads_package = 3 -->
-                                                    <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                                                @if($ad->ads_package == 4) <!-- Filter ads with ads_package = 4 -->
+                                                    <div class="carousel-item {{ $key === 0 ? 'active' : '' }} blink-border">
                                                         <!-- Wrap the entire content with an anchor tag -->
-                                                        <a href="{{ route('ads.details', ['ad_id' => $ad->id]) }}" style="display: block; height: 100%; text-decoration: none;">
+                                                        <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" style="display: block; height: 100%; text-decoration: none;">
                                                             <div class="carousel-item-content">
                                                                 <!-- Image -->
-                                                                <img src="{{ asset('images/Ads/' . $ad->mainImage) }}" class="d-block w-100" alt="{{ $ad->title }}" style="min-height: 450px;height:auto; object-fit: cover;">
+                                                                <img src="{{ asset('storage/' . $ad->mainImage) }}" class="d-block w-100" alt="{{ $ad->title }}" style="min-height: 450px;height:auto; object-fit: cover;">
                                                                 
                                                                 <!-- Dark Overlay -->
                                                                 <div class="carousel-overlay"></div>
 
                                                                 <!-- Top-left image -->
-                                                                <img src="{{ asset('3.png') }}" alt="Urgent Ad" class="top-left-image">
+                                                                <img src="{{ asset('3.png') }}" alt="Urgent Ad" class="top-left-image" style="z-index:10000; height:80px; width:auto">
 
                                                                 <!-- Ad Details Overlay -->
                                                                 <div class="carousel-caption d-none d-md-block text-start">
@@ -260,7 +276,6 @@
                                 </div>
 
 
-
                                 <!-- Banner (Column 2) -->
                                 <div class="col-md-4">
                                     @php
@@ -284,16 +299,16 @@
             <div class="col-lg-4 col-md-6 col-sm-12 feature-block" 
                 style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
                     <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                    <a href="{{ route('ads.details', ['ad_id' => $ad->id]) }}" 
+                    <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" 
                     class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}"
                     style="display: block; height: 100%; text-decoration: none;">
-
+                    
                         <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
                             
                             <div class="image-box" style="flex-grow: 0;">
                                 <figure class="image">
-                                    <img src="{{ asset('images/Ads/' . $ad->mainImage) }}" 
-                                        style="height: 150px; object-fit: cover;" alt="{{ $ad->title }}">
+                                    <img src="{{ asset('storage/' . $ad->mainImage) }}" 
+                                        style="height: 170px; object-fit: cover;" alt="{{ $ad->title }}">
                                 </figure>
 
                                 @if($ad->ads_package == 3)

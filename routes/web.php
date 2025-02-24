@@ -41,7 +41,7 @@ Route::get('/',[HomeController::class,'home'])->name('/');
 Route::get('/ads/{id}', [AdsController::class, 'show'])->name('ads.details');
 
 Route::get('/top-ads', [adsManagementController::class, 'getTopAds']);
-Route::get('/ads/boost/{ad_id}', [AdsController::class, 'ads_boost'])->name('ads.boost');
+Route::get('/ads/boost/{adsId}', [AdsController::class, 'ads_boost'])->name('ads.boost');
 
 
 
@@ -61,7 +61,6 @@ Route::get('/add_post',[HomeController::class,'add_post'])->name('add_post');
 
 Route::get('/browse_ads', [AdsController::class, 'browseAds'])->name('browse-ads');
 Route::get('/browse_ads_details/{adsId}', [AdsController::class, 'show_details'])->name('ads.details');
-
 
 
 

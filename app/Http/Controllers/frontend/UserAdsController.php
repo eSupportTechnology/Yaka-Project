@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Carbon\Carbon; 
 
 class UserAdsController extends Controller
 {
@@ -114,8 +115,6 @@ class UserAdsController extends Controller
     
 
 
-
-
     public function store(Request $request)
     {
         try {
@@ -124,23 +123,23 @@ class UserAdsController extends Controller
                 Log::error('User is not authenticated.');
                 return redirect()->route('login')->with('error', 'You must be logged in to post an ad.');
             }
-
+    
             // Extract query parameters
             $cat_id = $request->query('cat_id'); 
             $sub_cat_id = $request->query('sub_cat_id');
             $location = $request->query('location');
             $sublocation = $request->query('sublocation');
-
+    
             // Log the extracted data for debugging
             Log::info('Store method called', ['request_data' => $request->all(), 'query_params' => $request->query()]);
             
             $formFields = FormField::all();
             $dynamicRules = [];
-    
+        
             foreach ($formFields as $field) {
                 $dynamicRules['field_' . $field->id] = 'nullable';
             }
-    
+        
             // Merge validation rules
             $validationRules = array_merge([
                 'title'         => 'required|string|max:255',
@@ -154,37 +153,39 @@ class UserAdsController extends Controller
                 'pricing_type'  => 'nullable|in:Fixed,Negotiable,Daily,Weekly,Monthly,Yearly',
                 'post_type'     => 'nullable|in:Booking,Sale,Rent',
                 'boosting_option' => [
-    'required',
-    function ($attribute, $value, $fail) {
-        // Allow 0 for Free Ads
-        if ($value == '0') {
-            return;
-        }
-        // Otherwise, check if the value exists in the table_package
-        $package = \App\Models\Package::find($value);
-        if (!$package) {
-            $fail('The selected boosting option is invalid.');
-        }
-    }
-],
-'package_type' => [
-    'required_unless:boosting_option,0',
-    function ($attribute, $value, $fail) {
-        if (request('boosting_option') == '0' && $value != '0') {
-            $fail('The package type must be 0 when selecting a Free Ad.');
-        }
-    },
-    'exists:table_package_typess,id'
-],
-
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        // Allow 0 for Free Ads
+                        if ($value == '0') {
+                            return;
+                        }
+                        $package = \App\Models\Package::find($value);
+                        if (!$package) {
+                            $fail('The selected boosting option is invalid.');
+                        }
+                    }
+                ],
+                'package_type' => [
+                    'required_unless:boosting_option,0',
+                    function ($attribute, $value, $fail) {
+                        if (request('boosting_option') == '0' && $value != '0') {
+                            $fail('The package type must be 0 when selecting a Free Ad.');
+                        }
+                    },
+                    'exists:table_package_typess,id'
+                ],
             ], $dynamicRules);
             
             // Validate the request data
             $validated = $request->validate($validationRules);
     
+            // Get the package type duration
+            $packageType = \App\Models\PackageType::find($validated['package_type']);
+            $packageExpireAt = Carbon::now()->addDays($packageType->duration); 
+    
             $mainImagePath = $request->file('main_image')->storeAs('ads/main_images', 
             $request->file('main_image')->getClientOriginalName(), 'public');
-
+    
             // Handle sub images upload with original file names
             $subImagesPaths = [];
             if ($request->hasFile('sub_images')) {
@@ -192,12 +193,11 @@ class UserAdsController extends Controller
                     $subImagesPaths[] = $file->storeAs('ads/sub_images', $file->getClientOriginalName(), 'public');
                 }
             }
-
     
-            // Create the Ad
+            // Create the Ad with package expiration date
             $ad = Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
-                'user_id' => auth()->user()->id, // Ensure user ID is set correctly
+                'user_id' => auth()->user()->id, 
                 'title'         => $validated['title'],
                 'price'         => $validated['price'],
                 'description'   => $validated['description'],
@@ -210,13 +210,13 @@ class UserAdsController extends Controller
                 'condition'     => $validated['condition'] ?? null,
                 'ads_package'   => $request->boosting_option,
                 'package_type'  => $request->package_type,
+                'package_expire_at' => $packageExpireAt, // Store the expiration date
                 'cat_id'        => $cat_id,        
                 'sub_cat_id'    => $sub_cat_id,    
                 'location'      => $location,      
                 'sublocation'   => $sublocation,    
                 'status'        => '0',
             ]);
-    
     
             foreach ($formFields as $field) {
                 $inputName = 'field_' . $field->id;

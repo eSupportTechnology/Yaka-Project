@@ -26,6 +26,11 @@
     transform: scale(1.1); 
 }
 
+    .equal-height {
+        min-height: 220px; 
+    }
+
+
 </style>
 
 @php
@@ -299,46 +304,83 @@
                         <div class="col-lg-12 mb-3">
                             <div class="section-box">
                                 <h4>Boosting Option</h4>
-                                
-                                <!-- Package Selection -->
-                                <div class="mb-3">
-                                    <h5 class="mb-2">Select a Package:</h5>
-                                    
-                                    <!-- Free Ad Option -->
-                                    <div class="form-check mt-2">
-                                        <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
-                                        <label class="form-check-label text-dark" for="package_free">
-                                            <h5>Free Ad</h5>
-                                        </label>
+
+                                <!-- Top Ads, Super Ads, Urgent Ads Section -->
+                                <div class="row mt-4">
+                                    <!-- Top Ads Box -->
+                                    <div class="col-md-4 mb-3">
+                                        <div class="box p-3 border border-success rounded equal-height">
+                                            <h5 class="text-success">Top Ads</h5>
+                                            <p class="text-muted">At every page, there are 4 top slots available for top ads. If you apply for top ads, your ad will appear on top of those slots, increasing responses. Top ads are bigger than free ads, with a green blinking border for more visibility.</p>
+                                        </div>
                                     </div>
 
-                                    @foreach($packages as $package)
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="radio" name="boosting_option" id="package_{{ $package->id }}" value="{{ $package->id }}">
-                                            <label class="form-check-label text-dark" for="package_{{ $package->id }}">
-                                                <h5>{{ $package->name }}</h5>
-                                            </label>
+                                    <!-- Super Ads Box -->
+                                    <div class="col-md-4 mb-3">
+                                        <div class="box p-3 border border-primary rounded equal-height">
+                                            <h5 class="text-primary">Super Ads</h5>
+                                            <p class="text-muted">Super ads are designed to grab immediate attention, featuring a premium slot at the top with a blue blinking border and rocket symbol. They stand out as soon as they're promoted and also appear as free ads for extra visibility.</p>
                                         </div>
-                                    @endforeach
+                                    </div>
+
+                                    <!-- Urgent Ads Box -->
+                                    <div class="col-md-4 mb-3">
+                                        <div class="box p-3 border border-danger rounded equal-height">
+                                            <h5 class="text-danger">Urgent Ads</h5>
+                                            <p class="text-muted">We have some special promotions for selling urgently. Urgent ads have a blinking red border and an urgent badge, which is a great advantage to get more attention quickly.</p>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div id="package-types" class="d-none">
-                                    <h4>Select Package Type:</h4>
-                                    @foreach($packages as $package)
-                                        <div class="package-types-for-{{ $package->id }} d-none">
-                                            @foreach($package->packageTypes as $packageType)
+                                <!-- Package and Package Type Selection Section -->
+                                <div class="row mt-4">
+                                    <!-- Package Selection Column -->
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <h5 class="mb-2">Select a Package:</h5>
+                                            
+                                            <!-- Free Ad Option -->
+                                            <div class="form-check mt-2">
+                                                <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
+                                                <label class="form-check-label text-dark" for="package_free">
+                                                    <h5>Free Ad</h5>
+                                                </label>
+                                            </div>
+
+                                            @foreach($packages as $package)
                                                 <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="radio" name="package_type" id="packageType_{{ $packageType->id }}" value="{{ $packageType->id }}">
-                                                    <label class="form-check-label text-dark" for="packageType_{{ $packageType->id }}">
-                                                        {{ $packageType->duration }} (LKR {{ number_format($packageType->price, 2) }})
+                                                    <input class="form-check-input" type="radio" name="boosting_option" id="package_{{ $package->id }}" value="{{ $package->id }}">
+                                                    <label class="form-check-label text-dark" for="package_{{ $package->id }}">
+                                                        <h5>{{ $package->name }}</h5>
                                                     </label>
                                                 </div>
                                             @endforeach
                                         </div>
-                                    @endforeach
+                                    </div>
+
+                                    <!-- Package Type Selection Column -->
+                                    <div class="col-md-4">
+                                        <div id="package-types" class="d-none">
+                                            <h4>Select Package Type:</h4>
+                                            @foreach($packages as $package)
+                                                <div class="package-types-for-{{ $package->id }} d-none">
+                                                    @foreach($package->packageTypes as $packageType)
+                                                        <div class="form-check mt-2">
+                                                            <input class="form-check-input" type="radio" name="package_type" id="packageType_{{ $packageType->id }}" value="{{ $packageType->id }}">
+                                                            <label class="form-check-label text-dark" for="packageType_{{ $packageType->id }}">
+                                                                {{ $packageType->duration }} (LKR {{ number_format($packageType->price, 2) }})
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
+
 
 
                     <div class="col-lg-12 mt-4">
