@@ -12,27 +12,27 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ads', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('adsId')->nullable();
+            $table->unsignedBigInteger('adsId')->primary(); 
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('title');
             $table->string('url')->nullable();
             $table->unsignedBigInteger('location')->nullable();
             $table->unsignedBigInteger('sublocation')->nullable();
             $table->text('description')->nullable();
             $table->decimal('price', 10)->nullable();
-            $table->string('mainImage')->nullable()->default('0');
-            $table->string('subImage')->nullable()->default('0');
+            $table->string('mainImage')->nullable();
+            $table->json('subImage')->nullable()->default(json_encode([])); 
             $table->unsignedBigInteger('cat_id')->nullable();
             $table->unsignedBigInteger('sub_cat_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('ads_package')->nullable();
             $table->unsignedBigInteger('package_type')->nullable();
             $table->timestamp('package_expire_at')->nullable();
             $table->timestamp('bump_up_at')->nullable();
-            $table->unsignedBigInteger('view_counr')->default(0);
-            $table->unsignedBigInteger('click_counr')->default(0);
-            $table->unsignedBigInteger('price_type')->nullable();
-            $table->unsignedBigInteger('post_type')->nullable();
+            $table->unsignedBigInteger('view_count')->default(0);
+            $table->string('price_type')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('model')->nullable();
+            $table->string('post_type')->nullable();
             $table->string('status')->default('1');
             $table->timestamps();
         });

@@ -1,5 +1,5 @@
 <div>
-    <div class="col-lg-12 mb-3">
+    <div >
         <div class="section-box">
             <h4>Additional Information</h4>
 

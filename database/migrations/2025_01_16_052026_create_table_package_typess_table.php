@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('table_package_typess', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('package_id')->index('table_package_typess_package_id_foreign');
             $table->string('url');
             $table->string('name');

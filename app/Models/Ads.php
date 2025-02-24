@@ -6,29 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ads extends Model
 {
+    protected $table = 'ads'; 
+    protected $primaryKey = 'adsId'; 
+
     protected $fillable = [
+        'adsId',
+        'user_id',
         'title',
         'url',
-        'adsId',
         'location',
         'sublocation',
-        'bump_up_at',
         'description',
         'price',
         'mainImage',
         'subImage',
         'cat_id',
-        'cat_name',
         'sub_cat_id',
-        'sub_cat_name',
-        'user_id',
         'ads_package',
         'package_type',
-        'view_counr',
-        'click_counr',
+        'view_count',
+        'brand',
+        'model',
         'price_type',
         'post_type',
         'package_expire_at',
+        'bump_up_at',
+        'condition',
         'status',
     ];
 
@@ -38,13 +41,46 @@ class Ads extends Model
         return $this->belongsTo(Category::class, 'cat_id');
     }
 
+    // Relationship with Subcategory
+    public function subcategory()
+    {
+        return $this->belongsTo(Category::class, 'sub_cat_id');
+    }
 
+    // Relationship with User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Relationship with Location
+    public function main_location()
+    {
+        return $this->belongsTo(Districts::class, 'location');
+    }
+
+    // Relationship with Sublocation
+    public function sub_location()
+    {
+        return $this->belongsTo(Cities::class, 'sublocation');
+    }
 
     public function city()
     {
         return $this->belongsTo(Cities::class);
     }
 
+    // Accessor for subImage to get it as an array
+    public function getSubImageAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    // Mutator for subImage to store it as a JSON string
+    public function setSubImageAttribute($value)
+    {
+        $this->attributes['subImage'] = json_encode($value);
+    }
 
     public function ads_electronics() {
         return $this->hasMany(ElectronicDevices::class, 'adsId', 'adsId');
@@ -98,30 +134,9 @@ class Ads extends Model
     }
 
 
-    // Relationship with Subcategory
-    public function subcategory()
-    {
-        return $this->belongsTo(Category::class, 'sub_cat_id');
-    }
+   
 
-    // Relationship with User
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-
-    // Relationship with Location
-    public function main_location()
-    {
-        return $this->belongsTo(Districts::class, 'location');
-    }
-
-    // Relationship with Sublocation
-    public function sub_location()
-    {
-        return $this->belongsTo(Cities::class, 'sublocation');
-    }
+   
 
     // Relationship with AdsPackage
     public function adsPackage()

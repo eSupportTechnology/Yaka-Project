@@ -139,7 +139,8 @@
                             {{ $message }}
                         </div>
                     @endif
-                    <form class="setting-form" method="POST" action="{{ route('user.ad_posts') }}" enctype="multipart/form-data">
+                    <form action="{{ route('user.ad_posts.store') }}?cat_id={{ $cat_id }}&sub_cat_id={{ $sub_cat_id }}&location={{ $location }}&sublocation={{ $sublocation }}"
+                     method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="userId" value="">
 
@@ -189,41 +190,34 @@
                         <div class="section-box">
                             <div class="d-flex flex-wrap gap-3">
                                <!-- Brand -->
-                               @php
-                               $cat_id = request()->get('cat_id');
-                           @endphp
-                           
-                           @if($cat_id == 1 || $cat_id == 4)
-                               <div class="col-lg-6 mb-3">
-                                   <div class="form-group">
-                                       <label class="form-label text-dark"><strong>Brand</strong></label>
-                                       <select id="brand" name="brand" class="form-control custom-select">
-                                           <option value="">Select Brand</option>
-                                           @foreach($brands as $brand)
-                                               <option value="{{ $brand->id }}" @if(request()->brand == $brand->id) selected @endif>
-                                                   {{ $brand->name }}
-                                               </option>
-                                           @endforeach
-                                       </select>
-                                   </div>
-                               </div>
-                           
-                               <!-- Model -->
-                               <div class="col-lg-6 mb-3">
-                                   <div class="form-group">
-                                       <label class="form-label text-dark"><strong>Model</strong></label>
-                                       <select id="model" name="model" class="form-control custom-select">
-                                           <option value="">Select Model</option>
-                                           @foreach($models as $model)
-                                               <option value="{{ $model->id }}" @if(request()->model == $model->id) selected @endif>
-                                                   {{ $model->name }}
-                                               </option>
-                                           @endforeach
-                                       </select>
-                                   </div>
-                               </div>
-                           @endif
-                           
+                                <div class="col-lg-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="form-label text-dark"><strong>Brand</strong></label>
+                                        <select id="brand" name="brand" class="form-control custom-select">
+                                            <option value="">Select Brand</option>
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand->id }}" @if(request()->brand == $brand->id) selected @endif>
+                                                    {{ $brand->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Model -->
+                                <div class="col-lg-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="form-label text-dark"><strong>Model</strong></label>
+                                        <select id="model" name="model" class="form-control custom-select">
+                                            <option value="">Select Model</option>
+                                            @foreach($models as $model)
+                                                <option value="{{ $model->id }}" @if(request()->model == $model->id) selected @endif>
+                                                    {{ $model->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -232,7 +226,7 @@
                             <div class="d-flex">
                                 @foreach(['New', 'Used'] as $option)
                                     <div class="form-check me-3">
-                                        <input class="form-check-input" type="radio" name="condition" value="{{ $option }}" required>
+                                        <input class="form-check-input" type="radio" name="condition" value="{{ $option }}" >
                                         <label class="form-check-label"  style="margin-right:15px">{{ $option }}</label>
                                     </div>
                                 @endforeach
@@ -241,32 +235,34 @@
                         </div>
                     </div>
                     
-              <div class="col-lg-12 mb-3">
-                 @if($cat_id == 1)
-                        <x-additiona-electronicl-information :cat_id="$cat_id" :sub_cat_id="$sub_cat_id" />
-                    @elseif($cat_id == 4)
-                        <x-additional-vehicles-information />
-                    @elseif($cat_id == 20)
-                        <x-additional-home-and-land-information />
-                    @elseif($cat_id == 35)
-                        <x-additional-home-and-garden-information />
-                    @elseif($cat_id == 43)
-                        <x-additional-pet-information />
-                    @elseif($cat_id == 50)
-                        <x-additional-services-information />    
-                    @elseif($cat_id == 57)
-                        <x-additional-business-and-industry-information />
-                    @elseif($cat_id == 65)
-                        <x-additional-leisure-kids-information />       
-                    @elseif($cat_id == 74)
-                        <x-additional-fancy-and-cosmetics-information /> 
-                    @elseif($cat_id == 84)
-                        <x-additional-daily-essentials-information />     
-                    @elseif($cat_id == 93)
-                        <x-additional-education-information />             
-                    @endif
+                    <div class="col-lg-12 mb-3">
+                        <div class="section-box">
+                            <label class="form-label text-dark"><strong>Additional Information</strong></label>
+                                <!-- Render the form fields -->
+                                @foreach($formFields as $field)
+                                    <div class="form-group">
+                                        <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                        
+                                        <!-- Check field type and render appropriate input box -->
+                                        @if($field->field_type == 'text')
+                                            <input type="text" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control" >
+                                        @elseif($field->field_type == 'number')
+                                            <input type="number" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control" >
+                                        @elseif($field->field_type == 'email')
+                                            <input type="email" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control" >
+                                        @elseif($field->field_type == 'textarea')
+                                            <textarea id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control" ></textarea>
+                                        @elseif($field->field_type == 'select')
+                                            <select id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control" >
+                                                <option value="">Select</option>
+                                                <!-- Options should be fetched dynamically if needed -->
+                                            </select>
+                                        @endif
+                                    </div>
+                                @endforeach
+                        </div>
+                    </div>
 
-              </div>
                    
               <!-- Pricing Type -->
                 <div class="col-lg-12 mb-3">
@@ -275,7 +271,7 @@
                         <div class="d-flex flex-wrap align-items-center">
                             @foreach(['Fixed', 'Negotiable', 'Daily', 'Weekly', 'Monthly', 'Yearly'] as $option)
                                 <div class="form-check me-4">
-                                    <input class="form-check-input" type="radio" name="pricing_type" value="{{ $option }}" required>
+                                    <input class="form-check-input" type="radio" name="pricing_type" value="{{ $option }}" >
                                     <label class="form-check-label" style="margin-right:15px">{{ $option }}</label>
                                 </div>
                             @endforeach
@@ -285,14 +281,14 @@
 
 
                   
-                    <!-- Ad Type -->
+                    <!-- Post Type -->
                         <div class="col-lg-12 mb-3">
                         <div class="section-box">
-                            <label class="form-label text-dark"><strong>Ad Type</strong></label>
+                            <label class="form-label text-dark"><strong>Post Type</strong></label>
                             <div class="d-flex">
                                 @foreach(['Booking', 'Sale', 'Rent'] as $option)
                                     <div class="form-check me-3">
-                                        <input class="form-check-input" type="radio" name="ad_type" value="{{ $option }}" required>
+                                        <input class="form-check-input" type="radio" name="post_type" value="{{ $option }}" >
                                         <label class="form-check-label"  style="margin-right:15px">{{ $option }}</label>
                                     </div>
                                 @endforeach
@@ -300,164 +296,50 @@
                             </div>
                         </div>
 
-                    <div class="col-lg-12 mb-3">
-                        <div class="section-box">
-                            <h4>Boosting Option</h4>
-
-                            <!-- Free Ad Option -->
-                            <div class="d-flex align-items-center mb-2">
-                            <div class="form-check me-3">
-                                <input class="form-check-input me-2" type="radio" name="boosting_option" id="freeAd" value="free" checked>
-                                <label class="form-check-label text-dark" for="freeAd">Free Ad</label>
-                            </div>
-                            </div>
-
-                            <!-- Top Ads Section -->
-                            <div class="d-flex justify-content-between align-items-start">
-                                <!-- Left: Radio Options -->
-                                <div>
-                                    <h5 class="mt-3 mb-2">Top Ads</h5>
-                                    <div class="d-flex flex-column gap-3">
-
-                                        <!-- 3 Days -->
-                                        <div class="d-flex align-items-center">
-                                            <div class="form-check me-3">
-                                                <input class="form-check-input" type="radio" name="boosting_option" id="topAd3" value="3_days">
-                                                <label class="form-check-label text-dark" for="topAd3">
-                                                    3 DAYS (LKR 500.00)
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <!-- 7 Days -->
-                                        <div class="d-flex align-items-center">
-                                            <div class="form-check me-3">
-                                                <input class="form-check-input" type="radio" name="boosting_option" id="topAd7" value="7_days">
-                                                <label class="form-check-label text-dark" for="topAd7">
-                                                    7 DAYS (LKR 1400.00)
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <!-- 15 Days -->
-                                        <div class="d-flex align-items-center">
-                                            <div class="form-check me-3">
-                                                <input class="form-check-input" type="radio" name="boosting_option" id="topAd15" value="15_days">
-                                                <label class="form-check-label text-dark" for="topAd15">
-                                                    15 DAYS (LKR 1800.00)
-                                                </label>
-                                            </div>
-                                        </div>
-
+                        <div class="col-lg-12 mb-3">
+                            <div class="section-box">
+                                <h4>Boosting Option</h4>
+                                
+                                <!-- Package Selection -->
+                                <div class="mb-3">
+                                    <h5 class="mb-2">Select a Package:</h5>
+                                    
+                                    <!-- Free Ad Option -->
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
+                                        <label class="form-check-label text-dark" for="package_free">
+                                            <h5>Free Ad</h5>
+                                        </label>
                                     </div>
+
+                                    @foreach($packages as $package)
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="radio" name="boosting_option" id="package_{{ $package->id }}" value="{{ $package->id }}">
+                                            <label class="form-check-label text-dark" for="package_{{ $package->id }}">
+                                                <h5>{{ $package->name }}</h5>
+                                            </label>
+                                        </div>
+                                    @endforeach
                                 </div>
 
-                                <!-- Right: Description Text -->
-                                <div class="text-muted ms-4 mb-3" style="max-width: 50%;">
-                                    <p>At every page, there are 4 top slots available for top ads.</p>
-                                    <p>If you apply for top ads, your ad will appear on top of those slots, increasing responses.</p>
-                                    <p>Top ads are bigger than free ads, with a green blinking border for more visibility.</p>
-                                </div>
-
-                            </div>
-
-                             <!-- urgent Ads Section -->
-                             <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <h5 class="mt-3 mb-2">Urgent Ads</h5>
-                                    <div class="d-flex flex-column gap-3">
-
-                                        <!-- 3 Days -->
-                                        <div class="d-flex align-items-center">
-                                            <div class="form-check me-3">
-                                                <input class="form-check-input" type="radio" name="boosting_option" id="urgentAd3" value="3_days">
-                                                <label class="form-check-label text-dark" for="urgentAd3">
-                                                    3 DAYS (LKR 700.00)
-                                                </label>
-                                            </div>
+                                <div id="package-types" class="d-none">
+                                    <h4>Select Package Type:</h4>
+                                    @foreach($packages as $package)
+                                        <div class="package-types-for-{{ $package->id }} d-none">
+                                            @foreach($package->packageTypes as $packageType)
+                                                <div class="form-check mt-2">
+                                                    <input class="form-check-input" type="radio" name="package_type" id="packageType_{{ $packageType->id }}" value="{{ $packageType->id }}">
+                                                    <label class="form-check-label text-dark" for="packageType_{{ $packageType->id }}">
+                                                        {{ $packageType->duration }} (LKR {{ number_format($packageType->price, 2) }})
+                                                    </label>
+                                                </div>
+                                            @endforeach
                                         </div>
-
-                                        <!-- 7 Days -->
-                                        <div class="d-flex align-items-center">
-                                            <div class="form-check me-3">
-                                                <input class="form-check-input" type="radio" name="boosting_option" id="urgentAd7" value="7_days">
-                                                <label class="form-check-label text-dark" for="urgentAd7">
-                                                    7 DAYS (LKR 800.00)
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <!-- 15 Days -->
-                                        <div class="d-flex align-items-center">
-                                            <div class="form-check me-3">
-                                                <input class="form-check-input" type="radio" name="boosting_option" id="urgentAd15" value="15_days">
-                                                <label class="form-check-label text-dark" for="urgentAd15">
-                                                    15 DAYS (LKR 900.00)
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="text-muted ms-4 mt-4 mb-3" style="max-width: 50%;">
-                                    <p>We have some special promotion for sell urgently</p>
-                                    <p>Urgent ads border blink in bright RED color also urgent badge which is great advantage to get more attention quickly.</p>
+                                    @endforeach
                                 </div>
                             </div>
-
-                             <!-- Super Ads Section -->
-                             <div class="d-flex justify-content-between align-items-start mt-4">
-                                <div>
-                                    <h5 class="mt-3 mb-2">Super Ads</h5>
-                                    <div class="d-flex flex-column gap-3">
-
-                                        <!-- 3 Days -->
-                                        <div class="d-flex align-items-center">
-                                            <div class="form-check me-3">
-                                                <input class="form-check-input" type="radio" name="boosting_option" id="superAd3" value="3_days">
-                                                <label class="form-check-label text-dark" for="superAd3">
-                                                    3 DAYS (LKR 2400.00)
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <!-- 7 Days -->
-                                        <div class="d-flex align-items-center">
-                                            <div class="form-check me-3">
-                                                <input class="form-check-input" type="radio" name="boosting_option" id="superAd7" value="7_days">
-                                                <label class="form-check-label text-dark" for="superAd7">
-                                                    7 DAYS (LKR 3000.00)
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <!-- 15 Days -->
-                                        <div class="d-flex align-items-center">
-                                            <div class="form-check me-3">
-                                                <input class="form-check-input" type="radio" name="boosting_option" id="superAd15" value="15_days">
-                                                <label class="form-check-label text-dark" for="superAd15">
-                                                    15 DAYS (LKR 3500.00)
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="text-muted ms-4 mt-4" style="max-width: 50%;">
-                                    <p>Super adds specially designed to get immediate attention from buyers as soon as log into adds listing page.</p>
-                                    <p>Super adds has given premium slot of top of the adds listing with highlighted blue 
-                                        blinking border around and rocket symbol, which attract buyers as soon as add promoted to super add.</p>
-                                    <p>Super adds also visible as a free add is an extra advantage.</p>
-                                </div>
-                            </div>
-
                         </div>
-                    </div>
 
-
-                    
 
                     <div class="col-lg-12 mt-4">
                         <button type="submit" class="theme-btn-one">
@@ -551,6 +433,25 @@
 
 
 </script>
+
+<script>
+    // Show package types based on selected package
+    document.querySelectorAll('input[name="boosting_option"]').forEach(packageRadio => {
+        packageRadio.addEventListener('change', function() {
+            // Hide all package types first
+            document.querySelectorAll('[class^="package-types-for-"]').forEach(element => {
+                element.classList.add('d-none');
+            });
+
+            // Show package types for the selected package
+            const selectedPackageId = this.value;
+            document.querySelector('.package-types-for-' + selectedPackageId).classList.remove('d-none');
+            document.getElementById('package-types').classList.remove('d-none');
+        });
+    });
+</script>
+
+
 
 
 @endsection
