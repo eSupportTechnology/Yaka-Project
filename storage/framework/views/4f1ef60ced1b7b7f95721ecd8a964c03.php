@@ -137,14 +137,14 @@
                                         <ul class="dropdown-menu" aria-labelledby="shareDropdown">
                                             <li>
                                                 <a class="dropdown-item" 
-                                                href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(urlencode(route('ads.details', ['ad_id' => $ad->id]))); ?>" 
+                                                href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(urlencode(route('ads.details', ['adsId' => $ad->id]))); ?>" 
                                                 target="_blank">
                                                     <i class="fab fa-facebook"></i> Facebook
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" 
-                                                href="https://api.whatsapp.com/send?text=<?php echo e(urlencode($ad->title)); ?>%0A%0A<?php echo e(urlencode($ad->description)); ?>%0A%0A🔗 <?php echo e(route('ads.details', ['ad_id' => $ad->id])); ?>" 
+                                            <a class="dropdown-item" 
+                                                href="https://api.whatsapp.com/send?text=<?php echo e(urlencode($ad->title)); ?>%0A%0A<?php echo e(urlencode($ad->description)); ?>%0A%0A🔗 <?php echo e(urlencode(route('ads.details', ['adsId' => $ad->id]))); ?>" 
                                                 target="_blank">
                                                     <i class="fab fa-whatsapp"></i> WhatsApp
                                                 </a>
