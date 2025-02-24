@@ -453,14 +453,17 @@
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                         <div class="ad-box" style="margin-right:150px; width: 560px; height: 300px; background: url('{{ asset('storage/' . $ad->mainImage) }}') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
                         <!-- Shadow Overlay -->
-    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
-    <div class="badge">
-        <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
-    </div>
+                            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
+                            <div class="badge">
+                                <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
+                            </div>
 
+                        @if($ad->post_type)
                         <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-    Sale
-</button>
+                        {{ $ad->post_type }}
+                        </button>
+                        @endif
+                       
                                 <p style="color:white;">{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
                                 <h3 style="color:white;font-weight:bold;">{{ $ad->title }}</h3>
                                 

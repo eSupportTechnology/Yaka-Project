@@ -86,7 +86,7 @@
 
                             <div class="view-count-container">
                                 <i class="fas fa-eye" style="color:rgb(176, 5, 5)"></i> 
-                                <span><?php echo e($ad->view_counr); ?> Views </span>
+                                <span><?php echo e($ad->view_count); ?> Views </span>
                             </div>
 
                         </div>
@@ -119,15 +119,40 @@
                             </div>
                         </div>
 
-                            <div class="content-one single-box">
+                        <div class="content-one single-box">
                                 <div class="text">
-                                    <h3 style="color:rgb(176, 5, 5)">Rs <?php echo e($ad->price); ?></h3>
+                                    <h3 style="color:rgb(176, 5, 5)">
+                                        Rs <?php echo e($ad->price); ?>
+
+                                        <span style="font-size: 13px; font-style: italic;" class="text-muted">
+                                            <?php echo e($ad->price_type); ?>
+
+                                        </span>
+                                    </h3>
+
                                     <h6>Product Description</h6>
-                                    <p><?php echo e($ad->description); ?></p>
+                                    <p class="mb-1"><?php echo e($ad->description); ?></p>
+
+                                    <?php if($brand): ?>
+                                        <p class="mb-0"><strong>Brand:</strong> <?php echo e($brand->name); ?></p>
+                                    <?php endif; ?>
+
+                                    <?php if($model): ?>
+                                        <p class="mb-0"><strong>Model:</strong> <?php echo e($model->name); ?></p>
+                                    <?php endif; ?>
+
+
+                                    <?php if($ad->condition): ?>
+                                        <p class="mb-0"><strong>Condition:</strong> <?php echo e($ad->condition); ?></p>
+                                    <?php endif; ?>
+
+                                    <?php $__currentLoopData = $ad->adDetail; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $detail): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+                                        <?php if($detail->value): ?> 
+                                            <p class="mb-0"><strong><?php echo e($detail->additional_info); ?>:</strong> <?php echo e($detail->value); ?></p>
+                                        <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                             </div>
-                           
-                           
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12 sidebar-side">
@@ -172,8 +197,8 @@
                                             <i class="fas fa-user"></i>
                                         </div>
                                         <strong class="w-25">Name:</strong> 
-                                        <span class="text-wrap"><?php echo e($ad->user->name ?? 'N/A'); ?></span>
-                                    </div>
+                                        <span class="text-wrap"><?php echo e($ad->user->first_name); ?> <?php echo e($ad->user->last_name ?? 'N/A'); ?></span>
+                                    </div> 
                                     <hr class="my-2">
 
                                     <div class="mb-3 d-flex align-items-center">

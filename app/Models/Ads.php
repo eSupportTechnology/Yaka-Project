@@ -71,6 +71,25 @@ class Ads extends Model
         return $this->belongsTo(Cities::class);
     }
 
+
+    public function adDetail()
+    {
+        return $this->hasMany(AdDetail::class, 'adsId', 'adsId');
+    }
+
+
+    public function brand()
+    {
+        return $this->belongsTo(BrandsModels::class, 'brand', 'id'); 
+    }
+
+    public function model()
+    {
+        return $this->belongsTo(BrandsModels::class, 'model', 'id'); 
+    }
+    
+
+
     // Accessor for subImage to get it as an array
     public function getSubImageAttribute($value)
     {

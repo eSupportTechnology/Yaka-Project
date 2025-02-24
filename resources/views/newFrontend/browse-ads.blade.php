@@ -240,6 +240,11 @@
                                             @foreach($urgentAds as $key => $ad)
                                                 @if($ad->ads_package == 4) <!-- Filter ads with ads_package = 4 -->
                                                     <div class="carousel-item {{ $key === 0 ? 'active' : '' }} blink-border">
+                                                    @if($ad->post_type)
+                                                    <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                                    {{ $ad->post_type }}
+                                                    </button>
+                                                    @endif
                                                         <!-- Wrap the entire content with an anchor tag -->
                                                         <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" style="display: block; height: 100%; text-decoration: none;">
                                                             <div class="carousel-item-content">
@@ -304,7 +309,11 @@
                     style="display: block; height: 100%; text-decoration: none;">
                     
                         <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
-                            
+                        @if($ad->post_type)
+                        <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                        {{ $ad->post_type }}
+                        </button>
+                        @endif
                             <div class="image-box" style="flex-grow: 0;">
                                 <figure class="image">
                                     <img src="{{ asset('storage/' . $ad->mainImage) }}" 

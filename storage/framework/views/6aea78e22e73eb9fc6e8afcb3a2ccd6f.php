@@ -237,6 +237,12 @@
                                             <?php $__currentLoopData = $urgentAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <?php if($ad->ads_package == 4): ?> <!-- Filter ads with ads_package = 4 -->
                                                     <div class="carousel-item <?php echo e($key === 0 ? 'active' : ''); ?> blink-border">
+                                                    <?php if($ad->post_type): ?>
+                                                    <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                                    <?php echo e($ad->post_type); ?>
+
+                                                    </button>
+                                                    <?php endif; ?>
                                                         <!-- Wrap the entire content with an anchor tag -->
                                                         <a href="<?php echo e(route('ads.details', ['adsId' => $ad->adsId])); ?>" style="display: block; height: 100%; text-decoration: none;">
                                                             <div class="carousel-item-content">
@@ -301,7 +307,12 @@
                     style="display: block; height: 100%; text-decoration: none;">
                     
                         <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
-                            
+                        <?php if($ad->post_type): ?>
+                        <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                        <?php echo e($ad->post_type); ?>
+
+                        </button>
+                        <?php endif; ?>
                             <div class="image-box" style="flex-grow: 0;">
                                 <figure class="image">
                                     <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>" 

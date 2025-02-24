@@ -89,7 +89,7 @@
 
                             <div class="view-count-container">
                                 <i class="fas fa-eye" style="color:rgb(176, 5, 5)"></i> 
-                                <span>{{ $ad->view_counr }} Views </span>
+                                <span>{{ $ad->view_count }} Views </span>
                             </div>
 
                         </div>
@@ -122,15 +122,38 @@
                             </div>
                         </div>
 
-                            <div class="content-one single-box">
+                        <div class="content-one single-box">
                                 <div class="text">
-                                    <h3 style="color:rgb(176, 5, 5)">Rs {{ $ad->price }}</h3>
+                                    <h3 style="color:rgb(176, 5, 5)">
+                                        Rs {{ $ad->price }}
+                                        <span style="font-size: 13px; font-style: italic;" class="text-muted">
+                                            {{ $ad->price_type }}
+                                        </span>
+                                    </h3>
+
                                     <h6>Product Description</h6>
-                                    <p>{{ $ad->description }}</p>
+                                    <p class="mb-1">{{ $ad->description }}</p>
+
+                                    @if($brand)
+                                        <p class="mb-0"><strong>Brand:</strong> {{ $brand->name }}</p>
+                                    @endif
+
+                                    @if($model)
+                                        <p class="mb-0"><strong>Model:</strong> {{ $model->name }}</p>
+                                    @endif
+
+
+                                    @if($ad->condition)
+                                        <p class="mb-0"><strong>Condition:</strong> {{ $ad->condition }}</p>
+                                    @endif
+
+                                    @foreach($ad->adDetail as $detail) 
+                                        @if($detail->value) 
+                                            <p class="mb-0"><strong>{{ $detail->additional_info }}:</strong> {{ $detail->value }}</p>
+                                        @endif
+                                    @endforeach
                                 </div>
                             </div>
-                           
-                           
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12 sidebar-side">
@@ -175,8 +198,8 @@
                                             <i class="fas fa-user"></i>
                                         </div>
                                         <strong class="w-25">Name:</strong> 
-                                        <span class="text-wrap">{{ $ad->user->name ?? 'N/A' }}</span>
-                                    </div>
+                                        <span class="text-wrap">{{ $ad->user->first_name }} {{ $ad->user->last_name ?? 'N/A' }}</span>
+                                    </div> 
                                     <hr class="my-2">
 
                                     <div class="mb-3 d-flex align-items-center">

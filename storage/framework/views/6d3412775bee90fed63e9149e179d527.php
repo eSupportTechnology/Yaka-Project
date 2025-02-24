@@ -162,14 +162,18 @@
                 <div class="row">
                     <?php $__empty_1 = true; $__currentLoopData = $activeAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <div class="col-md-4 mb-4">
+                        <a href="<?php echo e(route('ads.details', ['adsId' => $ad->adsId])); ?>">
                             <div class="card ad-card">
                                 <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>" class="card-img-top" alt="Ad Image">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo e($ad->title); ?></h5>
                                     <p class="card-text">Price: Rs <?php echo e(number_format($ad->price, 2)); ?></p>
-                                    <p class="card-text text-muted">Location: <?php echo e($ad->location); ?></p>
+                                    <p class="card-text text-muted">Location:   
+                                    <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?></p>
+                                    <p class="card-text text-muted">Posted on <?php echo e(\Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a')); ?></p>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <p class="text-center">No active ads found.</p>
@@ -182,17 +186,22 @@
                 <div class="row">
                     <?php $__empty_1 = true; $__currentLoopData = $pendingAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <div class="col-md-4 mb-4">
+                        <a href="<?php echo e(route('ads.details', ['adsId' => $ad->adsId])); ?>">
                             <div class="card ad-card">
                                 <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>" class="card-img-top" alt="Ad Image">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo e($ad->title); ?></h5>
                                     <p class="card-text">Price: Rs <?php echo e(number_format($ad->price, 2)); ?></p>
-                                    <p class="card-text text-muted">Location: <?php echo e($ad->location); ?></p>
+                                    <p class="card-text text-muted">Location:   
+                                    <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?></p>
+                                    <p class="card-text text-muted">Posted on <?php echo e(\Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a')); ?></p>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <p class="text-center">No pending ads found.</p>
+                      
                     <?php endif; ?>
                 </div>
             </div>

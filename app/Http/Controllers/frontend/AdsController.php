@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Package;
 use App\Models\PackageType;
+use App\Models\BrandsModels;
 
 class AdsController extends Controller
 {
@@ -87,15 +88,17 @@ class AdsController extends Controller
     
 
     
-    
     public function show_details($adsId)
     {
-
-        
-        $ad = Ads::where('adsId', $adsId)->with(['main_location', 'sub_location', 'user', 'category'])->firstOrFail();
-
-        
+        // Fetch the ad details with eager loading for the related data
+        $ad = Ads::where('adsId', $adsId)
+                 ->with(['main_location', 'sub_location', 'user', 'category'])
+                 ->firstOrFail();
     
+        // Manually fetch the brand and model based on the brand and model IDs
+        $brand = BrandsModels::find($ad->brand);
+        $model = BrandsModels::find($ad->model);
+
         $mainImage = $ad->mainImage;
         $subImages = json_decode($ad->subImage, true);
     
@@ -121,11 +124,11 @@ class AdsController extends Controller
                 ->take(12)
                 ->get();
         }
-
-        
     
-        return view('newFrontend.browse-ads-details', compact('ad', 'banners', 'mainImage', 'subImages', 'otherbanners', 'relatedAds'));
+        return view('newFrontend.browse-ads-details', compact('ad', 'banners', 'mainImage', 'subImages', 'otherbanners', 'relatedAds', 'brand', 'model'));
     }
+    
+    
     
 
     public function ads_boost($adsId)

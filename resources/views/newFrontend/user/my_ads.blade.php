@@ -164,14 +164,18 @@
                 <div class="row">
                     @forelse($activeAds as $ad)
                         <div class="col-md-4 mb-4">
+                        <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}">
                             <div class="card ad-card">
                                 <img src="{{ asset('storage/' . $ad->mainImage) }}" class="card-img-top" alt="Ad Image">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $ad->title }}</h5>
                                     <p class="card-text">Price: Rs {{ number_format($ad->price, 2) }}</p>
-                                    <p class="card-text text-muted">Location: {{ $ad->location }}</p>
+                                    <p class="card-text text-muted">Location:   
+                                    {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }}</p>
+                                    <p class="card-text text-muted">Posted on {{ \Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a') }}</p>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     @empty
                         <p class="text-center">No active ads found.</p>
@@ -184,17 +188,22 @@
                 <div class="row">
                     @forelse($pendingAds as $ad)
                         <div class="col-md-4 mb-4">
+                        <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}">
                             <div class="card ad-card">
                                 <img src="{{ asset('storage/' . $ad->mainImage) }}" class="card-img-top" alt="Ad Image">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $ad->title }}</h5>
                                     <p class="card-text">Price: Rs {{ number_format($ad->price, 2) }}</p>
-                                    <p class="card-text text-muted">Location: {{ $ad->location }}</p>
+                                    <p class="card-text text-muted">Location:   
+                                    {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }}</p>
+                                    <p class="card-text text-muted">Posted on {{ \Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a') }}</p>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     @empty
                         <p class="text-center">No pending ads found.</p>
+                      
                     @endforelse
                 </div>
             </div>
