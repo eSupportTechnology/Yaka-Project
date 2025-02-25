@@ -312,8 +312,8 @@
                     $imageMap = [
                         'Jump up' => '4.png',
                         'Urgent' => '3.png',
-                        'Top Ad' => '2.png',
-                        'Super' => '1.png'
+                        'Top Ad' => '1.png',
+                        'Super' => '2.png'
                     ];
 
                     // Set the image based on package name, default to 'default.png' if not found

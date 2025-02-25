@@ -1,35 +1,34 @@
-@extends ('newAdminDashboard.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Create New Fields for Categories</h4>
 
-                    @if (isset($success) && $success)
+                    <?php if(isset($success) && $success): ?>
                         <div class="alert alert-success" role="alert">
-                            {{$success}}
-                        </div>
-                    @endif
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                   {{ $error }}</li>
-                                @endforeach
-                        </div>
-                    @endif
+                            <?php echo e($success); ?>
 
-                    <form method="post" action="{{ route('dashboard.formfields.store') }}" enctype="multipart/form-data">
-                        @csrf
+                        </div>
+                    <?php endif; ?>
+                    <?php if($errors->any()): ?>
+                        <div class="alert alert-danger">
+                                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                   <?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form method="post" action="<?php echo e(route('dashboard.formfields.store')); ?>" enctype="multipart/form-data">
+                        <?php echo csrf_field(); ?>
 
                         <div class="form-group">
                             <label for="main_category">Main Category</label>
                             <select id="main_category" class="form-control" name="main_category" required>
                                 <option value="">Select Main Category</option>
-                                @foreach($mainCategories as $mainCategory)
-                                    <option value="{{ $mainCategory->id }}">{{ $mainCategory->name }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $mainCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $mainCategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($mainCategory->id); ?>"><?php echo e($mainCategory->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
 
@@ -142,4 +141,6 @@
         }
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('newAdminDashboard.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newAdminDashboard/formfieldsManagement/create.blade.php ENDPATH**/ ?>

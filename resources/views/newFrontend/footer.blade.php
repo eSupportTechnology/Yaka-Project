@@ -1,4 +1,41 @@
- <!-- main-footer -->
+<style>
+    .fb-icon i {
+    background-color: #3b5998; 
+}
+
+.insta-icon i {
+    background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
+}
+
+.twitter-icon i {
+    background-color: #0082ca;
+}
+
+.linkedin-icon i {
+    background-color: #0082ca;
+}
+
+.whatsppfb-icon i {
+    background-color: #25d366;
+}
+
+.utube-icon i {
+    background-color: #ed302f;
+}
+
+
+.sidebar-icon i {
+    width: 43px;
+    height: 43px;
+    display: flex;  
+    justify-content: center;  
+    align-items: center; 
+    border-radius: 50%; 
+    color: white;
+}
+
+</style>
+<!-- main-footer -->
  <footer class="main-footer">
             <div class="footer-top" style="  background:rgb(88, 12, 12) ;">
                 <div class="auto-container">
@@ -10,12 +47,11 @@
                                     <div class="text">
                                         <p>Don’t miss out on the best deals in Sri Lanka’s largest marketplace! Subscribe now for exclusive offers, promotions, and updates on discounts for electronics, fashion, home goods, and more. Be the first to know and save big—sign up today!</p>
                                     </div>
-                                    <ul class="clearfix social-links">
-                                        <li><a href="index.html"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="index.html"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="index.html"><i class="fab fa-instagram"></i></a></li>
-                                        <li><a href="index.html"><i class="fab fa-google-plus-g"></i></a></li>
-                                        <li><a href="index.html"><i class="fab fa-linkedin-in"></i></a></li>
+                                    <ul class="clearfix social-links sidebar-social-media">
+                                        <li><a href="index.html" class="sidebar-icon fb-icon"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="index.html" class="sidebar-icon twitter-icon"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="index.html" class="sidebar-icon insta-icon"><i class="fab fa-instagram"></i></a></li>
+                                        <li><a href="index.html" class="sidebar-icon utube-icon"><i class="fab fa-youtube"></i></a></li>
                                     </ul>
                                 </div>
                             </div>

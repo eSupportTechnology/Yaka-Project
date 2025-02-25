@@ -54,8 +54,8 @@ Route::get('/terms-conditions',[HomeController::class,'termsConditions'])->name(
 //general links
 Route::get('/tips',[HomeController::class,'tips'])->name('tips');
 Route::get('/boosting_ads',[HomeController::class,'boosting_ads'])->name('boosting_ads');
-Route::get('/add_posting',[HomeController::class,'add_posting'])->name('add_posting');
-Route::get('/add_post',[HomeController::class,'add_post'])->name('add_post');
+Route::get('/ad_posting_allowances',[HomeController::class,'add_posting'])->name('add_posting');
+Route::get('/ad_post_criteria',[HomeController::class,'add_post'])->name('add_post');
 
 
 
@@ -66,6 +66,7 @@ Route::get('/browse_ads_details/{adsId}', [AdsController::class, 'show_details']
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
+    Route::get('/user/logout', [UserDashboardController::class, 'logout'])->name('user.logout');
     Route::get('/user/profile', [UserDashboardController::class, 'profile'])->name('user.profile');
     Route::get('/get-cities', [UserDashboardController::class, 'getCities'])->name('get.cities');
     Route::post('/user/profile/update', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');

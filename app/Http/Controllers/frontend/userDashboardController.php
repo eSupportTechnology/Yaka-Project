@@ -94,7 +94,10 @@ class userDashboardController extends Controller
     }
     
 
-
+    public function logout()
+    {
+        return view('newFrontend.user.logout');
+    }
 
 
 }

@@ -117,12 +117,7 @@
                                 <li><a href="{{route('user.profile')}}">Profile</a></li>
                                 <li><a href="#">Message</a></li>
                                 <li>
-                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
+                                    <a href="{{route('user.logout')}}">Logout</a>
                                 </li>
                             </ul>
                         </div>
@@ -246,23 +241,53 @@
                                 <!-- Render the form fields -->
                                 @foreach($formFields as $field)
                                     <div class="form-group">
-                                        <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
-                                        
+                                       
                                         <!-- Check field type and render appropriate input box -->
                                         @if($field->field_type == 'text')
-                                            <input type="text" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control" >
+                                            <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                            <input type="text" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control">
                                         @elseif($field->field_type == 'number')
-                                            <input type="number" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control" >
+                                            <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                            <input type="number" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control">
                                         @elseif($field->field_type == 'email')
-                                            <input type="email" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control" >
+                                            <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                            <input type="email" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control">
                                         @elseif($field->field_type == 'textarea')
-                                            <textarea id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control" ></textarea>
-                                        @elseif($field->field_type == 'select')
-                                            <select id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control" >
+                                            <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                            <textarea id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control"></textarea>
+                                        @elseif($field->field_type == 'dropdown')
+                                            <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                            <select id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control">
                                                 <option value="">Select</option>
-                                                <!-- Options should be fetched dynamically if needed -->
+                                                <!-- Add dynamic options here if necessary -->
                                             </select>
+                                            @elseif($field->field_type == 'checkbox')
+                                            <div class="form-check">
+                                                <input type="checkbox" id="field_{{ $field->id }}" name="field_{{ $field->id }}[]" class="form-check-input" style="width: auto; height: auto;">
+                                                <label for="field_{{ $field->id }}" class="form-check-label">
+                                                    {{ $field->field_name }}
+                                                </label>
+                                            </div>
+                                        @elseif($field->field_type == 'radio')
+                                            <!-- Assuming you have options, you can use a loop to render radio buttons -->
+                                            <div id="field_{{ $field->id }}">
+                                                <input type="radio" name="field_{{ $field->id }}" value="option1" id="option1_{{ $field->id }}"> Option 1
+                                                <input type="radio" name="field_{{ $field->id }}" value="option2" id="option2_{{ $field->id }}"> Option 2
+                                            </div>
+                                        @elseif($field->field_type == 'tel')
+                                            <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                            <input type="tel" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control">
+                                        @elseif($field->field_type == 'date')
+                                            <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                            <input type="date" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control">
+                                        @elseif($field->field_type == 'time')
+                                            <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                            <input type="time" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control">
+                                        @elseif($field->field_type == 'month')
+                                            <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                            <input type="month" id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control">
                                         @endif
+
                                     </div>
                                 @endforeach
                         </div>

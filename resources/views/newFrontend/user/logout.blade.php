@@ -2,6 +2,13 @@
 
 @section('content')
 <link href="{{ asset('newFrontend/Clasifico/assets/css/userdashboard.css') }}" rel="stylesheet">
+<style>
+
+.btn-danger:hover, .btn-secondary:hover {
+    opacity: 0.85;
+}
+
+</style>
 
  <!-- Page Title -->
  <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
@@ -76,13 +83,13 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a  class="active" href="{{route('user.dashboard')}}">dashboard</a></li>
+                                <li><a href="{{route('user.dashboard')}}">dashboard</a></li>
                                 <li><a href="{{route('user.ad_posts.categories')}}">ad post</a></li>
                                 <li><a href="{{route('user.my_ads')}}" >my ads</a></li>
                                 <li><a href="{{route('user.profile')}}">Profile</a></li>
                                 <li><a href="">message</a></li>
                                 <li>
-                                    <a href="{{route('user.logout')}}">Logout</a>
+                                    <a class="active" href="{{route('user.logout')}}">Logout</a>
                                 </li>
                                 
                             </ul>
@@ -92,37 +99,29 @@
             </div>
         </div>
     </section>
-    <section class="dashboard-part mt-4 mb-4">
-        <div class="container mb-4">
 
-            @if (session('success'))  
-                <div class="alert alert-success" role="alert" style="margin-top: 20px;padding: 18px;0border-radius: 6px;">
-                    {{ session('success') }}
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-danger" role="alert" style="margin-top: 20px;padding: 18px;0border-radius: 6px;">
-                    {{ session('error') }}
-                </div>
-            @endif
-            
-            <div class="row mt-5 " >
-              
-                <div class="col-lg-4">
-                    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
-                    <dotlottie-player src="https://lottie.host/07462177-04f3-4b21-93c1-8455179693c0/EUCuUmDPlB.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
-                </div>
-                <div class="col-lg-8">
-                    <h1>Hello, {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
-                    <h1>Welcome to Yaka.lk</h1>
-                    <p style="text-align:justify">   We're thrilled to have you here. As a valued member of our community, you now have access to the largest online marketplace in Sri Lanka, where countless opportunities await you.
-                        Explore an extensive range of categories, from real estate and vehicles to electronics and fashion. Our platform connects you with local sellers and unique products, making it easier than ever to find exactly what you need. With user-friendly features, advanced search options, and exclusive offers, shopping has never been more convenient.
-                        Thank you for joining yaka.lk —dive in and start discovering the best deals and services </p>
-                </div>
+    <section class="dashboard-part mt-4">
+    <div class="container mb-4">
+        <div class="logout-box text-center p-4 shadow-lg rounded">
+            <h4 class="mb-3 text-dark">Are you sure you want to logout?</h4>
+            <div class="d-flex justify-content-center" style="gap: 20px;">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger px-4 py-2 fw-bold text-white" style="margin-right: 10px;">
+                        Yes, Logout
+                    </button>
+                </form>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary px-4 py-2 fw-bold text-white">
+                    No, Stay
+                </a>
             </div>
-
-            
-
         </div>
-    </section>
+    </div> 
+</section>
+
+
+
+
+
+
 @endsection

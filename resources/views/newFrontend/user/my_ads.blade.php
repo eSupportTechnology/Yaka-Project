@@ -134,7 +134,7 @@
                                 <li><a href="{{route('user.profile')}}">Profile</a></li>
                                 <li><a href="">message</a></li>
                                 <li>
-                                    <a href="{{route('logout')}}" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+                                    <a href="{{route('user.logout')}}">Logout</a>
                                 </li>
                                 
                             </ul>

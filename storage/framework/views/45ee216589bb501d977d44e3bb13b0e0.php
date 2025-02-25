@@ -146,12 +146,7 @@
                                 <li><a href="<?php echo e(route('user.profile')); ?>">Profile</a></li>
                                 <li><a href="#">Message</a></li>
                                 <li>
-                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
-                                        <?php echo csrf_field(); ?>
-                                    </form>
+                                    <a href="<?php echo e(route('user.logout')); ?>">Logout</a>
                                 </li>
                             </ul>
                         </div>

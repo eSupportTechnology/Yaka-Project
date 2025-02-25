@@ -148,12 +148,7 @@
                                 <li><a href="{{route('user.profile')}}">Profile</a></li>
                                 <li><a href="#">Message</a></li>
                                 <li>
-                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
+                                    <a href="{{route('user.logout')}}">Logout</a>
                                 </li>
                             </ul>
                         </div>
