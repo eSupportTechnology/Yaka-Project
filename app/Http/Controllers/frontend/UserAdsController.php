@@ -64,28 +64,25 @@ class UserAdsController extends Controller
 
     public function ad_posts(Request $request)
     {
-
         $categories = \App\Models\Category::where('status', 1)->where('mainId', 0)->get();
         
         $subcategories = collect();
-        
         if ($request->cat_id) {
             $subcategories = \App\Models\Category::where('mainId', $request->cat_id)->get();
         }
     
         $brands = collect();
-
         if ($request->sub_cat_id) {
             $brands = \App\Models\BrandsModels::where('sub_cat_id', $request->sub_cat_id)
-                        ->where('brandsId', 0)
+                        ->where('brandsId', 0) 
                         ->get();
         }
     
+        // Get models based on brandId and subCatId
         $models = collect();
-        
-        if ($request->brand) {
+        if ($request->brand && $request->sub_cat_id) {
             $models = \App\Models\BrandsModels::where('brandsId', $request->brand)
-                        ->where('sub_cat_id', $request->sub_cat_id) 
+                        ->where('sub_cat_id', $request->sub_cat_id)
                         ->get();
         }
     
@@ -94,10 +91,9 @@ class UserAdsController extends Controller
                         ->get();
         
         $packages = \App\Models\Package::with('packageTypes')
-        ->where('name', '!=', 'Jump Up')  
-        ->where('id', '!=', 5)            
-        ->get();
-                    
+            ->where('name', '!=', 'Jump Up')  
+            ->where('id', '!=', 5)            
+            ->get();
     
         return view('newFrontend.user.ad_posts', [
             'categories' => $categories,
@@ -106,10 +102,10 @@ class UserAdsController extends Controller
             'models' => $models,
             'formFields' => $formFields,
             'packages' => $packages,
-            'cat_id' => $request->query('cat_id', 0),   
+            'cat_id' => $request->query('cat_id', 0),
             'sub_cat_id' => $request->query('sub_cat_id', 0),
-            'location' => $request->query('location', 0),   
-            'sublocation' => $request->query('sublocation', 0) 
+            'location' => $request->query('location', 0),
+            'sublocation' => $request->query('sublocation', 0)
         ]);
     }
     
@@ -150,6 +146,7 @@ class UserAdsController extends Controller
                 'price'         => 'required|numeric',
                 'description'   => 'required|string',
                 'main_image'    => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+                'sub_images'    => 'nullable|array',
                 'sub_images.*'  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
                 'brand'         => 'nullable',
                 'model'         => 'nullable',
@@ -200,15 +197,18 @@ class UserAdsController extends Controller
     
             $mainImagePath = $request->file('main_image')->storeAs('ads/main_images', 
             $request->file('main_image')->getClientOriginalName(), 'public');
-    
-            // Handle sub images upload with original file names
+
             $subImagesPaths = [];
+        
             if ($request->hasFile('sub_images')) {
                 foreach ($request->file('sub_images') as $file) {
-                    $subImagesPaths[] = $file->storeAs('ads/sub_images', $file->getClientOriginalName(), 'public');
+                    if ($file->isValid()) { // Ensure the file is valid
+                        $path = $file->storeAs('ads/sub_images', $file->getClientOriginalName(), 'public');
+                        $subImagesPaths[] = $path; // Add the path to the array
+                    }
                 }
             }
-    
+            
             // Create the Ad with package expiration date
             $ad = Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
@@ -256,5 +256,7 @@ class UserAdsController extends Controller
     }
     
     
+
+ 
     
 }

@@ -144,46 +144,6 @@
                     <input type="hidden" name="userId" value="">
 
                     <div class="row">
-                        
-                    <!-- Product Details -->
-                    <div class="col-lg-12 mb-3">
-                    <div class="section-box">
-                            <h4>Product Details</h4>
-                        <div class="col-lg-12 mb-3">
-                            <div class="form-group">
-                                <label class="form-label text-dark"><strong>Product Title</strong></label>
-                                <input type="text" name="title" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 mb-3">
-                            <div class="form-group">
-                                <label class="form-label text-dark"><strong>Price</strong></label>
-                                <input type="number" name="price" class="form-control" required>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-12 mb-3">
-                            <div class="form-group">
-                                <label class="form-label text-dark"><strong>Ad Description</strong></label>
-                                <textarea name="description" class="form-control" rows="4" required></textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-12 mb-3">
-                            <div class="form-group">
-                                <label class="form-label text-dark"><strong>Upload Main Image</strong></label>
-                                <input type="file" name="main_image" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 mb-3">
-                            <div class="form-group">
-                                <label class="form-label text-dark"><strong>Upload Sub Images</strong></label>
-                                <input type="file" name="sub_images[]" class="form-control" multiple>
-                            </div>
-                        </div>
-                        </div>
-                        </div>
-
                      <!-- category Information -->
                      <div class="col-lg-12 mb-3">
                         <div class="section-box">
@@ -222,6 +182,56 @@
 
 
                             </div>
+                            
+                        
+                        </div>
+                    </div>
+
+                    <!-- Product Details -->
+                    <div class="col-lg-12 mb-3">
+                    <div class="section-box">
+                            <h4>Product Details</h4>
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-group">
+                                <label class="form-label text-dark"><strong>Product Title <i class="text-danger">*</i></strong></label>
+                                <input type="text" name="title" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-group">
+                                <label class="form-label text-dark"><strong>Price <i class="text-danger">*</i></strong></label>
+                                <input type="number" name="price" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-group">
+                                <label class="form-label text-dark"><strong> Ad Description <i class="text-danger">*</i></strong></label>
+                                <textarea name="description" class="form-control" rows="4" required></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-group">
+                                <label class="form-label text-dark"><strong>Upload Main Image <i class="text-danger">*</i></strong></label>
+                                <input type="file" name="main_image" class="form-control" id="main_image" required>
+                                <div id="main_image_preview" style="margin-top: 10px;"></div> <!-- Preview section for main image -->
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-group">
+                                <label class="form-label text-dark"><strong>Upload Sub Images <i class="text-danger">*</i></strong></label>
+                                <small class=" text-muted">Simply select all images at once.</small>
+                                <input type="file" name="sub_images[]" class="form-control" id="sub_images" multiple>
+                                <div id="sub_images_preview" style="margin-top: 10px;"></div>
+                            </div>
+                        </div>
+
+                        </div>
+                        </div>
+
+                     <!-- category Information -->
+                     <div class="col-lg-12 mb-3">
                             <div class="section-box">
                             <label class="form-label text-dark"><strong>Product Condition</strong></label>
                             <div class="d-flex">
@@ -232,7 +242,7 @@
                                     </div>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
-                        </div>
+                        
                         </div>
                     </div>
                     
@@ -330,7 +340,7 @@
 
                         <div class="col-lg-12 mb-3">
                             <div class="section-box">
-                                <h4>Boosting Option</h4>
+                                <h4>Boosting Option <i class="text-danger">*</i></h4>
 
                                 <!-- Top Ads, Super Ads, Urgent Ads Section -->
                                 <div class="row mt-4">
@@ -427,79 +437,57 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
 <script>
- $(document).ready(function() {
+$(document).ready(function() {
     let urlParams = new URLSearchParams(window.location.search);
-    let catId = urlParams.get('cat_id');
     let subCatId = urlParams.get('sub_cat_id');
-    let selectedBrandId = "<?php echo e(request()->brand); ?>"; // Get pre-selected brand from request
-    let selectedModelId = "<?php echo e(request()->model); ?>"; // Get pre-selected model from request
+    let selectedBrandId = "<?php echo e(request()->brand); ?>"; 
+    let selectedModelId = "<?php echo e(request()->model); ?>";
 
-    // Function to Fetch Brands
-    function fetchBrands(subCatId) {
-        if (subCatId) {
+    // Function to Fetch Models dynamically without reloading the page
+    function fetchModels(brandId, subCatId) {
+        if (brandId && subCatId) {
             $.ajax({
-                url: "<?php echo e(route('get.brands')); ?>",
+                url: "<?php echo e(route('get.models')); ?>", 
                 type: "GET",
-                data: { subcategory_id: subCatId },
+                data: { brand_id: brandId, sub_cat_id: subCatId },
                 success: function(data) {
-                    $('#brand').html('<option value="">Select Brand</option>');
-                    $.each(data, function(key, value) {
-                        let selected = selectedBrandId == value.id ? "selected" : "";
-                        $('#brand').append('<option value="' + value.id + '" ' + selected + '>' + value.name + '</option>');
-                    });
-
-                    // If a brand is pre-selected, fetch models for it
-                    if (selectedBrandId) {
-                        fetchModels(selectedBrandId);
+                    // Clear the model dropdown before appending new options
+                    $('#model').html('<option value="">Select Model</option>');
+                    if (data.length > 0) {
+                        // Dynamically append the models to the dropdown
+                        $.each(data, function(key, value) {
+                            let selected = selectedModelId == value.id ? "selected" : ""; 
+                            $('#model').append('<option value="' + value.id + '" ' + selected + '>' + value.name + '</option>');
+                        });
+                    } else {
+                        $('#model').html('<option value="">No models available</option>');
                     }
+                },
+                error: function(response) {
+                    console.log('Error fetching models:', response);
                 }
             });
         }
     }
 
-    function fetchModels(brandId, subCatId) {
-    if (brandId && subCatId) {
-        $.ajax({
-            url: "<?php echo e(route('get.models')); ?>",
-            type: "GET",
-            data: { brand_id: brandId, sub_cat_id: subCatId },
-            success: function(data) {
-                $('#model').html('<option value="">Select Model</option>');
-                $.each(data, function(key, value) {
-                    let selected = selectedModelId == value.id ? "selected" : "";
-                    $('#model').append('<option value="' + value.id + '" ' + selected + '>' + value.name + '</option>');
-                });
-            },
-            error: function(response) {
-                console.log('Error:', response);
-            }
-        });
-    }
-}
-
-
-
-
-    // Auto-fetch brands if category and subcategory exist in URL
-    if (subCatId) {
-        fetchBrands(subCatId);
-    }
-
-    // Fetch Models when Brand is selected
     $('#brand').change(function() {
         let brandId = $(this).val();
-        fetchModels(brandId);
+        if (brandId) {
+            // Update URL with selected brand_id
+            let newUrl = new URL(window.location.href);
+            newUrl.searchParams.set('brand', brandId); 
+            window.history.pushState({}, '', newUrl);  
+            
+            // Trigger page refresh after URL is updated
+            location.reload(); 
+        }
     });
 
-    // If brand is already selected (from request), fetch its models
     if (selectedBrandId) {
-        fetchModels(selectedBrandId);
+        fetchModels(selectedBrandId, subCatId);
     }
 });
-
-
 
 </script>
 
@@ -519,6 +507,56 @@
         });
     });
 </script>
+
+<script>
+$(document).ready(function() {
+    // Function to display main image preview
+    $('#main_image').change(function() {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            $('#main_image_preview').html('<img src="' + e.target.result + '" alt="Main Image" style="max-width: 20%; height: auto; border: 1px solid #ddd; padding: 5px;">');
+        }
+        reader.readAsDataURL(this.files[0]);
+    });
+});
+</script>
+<script>
+let allFiles = []; 
+
+document.getElementById('sub_images').addEventListener('change', function(event) {
+    const previewContainer = document.getElementById('sub_images_preview');
+    const newFiles = event.target.files;
+
+    // Add new files to the allFiles array
+    for (let i = 0; i < newFiles.length; i++) {
+        allFiles.push(newFiles[i]);
+    }
+
+    // Clear the preview container
+    previewContainer.innerHTML = '';
+
+    // Display all files in the preview container
+    allFiles.forEach(file => {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.width = '100px';
+            img.style.height = '100px';
+            img.style.margin = '5px';
+            previewContainer.appendChild(img); 
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    // Debug: Log all files
+    console.log('All Files:', allFiles);
+});
+</script>
+
+
 
 
 

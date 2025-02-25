@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 <link href="<?php echo e(asset('newFrontend/Clasifico/assets/css/userdashboard.css')); ?>" rel="stylesheet">
 <style>

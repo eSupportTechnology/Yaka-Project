@@ -385,7 +385,7 @@
         <!-- ad - banner-section end -->
 
         <!-- category-section -->
-        <section class="category-section centred sec-pad mt-0">
+        <section class="category-section centred sec-pad" style="padding-top:30px;">
             <div class="auto-container">
                 <div class="sec-title">
                     <span>Categories</span>

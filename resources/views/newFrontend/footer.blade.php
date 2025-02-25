@@ -65,7 +65,7 @@
                                             <li><a href="{{route(name: 'about-us')}}">About Us</a></li>
                                             <li><a href="{{route('contact-us')}}">Contact Us</a></li>
                                             <li><a href="{{route('privacy-safety')}}">Privacy & Safety</a></li>
-                                            <li><a href="{{route('terms-conditions')}}">Tems & Conditions</a></li>
+                                            <li><a href="{{route('terms-conditions')}}">Terms & Conditions</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -116,10 +116,10 @@
             <div class="footer-bottom">
                 <div class="auto-container">
                     <div class="clearfix footer-inner">
-                        <div class="copyright pull-left"><p><a href="index.html">Clasifico</a> &copy; 2020 All Right Reserved</p></div>
+                        <div class="copyright pull-left"><p>Copyright © 2025 . All Rights Reserved.</p></div>
                         <ul class="clearfix footer-nav pull-right">
-                            <li><a href="index.html">Terms of Service</a></li>
-                            <li><a href="index.html">Privacy Policy</a></li>
+                            <li><a href="index.html"></a></li>
+                            <li><a href="index.html"></a></li>
                         </ul>
                     </div>
                 </div>

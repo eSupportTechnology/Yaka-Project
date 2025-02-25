@@ -44,6 +44,14 @@ class userDashboardController extends Controller
         }
     }
     
+    public function destroy($adsId)
+    {
+        $ad = Ads::findOrFail($adsId);  
+        $ad->delete();
+
+        return redirect()->route('user.my_ads')->with('success', 'Ad deleted successfully!');
+    }
+
 
     public function updateProfile(Request $request)
     {

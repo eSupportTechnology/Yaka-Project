@@ -132,7 +132,7 @@
                                 <li><a href="<?php echo e(route('user.profile')); ?>">Profile</a></li>
                                 <li><a href="">message</a></li>
                                 <li>
-                                    <a href="<?php echo e(route('logout')); ?>" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+                                    <a href="<?php echo e(route('user.logout')); ?>">Logout</a>
                                 </li>
                                 
                             </ul>
@@ -159,26 +159,34 @@
         <div class="tab-content mt-3" id="adsTabsContent">
             <!-- Active Ads Tab -->
             <div class="tab-pane fade show active" id="active-ads" role="tabpanel" aria-labelledby="active-ads-tab">
-                <div class="row">
+            <div class="row">
                     <?php $__empty_1 = true; $__currentLoopData = $activeAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <div class="col-md-4 mb-4">
-                        <a href="<?php echo e(route('ads.details', ['adsId' => $ad->adsId])); ?>">
-                            <div class="card ad-card">
-                                <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>" class="card-img-top" alt="Ad Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?php echo e($ad->title); ?></h5>
-                                    <p class="card-text">Price: Rs <?php echo e(number_format($ad->price, 2)); ?></p>
-                                    <p class="card-text text-muted">Location:   
-                                    <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?></p>
-                                    <p class="card-text text-muted">Posted on <?php echo e(\Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a')); ?></p>
+                            <a href="<?php echo e(route('ads.details', ['adsId' => $ad->adsId])); ?>">
+                                <div class="card ad-card">
+                                    <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>" class="card-img-top" alt="Ad Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo e($ad->title); ?></h5>
+                                        <p class="card-text">Price: Rs <?php echo e(number_format($ad->price, 2)); ?></p>
+                                        <p class="card-text text-muted">Location:   
+                                            <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?></p>
+                                        <p class="card-text text-muted">Posted on <?php echo e(\Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a')); ?></p>
+
+                                        <!-- Delete Button -->
+                                        <form action="<?php echo e(route('ads.delete', ['adsId' => $ad->adsId])); ?>" method="POST" class="d-inline mt-2">
+                                            <?php echo csrf_field(); ?>
+                                            <?php echo method_field('DELETE'); ?>
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ad?')"> <i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
                             </a>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <p class="text-center">No active ads found.</p>
                     <?php endif; ?>
                 </div>
+
             </div>
 
             <!-- Pending Ads Tab -->
@@ -195,6 +203,12 @@
                                     <p class="card-text text-muted">Location:   
                                     <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?></p>
                                     <p class="card-text text-muted">Posted on <?php echo e(\Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a')); ?></p>
+                                  <!-- Delete Button -->
+                                  <form action="<?php echo e(route('ads.delete', ['adsId' => $ad->adsId])); ?>" method="POST" class="d-inline mt-2">
+                                            <?php echo csrf_field(); ?>
+                                            <?php echo method_field('DELETE'); ?>
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ad?')"> <i class="fas fa-trash"></i></button>
+                                        </form>
                                 </div>
                             </div>
                             </a>

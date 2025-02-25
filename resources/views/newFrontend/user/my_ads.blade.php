@@ -161,26 +161,34 @@
         <div class="tab-content mt-3" id="adsTabsContent">
             <!-- Active Ads Tab -->
             <div class="tab-pane fade show active" id="active-ads" role="tabpanel" aria-labelledby="active-ads-tab">
-                <div class="row">
+            <div class="row">
                     @forelse($activeAds as $ad)
                         <div class="col-md-4 mb-4">
-                        <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}">
-                            <div class="card ad-card">
-                                <img src="{{ asset('storage/' . $ad->mainImage) }}" class="card-img-top" alt="Ad Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $ad->title }}</h5>
-                                    <p class="card-text">Price: Rs {{ number_format($ad->price, 2) }}</p>
-                                    <p class="card-text text-muted">Location:   
-                                    {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }}</p>
-                                    <p class="card-text text-muted">Posted on {{ \Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a') }}</p>
+                            <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}">
+                                <div class="card ad-card">
+                                    <img src="{{ asset('storage/' . $ad->mainImage) }}" class="card-img-top" alt="Ad Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $ad->title }}</h5>
+                                        <p class="card-text">Price: Rs {{ number_format($ad->price, 2) }}</p>
+                                        <p class="card-text text-muted">Location:   
+                                            {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }}</p>
+                                        <p class="card-text text-muted">Posted on {{ \Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a') }}</p>
+
+                                        <!-- Delete Button -->
+                                        <form action="{{ route('ads.delete', ['adsId' => $ad->adsId]) }}" method="POST" class="d-inline mt-2">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ad?')"> <i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
                             </a>
                         </div>
                     @empty
                         <p class="text-center">No active ads found.</p>
                     @endforelse
                 </div>
+
             </div>
 
             <!-- Pending Ads Tab -->
@@ -197,6 +205,12 @@
                                     <p class="card-text text-muted">Location:   
                                     {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }}</p>
                                     <p class="card-text text-muted">Posted on {{ \Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a') }}</p>
+                                  <!-- Delete Button -->
+                                  <form action="{{ route('ads.delete', ['adsId' => $ad->adsId]) }}" method="POST" class="d-inline mt-2">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ad?')"> <i class="fas fa-trash"></i></button>
+                                        </form>
                                 </div>
                             </div>
                             </a>

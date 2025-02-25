@@ -36,6 +36,10 @@ class Ads extends Model
         'status',
     ];
 
+    protected $casts = [
+        'subImage' => 'array', 
+    ];
+
     // Relationship with Category
     public function category()
     {
