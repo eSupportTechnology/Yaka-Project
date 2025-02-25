@@ -1,0 +1,20 @@
+#zss {
+    width: 500%;
+    position: relative;
+    margin: 0;
+    animation: anm1 20s infinite;
+}
+
+.zss {
+    height: 180px;
+    width: 20%;
+    float: left;
+}
+
+@keyframes anm1 {
+	0%,10%{left: 0%;}
+	20%,30%{left: -100%;}
+	40%,50%{left: -200%;}
+	60%,70%{left: -300%;}
+	80%,90%{left: -400%;}
+}
