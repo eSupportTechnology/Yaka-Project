@@ -336,7 +336,15 @@
 
                             <div class="lower-content" style="flex-grow: 1;">
                                 <div class="category"><i class="fas fa-tags"></i><p><?php echo e($ad->category->name); ?></p></div>
-                                <h4><?php echo e($ad->title); ?></h4>
+                                <h4 style="
+                                        display: -webkit-box; 
+                                        -webkit-line-clamp: 2; 
+                                        -webkit-box-orient: vertical; 
+                                        overflow: hidden; 
+                                        text-overflow: ellipsis; 
+                                        max-height: 55px; 
+                                        margin-top: 20px; 
+                                        margin-bottom: 10px;"><?php echo e($ad->title); ?></h4>
                                 <ul class="info clearfix">
                                     <li><i class="far fa-clock"></i><?php echo e($ad->created_at->diffForHumans()); ?></li>
                                     <li>

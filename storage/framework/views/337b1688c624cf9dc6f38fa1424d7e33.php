@@ -1,4 +1,3 @@
-
 <style>
     .ad-card {
     background: white;

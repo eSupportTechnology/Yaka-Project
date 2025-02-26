@@ -109,21 +109,58 @@ class AdsController extends Controller
         $banners = Banners::where('type', 0)->get();
         $otherbanners = Banners::where('type', 1)->get();
     
-        // Fetch related ads
         $relatedAds = Ads::where('adsId', '!=', $ad->adsId)
+    ->where(function ($query) use ($ad) {
+        $query->where('cat_id', $ad->cat_id)
+              ->where('sub_cat_id', $ad->sub_cat_id)
+              ->where('location', $ad->location);
+    })
+    ->latest()
+    ->take(12)
+    ->get();
+
+    if ($relatedAds->count() < 12) {
+        $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
+            ->where(function ($query) use ($ad) {
+                $query->where('cat_id', $ad->cat_id)
+                    ->where('sub_cat_id', $ad->sub_cat_id);
+            })
+            ->latest()
+            ->take(12 - $relatedAds->count())
+            ->get();
+        $relatedAds = $relatedAds->merge($additionalAds);
+    }
+
+    if ($relatedAds->count() < 12) {
+        $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
+            ->where(function ($query) use ($ad) {
+                $query->where('cat_id', $ad->cat_id)
+                    ->where('location', $ad->location);
+            })
+            ->latest()
+            ->take(12 - $relatedAds->count())
+            ->get();
+        $relatedAds = $relatedAds->merge($additionalAds);
+    }
+
+    if ($relatedAds->count() < 12) {
+        $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
             ->where('cat_id', $ad->cat_id)
+            ->latest()
+            ->take(12 - $relatedAds->count())
+            ->get();
+        $relatedAds = $relatedAds->merge($additionalAds);
+    }
+
+    if ($relatedAds->count() < 12) {
+        $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
             ->where('location', $ad->location)
             ->latest()
-            ->take(12)
+            ->take(12 - $relatedAds->count())
             ->get();
-    
-        if ($relatedAds->isEmpty()) {
-            $relatedAds = Ads::where('adsId', '!=', $ad->adsId)
-                ->where('cat_id', $ad->cat_id)
-                ->latest()
-                ->take(12)
-                ->get();
-        }
+        $relatedAds = $relatedAds->merge($additionalAds);
+    }
+
     
         return view('newFrontend.browse-ads-details', compact('ad', 'banners', 'mainImage', 'subImages', 'otherbanners', 'relatedAds', 'brand', 'model'));
     }
@@ -143,29 +180,7 @@ class AdsController extends Controller
     }
 
  
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-        
-        if (!$query) {
-            return redirect()->back()->with('error', 'Please enter a search term.');
-        }
-    
-        $ads = Ads::with(['category', 'subcategory', 'main_location'])
-            ->where(function ($q) use ($query) {
-                $q->where('title', 'like', "%$query%")
-                    ->orWhere('description', 'like', "%$query%");
-            })
-            ->orWhereHas('category', function ($q) use ($query) {
-                $q->where('name', 'like', "%$query%");
-            })
-            ->orWhereHas('subcategory', function ($q) use ($query) {
-                $q->where('name', 'like', "%$query%");
-            })
-            ->get();
-    
-        return view('newFrontend.search-results', compact('ads')); // Adjust the view path if necessary
-    }
+ 
     
     
 

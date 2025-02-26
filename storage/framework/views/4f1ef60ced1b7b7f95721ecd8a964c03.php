@@ -52,6 +52,8 @@
     opacity: 0.7; /* Optional: Add opacity effect on hover for better UX */
 }
 
+
+
 </style>
 
         <!-- browse-add-details -->
@@ -305,7 +307,7 @@
 
 
 <script>
-// JavaScript (vanilla)
+
 
 // Get the original main image src (for reset on mouseout)
 const originalMainImageSrc = document.getElementById('mainImage').src;
@@ -323,6 +325,7 @@ document.querySelectorAll('.thumbnail').forEach(function (thumbnail) {
     });
 });
 </script>
+
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/browse-ads-details.blade.php ENDPATH**/ ?>

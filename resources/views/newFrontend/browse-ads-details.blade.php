@@ -55,6 +55,8 @@
     opacity: 0.7; /* Optional: Add opacity effect on hover for better UX */
 }
 
+
+
 </style>
 
         <!-- browse-add-details -->
@@ -305,7 +307,7 @@
 
 
 <script>
-// JavaScript (vanilla)
+
 
 // Get the original main image src (for reset on mouseout)
 const originalMainImageSrc = document.getElementById('mainImage').src;
@@ -323,5 +325,6 @@ document.querySelectorAll('.thumbnail').forEach(function (thumbnail) {
     });
 });
 </script>
+
 
 @endsection

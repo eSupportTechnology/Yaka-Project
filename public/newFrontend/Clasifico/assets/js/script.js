@@ -284,35 +284,39 @@
 		});    		
 	}
 
+// Four Item Carousel
+if ($('.four-item-carousel').length) {
+    var adCount = $('.four-item-carousel .feature-block-one').length;
 
-	// Four Item Carousel
-	if ($('.four-item-carousel').length) {
-		$('.four-item-carousel').owlCarousel({
-			loop:true,
-			margin:30,
-			nav:true,
-			smartSpeed: 500,
-			autoplay: 5000,
-			navText: [ '<span class="fas fa-angle-left"></span>', '<span class="fas fa-angle-right"></span>' ],
-			responsive:{
-				0:{
-					items:1
-				},
-				600:{
-					items:2
-				},
-				800:{
-					items:2
-				},
-				1024:{
-					items:3
-				},
-				1200:{
-					items:4
-				}
-			}
-		});    		
-	}
+    $('.four-item-carousel').owlCarousel({
+        loop: adCount > 4, // Disable loop if less than 4 ads
+        margin: 30,
+        nav: true,
+        smartSpeed: 500,
+        autoplay: 5000,
+        navText: [
+            '<span class="fas fa-angle-left"></span>',
+            '<span class="fas fa-angle-right"></span>'
+        ],
+        responsive: {
+            0: {
+                items: Math.min(adCount, 1) // Show only available ads
+            },
+            600: {
+                items: Math.min(adCount, 2)
+            },
+            800: {
+                items: Math.min(adCount, 2)
+            },
+            1024: {
+                items: Math.min(adCount, 3)
+            },
+            1200: {
+                items: Math.min(adCount, 4)
+            }
+        }
+    });
+}
 
 
 	// single-item-carousel

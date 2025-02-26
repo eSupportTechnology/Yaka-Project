@@ -337,7 +337,15 @@
 
                             <div class="lower-content" style="flex-grow: 1;">
                                 <div class="category"><i class="fas fa-tags"></i><p>{{ $ad->category->name }}</p></div>
-                                <h4>{{ $ad->title }}</h4>
+                                <h4 style="
+                                        display: -webkit-box; 
+                                        -webkit-line-clamp: 2; 
+                                        -webkit-box-orient: vertical; 
+                                        overflow: hidden; 
+                                        text-overflow: ellipsis; 
+                                        max-height: 55px; 
+                                        margin-top: 20px; 
+                                        margin-bottom: 10px;">{{ $ad->title }}</h4>
                                 <ul class="info clearfix">
                                     <li><i class="far fa-clock"></i>{{ $ad->created_at->diffForHumans() }}</li>
                                     <li>
