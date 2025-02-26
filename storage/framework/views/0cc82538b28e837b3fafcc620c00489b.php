@@ -63,7 +63,7 @@
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
                                             <li><a href="<?php echo e(route(name: 'about-us')); ?>"><?php echo app('translator')->get('messages.About'); ?></a></li>
-                                            <li><a href="<?php echo e(route('contact-us')); ?>"><?php echo app('translator')->get('messages.Contact'); ?></a></li>
+                                            <li><a href="<?php echo e(route('contact-us')); ?>"><?php echo app('translator')->get('messages.Contact Us'); ?></a></li>
                                             <li><a href="<?php echo e(route('privacy-safety')); ?>"><?php echo app('translator')->get('messages.Privacy & Safety'); ?></a></li>
                                             <li><a href="<?php echo e(route('terms-conditions')); ?>"><?php echo app('translator')->get('messages.Terms & Conditions'); ?></a></li>
                                         </ul>

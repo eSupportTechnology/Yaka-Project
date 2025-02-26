@@ -63,7 +63,7 @@
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
                                             <li><a href="{{route(name: 'about-us')}}">@lang('messages.About')</a></li>
-                                            <li><a href="{{route('contact-us')}}">@lang('messages.Contact')</a></li>
+                                            <li><a href="{{route('contact-us')}}">@lang('messages.Contact Us')</a></li>
                                             <li><a href="{{route('privacy-safety')}}">@lang('messages.Privacy & Safety')</a></li>
                                             <li><a href="{{route('terms-conditions')}}">@lang('messages.Terms & Conditions')</a></li>
                                         </ul>
