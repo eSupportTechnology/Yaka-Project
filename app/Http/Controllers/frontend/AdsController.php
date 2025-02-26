@@ -143,7 +143,29 @@ class AdsController extends Controller
     }
 
  
- 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return redirect()->back()->with('error', 'Please enter a search term.');
+        }
+    
+        $ads = Ads::with(['category', 'subcategory', 'main_location'])
+            ->where(function ($q) use ($query) {
+                $q->where('title', 'like', "%$query%")
+                    ->orWhere('description', 'like', "%$query%");
+            })
+            ->orWhereHas('category', function ($q) use ($query) {
+                $q->where('name', 'like', "%$query%");
+            })
+            ->orWhereHas('subcategory', function ($q) use ($query) {
+                $q->where('name', 'like', "%$query%");
+            })
+            ->get();
+    
+        return view('newFrontend.search-results', compact('ads')); // Adjust the view path if necessary
+    }
     
     
 

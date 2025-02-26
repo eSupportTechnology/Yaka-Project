@@ -581,18 +581,27 @@ Urgent badge which is great advantage to get more attention quickly. <br /></p>
                                                 <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent</div>
                                             
                                             </div>
-                                            <div class="lower-content">
+                                            <div class="lower-content" style="display: flex; flex-direction: column; justify-content: space-between;height: 200px;">
                                             
                                               
-                                                <h3 style="margin-top:20px;"><a href="<?php echo e(route('ads.details', ['adsId' => $ad->adsId])); ?>"><?php echo e($ads ->title); ?></a></h3>
+                                                <h3 style="
+                                                    display: -webkit-box; 
+                                                    -webkit-line-clamp: 2; 
+                                                    -webkit-box-orient: vertical; 
+                                                    overflow: hidden; 
+                                                    text-overflow: ellipsis; 
+                                                    max-height: 55px; 
+                                                    margin-top: 20px; 
+                                                    margin-bottom: 10px;">
+                                                    <a href="<?php echo e(route('ads.details', ['adsId' => $ads->adsId])); ?>"><?php echo e($ads ->title); ?></a></h3>
                                            
                                                 <ul class="clearfix info">
                                                     
-                                                    <li><i class="fas fa-map-marker-alt"></i><?php echo e($ad->sub_location ? $ad->sub_location->name_en : 'N/A'); ?>,
-                                                    <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?></li>
+                                                    <li><i class="fas fa-map-marker-alt"></i><?php echo e($ads->sub_location ? $ads->sub_location->name_en : 'N/A'); ?>,
+                                                    <?php echo e($ads->main_location ? $ads->main_location->name_en : 'N/A'); ?></li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Price:</span><?php echo e($ads -> price); ?></h5>
+                                                    <h5><span>Price:</span>LKR <?php echo e($ads -> price); ?></h5>
                                                    
                                                 </div>
                                             </div>

@@ -272,9 +272,16 @@
                                 <?php endif; ?>
                             </div>
 
-                            <div class="lower-content" style="flex-grow: 1;">
-                                <div class="category"><i class="fas fa-tags"></i> <p><?php echo e($relatedAd->category->name ?? 'N/A'); ?></p></div>
-                                <h4><?php echo e($relatedAd->title); ?></h4>
+                            <div class="lower-content" style="flex-grow: 1; flex-direction: column; justify-content: space-between;height: 260px;">
+                                <div class="category mt-3"><i class="fas fa-tags"></i> <p><?php echo e($relatedAd->category->name ?? 'N/A'); ?></p></div>
+                                <h4 style=" display: -webkit-box; 
+                                                    -webkit-line-clamp: 2; 
+                                                    -webkit-box-orient: vertical; 
+                                                    overflow: hidden; 
+                                                    text-overflow: ellipsis; 
+                                                    max-height: 55px; 
+                                                    margin-top: 20px; 
+                                                    margin-bottom: 10px;"><?php echo e($relatedAd->title); ?></h4>
                                 <ul class="clearfix info">
                                     <li><i class="far fa-clock"></i><?php echo e($relatedAd->created_at->diffForHumans()); ?></li>
                                     <li>
@@ -284,7 +291,7 @@
                                     </li>
                                 </ul>
                                 <div class="lower-box" style="margin-top: auto;">
-                                    <h5>Rs <?php echo e(number_format($relatedAd->price, 2)); ?></h5>
+                                    <h5>LKR <?php echo e(number_format($relatedAd->price, 2)); ?></h5>
                                 </div>
                             </div>
                         </div>

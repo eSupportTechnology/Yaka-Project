@@ -123,6 +123,49 @@
     border-radius: 10px;
     padding: 20px 20px;
 }
+/* Style the search bar container */
+.search-bar {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 600px;
+   
+    
+}
+
+/* Style the input field */
+.search-bar input {
+    width: 100%;
+    padding: 13px;
+    padding-right: 40px; /* Space for the icon */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    height:45px;
+}
+
+/* Style the search button (icon) */
+.search-icon-btn {
+    position: absolute;
+    right: 10px; /* Position the icon on the right */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+}
+
+.search-icon-btn i {
+    pointer-events: none;
+    color:grey; /* Prevents click through */
+}
+
+/* Optional: Add focus style to input */
+.search-bar input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
 
 @media (max-width: 768px) {
     .logo {
@@ -221,9 +264,19 @@
         </div></a>
 
         <!-- Search Bar -->
-        <div class="search-bar">
-            <input type="text" class="form-control" placeholder="Search, Category Name, Sub Category Name, District You Need...">
-        </div>
+        <form action="{{ route('search') }}" method="GET">
+            <div class="search-bar">
+                <input type="text" name="query" class="form-control" 
+                    placeholder="Search by Title, Category, Subcategory, or Location" 
+                    value="{{ request('query') }}">
+                
+                <!-- Search Icon -->
+                <button type="submit" class="search-icon-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+
             <div class="btn-box mt-2">
                 <a href="{{ route('user.ad_posts.categories') }}" class="theme-btn-one"><i class="icon-1"></i>Post Your Ads</a>
             </div>
@@ -239,9 +292,19 @@
                 <figure class="logo"><a href="{{ route('/') }}"> <img src="{{asset('Logo-re.png')}}" style="" alt="logo"></a></figure>
             </div>
     
+            <form action="{{ route('search') }}" method="GET">
             <div class="search-bar">
-                <input type="text" class="form-control" placeholder="Search, Category Name, Sub Category Name, District You Need...">
+                <input type="text" name="query" class="form-control" 
+                    placeholder="Search by Title, Category, Subcategory, or Location" 
+                    value="{{ request('query') }}">
+                
+                <!-- Search Icon -->
+                <button type="submit" class="search-icon-btn">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
+        </form>
+
             
             <div class="btn-box">
                 <a href="{{ route('user.ad_posts.categories') }}" class="theme-btn-one"><i class="icon-1"></i>Post Your Ads</a>
@@ -279,6 +342,3 @@
     </div>
 </nav>
 </div><!-- End Mobile Menu -->
-
-
-
