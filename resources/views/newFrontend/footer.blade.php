@@ -45,7 +45,7 @@
                                 <div class="footer-widget logo-widget">
                                     <figure class="footer-logo"><a href="index.html"><img src="{{asset('Logo-re.png')}}" alt=""></a></figure>
                                     <div class="text">
-                                        <p>Don’t miss out on the best deals in Sri Lanka’s largest marketplace! Subscribe now for exclusive offers, promotions, and updates on discounts for electronics, fashion, home goods, and more. Be the first to know and save big—sign up today!</p>
+                                        <p>@lang('messages.para4')</p>
                                     </div>
                                     <ul class="clearfix social-links sidebar-social-media">
                                         <li><a href="index.html" class="sidebar-icon fb-icon"><i class="fab fa-facebook-f"></i></a></li>
@@ -58,14 +58,14 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget links-widget ml-70">
                                     <div class="widget-title">
-                                        <h3>Quick Links</h3>
+                                        <h3>@lang('messages.Quick Links')</h3>
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
-                                            <li><a href="{{route(name: 'about-us')}}">About Us</a></li>
-                                            <li><a href="{{route('contact-us')}}">Contact Us</a></li>
-                                            <li><a href="{{route('privacy-safety')}}">Privacy & Safety</a></li>
-                                            <li><a href="{{route('terms-conditions')}}">Terms & Conditions</a></li>
+                                            <li><a href="{{route(name: 'about-us')}}">@lang('messages.About')</a></li>
+                                            <li><a href="{{route('contact-us')}}">@lang('messages.Contact')</a></li>
+                                            <li><a href="{{route('privacy-safety')}}">@lang('messages.Privacy & Safety')</a></li>
+                                            <li><a href="{{route('terms-conditions')}}">@lang('messages.Terms & Conditions')</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -73,14 +73,14 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget links-widget ml-70">
                                     <div class="widget-title">
-                                        <h3>General</h3>
+                                        <h3>@lang('messages.General')</h3>
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
-                                            <li><a href="{{route('tips')}}">Tips</a></li>
-                                            <li><a href="{{route('boosting_ads')}}">Boosting ads</a></li>
-                                            <li><a href="{{route('add_posting')}}">Ad posting allowances</a></li>
-                                            <li><a href="{{route('add_post')}}">Ad posting criteria</a></li>
+                                            <li><a href="{{route('tips')}}">@lang('messages.Tips')</a></li>
+                                            <li><a href="{{route('boosting_ads')}}">@lang('messages.Boosting ads')</a></li>
+                                            <li><a href="{{route('add_posting')}}">@lang('messages.Ad posting allowances')</a></li>
+                                            <li><a href="{{route('add_post')}}">@lang('messages.Ad posting criteria')</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget contact-widget">
                                     <div class="widget-title">
-                                        <h3>Contact Us</h3>
+                                        <h3>@lang('messages.Contact')</h3>
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix info-list">

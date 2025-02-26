@@ -360,8 +360,8 @@
             <div class="auto-container" >
                 <div class="content-box">
                     <div class="text">
-                        <h1 style="font-size:45px">You can #Buy, #Rent, #Booking anything from here.</h1>
-                        <p>Buy and sell everything from used cars to mobile phones and computers,<br> or search for property, jobs and more in Sri Lanka.
+                        <h1 style="font-size:45px">@lang('messages.You can #Buy, #Rent, #Booking anything from here.')</h1>
+                        <p>@lang('messages.Buy and sell everything from used cars to mobile phones')
                         </p>
                     </div>
                     
@@ -390,8 +390,8 @@
         <section class="category-section centred sec-pad" style="padding-top:30px;">
             <div class="auto-container">
                 <div class="sec-title">
-                    <span>Categories</span>
-                    <h2>Explore by Category</h2>
+                    <span>@lang('messages.Categories')</span>
+                    <h2>@lang('messages.Explore by Category')</h2>
                 </div>
                 
                 <div class="clearfix inner-content" style="display: flex; flex-wrap: wrap; justify-content: center;">
@@ -427,8 +427,8 @@
 
 <!-- top add-section start -->
 <div class="cont">
-    <h2 class="heading"><b>Find your needs in our <br> 
-        best <span>Top Ads</span></b></h2>
+    <h2 class="heading"><b>@lang('messages.indextitle')<br> 
+    @lang('messages.Best') <span> @lang('messages.top') Ads</span></b></h2>
 
     <div class="top-banner"> <!-- Updated class reference here -->
         <div class="left">
@@ -484,8 +484,7 @@
                     @endforeach
                 </div>
 
-            <p style="margin-top:18px;font-size:16px; text-align:justify; width: 560px;">The Top Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.
-                with higher visibility and priority ranking.Top ads ensure your products or services reach more potential buyers quickly and effectively.
+            <p style="margin-top:18px;font-size:16px; text-align:justify; width: 560px;">@lang('messages.para1')
             </p>
         </div> <!-- Closing right div -->
 
@@ -510,8 +509,8 @@
                 @endif
             @endforeach
         </div>
-        <h2 class="heading" style="margin-top:90px;margin-left:0px;"><b>Find your needs in our <br> 
-        best <span>Super Ads</span></b></h2>
+        <h2 class="heading" style="margin-top:90px;margin-left:0px; "><b>@lang('messages.indextitle') <br> 
+        @lang('messages.Best') <span> @lang('messages.Super') Ads</span></b></h2>
 
         <div class="left" style="flex: 1;"> <!-- Ads on the Left -->
             <div id="superAdsCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -545,8 +544,7 @@
                         </div>
                     @endforeach
                 </div>
-                <p style="margin-top:18px;font-size:16px; text-align:justify; width: 550px;">The Super Ads section on Sri Lanka's largest classified website yaka.lk guarantees your listings premium placement at the top of search results.
-                    With higher visibility and priority ranking, super ads ensure your products or services reach more potential buyers quickly and effectively.
+                <p style="margin-top:18px;font-size:16px; text-align:justify; width: 550px;">@lang('messages.para2')
                 </p>
             </div>
         </div>
@@ -560,10 +558,9 @@
         <section class="feature-style-two">
             <div class="auto-container">
                 <div class="sec-title centred">
-                    <span>Urgents</span>
-                    <h2>Urgent Ads</h2>
-                    <p>We have some special promotion for sell urgently<br>
-Urgent badge which is great advantage to get more attention quickly. <br /></p>
+                    <span>@lang('messages.Urgent')</span>
+                    <h2>@lang('messages.Urgent') Ads</h2>
+                    <p>@lang('messages.para3')</p>
                 </div>
                 <div class="tabs-box">
                     

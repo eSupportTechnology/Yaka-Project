@@ -45,7 +45,7 @@
                                 <div class="footer-widget logo-widget">
                                     <figure class="footer-logo"><a href="index.html"><img src="<?php echo e(asset('Logo-re.png')); ?>" alt=""></a></figure>
                                     <div class="text">
-                                        <p>Don’t miss out on the best deals in Sri Lanka’s largest marketplace! Subscribe now for exclusive offers, promotions, and updates on discounts for electronics, fashion, home goods, and more. Be the first to know and save big—sign up today!</p>
+                                        <p><?php echo app('translator')->get('messages.para4'); ?></p>
                                     </div>
                                     <ul class="clearfix social-links sidebar-social-media">
                                         <li><a href="index.html" class="sidebar-icon fb-icon"><i class="fab fa-facebook-f"></i></a></li>
@@ -58,14 +58,14 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget links-widget ml-70">
                                     <div class="widget-title">
-                                        <h3>Quick Links</h3>
+                                        <h3><?php echo app('translator')->get('messages.Quick Links'); ?></h3>
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
-                                            <li><a href="<?php echo e(route(name: 'about-us')); ?>">About Us</a></li>
-                                            <li><a href="<?php echo e(route('contact-us')); ?>">Contact Us</a></li>
-                                            <li><a href="<?php echo e(route('privacy-safety')); ?>">Privacy & Safety</a></li>
-                                            <li><a href="<?php echo e(route('terms-conditions')); ?>">Terms & Conditions</a></li>
+                                            <li><a href="<?php echo e(route(name: 'about-us')); ?>"><?php echo app('translator')->get('messages.About'); ?></a></li>
+                                            <li><a href="<?php echo e(route('contact-us')); ?>"><?php echo app('translator')->get('messages.Contact'); ?></a></li>
+                                            <li><a href="<?php echo e(route('privacy-safety')); ?>"><?php echo app('translator')->get('messages.Privacy & Safety'); ?></a></li>
+                                            <li><a href="<?php echo e(route('terms-conditions')); ?>"><?php echo app('translator')->get('messages.Terms & Conditions'); ?></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -73,14 +73,14 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget links-widget ml-70">
                                     <div class="widget-title">
-                                        <h3>General</h3>
+                                        <h3><?php echo app('translator')->get('messages.General'); ?></h3>
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
-                                            <li><a href="<?php echo e(route('tips')); ?>">Tips</a></li>
-                                            <li><a href="<?php echo e(route('boosting_ads')); ?>">Boosting ads</a></li>
-                                            <li><a href="<?php echo e(route('add_posting')); ?>">Ad posting allowances</a></li>
-                                            <li><a href="<?php echo e(route('add_post')); ?>">Ad posting criteria</a></li>
+                                            <li><a href="<?php echo e(route('tips')); ?>"><?php echo app('translator')->get('messages.Tips'); ?></a></li>
+                                            <li><a href="<?php echo e(route('boosting_ads')); ?>"><?php echo app('translator')->get('messages.Boosting ads'); ?></a></li>
+                                            <li><a href="<?php echo e(route('add_posting')); ?>"><?php echo app('translator')->get('messages.Ad posting allowances'); ?></a></li>
+                                            <li><a href="<?php echo e(route('add_post')); ?>"><?php echo app('translator')->get('messages.Ad posting criteria'); ?></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget contact-widget">
                                     <div class="widget-title">
-                                        <h3>Contact Us</h3>
+                                        <h3><?php echo app('translator')->get('messages.Contact'); ?></h3>
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix info-list">

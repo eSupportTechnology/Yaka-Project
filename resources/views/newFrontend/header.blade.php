@@ -195,7 +195,14 @@
     }
 }
 
+#google_translate_element {
+    display: inline-block;
+    vertical-align: middle;
+}
 
+.goog-te-banner-frame {
+    display: none !important; /* Hide the Google Translate top banner */
+}
 </style>
 
 
@@ -208,15 +215,31 @@
     <div class="auto-container">
         <div class="top-inner">
             <div class="contact-info">
-                <span><i class="fas fa-phone"></i> Contact: 070 5 321 321</span>
-                <span><i class="fas fa-envelope"></i> Email: info@yaka.lk</span>
-                <span><i class="fas fa-map-marker-alt"></i> Location: Colombo 10, Sri Lanka</span>   
+                <span><i class="fas fa-phone"></i> @lang('messages.Contact'): 070 5 321 321</span>
+                <span><i class="fas fa-envelope"></i> @lang('messages.Email'): info@yaka.lk</span>
+                <span><i class="fas fa-map-marker-alt"></i> @lang('messages.Location'): Colombo 10, Sri Lanka</span>   
             </div>
+
             <div class="language-switcher">
-                <a href="#">English</a> | 
-                <a href="#">සිංහල</a> | 
-                <a href="#">தமிழ்</a>
+                <a href="{{ url('locale/en') }}">English</a> | 
+                <a href="{{ url('locale/si') }}">සිංහල</a> | 
+                <a href="{{ url('locale/ta') }}">தமிழ்</a>
             </div>
+
+           <!--<div id="google_translate_element"></div>
+
+            <script type="text/javascript">
+            function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en',
+                includedLanguages: 'en,si,ta', 
+            }, 'google_translate_element');
+            }
+            </script>
+
+            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+-->
+
+
             <div class="right-column clearfix">
                 <ul class="social-links clearfix">
                    <li><a href="index-4.html"><i class="fab fa-facebook-f"></i></a></li>
@@ -230,12 +253,12 @@
                             <i class="fas fa-user"></i> {{ Auth::user()->first_name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                         <li><a class="dropdown-item" href="{{ route('user.dashboard') }}" style="color: black !important; text-decoration:none">Dashboard</a></li>
+                         <li><a class="dropdown-item" href="{{ route('user.dashboard') }}" style="color: black !important; text-decoration:none">@lang('messages.Dashboard')</a></li>
                          <li>
                             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                                 @csrf
                                 <button type="submit" class="dropdown-item" style="background: none; border: none; text-decoration: none; color: inherit;">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                    <i class="fas fa-sign-out-alt"></i> @lang('messages.Logout')
                                 </button>
                             </form>
                         </li>
@@ -278,7 +301,7 @@
         </form>
 
             <div class="btn-box mt-2">
-                <a href="{{ route('user.ad_posts.categories') }}" class="theme-btn-one"><i class="icon-1"></i>Post Your Ads</a>
+                <a href="{{ route('user.ad_posts.categories') }}" class="theme-btn-one"><i class="icon-1"></i>@lang('messages.Post Your Ads')</a>
             </div>
         </div>
     </div>
@@ -307,7 +330,7 @@
 
             
             <div class="btn-box">
-                <a href="{{ route('user.ad_posts.categories') }}" class="theme-btn-one"><i class="icon-1"></i>Post Your Ads</a>
+                <a href="{{ route('user.ad_posts.categories') }}" class="theme-btn-one"><i class="icon-1"></i>@lang('messages.Post Your Ads')</a>
             </div>
         </div>
     </div>

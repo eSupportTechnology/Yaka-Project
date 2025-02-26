@@ -23,6 +23,9 @@ use App\Http\Controllers\Auth\CustomAuthController;
 use App\Http\Controllers\frontend\UserAdsController;
 use App\Http\Controllers\frontend\UserDashboardController;
 use App\Http\Controllers\frontend\AdsController;
+use App\Http\Controllers\LocaleController;
+
+Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 
 Route::get('/custom-login', function () {
     return view('newFrontend.login');
