@@ -299,8 +299,8 @@
 
         <!-- Main Plan Section -->
         <div class="custom-boost-options">
-            <h4 class="mb-0 text-center">Make your ad stand out!</h4>
-            <p class="mb-1 text-center">Get up to 10 times more responses by boosting your ad. Select one plan.</p>
+            <h4 class="mb-0 text-center">@lang('messages.Make your ad stand out')!</h4>
+            <p class="mb-1 text-center">@lang('messages.boosting_ad_message').</p>
 
             @foreach($packages as $package)
                 <?php
@@ -328,16 +328,16 @@
                             <img src="{{ asset($imageFile) }}" alt="{{ $package->name }}"> 
                             {{ $package->name }}
                         </h5>
-                        <p class="mb-1">Boost your ad with the "{{ $package->name }}" package!</p>
-                        <strong>From Rs {{ number_format($minPrice, 2) }}</strong>
+                        <p class="mb-1">@lang('messages.Boost your ad with the') "{{ $package->name }}" @lang('messages.package') @lang('messages.select')!</p>
+                        <strong>@lang('messages.Rs') {{ number_format($minPrice, 2) }}</strong>
                     </div>
                     <div class="dropdown-wrapper">
                         <select class="form-select" id="packageSelect{{ $package->id }}" onchange="selectPlanDropdown({{ $package->id }}, '{{ $package->name }}', this)">
-                            <option value="">Select Plan</option>
+                            <option value="">@lang('messages.Select Plan')</option>
                             @foreach($packageTypes->filter(fn($type) => $type->package_id == $package->id) as $type)
                                 <option value="{{ $type->price }}" data-duration="{{ $type->duration }}" 
                                     style="padding: 5px; font-size: 16px; color: #333; background-color: #f8f9fa;">
-                                    {{ $type->duration }} days | Rs- {{ $type->price }}
+                                    {{ $type->duration }} @lang('messages.Days') | @lang('messages.Rs')- {{ $type->price }}
                                 </option>
                             @endforeach
                         </select>
@@ -351,8 +351,8 @@
 
         <!-- Amount Summary -->
         <div class="custom-summary-box">
-            <h5>Amount: <span id="totalAmount" class="custom-text-success">Rs 0</span></h5>
-            <p id="selectedPlans">No plans selected</p>
+            <h5>@lang('messages.Amount'): <span id="totalAmount" class="custom-text-success">@lang('messages.Days') 0</span></h5>
+            <p id="selectedPlans">@lang('messages.No plans selected')</p>
         </div>
 
         <!-- Continue Button -->
@@ -366,18 +366,18 @@
                          style="width: 150px; height: auto; border-radius: 8px; object-fit: cover;">
                         
                     <div>
-                        <p style="color: black"><strong>Title:</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
-                        <p style="color: black"><strong>Price:</strong> <span id="summaryAdPrice" class="summary-text"></span></p>
-                        <p style="color: black"><strong>Description:</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
+                        <p style="color: black"><strong>@lang('messages.Title'):</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
+                        <p style="color: black"><strong>@lang('messages.Price'):</strong> <span id="summaryAdPrice" class="summary-text"></span></p>
+                        <p style="color: black"><strong>@lang('messages.Description'):</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
                     </div>
                 </div>
         
-                <p style="color: black" id="summarySelectedPlans">No plans selected</p>
-                <h5>Total Amount: <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
+                <p style="color: black" id="summarySelectedPlans">@lang('messages.No plans selected')</p>
+                <h5>@lang('messages.Total'): <span class="custom-text-success" id="summaryTotalAmount">@lang('messages.Rs') 0</span></h5>
         
                 <div class="summary-buttons">
-                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">Back</button>
-                    <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary">Proceed to Payment</button>
+                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">@lang('messages.Back')</button>
+                    <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary">@lang('messages.Proceed to Payment')</button>
                 </div>
             </div>
         </div>

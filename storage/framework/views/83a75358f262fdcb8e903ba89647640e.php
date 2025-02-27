@@ -408,11 +408,10 @@
                                     style="width: 70px; height: 70px; object-fit: contain;">
                             </div>
 
-                            <h5 style="min-height: 50px; display: -webkit-box; 
+                            <h5 style="min-height: 60px; display: -webkit-box; 
                                     -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
                                     overflow: hidden; text-overflow: ellipsis; ">
-                                <?php echo e($category->name); ?>
-
+                                 <?php echo app('translator')->get('messages.' . $category->name); ?>
                             </h5>
 
                             <span><?php echo e($category->ads_count); ?></span>

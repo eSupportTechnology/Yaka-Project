@@ -8,11 +8,11 @@
         <div class="auto-container">
             <div class="content-box centred mr-0">
                 <div class="title">
-                    <h1>Dashboard</h1>
+                    <h1>@lang('messages.Dashboard')</h1>
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="{{ route('/') }}">Home</a></li>
-                    <li>Dashboard</li>
+                    <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
+                    <li>@lang('messages.Dashboard')</li>
                 </ul>
             </div>
         </div>
@@ -76,13 +76,13 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a  class="active" href="{{route('user.dashboard')}}">dashboard</a></li>
-                                <li><a href="{{route('user.ad_posts.categories')}}">ad post</a></li>
-                                <li><a href="{{route('user.my_ads')}}" >my ads</a></li>
-                                <li><a href="{{route('user.profile')}}">Profile</a></li>
-                                <li><a href="">message</a></li>
+                                <li><a  class="active" href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
+                                <li><a href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
+                                <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
+                                <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>
+                                <li><a href="">@lang('messages.message')</a></li>
                                 <li>
-                                    <a href="{{route('user.logout')}}">Logout</a>
+                                    <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
                                 
                             </ul>
@@ -114,10 +114,9 @@
                 </div>
                 <div class="col-lg-8">
                     <h1>Hello, {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
-                    <h1>Welcome to Yaka.lk</h1>
-                    <p style="text-align:justify">   We're thrilled to have you here. As a valued member of our community, you now have access to the largest online marketplace in Sri Lanka, where countless opportunities await you.
-                        Explore an extensive range of categories, from real estate and vehicles to electronics and fashion. Our platform connects you with local sellers and unique products, making it easier than ever to find exactly what you need. With user-friendly features, advanced search options, and exclusive offers, shopping has never been more convenient.
-                        Thank you for joining yaka.lk —dive in and start discovering the best deals and services </p>
+                    <h1>@lang('messages.Welcome to Yaka.lk')</h1>
+                    <p style="text-align:justify">
+                    @lang('messages.para11')</p>
                 </div>
             </div>
 

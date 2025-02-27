@@ -80,15 +80,28 @@
                                 <!-- Ad Title and Details -->
                                 <h3 class="mb-0"><?php echo e($ad->title); ?></h3>  
                                 <p class="fw-bold">
-                                    Posted on <?php echo e(\Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a')); ?>,
-                                    <?php echo e($ad->sub_location ? $ad->sub_location->name_en : 'N/A'); ?>,
-                                    <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?>,
+                                Posted on <?php echo e(\Carbon\Carbon::parse($ad->created_at)->translatedFormat('d M Y g:i a')); ?>
+
+
+
+                                    <?php
+                                            $locale = App::getLocale(); 
+                                            $locationName = 'name_' . $locale;
+                                        ?>
+
+                                    <?php echo e($ad->sub_location ? $ad->sub_location->$locationName : 'N/A'); ?>,
+                                    <?php echo e($ad->main_location ? $ad->main_location->$locationName : 'N/A'); ?>
+
                                 </p>
                             </div>
 
                             <div class="view-count-container">
                                 <i class="fas fa-eye" style="color:rgb(176, 5, 5)"></i> 
-                                <span><?php echo e($ad->view_count); ?> Views </span>
+                                <span>
+                                    <?php echo e($ad->view_count); ?> 
+                                    <?php echo app('translator')->get('messages.view'); ?>
+                                </span>
+
                             </div>
 
                         </div>
@@ -124,28 +137,27 @@
                         <div class="content-one single-box">
                                 <div class="text">
                                     <h3 style="color:rgb(176, 5, 5)">
-                                        Rs <?php echo e($ad->price); ?>
+                                        <?php echo app('translator')->get('messages.Rs'); ?> <?php echo e($ad->price); ?>
 
                                         <span style="font-size: 13px; font-style: italic;" class="text-muted">
-                                            <?php echo e($ad->price_type); ?>
-
+                                            <?php echo app('translator')->get('messages.' . $ad->price_type); ?>
                                         </span>
                                     </h3>
 
-                                    <h6>Product Description</h6>
+                                    <h6><?php echo app('translator')->get('messages.Product Description'); ?></h6>
                                     <p class="mb-1"><?php echo e($ad->description); ?></p>
 
                                     <?php if($brand): ?>
-                                        <p class="mb-0"><strong>Brand:</strong> <?php echo e($brand->name); ?></p>
+                                        <p class="mb-0"><strong> <?php echo app('translator')->get('messages.Brand'); ?>:</strong> <?php echo e($brand->name); ?></p>
                                     <?php endif; ?>
 
                                     <?php if($model): ?>
-                                        <p class="mb-0"><strong>Model:</strong> <?php echo e($model->name); ?></p>
+                                        <p class="mb-0"><strong> <?php echo app('translator')->get('messages.Model'); ?>:</strong> <?php echo e($model->name); ?></p>
                                     <?php endif; ?>
 
 
                                     <?php if($ad->condition): ?>
-                                        <p class="mb-0"><strong>Condition:</strong> <?php echo e($ad->condition); ?></p>
+                                        <p class="mb-0"><strong> <?php echo app('translator')->get('messages.Condition'); ?>:</strong> <?php echo e($ad->condition); ?></p>
                                     <?php endif; ?>
 
                                     <?php $__currentLoopData = $ad->adDetail; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $detail): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
@@ -187,18 +199,18 @@
 
                                     <!-- Boost Ad Button -->
                                     <a href="<?php echo e(route('ads.boost', ['adsId' => $ad->adsId])); ?>" class="btn btn-warning align-items-center">
-                                        <i class="fas fa-rocket"></i> Boost this ad
+                                        <i class="fas fa-rocket"></i> <?php echo app('translator')->get('messages.Boost this ad'); ?>
                                     </a>
                                 </div>
 
                                 <div class="p-3 mt-3 user-details">
-                                    <h5 class="mb-3 text-primary fw-bold">Posted by:</h5>
+                                    <h5 class="mb-3 text-primary fw-bold"><?php echo app('translator')->get('messages.Posted by'); ?>:</h5>
 
                                     <div class="mb-3 d-flex align-items-center">
                                         <div class="text-white icon-circle bg-danger">
                                             <i class="fas fa-user"></i>
                                         </div>
-                                        <strong class="w-25">Name:</strong> 
+                                        <strong class="w-25"><?php echo app('translator')->get('messages.Name'); ?>:</strong> 
                                         <span class="text-wrap"><?php echo e($ad->user->first_name); ?> <?php echo e($ad->user->last_name ?? 'N/A'); ?></span>
                                     </div> 
                                     <hr class="my-2">
@@ -207,7 +219,7 @@
                                         <div class="text-white icon-circle bg-success">
                                             <i class="fas fa-envelope"></i>
                                         </div>
-                                        <strong class="w-25">Email:</strong> 
+                                        <strong class="w-25"><?php echo app('translator')->get('messages.Email'); ?>:</strong> 
                                         <span class="text-wrap"><?php echo e($ad->user->email ?? 'N/A'); ?></span>
                                     </div>
 
@@ -217,7 +229,7 @@
                                         <div class="text-white icon-circle bg-primary">
                                             <i class="fas fa-phone"></i>
                                         </div>
-                                        <strong class="w-25">Phone:</strong> 
+                                        <strong class="w-45"><?php echo app('translator')->get('messages.Phone'); ?>:</strong>
                                         <span class="flex-grow-1 text-wrap"><?php echo e($ad->user->phone_number ?? 'N/A'); ?></span>
                                     </div>
                                 </div>
@@ -275,7 +287,7 @@
                             </div>
 
                             <div class="lower-content" style="flex-grow: 1; flex-direction: column; justify-content: space-between;height: 260px;">
-                                <div class="category mt-3"><i class="fas fa-tags"></i> <p><?php echo e($relatedAd->category->name ?? 'N/A'); ?></p></div>
+                                <div class="category mt-3"><i class="fas fa-tags"></i> <p><?php echo app('translator')->get('messages.' . $relatedAd->category->name ?? 'N/A'); ?></p></div>
                                 <h4 style=" display: -webkit-box; 
                                                     -webkit-line-clamp: 2; 
                                                     -webkit-box-orient: vertical; 
@@ -288,12 +300,17 @@
                                     <li><i class="far fa-clock"></i><?php echo e($relatedAd->created_at->diffForHumans()); ?></li>
                                     <li>
                                         <i class="fas fa-map-marker-alt"></i>
-                                        <?php echo e($relatedAd->main_location ? $relatedAd->main_location->name_en : 'N/A'); ?>
+                                        <?php
+                                            $locale = App::getLocale(); 
+                                            $locationName = 'name_' . $locale;
+                                        ?>
+
+                                        <?php echo e($relatedAd->main_location ? $relatedAd->main_location->$locationName : 'N/A'); ?>
 
                                     </li>
                                 </ul>
                                 <div class="lower-box" style="margin-top: auto;">
-                                    <h5>LKR <?php echo e(number_format($relatedAd->price, 2)); ?></h5>
+                                    <h5><?php echo app('translator')->get('messages.Rs'); ?> <?php echo e(number_format($relatedAd->price, 2)); ?></h5>
                                 </div>
                             </div>
                         </div>

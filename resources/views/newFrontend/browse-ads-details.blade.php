@@ -83,15 +83,26 @@
                                 <!-- Ad Title and Details -->
                                 <h3 class="mb-0">{{ $ad->title }}</h3>  
                                 <p class="fw-bold">
-                                    Posted on {{ \Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a') }},
-                                    {{ $ad->sub_location ? $ad->sub_location->name_en : 'N/A' }},
-                                    {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }},
+                                Posted on {{ \Carbon\Carbon::parse($ad->created_at)->translatedFormat('d M Y g:i a') }}
+
+
+                                    @php
+                                            $locale = App::getLocale(); 
+                                            $locationName = 'name_' . $locale;
+                                        @endphp
+
+                                    {{ $ad->sub_location ? $ad->sub_location->$locationName : 'N/A' }},
+                                    {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}
                                 </p>
                             </div>
 
                             <div class="view-count-container">
                                 <i class="fas fa-eye" style="color:rgb(176, 5, 5)"></i> 
-                                <span>{{ $ad->view_count }} Views </span>
+                                <span>
+                                    {{ $ad->view_count }} 
+                                    @lang('messages.view')
+                                </span>
+
                             </div>
 
                         </div>
@@ -127,26 +138,26 @@
                         <div class="content-one single-box">
                                 <div class="text">
                                     <h3 style="color:rgb(176, 5, 5)">
-                                        Rs {{ $ad->price }}
+                                        @lang('messages.Rs') {{ $ad->price }}
                                         <span style="font-size: 13px; font-style: italic;" class="text-muted">
-                                            {{ $ad->price_type }}
+                                            @lang('messages.' . $ad->price_type)
                                         </span>
                                     </h3>
 
-                                    <h6>Product Description</h6>
+                                    <h6>@lang('messages.Product Description')</h6>
                                     <p class="mb-1">{{ $ad->description }}</p>
 
                                     @if($brand)
-                                        <p class="mb-0"><strong>Brand:</strong> {{ $brand->name }}</p>
+                                        <p class="mb-0"><strong> @lang('messages.Brand'):</strong> {{ $brand->name }}</p>
                                     @endif
 
                                     @if($model)
-                                        <p class="mb-0"><strong>Model:</strong> {{ $model->name }}</p>
+                                        <p class="mb-0"><strong> @lang('messages.Model'):</strong> {{ $model->name }}</p>
                                     @endif
 
 
                                     @if($ad->condition)
-                                        <p class="mb-0"><strong>Condition:</strong> {{ $ad->condition }}</p>
+                                        <p class="mb-0"><strong> @lang('messages.Condition'):</strong> {{ $ad->condition }}</p>
                                     @endif
 
                                     @foreach($ad->adDetail as $detail) 
@@ -188,18 +199,18 @@
 
                                     <!-- Boost Ad Button -->
                                     <a href="{{ route('ads.boost', ['adsId' => $ad->adsId]) }}" class="btn btn-warning align-items-center">
-                                        <i class="fas fa-rocket"></i> Boost this ad
+                                        <i class="fas fa-rocket"></i> @lang('messages.Boost this ad')
                                     </a>
                                 </div>
 
                                 <div class="p-3 mt-3 user-details">
-                                    <h5 class="mb-3 text-primary fw-bold">Posted by:</h5>
+                                    <h5 class="mb-3 text-primary fw-bold">@lang('messages.Posted by'):</h5>
 
                                     <div class="mb-3 d-flex align-items-center">
                                         <div class="text-white icon-circle bg-danger">
                                             <i class="fas fa-user"></i>
                                         </div>
-                                        <strong class="w-25">Name:</strong> 
+                                        <strong class="w-25">@lang('messages.Name'):</strong> 
                                         <span class="text-wrap">{{ $ad->user->first_name }} {{ $ad->user->last_name ?? 'N/A' }}</span>
                                     </div> 
                                     <hr class="my-2">
@@ -208,7 +219,7 @@
                                         <div class="text-white icon-circle bg-success">
                                             <i class="fas fa-envelope"></i>
                                         </div>
-                                        <strong class="w-25">Email:</strong> 
+                                        <strong class="w-25">@lang('messages.Email'):</strong> 
                                         <span class="text-wrap">{{ $ad->user->email ?? 'N/A' }}</span>
                                     </div>
 
@@ -218,7 +229,7 @@
                                         <div class="text-white icon-circle bg-primary">
                                             <i class="fas fa-phone"></i>
                                         </div>
-                                        <strong class="w-25">Phone:</strong> 
+                                        <strong class="w-45">@lang('messages.Phone'):</strong>
                                         <span class="flex-grow-1 text-wrap">{{ $ad->user->phone_number ?? 'N/A' }}</span>
                                     </div>
                                 </div>
@@ -276,7 +287,7 @@
                             </div>
 
                             <div class="lower-content" style="flex-grow: 1; flex-direction: column; justify-content: space-between;height: 260px;">
-                                <div class="category mt-3"><i class="fas fa-tags"></i> <p>{{ $relatedAd->category->name ?? 'N/A' }}</p></div>
+                                <div class="category mt-3"><i class="fas fa-tags"></i> <p>@lang('messages.' . $relatedAd->category->name ?? 'N/A')</p></div>
                                 <h4 style=" display: -webkit-box; 
                                                     -webkit-line-clamp: 2; 
                                                     -webkit-box-orient: vertical; 
@@ -289,11 +300,16 @@
                                     <li><i class="far fa-clock"></i>{{ $relatedAd->created_at->diffForHumans() }}</li>
                                     <li>
                                         <i class="fas fa-map-marker-alt"></i>
-                                        {{ $relatedAd->main_location ? $relatedAd->main_location->name_en : 'N/A' }}
+                                        @php
+                                            $locale = App::getLocale(); 
+                                            $locationName = 'name_' . $locale;
+                                        @endphp
+
+                                        {{ $relatedAd->main_location ? $relatedAd->main_location->$locationName : 'N/A' }}
                                     </li>
                                 </ul>
                                 <div class="lower-box" style="margin-top: auto;">
-                                    <h5>LKR {{ number_format($relatedAd->price, 2) }}</h5>
+                                    <h5>@lang('messages.Rs') {{ number_format($relatedAd->price, 2) }}</h5>
                                 </div>
                             </div>
                         </div>

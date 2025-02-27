@@ -48,8 +48,8 @@
     /* Top-left image for the carousel */
     .top-left-image {
         position: absolute;
-        top: 10px;
-        left: 10px;
+        top: 5px;
+        left: 5px;
         width: 70px;
         height: auto;
     }
@@ -106,11 +106,11 @@
         <div class="auto-container">
             <div class="content-box centred mr-0">
                 <div class="title">
-                    <h1>{{ $category ? $category->name : 'All Categories' }}</h1>
+                <h1>{{ $category ? __('messages.' . $category->name) : __('messages.All Categories') }}</h1
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="{{ route('/') }}">Home</a></li>
-                    <li>Browse Ads </li>
+                    <li><a href="{{route( '/')}}">@lang('messages.Home')</a></li>
+                    <li>@lang('messages.Browse Ads')</li>
                 </ul>
             </div>
         </div>
@@ -126,20 +126,26 @@
                         <div class="default-sidebar category-sidebar">
                         <div class="sidebar-search sidebar-widget">
                             <div class="widget-title">
-                                <h3>Search</h3>
+                                <h3>@lang('messages.Search')</h3>
                             </div>
                             <div class="widget-content">
                                 <form action="{{ route('browse-ads') }}" method="GET" class="search-form">
                                     <div class="form-group">
-                                        <input type="search" name="search-field" placeholder="Search Keyword..." value="{{ request()->input('search-field') }}" oninput="this.form.submit()">
+                                        <input type="search" name="search-field" placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}" oninput="this.form.submit()">
                                         <button type="submit" style="display:none;"><i class="icon-2"></i></button>
                                     </div>
                                     <div class="form-group">
                                         <i class="icon-3"></i>
                                         <select class="wide" name="location" onchange="this.form.submit()">
-                                            <option data-display="Select Location">Select Location</option>
+                                            <option data-display="@lang('messages.Select Location')">@lang('messages.Select Location')</option>
                                             @foreach($districts as $district)
-                                                <option value="{{ $district->id }}" {{ request()->input('location') == $district->id ? 'selected' : '' }}>{{ $district->name_en }}</option>
+                                                @php
+                                                    $locale = App::getLocale();  
+                                                    $districtName = 'name_' . $locale;  
+                                                @endphp
+                                                <option value="{{ $district->id }}" {{ request()->input('location') == $district->id ? 'selected' : '' }}>
+                                                    {{ $district->$districtName }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -149,7 +155,7 @@
 
                             <div class="sidebar-category sidebar-widget">
                                 <div class="widget-title">
-                                    <h3>Category</h3>
+                                    <h3>@lang('messages.Categories')</h3>
                                 </div>
                                 <div class="widget-content">
                                     <ul class="category-list">
@@ -158,7 +164,7 @@
                                                 <input type="radio" name="category" value="all"
                                                     onchange="window.location='{{ route('browse-ads') }}'"
                                                     {{ !request()->input('category') ? 'checked' : '' }}>
-                                                    <span class="text-dark">All Categories</span>
+                                                    <span class="text-dark">@lang('messages.All Categories')</span>
                                         
                                             </label>
                                         </li>
@@ -169,7 +175,7 @@
                                                     <input type="radio" name="category" value="{{ $category->id }}"
                                                         onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                         {{ request()->input('category') == $category->id ? 'checked' : '' }}>
-                                                    <span>{{ $category->name }}</span>
+                                                    <span> @lang('messages.' . $category->name)</span>
                                                 </label>
                                                 
                                                 @if($category->subcategories->isNotEmpty())
@@ -212,8 +218,8 @@
                         <div class="category-details-content">
                             <div class="item-shorting clearfix">
                                 <div class="text pull-left">
-                                    <h6>Buy, Sell, Rent or Find Anything in Sri Lanka</h6>
-                                    <p><span>Search Results:</span> Showing {{ $ads->firstItem() }}-{{ $ads->lastItem() }} of {{ $ads->total() }} Listings</p>
+                                    <h6>@lang('messages.Buy, Sell, Rent or Find Anything in Sri Lanka')</h6>
+                                    <p><span>@lang('messages.Search Results'):</span> @lang('messages.Showing') {{ $ads->firstItem() }}-{{ $ads->lastItem() }} @lang('messages.of') {{ $ads->total() }} @lang('messages.Listings')</p>
                                 </div>
                                 <div class="right-column pull-right clearfix">
                                 </div>
@@ -255,13 +261,19 @@
                                                                 <div class="carousel-overlay"></div>
 
                                                                 <!-- Top-left image -->
-                                                                <img src="{{ asset('3.png') }}" alt="Urgent Ad" class="top-left-image" style="z-index:10000; height:80px; width:auto">
+                                                                <img src="{{ asset('3.png') }}" alt="Urgent Ad" class="top-left-image" style="z-index:999; height:80px; width:auto">
 
                                                                 <!-- Ad Details Overlay -->
                                                                 <div class="carousel-caption d-none d-md-block text-start">
                                                                     <p>{{ $ad->title }}</p>
-                                                                    <p>Rs {{ number_format($ad->price, 2) }}</p>
-                                                                    <p><i class="fas fa-map-marker-alt"></i> {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }}</p>
+                                                                    <p>@lang('messages.Rs') {{ number_format($ad->price, 2) }}</p>
+                                                                    <p><i class="fas fa-map-marker-alt"></i> 
+                                                                    @php
+                                                                        $locale = App::getLocale(); 
+                                                                        $locationName = 'name_' . $locale;
+                                                                    @endphp
+
+                                                                        {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}</p>
                                                                 </div>
                                                             </div>
                                                         </a>
@@ -336,7 +348,7 @@
                             </div>
 
                             <div class="lower-content" style="flex-grow: 1;">
-                                <div class="category"><i class="fas fa-tags"></i><p>{{ $ad->category->name }}</p></div>
+                                <div class="category"><i class="fas fa-tags"></i><p>@lang('messages.' . $ad->category->name)</p></div>
                                 <h4 style="
                                         display: -webkit-box; 
                                         -webkit-line-clamp: 2; 
@@ -350,11 +362,16 @@
                                     <li><i class="far fa-clock"></i>{{ $ad->created_at->diffForHumans() }}</li>
                                     <li>
                                         <i class="fas fa-map-marker-alt"></i>
-                                        {{ $ad->main_location ? $ad->main_location->name_en : 'N/A' }}
+                                        @php
+                                            $locale = App::getLocale(); 
+                                            $locationName = 'name_' . $locale;
+                                        @endphp
+
+                                            {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}
                                     </li>
                                 </ul>
                                 <div class="lower-box" style="margin-top: auto;">
-                                    <h5>Rs {{ number_format($ad->price, 2) }}</h5>
+                                    <h5>@lang('messages.Rs') {{ number_format($ad->price, 2) }}</h5>
                                 </div>
                             </div>
 

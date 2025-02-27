@@ -226,7 +226,7 @@
                 <a href="<?php echo e(url('locale/ta')); ?>">தமிழ்</a>
             </div>
 
-           <!--<div id="google_translate_element"></div>
+          <div id="google_translate_element"></div>
 
             <script type="text/javascript">
             function googleTranslateElementInit() {
@@ -237,7 +237,7 @@
             </script>
 
             <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
--->
+
 
 
             <div class="right-column clearfix">
@@ -291,7 +291,7 @@
         <form action="<?php echo e(route('search')); ?>" method="GET">
             <div class="search-bar">
                 <input type="text" name="query" class="form-control" 
-                    placeholder="Search by Title, Category, Subcategory, or Location" 
+                    placeholder=" <?php echo app('translator')->get('messages.Search by Title, Category, Subcategory, or Location'); ?>"
                     value="<?php echo e(request('query')); ?>">
                 
                 <!-- Search Icon -->
@@ -319,7 +319,7 @@
             <form action="<?php echo e(route('search')); ?>" method="GET">
             <div class="search-bar">
                 <input type="text" name="query" class="form-control" 
-                    placeholder="Search by Title, Category, Subcategory, or Location" 
+                    placeholder="<?php echo app('translator')->get('messages.Search by Title, Category, Subcategory, or Location'); ?>" 
                     value="<?php echo e(request('query')); ?>">
                 
                 <!-- Search Icon -->

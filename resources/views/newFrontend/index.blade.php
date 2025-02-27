@@ -410,10 +410,10 @@
                                     style="width: 70px; height: 70px; object-fit: contain;">
                             </div>
 
-                            <h5 style="min-height: 50px; display: -webkit-box; 
+                            <h5 style="min-height: 60px; display: -webkit-box; 
                                     -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
                                     overflow: hidden; text-overflow: ellipsis; ">
-                                {{ $category->name }}
+                                 @lang('messages.' . $category->name)
                             </h5>
 
                             <span>{{ $category->ads_count }}</span>

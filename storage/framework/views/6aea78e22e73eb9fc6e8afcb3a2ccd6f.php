@@ -45,8 +45,8 @@
     /* Top-left image for the carousel */
     .top-left-image {
         position: absolute;
-        top: 10px;
-        left: 10px;
+        top: 5px;
+        left: 5px;
         width: 70px;
         height: auto;
     }
@@ -103,11 +103,11 @@
         <div class="auto-container">
             <div class="content-box centred mr-0">
                 <div class="title">
-                    <h1><?php echo e($category ? $category->name : 'All Categories'); ?></h1>
+                <h1><?php echo e($category ? __('messages.' . $category->name) : __('messages.All Categories')); ?></h1
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="<?php echo e(route('/')); ?>">Home</a></li>
-                    <li>Browse Ads </li>
+                    <li><a href="<?php echo e(route( '/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                    <li><?php echo app('translator')->get('messages.Browse Ads'); ?></li>
                 </ul>
             </div>
         </div>
@@ -123,20 +123,27 @@
                         <div class="default-sidebar category-sidebar">
                         <div class="sidebar-search sidebar-widget">
                             <div class="widget-title">
-                                <h3>Search</h3>
+                                <h3><?php echo app('translator')->get('messages.Search'); ?></h3>
                             </div>
                             <div class="widget-content">
                                 <form action="<?php echo e(route('browse-ads')); ?>" method="GET" class="search-form">
                                     <div class="form-group">
-                                        <input type="search" name="search-field" placeholder="Search Keyword..." value="<?php echo e(request()->input('search-field')); ?>" oninput="this.form.submit()">
+                                        <input type="search" name="search-field" placeholder="<?php echo app('translator')->get('messages.Search Keyword'); ?>..." value="<?php echo e(request()->input('search-field')); ?>" oninput="this.form.submit()">
                                         <button type="submit" style="display:none;"><i class="icon-2"></i></button>
                                     </div>
                                     <div class="form-group">
                                         <i class="icon-3"></i>
                                         <select class="wide" name="location" onchange="this.form.submit()">
-                                            <option data-display="Select Location">Select Location</option>
+                                            <option data-display="<?php echo app('translator')->get('messages.Select Location'); ?>"><?php echo app('translator')->get('messages.Select Location'); ?></option>
                                             <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($district->id); ?>" <?php echo e(request()->input('location') == $district->id ? 'selected' : ''); ?>><?php echo e($district->name_en); ?></option>
+                                                <?php
+                                                    $locale = App::getLocale();  
+                                                    $districtName = 'name_' . $locale;  
+                                                ?>
+                                                <option value="<?php echo e($district->id); ?>" <?php echo e(request()->input('location') == $district->id ? 'selected' : ''); ?>>
+                                                    <?php echo e($district->$districtName); ?>
+
+                                                </option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
@@ -146,7 +153,7 @@
 
                             <div class="sidebar-category sidebar-widget">
                                 <div class="widget-title">
-                                    <h3>Category</h3>
+                                    <h3><?php echo app('translator')->get('messages.Categories'); ?></h3>
                                 </div>
                                 <div class="widget-content">
                                     <ul class="category-list">
@@ -155,7 +162,7 @@
                                                 <input type="radio" name="category" value="all"
                                                     onchange="window.location='<?php echo e(route('browse-ads')); ?>'"
                                                     <?php echo e(!request()->input('category') ? 'checked' : ''); ?>>
-                                                    <span class="text-dark">All Categories</span>
+                                                    <span class="text-dark"><?php echo app('translator')->get('messages.All Categories'); ?></span>
                                         
                                             </label>
                                         </li>
@@ -166,7 +173,7 @@
                                                     <input type="radio" name="category" value="<?php echo e($category->id); ?>"
                                                         onchange="window.location='<?php echo e(route('browse-ads', ['category' => $category->id])); ?>'"
                                                         <?php echo e(request()->input('category') == $category->id ? 'checked' : ''); ?>>
-                                                    <span><?php echo e($category->name); ?></span>
+                                                    <span> <?php echo app('translator')->get('messages.' . $category->name); ?></span>
                                                 </label>
                                                 
                                                 <?php if($category->subcategories->isNotEmpty()): ?>
@@ -209,8 +216,8 @@
                         <div class="category-details-content">
                             <div class="item-shorting clearfix">
                                 <div class="text pull-left">
-                                    <h6>Buy, Sell, Rent or Find Anything in Sri Lanka</h6>
-                                    <p><span>Search Results:</span> Showing <?php echo e($ads->firstItem()); ?>-<?php echo e($ads->lastItem()); ?> of <?php echo e($ads->total()); ?> Listings</p>
+                                    <h6><?php echo app('translator')->get('messages.Buy, Sell, Rent or Find Anything in Sri Lanka'); ?></h6>
+                                    <p><span><?php echo app('translator')->get('messages.Search Results'); ?>:</span> <?php echo app('translator')->get('messages.Showing'); ?> <?php echo e($ads->firstItem()); ?>-<?php echo e($ads->lastItem()); ?> <?php echo app('translator')->get('messages.of'); ?> <?php echo e($ads->total()); ?> <?php echo app('translator')->get('messages.Listings'); ?></p>
                                 </div>
                                 <div class="right-column pull-right clearfix">
                                 </div>
@@ -253,13 +260,19 @@
                                                                 <div class="carousel-overlay"></div>
 
                                                                 <!-- Top-left image -->
-                                                                <img src="<?php echo e(asset('3.png')); ?>" alt="Urgent Ad" class="top-left-image" style="z-index:10000; height:80px; width:auto">
+                                                                <img src="<?php echo e(asset('3.png')); ?>" alt="Urgent Ad" class="top-left-image" style="z-index:999; height:80px; width:auto">
 
                                                                 <!-- Ad Details Overlay -->
                                                                 <div class="carousel-caption d-none d-md-block text-start">
                                                                     <p><?php echo e($ad->title); ?></p>
-                                                                    <p>Rs <?php echo e(number_format($ad->price, 2)); ?></p>
-                                                                    <p><i class="fas fa-map-marker-alt"></i> <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?></p>
+                                                                    <p><?php echo app('translator')->get('messages.Rs'); ?> <?php echo e(number_format($ad->price, 2)); ?></p>
+                                                                    <p><i class="fas fa-map-marker-alt"></i> 
+                                                                    <?php
+                                                                        $locale = App::getLocale(); 
+                                                                        $locationName = 'name_' . $locale;
+                                                                    ?>
+
+                                                                        <?php echo e($ad->main_location ? $ad->main_location->$locationName : 'N/A'); ?></p>
                                                                 </div>
                                                             </div>
                                                         </a>
@@ -335,7 +348,7 @@
                             </div>
 
                             <div class="lower-content" style="flex-grow: 1;">
-                                <div class="category"><i class="fas fa-tags"></i><p><?php echo e($ad->category->name); ?></p></div>
+                                <div class="category"><i class="fas fa-tags"></i><p><?php echo app('translator')->get('messages.' . $ad->category->name); ?></p></div>
                                 <h4 style="
                                         display: -webkit-box; 
                                         -webkit-line-clamp: 2; 
@@ -349,12 +362,17 @@
                                     <li><i class="far fa-clock"></i><?php echo e($ad->created_at->diffForHumans()); ?></li>
                                     <li>
                                         <i class="fas fa-map-marker-alt"></i>
-                                        <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?>
+                                        <?php
+                                            $locale = App::getLocale(); 
+                                            $locationName = 'name_' . $locale;
+                                        ?>
+
+                                            <?php echo e($ad->main_location ? $ad->main_location->$locationName : 'N/A'); ?>
 
                                     </li>
                                 </ul>
                                 <div class="lower-box" style="margin-top: auto;">
-                                    <h5>Rs <?php echo e(number_format($ad->price, 2)); ?></h5>
+                                    <h5><?php echo app('translator')->get('messages.Rs'); ?> <?php echo e(number_format($ad->price, 2)); ?></h5>
                                 </div>
                             </div>
 
