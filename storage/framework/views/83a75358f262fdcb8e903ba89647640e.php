@@ -528,7 +528,7 @@
                                 </button>
                                 <p style="color:white;"><?php echo e($adss->category->name ?? 'Uncategorized'); ?> &raquo; <?php echo e($adss->subcategory->name ?? ''); ?></p>
                                 <h3 style="color:white;font-weight:bold;font-size:1.1rem;"><?php echo e($adss->title); ?></h3>
-                                <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;">LKR <?php echo e(number_format($adss->price, 2)); ?></p>
+                                <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;"><?php echo app('translator')->get('messages.Rs'); ?>  <?php echo e(number_format($adss->price, 2)); ?></p>
                                 <p style="color:white;"><i class="fas fa-clock"></i> <?php echo e($adss->created_at->diffForHumans()); ?></p>
                             </div>
                         </div>
@@ -593,11 +593,18 @@
                                            
                                                 <ul class="clearfix info">
                                                     
-                                                    <li><i class="fas fa-map-marker-alt"></i><?php echo e($ads->sub_location ? $ads->sub_location->name_en : 'N/A'); ?>,
-                                                    <?php echo e($ads->main_location ? $ads->main_location->name_en : 'N/A'); ?></li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>
+                                                    <?php
+                                                        $locale = App::getLocale(); 
+                                                        $locationName = 'name_' . $locale;
+                                                    ?>
+                                                        <?php echo e($ads->sub_location ? $ads->sub_location->$locationName : 'N/A'); ?>,
+                                                        <?php echo e($ads->main_location ? $ads->main_location->$locationName : 'N/A'); ?>
+
+                                                </li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Price:</span>LKR <?php echo e($ads -> price); ?></h5>
+                                                    <h5><span>Price:</span><?php echo app('translator')->get('messages.Rs'); ?> <?php echo e($ads -> price); ?></h5>
                                                    
                                                 </div>
                                             </div>

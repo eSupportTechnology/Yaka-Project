@@ -529,7 +529,7 @@
                                 </button>
                                 <p style="color:white;">{{ $adss->category->name ?? 'Uncategorized' }} &raquo; {{ $adss->subcategory->name ?? '' }}</p>
                                 <h3 style="color:white;font-weight:bold;font-size:1.1rem;">{{ $adss->title }}</h3>
-                                <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;">LKR {{ number_format($adss->price, 2) }}</p>
+                                <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;">@lang('messages.Rs')  {{ number_format($adss->price, 2) }}</p>
                                 <p style="color:white;"><i class="fas fa-clock"></i> {{ $adss->created_at->diffForHumans() }}</p>
                             </div>
                         </div>
@@ -594,11 +594,17 @@
                                            
                                                 <ul class="clearfix info">
                                                     
-                                                    <li><i class="fas fa-map-marker-alt"></i>{{ $ads->sub_location ? $ads->sub_location->name_en : 'N/A' }},
-                                                    {{ $ads->main_location ? $ads->main_location->name_en : 'N/A' }}</li>
+                                                    <li><i class="fas fa-map-marker-alt"></i>
+                                                    @php
+                                                        $locale = App::getLocale(); 
+                                                        $locationName = 'name_' . $locale;
+                                                    @endphp
+                                                        {{ $ads->sub_location ? $ads->sub_location->$locationName : 'N/A' }},
+                                                        {{ $ads->main_location ? $ads->main_location->$locationName : 'N/A' }}
+                                                </li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Price:</span>LKR {{$ads -> price}}</h5>
+                                                    <h5><span>Price:</span>@lang('messages.Rs') {{$ads -> price}}</h5>
                                                    
                                                 </div>
                                             </div>
