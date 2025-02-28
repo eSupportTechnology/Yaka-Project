@@ -138,10 +138,13 @@
 
                         </div>
                     <?php endif; ?>
-                    <form action="<?php echo e(route('user.ad_posts.store')); ?>?cat_id=<?php echo e($cat_id); ?>&sub_cat_id=<?php echo e($sub_cat_id); ?>&location=<?php echo e($location); ?>&sublocation=<?php echo e($sublocation); ?>"
+                    <form id="adForm" action="<?php echo e(route('user.ad_posts.store')); ?>?cat_id=<?php echo e($cat_id); ?>&sub_cat_id=<?php echo e($sub_cat_id); ?>&location=<?php echo e($location); ?>&sublocation=<?php echo e($sublocation); ?>"
                      method="POST" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                     <input type="hidden" name="userId" value="">
+                    <input type="hidden" id="selected_package_name" name="selected_package_name">
+                    <input type="hidden" id="selected_package_price" name="selected_package_price">
+                    <input type="hidden" id="selected_package_duration" name="selected_package_duration"> <!-- Added for duration -->
 
                     <div class="row">
                      <!-- category Information -->
@@ -386,7 +389,7 @@
 
                                             <?php $__currentLoopData = $packages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="radio" name="boosting_option" id="package_<?php echo e($package->id); ?>" value="<?php echo e($package->id); ?>">
+                                                    <input class="form-check-input package-radio" type="radio" name="boosting_option" id="package_<?php echo e($package->id); ?>" value="<?php echo e($package->id); ?>" data-name="<?php echo e($package->name); ?>">
                                                     <label class="form-check-label text-dark" for="package_<?php echo e($package->id); ?>">
                                                         <h5><?php echo e($package->name); ?></h5>
                                                     </label>
@@ -403,7 +406,7 @@
                                                 <div class="package-types-for-<?php echo e($package->id); ?> d-none">
                                                     <?php $__currentLoopData = $package->packageTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $packageType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <div class="form-check mt-2">
-                                                            <input class="form-check-input" type="radio" name="package_type" id="packageType_<?php echo e($packageType->id); ?>" value="<?php echo e($packageType->id); ?>">
+                                                            <input class="form-check-input package-type-radio" type="radio" name="package_type" id="packageType_<?php echo e($packageType->id); ?>" value="<?php echo e($packageType->id); ?>" data-price="<?php echo e($packageType->price); ?>"  data-duration="<?php echo e($packageType->duration); ?>">
                                                             <label class="form-check-label text-dark" for="packageType_<?php echo e($packageType->id); ?>">
                                                                 <?php echo e($packageType->duration); ?> (LKR <?php echo e(number_format($packageType->price, 2)); ?>)
                                                             </label>
@@ -414,6 +417,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                
 
                             </div>
                         </div>
@@ -421,7 +426,7 @@
 
 
                     <div class="col-lg-12 mt-4">
-                        <button type="submit" class="theme-btn-one">
+                        <button type="submit" id="publishBtn" class="theme-btn-one">
                             <i class="fas fa-check"></i>
                             <span>Publish Your Ad</span>
                         </button>
@@ -555,6 +560,30 @@ document.getElementById('sub_images').addEventListener('change', function(event)
     console.log('All Files:', allFiles);
 });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const packageRadios = document.querySelectorAll(".package-radio");
+        const packageTypeRadios = document.querySelectorAll(".package-type-radio");
+        
+        packageRadios.forEach(radio => {
+            radio.addEventListener("change", function () {
+                document.getElementById("selected_package_name").value = this.dataset.name;
+            });
+        });
+    
+        packageTypeRadios.forEach(radio => {
+            radio.addEventListener("change", function () {
+                document.getElementById("selected_package_price").value = this.dataset.price;
+                document.getElementById("selected_package_duration").value = this.dataset.duration; // Store package duration
+                console.log("Selected Duration:", document.getElementById("selected_package_duration").value);
+            
+            });
+        });
+    });
+    </script>
+    
+
 
 
 

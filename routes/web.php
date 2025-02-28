@@ -243,4 +243,11 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
 });
 
 
+//paymentController
+use App\Http\Controllers\frontend\PaymentProcessingController;
+Route::get('/payment', [PaymentProcessingController::class, 'show'])->name('payment.page');
+Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
+
+
+
 require __DIR__.'/auth.php';

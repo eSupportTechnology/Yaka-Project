@@ -139,10 +139,13 @@
                             {{ $message }}
                         </div>
                     @endif
-                    <form action="{{ route('user.ad_posts.store') }}?cat_id={{ $cat_id }}&sub_cat_id={{ $sub_cat_id }}&location={{ $location }}&sublocation={{ $sublocation }}"
+                    <form id="adForm" action="{{ route('user.ad_posts.store') }}?cat_id={{ $cat_id }}&sub_cat_id={{ $sub_cat_id }}&location={{ $location }}&sublocation={{ $sublocation }}"
                      method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="userId" value="">
+                    <input type="hidden" id="selected_package_name" name="selected_package_name">
+                    <input type="hidden" id="selected_package_price" name="selected_package_price">
+                    <input type="hidden" id="selected_package_duration" name="selected_package_duration"> <!-- Added for duration -->
 
                     <div class="row">
                      <!-- category Information -->
@@ -384,7 +387,7 @@
 
                                             @foreach($packages as $package)
                                                 <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="radio" name="boosting_option" id="package_{{ $package->id }}" value="{{ $package->id }}">
+                                                    <input class="form-check-input package-radio" type="radio" name="boosting_option" id="package_{{ $package->id }}" value="{{ $package->id }}" data-name="{{ $package->name }}">
                                                     <label class="form-check-label text-dark" for="package_{{ $package->id }}">
                                                         <h5>{{ $package->name }}</h5>
                                                     </label>
@@ -401,7 +404,7 @@
                                                 <div class="package-types-for-{{ $package->id }} d-none">
                                                     @foreach($package->packageTypes as $packageType)
                                                         <div class="form-check mt-2">
-                                                            <input class="form-check-input" type="radio" name="package_type" id="packageType_{{ $packageType->id }}" value="{{ $packageType->id }}">
+                                                            <input class="form-check-input package-type-radio" type="radio" name="package_type" id="packageType_{{ $packageType->id }}" value="{{ $packageType->id }}" data-price="{{ $packageType->price }}"  data-duration="{{ $packageType->duration }}">
                                                             <label class="form-check-label text-dark" for="packageType_{{ $packageType->id }}">
                                                                 {{ $packageType->duration }} (LKR {{ number_format($packageType->price, 2) }})
                                                             </label>
@@ -412,6 +415,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                
 
                             </div>
                         </div>
@@ -419,7 +424,7 @@
 
 
                     <div class="col-lg-12 mt-4">
-                        <button type="submit" class="theme-btn-one">
+                        <button type="submit" id="publishBtn" class="theme-btn-one">
                             <i class="fas fa-check"></i>
                             <span>Publish Your Ad</span>
                         </button>
@@ -553,6 +558,30 @@ document.getElementById('sub_images').addEventListener('change', function(event)
     console.log('All Files:', allFiles);
 });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const packageRadios = document.querySelectorAll(".package-radio");
+        const packageTypeRadios = document.querySelectorAll(".package-type-radio");
+        
+        packageRadios.forEach(radio => {
+            radio.addEventListener("change", function () {
+                document.getElementById("selected_package_name").value = this.dataset.name;
+            });
+        });
+    
+        packageTypeRadios.forEach(radio => {
+            radio.addEventListener("change", function () {
+                document.getElementById("selected_package_price").value = this.dataset.price;
+                document.getElementById("selected_package_duration").value = this.dataset.duration; // Store package duration
+                console.log("Selected Duration:", document.getElementById("selected_package_duration").value);
+            
+            });
+        });
+    });
+    </script>
+    
+
 
 
 
