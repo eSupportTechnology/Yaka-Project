@@ -37,26 +37,33 @@ class PaymentProcessingController extends Controller
     public function complete(Request $request)
     {
         try {
-
-            
-           
-
-            //Decode ad data
-           $adData = json_decode($request->input('ad_data'), true);
-          //dd($adData);
+            // Decode ad data
+            $adData = json_decode($request->input('ad_data'), true);
+    
             if (!$adData) {
                 return redirect()->back()->with('error', 'Invalid ad data.');
             }
-
+    
             // Simulate Payment Processing (Replace with real payment gateway logic)
-            $paymentSuccess = true;
-           $this-> saveAd($adData);
-
+            $paymentSuccess = true; // Simulated payment success
+    
+            if ($paymentSuccess) {
+                // Save the ad after payment success
+                $this->saveAd($adData);
+    
+                // Redirect to user's ads page with success message
+                return redirect()->route('user.my_ads')->with('success', 'Payment successful! Your ad has been posted.');
+            }
+    
+            // If payment fails, redirect back with an error message
+            return redirect()->back()->with('error', 'Payment failed! Please try again.');
+    
         } catch (\Exception $e) {
             Log::error('Payment processing error', ['error' => $e->getMessage()]);
-            return redirect()->back()->with('error', 'Payment failed! Please try again.');
+            return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
         }
     }
+    
 
     private function saveAd($adData)
     {

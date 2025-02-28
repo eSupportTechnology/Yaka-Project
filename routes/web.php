@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
-
+use App\Http\Controllers\frontend\PaymentProcessingController;
 use App\Http\Controllers\adminPanel\FormFieldsController;
 use App\Http\Controllers\adminPanel\usersManagementController;
 use App\Http\Controllers\adminPanel\adminManagementController;
@@ -112,6 +112,10 @@ Route::middleware(['auth'])->group(function () {
         
         return response()->json($models);
     })->name('get.models');
+
+    //paymentController
+    Route::get('/payment', [PaymentProcessingController::class, 'show'])->name('payment.page');
+    Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
     
 });
 
@@ -243,10 +247,7 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
 });
 
 
-//paymentController
-use App\Http\Controllers\frontend\PaymentProcessingController;
-Route::get('/payment', [PaymentProcessingController::class, 'show'])->name('payment.page');
-Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
+
 
 
 

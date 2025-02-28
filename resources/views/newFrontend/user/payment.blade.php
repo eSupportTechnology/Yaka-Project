@@ -43,7 +43,7 @@
 </style>
 
 <div class="container mt-5">
-    <div class="payment-container" id="main-payment-content">
+    <div class="payment-container mb-4" id="main-payment-content">
         <h2 class="mb-4 text-center">Complete Your Payment</h2>
 
         @if(session('error'))
@@ -80,7 +80,7 @@
     </div>
 
     <!-- Payment Form Page (Initially Hidden) -->
-    <div class="payment-container" id="card-details-page">
+    <div class="payment-container mb-4" id="card-details-page">
         <h2 class="mb-4 text-center">Enter Card Details</h2>
 
         <!-- Display Package Price on Card Details Page -->
