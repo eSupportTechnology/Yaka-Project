@@ -312,76 +312,77 @@
 <!-- Grid Items -->
 <div class="grid-item feature-style-two four-column pd-0" style="display: flex; flex-wrap: wrap;">
     <div class="row clearfix" style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between;">
-        @foreach($ads as $ad)
-            <div class="col-lg-4 col-md-6 col-sm-12 feature-block" 
-                style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
+            @foreach($ads as $ad)
+            @if(is_null($ad->package_expire_at) || \Carbon\Carbon::now()->lessThanOrEqualTo($ad->package_expire_at))
+                <!-- Display the ad if the package is not expired or expiry date is null -->
+                <div class="col-lg-4 col-md-6 col-sm-12 feature-block" 
+                    style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
                     <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                    <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" 
-                    class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}"
-                    style="display: block; height: 100%; text-decoration: none;">
-                    
-                        <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
-                        @if($ad->post_type)
-                        <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                        {{ $ad->post_type }}
-                        </button>
-                        @endif
-                            <div class="image-box" style="flex-grow: 0;">
-                                <figure class="image">
-                                    <img src="{{ asset('storage/' . $ad->mainImage) }}" 
-                                        style="height: 170px; object-fit: cover;" alt="{{ $ad->title }}">
-                                </figure>
+                        <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" 
+                        class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}"
+                        style="display: block; height: 100%; text-decoration: none;">
+                            <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
+                            @if($ad->post_type)
+                            <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                            {{ $ad->post_type }}
+                            </button>
+                            @endif
+                                <div class="image-box" style="flex-grow: 0;">
+                                    <figure class="image">
+                                        <img src="{{ asset('storage/' . $ad->mainImage) }}" 
+                                            style="height: 170px; object-fit: cover;" alt="{{ $ad->title }}">
+                                    </figure>
 
-                                @if($ad->ads_package == 3)
-                                    <!-- Top Ad Badge -->
-                                    <div class="icon">
-                                        <div class="icon-shape"></div>
-                                        <i class=""> <img src="{{ asset('01.png') }}" alt="Top Ad"></i>
-                                    </div>
-                                @elseif($ad->ads_package == 6)
-                                    <!-- Super Ad Badge -->
-                                    <div class="icon">
-                                        <div class="icon-shape"></div>
-                                        <i class=""> <img src="{{ asset('02.png') }}" alt="Super Ad"></i>
-                                    </div>
-                                @endif
-                            </div>
-
-                            <div class="lower-content" style="flex-grow: 1;">
-                                <div class="category"><i class="fas fa-tags"></i><p>@lang('messages.' . $ad->category->name)</p></div>
-                                <h4 style="
-                                        display: -webkit-box; 
-                                        -webkit-line-clamp: 2; 
-                                        -webkit-box-orient: vertical; 
-                                        overflow: hidden; 
-                                        text-overflow: ellipsis; 
-                                        max-height: 55px; 
-                                        margin-top: 20px; 
-                                        margin-bottom: 10px;">{{ $ad->title }}</h4>
-                                <ul class="info clearfix">
-                                    <li><i class="far fa-clock"></i>{{ $ad->created_at->diffForHumans() }}</li>
-                                    <li>
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        @php
-                                            $locale = App::getLocale(); 
-                                            $locationName = 'name_' . $locale;
-                                        @endphp
-
-                                            {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}
-                                    </li>
-                                </ul>
-                                <div class="lower-box" style="margin-top: auto;">
-                                    <h5>@lang('messages.Rs') {{ number_format($ad->price, 2) }}</h5>
+                                    @if($ad->ads_package == 3)
+                                        <!-- Top Ad Badge -->
+                                        <div class="icon">
+                                            <div class="icon-shape"></div>
+                                            <i class=""> <img src="{{ asset('01.png') }}" alt="Top Ad"></i>
+                                        </div>
+                                    @elseif($ad->ads_package == 6)
+                                        <!-- Super Ad Badge -->
+                                        <div class="icon">
+                                            <div class="icon-shape"></div>
+                                            <i class=""> <img src="{{ asset('02.png') }}" alt="Super Ad"></i>
+                                        </div>
+                                    @endif
                                 </div>
-                            </div>
 
-                        </div>
+                                <div class="lower-content" style="flex-grow: 1;">
+                                    <div class="category"><i class="fas fa-tags"></i><p>@lang('messages.' . $ad->category->name)</p></div>
+                                    <h4 style="
+                                            display: -webkit-box; 
+                                            -webkit-line-clamp: 2; 
+                                            -webkit-box-orient: vertical; 
+                                            overflow: hidden; 
+                                            text-overflow: ellipsis; 
+                                            max-height: 55px; 
+                                            margin-top: 20px; 
+                                            margin-bottom: 10px;">{{ $ad->title }}</h4>
+                                    <ul class="info clearfix">
+                                        <li><i class="far fa-clock"></i>{{ $ad->created_at->diffForHumans() }}</li>
+                                        <li>
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            @php
+                                                $locale = App::getLocale(); 
+                                                $locationName = 'name_' . $locale;
+                                            @endphp
+
+                                                {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}
+                                        </li>
+                                    </ul>
+                                    <div class="lower-box" style="margin-top: auto;">
+                                        <h5>@lang('messages.Rs') {{ number_format($ad->price, 2) }}</h5>
+                                    </div>
+                                </div>
+
+                            </div>
                         </a>
                     </div>
-               
-
-            </div>
+                </div>
+            @endif
         @endforeach
+
     </div>
 </div>
 

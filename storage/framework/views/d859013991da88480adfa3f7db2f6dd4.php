@@ -226,7 +226,7 @@
                 <a href="<?php echo e(url('locale/ta')); ?>">தமிழ்</a>
             </div>
 
-          <div id="google_translate_element"></div>
+          <!--<div id="google_translate_element"></div>
 
             <script type="text/javascript">
             function googleTranslateElementInit() {
@@ -237,15 +237,15 @@
             </script>
 
             <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
+-->
 
 
             <div class="right-column clearfix">
-                <ul class="social-links clearfix">
+<!--<ul class="social-links clearfix">
                    <li><a href="index-4.html"><i class="fab fa-facebook-f"></i></a></li>
                     <li><a href="index-4.html"><i class="fab fa-instagram"></i></a></li>
                     <li><a href="index-4.html"><i class="fab fa-youtube"></i></a></li>
-                </ul>
+                </ul>-->
                 <div class="sign-in">
                     <?php if(auth()->guard()->check()): ?>
                     <div class="dropdown">
@@ -302,7 +302,7 @@
         </form>
 
             <div class="btn-box mt-2">
-                <a href="<?php echo e(route('user.ad_posts.categories')); ?>" class="theme-btn-one"><i class="icon-1"></i><?php echo app('translator')->get('messages.Post Your Ads'); ?></a>
+                <a href="<?php echo e(route('user.ad_posts.categories')); ?>" style="text-decoration:none" class="theme-btn-one"><i class="icon-1"></i><?php echo app('translator')->get('messages.Post Your Ads'); ?></a>
             </div>
         </div>
     </div>
@@ -331,7 +331,7 @@
 
             
             <div class="btn-box">
-                <a href="<?php echo e(route('user.ad_posts.categories')); ?>" class="theme-btn-one"><i class="icon-1"></i><?php echo app('translator')->get('messages.Post Your Ads'); ?></a>
+                <a href="<?php echo e(route('user.ad_posts.categories')); ?>" style="text-decoration:none" class="theme-btn-one"><i class="icon-1"></i><?php echo app('translator')->get('messages.Post Your Ads'); ?></a>
             </div>
         </div>
     </div>
