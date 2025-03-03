@@ -39,16 +39,15 @@
    
 @endphp
 
-<!-- Page Title -->
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
             <div class="content-box centred mr-0">
                 <div class="title">
-                    <h1>Dashboard</h1>
+                    <h1>@lang('messages.Dashboard')</h1>
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="{{ route('/') }}">Home</a></li>
-                    <li>Dashboard</li>
+                    <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
+                    <li>@lang('messages.Dashboard')</li>
                 </ul>
             </div>
         </div>
@@ -61,7 +60,7 @@
                             <div class="row">
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
-                                    <div class="dash-avatar">
+                                  <div class="dash-avatar">
                                         @if(Auth::check() && Auth::user()->profileImage) 
                                             <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
                                             alt="user"></a>
@@ -69,6 +68,7 @@
                                             <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
                                         @endif
                                     </div>
+
                                     <div class="dash-intro">
                                         <h4><a href="#">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a></h4>
                                         <h5>{{ Auth::user()->email }}</h5>
@@ -111,14 +111,15 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a href="{{route('user.dashboard')}}">dashboard</a></li>
-                                <li><a class="active" href="{{route('user.ad_posts')}}">ad post</a></li>
-                                <li><a href="{{route('user.my_ads')}}" >my ads</a></li>
-                                <li><a href="{{route('user.profile')}}">Profile</a></li>
-                                <li><a href="#">Message</a></li>
+                                <li><a href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
+                                <li><a  class="active" href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
+                                <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
+                                <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>
+                                <li><a href="">@lang('messages.message')</a></li>
                                 <li>
-                                    <a href="{{route('user.logout')}}">Logout</a>
+                                    <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
+                                
                             </ul>
                         </div>
                     </div>

@@ -8,16 +8,15 @@
 
 </style>
 
- <!-- Page Title -->
- <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
+<section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
             <div class="content-box centred mr-0">
                 <div class="title">
-                    <h1>Dashboard</h1>
+                    <h1><?php echo app('translator')->get('messages.Dashboard'); ?></h1>
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="<?php echo e(route('/')); ?>">Home</a></li>
-                    <li>Dashboard</li>
+                    <li><a href="<?php echo e(route('/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                    <li><?php echo app('translator')->get('messages.Dashboard'); ?></li>
                 </ul>
             </div>
         </div>
@@ -81,13 +80,13 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a href="<?php echo e(route('user.dashboard')); ?>">dashboard</a></li>
-                                <li><a href="<?php echo e(route('user.ad_posts.categories')); ?>">ad post</a></li>
-                                <li><a href="<?php echo e(route('user.my_ads')); ?>" >my ads</a></li>
-                                <li><a href="<?php echo e(route('user.profile')); ?>">Profile</a></li>
-                                <li><a href="">message</a></li>
+                                <li><a href="<?php echo e(route('user.dashboard')); ?>"><?php echo app('translator')->get('messages.Dashboard'); ?></a></li>
+                                <li><a href="<?php echo e(route('user.ad_posts.categories')); ?>"><?php echo app('translator')->get('messages.ad post'); ?></a></li>
+                                <li><a href="<?php echo e(route('user.my_ads')); ?>" ><?php echo app('translator')->get('messages.my ads'); ?></a></li>
+                                <li><a href="<?php echo e(route('user.profile')); ?>"><?php echo app('translator')->get('messages.Profile'); ?></a></li>
+                                <li><a href=""><?php echo app('translator')->get('messages.message'); ?></a></li>
                                 <li>
-                                    <a class="active" href="<?php echo e(route('user.logout')); ?>">Logout</a>
+                                    <a  class="active" href="<?php echo e(route('user.logout')); ?>"><?php echo app('translator')->get('messages.Logout'); ?></a>
                                 </li>
                                 
                             </ul>
@@ -97,20 +96,19 @@
             </div>
         </div>
     </section>
-
     <section class="dashboard-part mt-4">
     <div class="container mb-4">
         <div class="logout-box text-center p-4 shadow-lg rounded">
-            <h4 class="mb-3 text-dark">Are you sure you want to logout?</h4>
+            <h4 class="mb-3 text-dark"><?php echo app('translator')->get('messages.logout_confirmation'); ?></h4>
             <div class="d-flex justify-content-center" style="gap: 20px;">
                 <form action="<?php echo e(route('logout')); ?>" method="POST">
                     <?php echo csrf_field(); ?>
                     <button type="submit" class="btn btn-danger px-4 py-2 fw-bold text-white" style="margin-right: 10px;">
-                        Yes, Logout
+                        <?php echo app('translator')->get('messages.yes_logout'); ?>
                     </button>
                 </form>
                 <a href="<?php echo e(url()->previous()); ?>" class="btn btn-secondary px-4 py-2 fw-bold text-white">
-                    No, Stay
+                    <?php echo app('translator')->get('messages.no_stay'); ?>
                 </a>
             </div>
         </div>

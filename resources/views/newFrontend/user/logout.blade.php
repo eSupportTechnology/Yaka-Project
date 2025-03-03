@@ -10,16 +10,15 @@
 
 </style>
 
- <!-- Page Title -->
- <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
+<section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
             <div class="content-box centred mr-0">
                 <div class="title">
-                    <h1>Dashboard</h1>
+                    <h1>@lang('messages.Dashboard')</h1>
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="{{ route('/') }}">Home</a></li>
-                    <li>Dashboard</li>
+                    <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
+                    <li>@lang('messages.Dashboard')</li>
                 </ul>
             </div>
         </div>
@@ -83,13 +82,13 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a href="{{route('user.dashboard')}}">dashboard</a></li>
-                                <li><a href="{{route('user.ad_posts.categories')}}">ad post</a></li>
-                                <li><a href="{{route('user.my_ads')}}" >my ads</a></li>
-                                <li><a href="{{route('user.profile')}}">Profile</a></li>
-                                <li><a href="">message</a></li>
+                                <li><a href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
+                                <li><a href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
+                                <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
+                                <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>
+                                <li><a href="">@lang('messages.message')</a></li>
                                 <li>
-                                    <a class="active" href="{{route('user.logout')}}">Logout</a>
+                                    <a  class="active" href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
                                 
                             </ul>
@@ -99,20 +98,19 @@
             </div>
         </div>
     </section>
-
     <section class="dashboard-part mt-4">
     <div class="container mb-4">
         <div class="logout-box text-center p-4 shadow-lg rounded">
-            <h4 class="mb-3 text-dark">Are you sure you want to logout?</h4>
+            <h4 class="mb-3 text-dark">@lang('messages.logout_confirmation')</h4>
             <div class="d-flex justify-content-center" style="gap: 20px;">
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-danger px-4 py-2 fw-bold text-white" style="margin-right: 10px;">
-                        Yes, Logout
+                        @lang('messages.yes_logout')
                     </button>
                 </form>
                 <a href="{{ url()->previous() }}" class="btn btn-secondary px-4 py-2 fw-bold text-white">
-                    No, Stay
+                    @lang('messages.no_stay')
                 </a>
             </div>
         </div>

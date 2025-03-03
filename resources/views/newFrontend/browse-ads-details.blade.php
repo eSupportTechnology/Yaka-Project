@@ -83,7 +83,7 @@
                                 <!-- Ad Title and Details -->
                                 <h3 class="mb-0">{{ $ad->title }}</h3>  
                                 <p class="fw-bold">
-                                Posted on {{ \Carbon\Carbon::parse($ad->created_at)->translatedFormat('d M Y g:i a') }}
+                                @lang('messages.Posted on'): {{ \Carbon\Carbon::parse($ad->created_at)->translatedFormat('d M Y g:i a') }}
 
 
                                     @php

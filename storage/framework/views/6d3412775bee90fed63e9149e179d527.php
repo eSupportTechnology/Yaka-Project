@@ -53,16 +53,15 @@
 
 </style>
 
- <!-- Page Title -->
- <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
+<section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
             <div class="content-box centred mr-0">
                 <div class="title">
-                    <h1>Dashboard</h1>
+                    <h1><?php echo app('translator')->get('messages.Dashboard'); ?></h1>
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="<?php echo e(route('/')); ?>">Home</a></li>
-                    <li>Dashboard</li>
+                    <li><a href="<?php echo e(route('/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                    <li><?php echo app('translator')->get('messages.Dashboard'); ?></li>
                 </ul>
             </div>
         </div>
@@ -126,13 +125,13 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a href="<?php echo e(route('user.dashboard')); ?>">dashboard</a></li>
-                                <li><a href="<?php echo e(route('user.ad_posts.categories')); ?>">ad post</a></li>
-                                <li><a  class="active" href="<?php echo e(route('user.my_ads')); ?>" >my ads</a></li>
-                                <li><a href="<?php echo e(route('user.profile')); ?>">Profile</a></li>
-                                <li><a href="">message</a></li>
+                                <li><a href="<?php echo e(route('user.dashboard')); ?>"><?php echo app('translator')->get('messages.Dashboard'); ?></a></li>
+                                <li><a href="<?php echo e(route('user.ad_posts.categories')); ?>"><?php echo app('translator')->get('messages.ad post'); ?></a></li>
+                                <li><a  class="active" href="<?php echo e(route('user.my_ads')); ?>" ><?php echo app('translator')->get('messages.my ads'); ?></a></li>
+                                <li><a href="<?php echo e(route('user.profile')); ?>"><?php echo app('translator')->get('messages.Profile'); ?></a></li>
+                                <li><a href=""><?php echo app('translator')->get('messages.message'); ?></a></li>
                                 <li>
-                                    <a href="<?php echo e(route('user.logout')); ?>">Logout</a>
+                                    <a href="<?php echo e(route('user.logout')); ?>"><?php echo app('translator')->get('messages.Logout'); ?></a>
                                 </li>
                                 
                             </ul>
@@ -142,16 +141,16 @@
             </div>
         </div>
     </section>
-   
+
     <section class="dashboard-part mt-4">
     <div class="container mb-4">
         <!-- Tabs Navigation -->
         <ul class="nav nav-tabs" id="adsTabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="active-ads-tab" data-bs-toggle="tab" href="#active-ads" role="tab" aria-controls="active-ads" aria-selected="true">Active Ads</a>
+                <a class="nav-link active" id="active-ads-tab" data-bs-toggle="tab" href="#active-ads" role="tab" aria-controls="active-ads" aria-selected="true"><?php echo app('translator')->get('messages.Active Ads'); ?></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="pending-ads-tab" data-bs-toggle="tab" href="#pending-ads" role="tab" aria-controls="pending-ads" aria-selected="false">Pending Ads</a>
+                <a class="nav-link" id="pending-ads-tab" data-bs-toggle="tab" href="#pending-ads" role="tab" aria-controls="pending-ads" aria-selected="false"><?php echo app('translator')->get('messages.Pending Ads'); ?></a>
             </li>
         </ul>
 
@@ -167,24 +166,31 @@
                                     <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>" class="card-img-top" alt="Ad Image">
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo e($ad->title); ?></h5>
-                                        <p class="card-text">Price: Rs <?php echo e(number_format($ad->price, 2)); ?></p>
-                                        <p class="card-text text-muted">Location:   
-                                            <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?></p>
-                                        <p class="card-text text-muted">Posted on <?php echo e(\Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a')); ?></p>
+                                        <p class="card-text"><?php echo app('translator')->get('messages.price'); ?>: <?php echo app('translator')->get('messages.Rs'); ?> <?php echo e(number_format($ad->price, 2)); ?></p>
+                                        <p class="card-text text-muted"><?php echo app('translator')->get('messages.Location'); ?>:  
+                                            <?php
+                                                $locale = App::getLocale(); 
+                                                $locationName = 'name_' . $locale;
+                                            ?>
+                                                <?php echo e($ad->main_location ? $ad->main_location->$locationName : 'N/A'); ?> </p>
+                                                <p class="card-text text-muted">
+                                                    <?php echo app('translator')->get('messages.Posted on'); ?> : <?php echo e(\Carbon\Carbon::parse($ad->created_at)->translatedFormat('d M Y g:i a')); ?>
 
-                                        <!-- Package Expire Date -->
-                                        <p class="card-text text-muted">
-                                            <?php if(is_null($ad->package_expire_at)): ?>
-                                                No Expire Date
-                                            <?php else: ?>
-                                                <?php if(\Carbon\Carbon::now()->greaterThan($ad->package_expire_at)): ?>
-                                                    <span class="text-danger">Expired</span>
-                                                <?php else: ?>
-                                                    Expires on <?php echo e(\Carbon\Carbon::parse($ad->package_expire_at)->format('d M Y')); ?>
+                                                </p>
 
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                        </p>
+                                                <!-- Package Expire Date -->
+                                                <p class="card-text text-muted">
+                                                    <?php if(is_null($ad->package_expire_at)): ?>
+                                                        <?php echo app('translator')->get('messages.No Expire Date'); ?>
+                                                    <?php else: ?>
+                                                        <?php if(\Carbon\Carbon::now()->greaterThan($ad->package_expire_at)): ?>
+                                                            <span class="text-danger"><?php echo app('translator')->get('messages.Expired'); ?></span>
+                                                        <?php else: ?>
+                                                            <?php echo app('translator')->get('messages.Expires on'); ?> <?php echo e(\Carbon\Carbon::parse($ad->package_expire_at)->translatedFormat('d M Y')); ?>
+
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                </p>
 
                                         <!-- Delete Button -->
                                         <form action="<?php echo e(route('ads.delete', ['adsId' => $ad->adsId])); ?>" method="POST" class="d-inline mt-2">
@@ -214,24 +220,31 @@
                                     <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>" class="card-img-top" alt="Ad Image">
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo e($ad->title); ?></h5>
-                                        <p class="card-text">Price: Rs <?php echo e(number_format($ad->price, 2)); ?></p>
-                                        <p class="card-text text-muted">Location:   
-                                            <?php echo e($ad->main_location ? $ad->main_location->name_en : 'N/A'); ?></p>
-                                        <p class="card-text text-muted">Posted on <?php echo e(\Carbon\Carbon::parse($ad->created_at)->format('d M Y g:i a')); ?></p>
+                                        <p class="card-text"><?php echo app('translator')->get('messages.price'); ?>: <?php echo app('translator')->get('messages.Rs'); ?> <?php echo e(number_format($ad->price, 2)); ?></p>
+                                        <p class="card-text text-muted"><?php echo app('translator')->get('messages.Location'); ?>:  
+                                        <?php
+                                                $locale = App::getLocale(); 
+                                                $locationName = 'name_' . $locale;
+                                            ?>
+                                                <?php echo e($ad->main_location ? $ad->main_location->$locationName : 'N/A'); ?> </p>
+                                                <p class="card-text text-muted">
+                                                    <?php echo app('translator')->get('messages.Posted on'); ?> : <?php echo e(\Carbon\Carbon::parse($ad->created_at)->translatedFormat('d M Y g:i a')); ?>
 
-                                        <!-- Package Expire Date -->
-                                        <p class="card-text text-muted">
-                                            <?php if(is_null($ad->package_expire_at)): ?>
-                                                No Expire Date
-                                            <?php else: ?>
-                                                <?php if(\Carbon\Carbon::now()->greaterThan($ad->package_expire_at)): ?>
-                                                    <span class="text-danger">Expired</span>
-                                                <?php else: ?>
-                                                    Expires on <?php echo e(\Carbon\Carbon::parse($ad->package_expire_at)->format('d M Y')); ?>
+                                                </p>
 
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                        </p>
+                                                <!-- Package Expire Date -->
+                                                <p class="card-text text-muted">
+                                                    <?php if(is_null($ad->package_expire_at)): ?>
+                                                        <?php echo app('translator')->get('messages.No Expire Date'); ?>
+                                                    <?php else: ?>
+                                                        <?php if(\Carbon\Carbon::now()->greaterThan($ad->package_expire_at)): ?>
+                                                            <span class="text-danger"><?php echo app('translator')->get('messages.Expired'); ?></span>
+                                                        <?php else: ?>
+                                                            <?php echo app('translator')->get('messages.Expires on'); ?> <?php echo e(\Carbon\Carbon::parse($ad->package_expire_at)->translatedFormat('d M Y')); ?>
+
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                </p>
 
                                         <!-- Delete Button -->
                                         <form action="<?php echo e(route('ads.delete', ['adsId' => $ad->adsId])); ?>" method="POST" class="d-inline mt-2">

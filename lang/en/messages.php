@@ -144,6 +144,7 @@ return [
 
     'Rs' => 'Rs',
     'LKR' => 'LKR',
+    'price' => 'Price',
 
     'view' => 'View',
     'Fixed' => 'Fixed',
@@ -184,4 +185,34 @@ return [
     'para11' => 'We are thrilled to have you here. As a valued member of our community, you now have access to the largest online marketplace in Sri Lanka, where countless opportunities await you.
                 Explore an extensive range of categories, from real estate and vehicles to electronics and fashion. Our platform connects you with local sellers and unique products, making it easier than ever to find exactly what you need. With user-friendly features, advanced search options, and exclusive offers, shopping has never been more convenient.
                 Thank you for joining yaka.lk —dive in and start discovering the best deals and services',
+
+    'Posted on' => 'Posted on',
+    'No Expire Date' => 'No Expire Date',
+    'Expired' => 'Expired',
+    'Expires on' => 'Expires on',
+    'Active Ads' => 'Active Ads',
+    'Pending Ads' => 'Pending Ads',
+
+    'Edit Profile' => 'Edit Profile',
+    'First Name' => 'First Name',
+    'Last Name' => 'Last Name',
+    'Email' => 'Email',
+    'Company' => 'Company',
+    'District' => 'District',
+    'Select District' => 'Select District',
+    'City' => 'City',
+    'Select City' => 'Select City',
+    'Post Code' => 'Post Code',
+    'Country' => 'Country',
+    'Website' => 'Website',
+    'Phone' => 'Phone',
+    'Birthday' => 'Birthday',
+    'Profile Image' => 'Profile Image',
+    'Update Profile' => 'Update Profile',
+
+    'logout_confirmation' => 'Are you sure you want to logout?',
+    'yes_logout' => 'Yes, Logout',
+    'no_stay' => 'No, Stay',
+
+
 ];
