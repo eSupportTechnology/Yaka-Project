@@ -247,7 +247,7 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
 });
 
 
-
+Route::post('/boosting-update', [UserAdsController::class, 'boostingUpdate'])->name('boosting.update');
 
 
 

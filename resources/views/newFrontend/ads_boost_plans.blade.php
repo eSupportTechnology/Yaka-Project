@@ -299,8 +299,8 @@
 
         <!-- Main Plan Section -->
         <div class="custom-boost-options">
-            <h4 class="mb-0 text-center">@lang('messages.Make your ad stand out')!</h4>
-            <p class="mb-1 text-center">@lang('messages.boosting_ad_message').</p>
+            <h4 class="mb-0 text-center">Make your ad stand out!</h4>
+            <p class="mb-1 text-center">Get up to 10 times more responses by boosting your ad. Select one plan.</p>
 
             @foreach($packages as $package)
                 <?php
@@ -328,16 +328,16 @@
                             <img src="{{ asset($imageFile) }}" alt="{{ $package->name }}"> 
                             {{ $package->name }}
                         </h5>
-                        <p class="mb-1">@lang('messages.Boost your ad with the') "{{ $package->name }}" @lang('messages.package') @lang('messages.select')!</p>
-                        <strong>@lang('messages.Rs') {{ number_format($minPrice, 2) }}</strong>
+                        <p class="mb-1">Boost your ad with the "{{ $package->name }}" package!</p>
+                        <strong>From Rs {{ number_format($minPrice, 2) }}</strong>
                     </div>
                     <div class="dropdown-wrapper">
                         <select class="form-select" id="packageSelect{{ $package->id }}" onchange="selectPlanDropdown({{ $package->id }}, '{{ $package->name }}', this)">
-                            <option value="">@lang('messages.Select Plan')</option>
+                            <option value="">Select Plan</option>
                             @foreach($packageTypes->filter(fn($type) => $type->package_id == $package->id) as $type)
-                                <option value="{{ $type->price }}" data-duration="{{ $type->duration }}" 
+                                <option value="{{ $type->price }}" data-id="{{$type->id}}" data-duration="{{ $type->duration }}" 
                                     style="padding: 5px; font-size: 16px; color: #333; background-color: #f8f9fa;">
-                                    {{ $type->duration }} @lang('messages.Days') | @lang('messages.Rs')- {{ $type->price }}
+                                    {{ $type->duration }} days | Rs- {{ $type->price }}
                                 </option>
                             @endforeach
                         </select>
@@ -351,8 +351,8 @@
 
         <!-- Amount Summary -->
         <div class="custom-summary-box">
-            <h5>@lang('messages.Amount'): <span id="totalAmount" class="custom-text-success">@lang('messages.Days') 0</span></h5>
-            <p id="selectedPlans">@lang('messages.No plans selected')</p>
+            <h5>Amount: <span id="totalAmount" class="custom-text-success">Rs 0</span></h5>
+            <p id="selectedPlans">No plans selected</p>
         </div>
 
         <!-- Continue Button -->
@@ -366,18 +366,21 @@
                          style="width: 150px; height: auto; border-radius: 8px; object-fit: cover;">
                         
                     <div>
-                        <p style="color: black"><strong>@lang('messages.Title'):</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
-                        <p style="color: black"><strong>@lang('messages.Price'):</strong> <span id="summaryAdPrice" class="summary-text"></span></p>
-                        <p style="color: black"><strong>@lang('messages.Description'):</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
+                        <p style="color: black"><strong>Title:</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
+                        <p style="color: black"><strong>Price:</strong> <span id="summaryAdPrice" class="summary-text"></span></p>
+                        <p style="color: black"><strong>Description:</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
+                        <p style="color: black"><strong>Current Package:</strong> <span id="summaryAdCurrentPackage" class="summary-text"></span></p>
+                        <p style="color: black"><strong>Current Package Duration:</strong> <span id="summaryAdCurrentPackageType" class="summary-text"></span>days</p>
+                        <p style="color: black"><strong>Current Package expired:</strong> <span id="summaryAdCurrentPackageExpired" class="summary-text"></span></p>
                     </div>
                 </div>
         
-                <p style="color: black" id="summarySelectedPlans">@lang('messages.No plans selected')</p>
-                <h5>@lang('messages.Total'): <span class="custom-text-success" id="summaryTotalAmount">@lang('messages.Rs') 0</span></h5>
+                <p style="color: black" id="summarySelectedPlans">No plans selected</p>
+                <h5>Total Amount: <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
         
                 <div class="summary-buttons">
-                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">@lang('messages.Back')</button>
-                    <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary">@lang('messages.Proceed to Payment')</button>
+                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">Back</button>
+                    <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary">Proceed to Payment</button>
                 </div>
             </div>
         </div>
@@ -414,10 +417,10 @@
                       <!-- Display Total Amount -->
                     <h5>Total Amount: <span class="custom-text-success" id="paymentTotalAmount">Rs 0</span></h5>
 
-                    <!-- Payment Button -->
                     <div class="form-group mt-2">
-                        <button type="submit" class="custom-button custom-btn-primary">Pay</button>
+                        <button type="button" class="custom-button custom-btn-primary" onclick="updateBoost()">Pay</button>
                     </div>
+                    
                     <div class="form-group ">
                         <button type="button" class="custom-button custom-btn-secondary" onclick="backToSummary()">Back to Summary</button>
                     </div>
@@ -435,13 +438,21 @@
 
 <script>
     let ad = @json($ad);
+    let packages = @json($packages);
+    let packagesType = @json($packageTypes);
     let selectedPlans = [];
     let totalAmount = 0;
+    let selectedPackageId = null;
+    let selectedPackageTypeId = null; // Global variable for packagetypeId
+
 
     function selectPlanDropdown(packageId, packageName, selectElement) {
+        selectedPackageId = packageId; // Store globally
     let planName = selectElement.options[selectElement.selectedIndex].text;
     let price = parseFloat(selectElement.value);
-
+    selectedPackageTypeId = parseInt(selectElement.options[selectElement.selectedIndex].getAttribute("data-id"), 10);
+     
+   
     // Clear previous selection
     selectedPlans = [];
 
@@ -528,8 +539,24 @@ function removePlan(packageId) {
 
         document.getElementById("summaryAdTitle").innerText = ad.title;
         document.getElementById("summaryAdDescription").innerText = ad.description;
-        document.getElementById("summaryAdPrice").innerText = "Rs " + ad.price;  // Set the price
+        document.getElementById("summaryAdPrice").innerText = "Rs " + ad.price;
+        // Find the package that matches ad.ads_package
+        const packageName = packages.find(pkg => pkg.id === ad.ads_package)?.name || "Unknown Package";
 
+        // Update the element with the package name
+        document.getElementById("summaryAdCurrentPackage").innerText = packageName;
+
+            // Find the matching package type using both ad.ads_package and ad.package_type
+        const packageType = packagesType.find(pt => pt.package_id === ad.ads_package && pt.id === ad.package_type);
+
+        // Get duration or set a default value if not found
+        const duration = packageType ? packageType.duration : "Unknown Duration";
+
+        // Update the element with the duration
+        document.getElementById("summaryAdCurrentPackageType").innerText = duration;
+        document.getElementById("summaryAdCurrentPackageExpired").innerText = ad.package_expire_at;
+
+        
         document.querySelector(".custom-boost-options").style.display = "none";
         document.querySelector(".custom-summary-box").style.display = "none";
         document.getElementById("continueButton").style.display = "none";
@@ -603,6 +630,62 @@ function removePlan(packageId) {
         summaryStep.classList.add("active");
         summaryStep.classList.remove("disabled");
     }
+
+   
+
+
+
+    // Function to send selected package data to the controller
+    function updateBoost() {
+    console.log("Selected Package ID:", selectedPackageId);
+    console.log("Selected Package Type ID:", selectedPackageTypeId);
+    console.log("adsID:", ad.adsId);
+
+    if (!selectedPackageId || !selectedPackageTypeId) {
+        alert("Please select a package before proceeding!");
+        return;
+    }
+
+    let csrfToken = document.querySelector('meta[name="csrf-token"]');
+
+    if (!csrfToken) {
+        console.error("CSRF token not found! Make sure it's included in your HTML.");
+        return;
+    }
+
+    fetch("{{ route('boosting.update') }}", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+    },
+    body: JSON.stringify({
+        adsId: ad.adsId, 
+        ads_package: selectedPackageId,
+        package_type: selectedPackageTypeId
+    })
+})
+.then(response => response.text()) // Read as text
+.then(data => {
+    console.log("Raw Server Response:", data); // Log full response
+
+    try {
+        let jsonData = JSON.parse(data); // Try parsing JSON
+        if (jsonData.success) {
+            alert("Ad boosting updated successfully!");
+        } else {
+            alert("Error: " + jsonData.message);
+        }
+    } catch (error) {
+        console.error("Invalid JSON response:", data); // Show invalid response
+    }
+})
+.catch(error => {
+    console.error("Error updating ad boosting:", error);
+});
+
+}
+
 
 </script>
 

@@ -276,7 +276,53 @@ class UserAdsController extends Controller
     }
 }
 
-    
+public function boostingUpdate(Request $request)
+{
+    try {
+        // Log the incoming request data
+        Log::info('Request data:', $request->all());
+
+        // Validate the request
+        $validated = $request->validate([
+            'adsId' => 'required|exists:ads,adsId',
+            'ads_package' => 'required|exists:table_package,id',
+            'package_type' => 'required|exists:table_package_typess,id',
+        ]);
+
+        // Find the Ad using adsId
+        $ad = Ads::where('adsId', $validated['adsId'])->firstOrFail();
+
+        // Get the package type duration from the PackageType model
+        $packageType = \App\Models\PackageType::find($validated['package_type']);
+        
+        // Check if the package type exists and calculate the expiration date
+        if ($packageType) {
+            $packageExpireAt = Carbon::now()->addDays($packageType->duration);
+        } else {
+            // If no packageType found, handle the error or use default value
+            throw new \Exception('Package type not found');
+        }
+
+        // Update the Ad with new package details
+        $ad->update([
+            'ads_package' => $validated['ads_package'],
+            'package_type' => $validated['package_type'],
+            'package_expire_at' => $packageExpireAt,
+        ]);
+
+        // Log successful update
+        Log::info('Ad boosting updated successfully', ['adsId' => $ad->adsId]);
+
+        // Return success response
+        return response()->json(['success' => true, 'message' => 'Ad boosting updated successfully!']);
+    } catch (\Exception $e) {
+        // Log the error message
+        Log::error('Error in boosting update', ['error' => $e->getMessage()]);
+
+        // Return error response
+        return response()->json(['success' => false, 'message' => 'Something went wrong! Please try again.'], 500);
+    }
+}
     
 
  
