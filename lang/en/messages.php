@@ -144,6 +144,7 @@ return [
 
     'Rs' => 'Rs',
     'LKR' => 'LKR',
+    'price' => 'Price',
 
     'view' => 'View',
     'Fixed' => 'Fixed',
@@ -279,6 +280,35 @@ return [
     'approval_step_2' => 'Review',
     'approval_step_3' => 'Approval',
     'approval_step_4' => 'Live',
+    'Posted on' => 'Posted on',
+    'No Expire Date' => 'No Expire Date',
+    'Expired' => 'Expired',
+    'Expires on' => 'Expires on',
+    'Active Ads' => 'Active Ads',
+    'Pending Ads' => 'Pending Ads',
+
+    'Edit Profile' => 'Edit Profile',
+    'First Name' => 'First Name',
+    'Last Name' => 'Last Name',
+    'Email' => 'Email',
+    'Company' => 'Company',
+    'District' => 'District',
+    'Select District' => 'Select District',
+    'City' => 'City',
+    'Select City' => 'Select City',
+    'Post Code' => 'Post Code',
+    'Country' => 'Country',
+    'Website' => 'Website',
+    'Phone' => 'Phone',
+    'Birthday' => 'Birthday',
+    'Profile Image' => 'Profile Image',
+    'Update Profile' => 'Update Profile',
+
+    'logout_confirmation' => 'Are you sure you want to logout?',
+    'yes_logout' => 'Yes, Logout',
+    'no_stay' => 'No, Stay',
+
+
 ];
 
 

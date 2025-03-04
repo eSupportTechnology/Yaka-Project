@@ -1,15 +1,14 @@
 <?php $__env->startSection('content'); ?>
 <link href="<?php echo e(asset('newFrontend/Clasifico/assets/css/userdashboard.css')); ?>" rel="stylesheet">
-<!-- Page Title -->
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
             <div class="content-box centred mr-0">
                 <div class="title">
-                    <h1>Dashboard</h1>
+                    <h1><?php echo app('translator')->get('messages.Dashboard'); ?></h1>
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="<?php echo e(route('/')); ?>">Home</a></li>
-                    <li>Dashboard</li>
+                    <li><a href="<?php echo e(route('/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                    <li><?php echo app('translator')->get('messages.Dashboard'); ?></li>
                 </ul>
             </div>
         </div>
@@ -22,7 +21,7 @@
                             <div class="row">
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
-                                    <div class="dash-avatar">
+                                  <div class="dash-avatar">
                                         <?php if(Auth::check() && Auth::user()->profileImage): ?> 
                                             <a href="#"><img src="<?php echo e(asset('storage/profile_images/' . Auth::user()->profileImage)); ?>" 
                                             alt="user"></a>
@@ -30,6 +29,7 @@
                                             <a href="#"><img src="<?php echo e(asset('web/images/user.png')); ?>" alt="user"></a>
                                         <?php endif; ?>
                                     </div>
+
                                     <div class="dash-intro">
                                         <h4><a href="#"><?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?></a></h4>
                                         <h5><?php echo e(Auth::user()->email); ?></h5>
@@ -72,13 +72,13 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a href="<?php echo e(route('user.dashboard')); ?>">dashboard</a></li>
-                                <li><a href="<?php echo e(route('user.ad_posts.categories')); ?>">ad post</a></li>
-                                <li><a href="<?php echo e(route('user.my_ads')); ?>" >my ads</a></li>
-                                <li><a  class="active" href="<?php echo e(route('user.profile')); ?>">Profile</a></li>
-                                <li><a href="">message</a></li>
+                                <li><a href="<?php echo e(route('user.dashboard')); ?>"><?php echo app('translator')->get('messages.Dashboard'); ?></a></li>
+                                <li><a href="<?php echo e(route('user.ad_posts.categories')); ?>"><?php echo app('translator')->get('messages.ad post'); ?></a></li>
+                                <li><a href="<?php echo e(route('user.my_ads')); ?>" ><?php echo app('translator')->get('messages.my ads'); ?></a></li>
+                                <li><a  class="active" href="<?php echo e(route('user.profile')); ?>"><?php echo app('translator')->get('messages.Profile'); ?></a></li>
+                                <li><a href=""><?php echo app('translator')->get('messages.message'); ?></a></li>
                                 <li>
-                                    <a href="<?php echo e(route('logout')); ?>" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+                                    <a href="<?php echo e(route('user.logout')); ?>"><?php echo app('translator')->get('messages.Logout'); ?></a>
                                 </li>
                                 
                             </ul>
@@ -96,7 +96,7 @@
             <div class="col-lg-12">
             <div class="account-card alert fade show p-4" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
                     <div class="account-title">
-                        <h3>Edit Profile</h3>
+                        <h3><?php echo app('translator')->get('messages.Edit Profile'); ?></h3>
                     </div>
 
                     <?php if(isset($message)): ?>
@@ -113,41 +113,45 @@
 
                     <input type="hidden" name="userId" value="<?php echo e($user->id); ?>">
 
-                    <div class="row">
+                    <div class="row mt-4">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-label">First Name</label>
+                                <label class="form-label"><?php echo app('translator')->get('messages.First Name'); ?></label>
                                 <input type="text" class="form-control" name="first_name" value="<?php echo e(old('first_name', $user->first_name)); ?>">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-label">Last Name</label>
+                                <label class="form-label"><?php echo app('translator')->get('messages.Last Name'); ?></label>
                                 <input type="text" class="form-control" name="last_name" value="<?php echo e(old('last_name', $user->last_name)); ?>">
                             </div>
                         </div>
 
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label class="form-label">Email</label>
+                                <label class="form-label"><?php echo app('translator')->get('messages.Email'); ?></label>
                                 <input type="text" class="form-control" name="email" value="<?php echo e(old('email', $user->email)); ?>">
                             </div>
                         </div>
                         <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label class="form-label">Company</label>
+                                    <label class="form-label"><?php echo app('translator')->get('messages.Company'); ?></label>
                                     <input type="text" class="form-control" value="<?php echo e(old('company', $user->company)); ?>" name="company">
                                 </div>
                             </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-label">District</label>
+                                <label class="form-label"><?php echo app('translator')->get('messages.District'); ?></label>
                                 <select id="district" name="location" class="form-control custom-select">
-                                    <option value="">Select District</option>
+                                    <option value=""><?php echo app('translator')->get('messages.Select District'); ?></option>
                                     <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($district->id); ?>" <?php echo e($user->location == $district->id ? 'selected' : ''); ?>>
-                                            <?php echo e($district->name_en); ?>
+                                        <?php
+                                            $locale = App::getLocale();  
+                                            $districtName = 'name_' . $locale;  
+                                        ?>
+                                        <option value="<?php echo e($district->id); ?>" <?php echo e(request()->input('location') == $district->id ? 'selected' : ''); ?>>
+                                            <?php echo e($district->$districtName); ?>
 
                                         </option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -157,9 +161,9 @@
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-label">City</label>
+                                <label class="form-label"><?php echo app('translator')->get('messages.City'); ?></label>
                                 <select id="cities" name="sublocation" class="form-control custom-select">
-                                    <option value="">Select City</option>
+                                    <option value=""><?php echo app('translator')->get('messages.Select City'); ?></option>
                                     <?php if($user->location): ?>
                                         <?php $__currentLoopData = App\Models\Cities::where('district_id', $user->location)->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($city->id); ?>" <?php echo e($user->sub_location == $city->id ? 'selected' : ''); ?>>
@@ -171,40 +175,40 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 mt-4">
                                 <div class="form-group">
-                                    <label class="form-label">Post Code</label>
+                                    <label class="form-label"><?php echo app('translator')->get('messages.Post Code'); ?></label>
                                     <input type="text" class="form-control" value="<?php echo e(old('postCode', $user->postCode)); ?>" name="postCode">
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 mt-4">
                                 <div class="form-group">
-                                    <label class="form-label">Country</label>
+                                    <label class="form-label"><?php echo app('translator')->get('messages.Country'); ?></label>
                                     <input type="text" class="form-control" value="Sri Lanka" readonly name="country">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-label">Website</label>
+                                    <label class="form-label"><?php echo app('translator')->get('messages.Website'); ?></label>
                                     <input type="text" class="form-control" value="<?php echo e(old('website', $user->website)); ?>" name="website">
                                 </div>
                             </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-label">Phone</label>
+                                <label class="form-label"><?php echo app('translator')->get('messages.Phone'); ?></label>
                                 <input type="text" class="form-control" name="phone_number" value="<?php echo e(old('phone_number', $user->phone_number)); ?>">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-label">Birthday</label>
+                                <label class="form-label"><?php echo app('translator')->get('messages.Birthday'); ?></label>
                                 <input type="date" class="form-control" name="birthday" value="<?php echo e(old('birthday', $user->birthday)); ?>">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-label">Profile Image</label>
+                                <label class="form-label"><?php echo app('translator')->get('messages.Profile Image'); ?></label>
                                 <input type="file" class="form-control" name="profileImage" accept="image/*">
                             </div>
                             <?php if($user->profileImage): ?>
@@ -215,7 +219,7 @@
                         <div class="col-lg-12">
                             <button class="theme-btn-one">
                                 <i class="fas fa-user-check"></i>
-                                <span>Update Profile</span>
+                                <span><?php echo app('translator')->get('messages.Update Profile'); ?></span>
                             </button>
                         </div>
                     </div>
