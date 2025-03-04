@@ -9,11 +9,11 @@
             <div class="auto-container">
                 <div class="mr-0 content-box centred">
                     <div class="title">
-                        <h1>Ad Posting Criteria</h1>
+                        <h1>@lang('messages.Ad posting criteria')</h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="{{route( '/')}}">Home</a></li>
-                        <li>Ad Posting Criteria</li>
+                        <li><a href="{{route( '/')}}">@lang('messages.Home')</a></li>
+                        <li>@lang('messages.Ad posting criteria')</li>
                     </ul>
                 </div>
             </div>
@@ -117,30 +117,28 @@
 
 <!-- Main Title & Posting Criteria -->
 <section class="criteria-section1 fade-in center-text" style="max-width: 1000px;">
-    <h2>Welcome to Our Advertising Platform!</h2>
-    <p>Please ensure your ad meets the following standards for a smooth experience.</p>
+    <h2>@lang('messages.welcome_title')</h2>
+    <p>@lang('messages.welcome_description')</p>
     <ul class="text-center posting-criteria-list">
-        <li>1. Use correct quality pictures regarding the item.</li>
-        <li>2. Strictly only legal items.</li>
-        <li>3. Photos should match the item or service.</li>
-        <li>4. Do not post alcohol, tobacco, or related drugs.</li>
-        <li>5. Use correct contact numbers.</li>
-        <li>6. Do not post prohibited items.</li>
-        <li>7. Do not post several items in a single ad.</li>
+        <li>@lang('messages.posting_criteria_1')</li>
+        <li>@lang('messages.posting_criteria_2')</li>
+        <li>@lang('messages.posting_criteria_3')</li>
+        <li>@lang('messages.posting_criteria_4')</li>
+        <li>@lang('messages.posting_criteria_5')</li>
+        <li>@lang('messages.posting_criteria_6')</li>
+        <li>@lang('messages.posting_criteria_7')</li>
     </ul>
 </section>
 
 <!-- Ad Approval Process -->
 <section class="criteria-section fade-in right-align" style="margin:50px 0; background-color: rgb(233, 233, 233); padding:30px 20px;">
-    <h2>Ad Approval Process</h2>
-    <p>
-        Once you submit an ad, it goes through a <b>4-step approval process</br> to maintain quality. Ads are reviewed based on their content, legitimacy, and compliance with our policies.
-    </p>
+    <h2>@lang('messages.approval_process_title')</h2>
+    <p>@lang('messages.approval_process_description')</p>
     <div class="steps">
-        <div class="step"><span>1</span><p>Submit Ad</p></div>
-        <div class="step"><span>2</span><p>Review</p></div>
-        <div class="step"><span>3</span><p>Approval</p></div>
-        <div class="step"><span>4</span><p>Live</p></div>
+        <div class="step"><span>1</span><p>@lang('messages.approval_step_1')</p></div>
+        <div class="step"><span>2</span><p>@lang('messages.approval_step_2')</p></div>
+        <div class="step"><span>3</span><p>@lang('messages.approval_step_3')</p></div>
+        <div class="step"><span>4</span><p>@lang('messages.approval_step_4')</p></div>
     </div>
 </section>
 
