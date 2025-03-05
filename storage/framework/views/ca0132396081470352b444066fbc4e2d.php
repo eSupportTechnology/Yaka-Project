@@ -155,9 +155,9 @@
                                <!-- Brand -->
                                 <div class="col-lg-6 mb-3">
                                     <div class="form-group">
-                                        <label class="form-label text-dark"><strong>Brand</strong></label>
+                                        <label class="form-label text-dark"><strong><?php echo app('translator')->get('messages.Brand'); ?></strong></label>
                                         <select id="brand" name="brand" class="form-control custom-select">
-                                            <option value="">Select Brand</option>
+                                            <option value=""><?php echo app('translator')->get('messages.Brand'); ?></option>
                                             <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <option value="<?php echo e($brand->id); ?>" <?php if(request()->brand == $brand->id): ?> selected <?php endif; ?>>
                                                     <?php echo e($brand->name); ?>
@@ -171,9 +171,9 @@
                                 <!-- Model -->
                                 <div class="col-lg-6 mb-3">
                                     <div class="form-group">
-                                        <label class="form-label text-dark"><strong>Model</strong></label>
+                                        <label class="form-label text-dark"><strong><?php echo app('translator')->get('messages.Model'); ?></strong></label>
                                         <select id="model" name="model" class="form-control custom-select">
-                                            <option value="">Select Model</option>
+                                            <option value=""><?php echo app('translator')->get('messages.Model'); ?></option>
                                             <?php $__currentLoopData = $models; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $model): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <option value="<?php echo e($model->id); ?>" <?php if(request()->model == $model->id): ?> selected <?php endif; ?>>
                                                     <?php echo e($model->name); ?>
@@ -194,37 +194,37 @@
                     <!-- Product Details -->
                     <div class="col-lg-12 mb-3">
                     <div class="section-box">
-                            <h4>Product Details</h4>
+                            <h4><strong><?php echo app('translator')->get('messages.Product Description'); ?></h4>
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>Product Title <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong><?php echo app('translator')->get('messages.Title'); ?><i class="text-danger">*</i></strong></label>
                                 <input type="text" name="title" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>Price <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong><?php echo app('translator')->get('messages.Price'); ?><i class="text-danger">*</i></strong></label>
                                 <input type="number" name="price" class="form-control" required>
                             </div>
                         </div>
                         
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong> Ad Description <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong><?php echo app('translator')->get('messages.Description'); ?> <i class="text-danger">*</i></strong></label>
                                 <textarea name="description" class="form-control" rows="4" required></textarea>
                             </div>
                         </div>
                         
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>Upload Main Image <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong><?php echo app('translator')->get('messages.Upload Main Image'); ?> <i class="text-danger">*</i></strong></label>
                                 <input type="file" name="main_image" class="form-control" id="main_image" required>
                                 <div id="main_image_preview" style="margin-top: 10px;"></div> <!-- Preview section for main image -->
                             </div>
                         </div>
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>Upload Sub Images <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong><?php echo app('translator')->get('messages.Upload Sub Image'); ?> <i class="text-danger">*</i></strong></label>
                                 <small class=" text-muted">Simply select all images at once.</small>
                                 <input type="file" name="sub_images[]" class="form-control" id="sub_images" multiple>
                                 <div id="sub_images_preview" style="margin-top: 10px;"></div>
@@ -237,12 +237,12 @@
                      <!-- category Information -->
                      <div class="col-lg-12 mb-3">
                             <div class="section-box">
-                            <label class="form-label text-dark"><strong>Product Condition</strong></label>
+                            <label class="form-label text-dark"><strong><?php echo app('translator')->get('messages.Condition'); ?></strong></label>
                             <div class="d-flex">
                                 <?php $__currentLoopData = ['New', 'Used']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="form-check me-3">
                                         <input class="form-check-input" type="radio" name="condition" value="<?php echo e($option); ?>" >
-                                        <label class="form-check-label"  style="margin-right:15px"><?php echo e($option); ?></label>
+                                        <label class="form-check-label" style="margin-right:15px"><?php echo app('translator')->get('messages.' . $option); ?></label>
                                     </div>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
@@ -313,12 +313,12 @@
               <!-- Pricing Type -->
                 <div class="col-lg-12 mb-3">
                     <div class="section-box">
-                        <h4>Pricing Type</h4>
+                        <h4><?php echo app('translator')->get('messages.Pricing Type'); ?></h4>
                         <div class="d-flex flex-wrap align-items-center">
                             <?php $__currentLoopData = ['Fixed', 'Negotiable', 'Daily', 'Weekly', 'Monthly', 'Yearly']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="form-check me-4">
                                     <input class="form-check-input" type="radio" name="pricing_type" value="<?php echo e($option); ?>" >
-                                    <label class="form-check-label" style="margin-right:15px"><?php echo e($option); ?></label>
+                                    <label class="form-check-label" style="margin-right:15px"><?php echo app('translator')->get('messages.' . $option); ?></label>
                                 </div>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
@@ -330,12 +330,12 @@
                     <!-- Post Type -->
                         <div class="col-lg-12 mb-3">
                         <div class="section-box">
-                            <label class="form-label text-dark"><strong>Post Type</strong></label>
+                            <label class="form-label text-dark"><strong><?php echo app('translator')->get('messages.Post Type'); ?></strong></label>
                             <div class="d-flex">
                                 <?php $__currentLoopData = ['Booking', 'Sale', 'Rent']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="form-check me-3">
                                         <input class="form-check-input" type="radio" name="post_type" value="<?php echo e($option); ?>" >
-                                        <label class="form-check-label"  style="margin-right:15px"><?php echo e($option); ?></label>
+                                        <label class="form-check-label"  style="margin-right:15px"><?php echo app('translator')->get('messages.' . $option); ?></label>
                                     </div>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
@@ -344,31 +344,31 @@
 
                         <div class="col-lg-12 mb-3">
                             <div class="section-box">
-                                <h4>Boosting Option <i class="text-danger">*</i></h4>
+                                <h4><?php echo app('translator')->get('messages.Boosting Option'); ?><i class="text-danger">*</i></h4>
 
                                 <!-- Top Ads, Super Ads, Urgent Ads Section -->
                                 <div class="row mt-4">
                                     <!-- Top Ads Box -->
                                     <div class="col-md-4 mb-3">
                                         <div class="box p-3 border border-success rounded equal-height">
-                                            <h5 class="text-success">Top Ads</h5>
-                                            <p class="text-muted">At every page, there are 4 top slots available for top ads. If you apply for top ads, your ad will appear on top of those slots, increasing responses. Top ads are bigger than free ads, with a green blinking border for more visibility.</p>
+                                            <h5 class="text-success"><?php echo app('translator')->get('messages.Top Ads'); ?></h5>
+                                            <p class="text-muted"><?php echo app('translator')->get('messages.TopAds description'); ?></p>
                                         </div>
                                     </div>
 
                                     <!-- Super Ads Box -->
                                     <div class="col-md-4 mb-3">
                                         <div class="box p-3 border border-primary rounded equal-height">
-                                            <h5 class="text-primary">Super Ads</h5>
-                                            <p class="text-muted">Super ads are designed to grab immediate attention, featuring a premium slot at the top with a blue blinking border and rocket symbol. They stand out as soon as they're promoted and also appear as free ads for extra visibility.</p>
+                                            <h5 class="text-primary"><?php echo app('translator')->get('messages.Super Ads'); ?></h5>
+                                            <p class="text-muted"><?php echo app('translator')->get('messages.SuperAds description'); ?></p>
                                         </div>
                                     </div>
 
                                     <!-- Urgent Ads Box -->
                                     <div class="col-md-4 mb-3">
                                         <div class="box p-3 border border-danger rounded equal-height">
-                                            <h5 class="text-danger">Urgent Ads</h5>
-                                            <p class="text-muted">We have some special promotions for selling urgently. Urgent ads have a blinking red border and an urgent badge, which is a great advantage to get more attention quickly.</p>
+                                            <h5 class="text-danger"><?php echo app('translator')->get('messages.Urgent Ads'); ?></h5>
+                                            <p class="text-muted"><?php echo app('translator')->get('messages.UrgentAds description'); ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -378,13 +378,13 @@
                                     <!-- Package Selection Column -->
                                     <div class="col-md-3">
                                         <div class="mb-3">
-                                            <h5 class="mb-2">Select a Package:</h5>
+                                            <h5 class="mb-2"><?php echo app('translator')->get('messages.Select a Package'); ?>:</h5>
                                             
                                             <!-- Free Ad Option -->
                                             <div class="form-check mt-2">
                                                 <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
                                                 <label class="form-check-label text-dark" for="package_free">
-                                                    <h5>Free Ad</h5>
+                                                    <h5><?php echo app('translator')->get('messages.Free Ad'); ?></h5>
                                                 </label>
                                             </div>
 
@@ -392,7 +392,7 @@
                                                 <div class="form-check mt-2">
                                                     <input class="form-check-input package-radio" type="radio" name="boosting_option" id="package_<?php echo e($package->id); ?>" value="<?php echo e($package->id); ?>" data-name="<?php echo e($package->name); ?>">
                                                     <label class="form-check-label text-dark" for="package_<?php echo e($package->id); ?>">
-                                                        <h5><?php echo e($package->name); ?></h5>
+                                                        <h5><?php echo app('translator')->get('messages.' . $package->name); ?></h5>
                                                     </label>
                                                 </div>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -402,14 +402,14 @@
                                     <!-- Package Type Selection Column -->
                                     <div class="col-md-4">
                                         <div id="package-types" class="d-none">
-                                            <h4>Select Package Type:</h4>
+                                            <h4><?php echo app('translator')->get('messages.Select Package Type'); ?></h4>
                                             <?php $__currentLoopData = $packages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <div class="package-types-for-<?php echo e($package->id); ?> d-none">
                                                     <?php $__currentLoopData = $package->packageTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $packageType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <div class="form-check mt-2">
                                                             <input class="form-check-input package-type-radio" type="radio" name="package_type" id="packageType_<?php echo e($packageType->id); ?>" value="<?php echo e($packageType->id); ?>" data-price="<?php echo e($packageType->price); ?>"  data-duration="<?php echo e($packageType->duration); ?>">
                                                             <label class="form-check-label text-dark" for="packageType_<?php echo e($packageType->id); ?>">
-                                                                <?php echo e($packageType->duration); ?> (LKR <?php echo e(number_format($packageType->price, 2)); ?>)
+                                                                <?php echo e($packageType->duration); ?> (<?php echo app('translator')->get('messages.Rs'); ?> <?php echo e(number_format($packageType->price, 2)); ?>)
                                                             </label>
                                                         </div>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -429,7 +429,7 @@
                     <div class="col-lg-12 mt-4">
                         <button type="submit" id="publishBtn" class="theme-btn-one">
                             <i class="fas fa-check"></i>
-                            <span>Publish Your Ad</span>
+                            <span><?php echo app('translator')->get('messages.Publish Your Ad'); ?></span>
                         </button>
                     </div>
                 </form>

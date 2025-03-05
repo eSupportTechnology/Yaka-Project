@@ -160,6 +160,27 @@ return [
     'Posted by' => 'Posted by',
     'Name' => 'Name',
     'Boost this ad' => 'Boost this ad',
+    'New' => 'New',
+    'Used' => 'Used',
+    'Pricing Type' => 'Pricing Type',
+    'Post Type' => 'Post Type',
+    'Booking' => 'Booking',
+    'Sale' => 'Sale',
+    'Rent' => 'Rent',
+    'Boosting Option' => 'Boosting Option',
+    'Select a Package' => 'Select a Package',
+    'Free Ad' => 'Free Ad',
+    'Top Ad' => 'Top Ads',
+    'Super' => 'Super Ads',
+    'Urgent' => 'Urgent Ads',
+    'Select Package Type'=>'Select Package Type',
+    'Upload Main Image'=>'Upload Main Image',
+    'Upload Sub Image'=>'Upload Sub Image',
+    'Publish Your Ad'=>'Publish Your Ad',
+
+
+
+
 
     'Make your ad stand out' => 'Make your ad stand out',
     'boosting_ad_message' => 'Get up to 10 times more responses by boosting your ad. Select one plan.',
@@ -307,6 +328,54 @@ return [
     'logout_confirmation' => 'Are you sure you want to logout?',
     'yes_logout' => 'Yes, Logout',
     'no_stay' => 'No, Stay',
+
+    //Additional information
+
+    'Additional Information' => 'Additional Information',
+    'Edition' => 'Edition',
+    'Features' => 'Features',
+    'Item Type' => 'Item Type',
+    'Device Type' => 'Device Type',
+    'Screen Size' => 'Screen Size',
+    'Capacity' => 'Capacity',
+    'Type' => 'Type',
+    'Textbook Type' => 'Textbook Type',
+    'Tuition Type' => 'Tuition Type',
+    'Size' => 'Size',
+    'Gender' => 'Gender',
+    'Furniture Type' => 'Furniture Type',
+    
+    'Land Type' => 'Land Type',
+    'Land Size' => 'Land Size',
+    'Address' => 'Address',
+    'Unit (Perches)' => 'Unit (Perches)',
+    'Unit Price' => 'Unit Price',
+    'Bedrooms' => 'Bedrooms',
+    'Bathrooms' => 'Bathrooms',
+    'House Size' => 'House Size',
+    'Size (sqft)' => 'Size (sqft)',
+    'Completion Status' => 'Completion Status',
+    'Furnished Status' => 'Furnished Status',
+    'Apartment Complex' => 'Apartment Complex',
+    'Property Type' => 'Property Type',
+    'Instrument Type' => 'Instrument Type',
+    'Type of Animal' => 'Type of Animal',
+    'Service type' => 'Service type',
+    'Trim / Edition (optional)' => 'Trim / Edition (optional)',
+    'Year of Manufacture' => 'Year of Manufacture',
+    'Mileage (km)' => 'Mileage (km)',
+    'Engine Capacity (cc)' => 'Engine Capacity (cc)',
+    'Fuel Type' => 'Fuel Type',
+    'Transmission' => 'Transmission',
+    'Body Type' => 'Body Type',
+    'Bike Type' => 'Bike Type',
+    'Model Year' => 'Model Year',
+    'Vehicle Type' => 'Vehicle Type',
+    'Service Type' => 'Service Type',
+    'Part or Accessory Type' => 'Part or Accessory Type',
+    'Maintenance and Repair Type' => 'Maintenance and Repair Type',
+
+
 
 
 ];

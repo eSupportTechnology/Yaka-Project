@@ -167,6 +167,23 @@ return [
     'Posted by' => 'பதிவிட்டவர்',
     'Name' => 'பெயர்',
     'Boost this ad' => 'இந்த விளம்பரத்தை Boost செய்யவும்',
+    'New' => 'புதியது',
+    'Used' => 'பயன்படுத்தப்பட்டது',
+    'Pricing Type' => 'விலை நிர்ணய வகை',
+    'Post Type' => 'இடுகை வகை',
+    'Booking' => 'முன்பதிவு',
+    'Sale' => 'விற்பனை',
+    'Rent' => 'வாடகை',
+    'Boosting Option' => 'வளர்ச்சி விருப்பம் ',
+    'Select a Package' => 'ஒரு தொகுப்பைத் தேர்வுசெய்க',
+    'Free Ad' => 'இலவச விளம்பரம்',
+    'Top Ad' => 'இழ தற்விம்',
+    'Super' => 'சுப்பிரி டான்விம்',
+    'Urgent' => 'அத்யத்ய மருத்துவம்',
+    'Select Package Type'=>'தொகுப்பு வகையைத் தேர்ந்தெடுக்கவும்:',
+    'Upload Main Image'=>'முதன்மைப் படத்தைச் செருகு',
+    'Upload Sub Image'=>'துணைப் படத்தைச் செருகு',
+    'Publish Your Ad'=>'உங்கள் விளம்பரத்தை வெளியிடுங்கள்',
 
     'Make your ad stand out' => 'உங்கள் விளம்பரத்தை தனித்துவமாக்குங்கள்',
     'boosting_ad_message' => 'விளம்பரத்தை Boost செய்வதன் மூலம் 10 மடங்கு அதிக பலன்களை பெறுங்கள். ஒன்று அல்லது அதற்கு மேற்பட்ட விருப்பங்களைத் தேர்ந்தெடுக்கவும்.',
@@ -289,7 +306,7 @@ return [
       
       
       
-        ];
+      
     'Posted on' => 'பதிவிடப்பட்டது',
     'No Expire Date' => 'காலாவதி தேதி இல்லை',
     'Expired' => 'காலாவதியானது',
@@ -317,5 +334,55 @@ return [
     'logout_confirmation' => 'நீங்கள் வெளியேற விரும்புகிறீர்களா?',
     'yes_logout' => 'ஆம், வெளியேறு',
     'no_stay' => 'இல்லை, தொடரவும்',
+
+
+
+
+
+    //Additional information
+    'Additional Information' => 'கூடுதல் தகவல்',
+    'Edition' => 'பதிப்பு',
+    'Features' => 'அம்சங்கள்',
+    'Item Type' => 'உருப்படி வகை',
+    'Device Type' => 'சாதன வகை',
+    'Screen Size' => 'திரை அளவு',
+    'Capacity' => 'திறன்',
+    'Type' => 'வகை',
+    'Textbook Type' => 'பாடப்புத்தக வகை',
+    'Tuition Type' => 'கற்றல் வகை',
+    'Size' => 'அளவு',
+    'Gender' => 'பாலினம்',
+    'Furniture Type' => 'தளபாடங்கள் வகை',
+
+    'Land Type' => 'நில வகை',
+    'Land Size' => 'நில அளவு',
+    'Address' => 'முகவரி',
+    'Unit (Perches)' => 'அலகு (பேர்சஸ்)',
+    'Unit Price' => 'அலகு விலை',
+    'Bedrooms' => 'படுக்கையறைகள்',
+    'Bathrooms' => 'குளியலறைகள்',
+    'House Size' => 'வீட்டின் அளவு',
+    'Size (sqft)' => 'அளவு (சதுர அடி)',
+    'Completion Status' => 'முடிவடைந்த நிலை',
+    'Furnished Status' => 'உடைமை நிலை',
+    'Apartment Complex' => 'அபார்ட்மெண்ட் வளாகம்',
+    'Property Type' => 'சொத்து வகை',
+    'Instrument Type' => 'கருவி வகை',
+    'Type of Animal' => 'விலங்கின் வகை',
+    'Service type' => 'சேவை வகை',
+    'Trim / Edition (optional)' => 'எடிஷன் / பதிப்பு (விருப்பம்)',
+    'Year of Manufacture' => 'உற்பத்தி ஆண்டு',
+    'Mileage (km)' => 'ஓட்டளவு (கி.மீ)',
+    'Engine Capacity (cc)' => 'இன்ஜின் திறன் (சிசி)',
+    'Fuel Type' => 'எரிபொருள் வகை',
+    'Transmission' => 'டிரான்ஸ்மிஷன்',
+    'Body Type' => 'உடல் வகை',
+    'Bike Type' => 'பைக் வகை',
+    'Model Year' => 'மாதிரி ஆண்டு',
+    'Vehicle Type' => 'வாகன வகை',
+    'Service Type' => 'சேவை வகை',
+    'Part or Accessory Type' => 'பாகம் அல்லது அணிகலன் வகை',
+    'Maintenance and Repair Type' => 'பராமரிப்பு மற்றும் பழுதுபார்க்கும் வகை',
+
     
 ];
