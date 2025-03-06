@@ -70,16 +70,15 @@
 
 </style>
 
-<!-- Page Title -->
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
             <div class="content-box centred mr-0">
                 <div class="title">
-                    <h1>Dashboard</h1>
+                    <h1>@lang('messages.Dashboard')</h1>
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="{{ route('/') }}">Home</a></li>
-                    <li>Dashboard</li>
+                    <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
+                    <li>@lang('messages.Dashboard')</li>
                 </ul>
             </div>
         </div>
@@ -92,7 +91,7 @@
                             <div class="row">
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
-                                    <div class="dash-avatar">
+                                  <div class="dash-avatar">
                                         @if(Auth::check() && Auth::user()->profileImage) 
                                             <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
                                             alt="user"></a>
@@ -100,6 +99,7 @@
                                             <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
                                         @endif
                                     </div>
+
                                     <div class="dash-intro">
                                         <h4><a href="#">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a></h4>
                                         <h5>{{ Auth::user()->email }}</h5>
@@ -142,14 +142,15 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a href="{{route('user.dashboard')}}">dashboard</a></li>
-                                <li><a class="active" href="{{route('user.ad_posts.categories')}}">ad post</a></li>
-                                <li><a href="{{route('user.my_ads')}}" >my ads</a></li>
-                                <li><a href="{{route('user.profile')}}">Profile</a></li>
-                                <li><a href="#">Message</a></li>
+                                <li><a href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
+                                <li><a  class="active" href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
+                                <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
+                                <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>
+                                <li><a href="">@lang('messages.message')</a></li>
                                 <li>
-                                    <a href="{{route('user.logout')}}">Logout</a>
+                                    <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
+                                
                             </ul>
                         </div>
                     </div>
@@ -164,18 +165,23 @@
             <!-- Districts Section -->
             <div class="col-lg-6 mb-3">
                 <div class="account-card alert fade show p-4" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-                    <h4>Districts</h4>
+                    <h4>@lang('messages.District')</h4>
 
-                    <!-- Districts List -->
+                   <!-- Districts List -->
                     <div class="main-categories">
                         @foreach($districts as $district)
+                            @php
+                                $locale = App::getLocale();  
+                                $districtName = 'name_' . $locale;  
+                            @endphp
                             <div class="category-item" onclick="toggleCities('{{ $district->id }}', this)">
-                                <div class="main-category-name" style="color:black;font-weight: 500; margin: 0px 0;">
-                                    {{ $district->name_en }}
+                                <div class="main-category-name" style="color:black; font-weight: 500; margin: 0px 0;">
+                                    {{ $district->$districtName ?? $district->name_en }} 
                                 </div>
                             </div>
                         @endforeach
                     </div>
+
                 </div>
             </div>
 
@@ -225,29 +231,38 @@
                 return response.json();
             })
             .then(data => {
-                const subcategorySection = document.getElementById('subcategory-section');
-                subcategorySection.innerHTML = '';
+                    const subcategorySection = document.getElementById('subcategory-section');
+                    subcategorySection.innerHTML = '';
 
-                // Check if there are cities
-                if (data.length > 0) {
-                    let cityList = '<h4 class="mb-4">Cities</h4>';
-                    data.forEach(city => {
-                        cityList += `
-                            <div class="subcategory-item" onclick="selectCity('${city.id}', '${city.name_en}', this)" style="color:black">
-                                ${city.name_en}
-                            </div>
-                        `;
-                    });
-                    subcategorySection.innerHTML = cityList;
-                } else {
-                    subcategorySection.innerHTML = '<p>No cities found.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching cities:', error);
-                const subcategorySection = document.getElementById('subcategory-section');
-                subcategorySection.innerHTML = '<p>Error loading cities. Please try again.</p>';
-            });
+                    // Get the current locale
+                    const locale = document.documentElement.lang || 'en'; 
+                    
+                    if (data.length > 0) {
+                        let cityList = '<h4 class="mb-4">@lang('messages.City')</h4>';
+                        
+                        data.forEach(city => {
+                            // Dynamically use the translated name based on the current locale
+                            const cityName = city[`name_${locale}`] || city.name_en; 
+
+                            // Add the city name dynamically
+                            cityList += `
+                                <div class="subcategory-item" onclick="selectCity('${city.id}', '${cityName}', this)" style="color:black">
+                                    ${cityName}
+                                </div>
+                            `;
+                        });
+                        
+                        subcategorySection.innerHTML = cityList;
+                    } else {
+                        subcategorySection.innerHTML = '<p>No cities found</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching cities:', error);
+                    const subcategorySection = document.getElementById('subcategory-section');
+                    subcategorySection.innerHTML = '<p>Error loading cities</p>';
+                });
+
     }
 
     function selectCity(cityId, cityName, cityElement) {

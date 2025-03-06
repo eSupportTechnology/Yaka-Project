@@ -39,16 +39,15 @@
    
 @endphp
 
-<!-- Page Title -->
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
             <div class="content-box centred mr-0">
                 <div class="title">
-                    <h1>Dashboard</h1>
+                    <h1>@lang('messages.Dashboard')</h1>
                 </div>
                 <ul class="bread-crumb clearfix">
-                    <li><a href="{{ route('/') }}">Home</a></li>
-                    <li>Dashboard</li>
+                    <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
+                    <li>@lang('messages.Dashboard')</li>
                 </ul>
             </div>
         </div>
@@ -61,7 +60,7 @@
                             <div class="row">
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
-                                    <div class="dash-avatar">
+                                  <div class="dash-avatar">
                                         @if(Auth::check() && Auth::user()->profileImage) 
                                             <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
                                             alt="user"></a>
@@ -69,6 +68,7 @@
                                             <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
                                         @endif
                                     </div>
+
                                     <div class="dash-intro">
                                         <h4><a href="#">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a></h4>
                                         <h5>{{ Auth::user()->email }}</h5>
@@ -111,14 +111,15 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a href="{{route('user.dashboard')}}">dashboard</a></li>
-                                <li><a class="active" href="{{route('user.ad_posts')}}">ad post</a></li>
-                                <li><a href="{{route('user.my_ads')}}" >my ads</a></li>
-                                <li><a href="{{route('user.profile')}}">Profile</a></li>
-                                <li><a href="#">Message</a></li>
+                                <li><a href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
+                                <li><a  class="active" href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
+                                <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
+                                <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>
+                                <li><a href="">@lang('messages.message')</a></li>
                                 <li>
-                                    <a href="{{route('user.logout')}}">Logout</a>
+                                    <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
+                                
                             </ul>
                         </div>
                     </div>
@@ -155,9 +156,9 @@
                                <!-- Brand -->
                                 <div class="col-lg-6 mb-3">
                                     <div class="form-group">
-                                        <label class="form-label text-dark"><strong>Brand</strong></label>
+                                        <label class="form-label text-dark"><strong>@lang('messages.Brand')</strong></label>
                                         <select id="brand" name="brand" class="form-control custom-select">
-                                            <option value="">Select Brand</option>
+                                            <option value="">@lang('messages.Brand')</option>
                                             @foreach($brands as $brand)
                                                 <option value="{{ $brand->id }}" @if(request()->brand == $brand->id) selected @endif>
                                                     {{ $brand->name }}
@@ -170,9 +171,9 @@
                                 <!-- Model -->
                                 <div class="col-lg-6 mb-3">
                                     <div class="form-group">
-                                        <label class="form-label text-dark"><strong>Model</strong></label>
+                                        <label class="form-label text-dark"><strong>@lang('messages.Model')</strong></label>
                                         <select id="model" name="model" class="form-control custom-select">
-                                            <option value="">Select Model</option>
+                                            <option value="">@lang('messages.Model')</option>
                                             @foreach($models as $model)
                                                 <option value="{{ $model->id }}" @if(request()->model == $model->id) selected @endif>
                                                     {{ $model->name }}
@@ -192,37 +193,37 @@
                     <!-- Product Details -->
                     <div class="col-lg-12 mb-3">
                     <div class="section-box">
-                            <h4>Product Details</h4>
+                            <h4><strong>@lang('messages.Product Description')</h4>
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>Product Title <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong>@lang('messages.Title')<i class="text-danger">*</i></strong></label>
                                 <input type="text" name="title" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>Price <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong>@lang('messages.Price')<i class="text-danger">*</i></strong></label>
                                 <input type="number" name="price" class="form-control" required>
                             </div>
                         </div>
                         
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong> Ad Description <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong>@lang('messages.Description') <i class="text-danger">*</i></strong></label>
                                 <textarea name="description" class="form-control" rows="4" required></textarea>
                             </div>
                         </div>
                         
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>Upload Main Image <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong>@lang('messages.Upload Main Image') <i class="text-danger">*</i></strong></label>
                                 <input type="file" name="main_image" class="form-control" id="main_image" required>
                                 <div id="main_image_preview" style="margin-top: 10px;"></div> <!-- Preview section for main image -->
                             </div>
                         </div>
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>Upload Sub Images <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong>@lang('messages.Upload Sub Image') <i class="text-danger">*</i></strong></label>
                                 <small class=" text-muted">Simply select all images at once.</small>
                                 <input type="file" name="sub_images[]" class="form-control" id="sub_images" multiple>
                                 <div id="sub_images_preview" style="margin-top: 10px;"></div>
@@ -235,12 +236,12 @@
                      <!-- category Information -->
                      <div class="col-lg-12 mb-3">
                             <div class="section-box">
-                            <label class="form-label text-dark"><strong>Product Condition</strong></label>
+                            <label class="form-label text-dark"><strong>@lang('messages.Condition')</strong></label>
                             <div class="d-flex">
                                 @foreach(['New', 'Used'] as $option)
                                     <div class="form-check me-3">
                                         <input class="form-check-input" type="radio" name="condition" value="{{ $option }}" >
-                                        <label class="form-check-label"  style="margin-right:15px">{{ $option }}</label>
+                                        <label class="form-check-label" style="margin-right:15px">@lang('messages.' . $option)</label>
                                     </div>
                                 @endforeach
                             </div>
@@ -310,12 +311,12 @@
               <!-- Pricing Type -->
                 <div class="col-lg-12 mb-3">
                     <div class="section-box">
-                        <h4>Pricing Type</h4>
+                        <h4>@lang('messages.Pricing Type')</h4>
                         <div class="d-flex flex-wrap align-items-center">
                             @foreach(['Fixed', 'Negotiable', 'Daily', 'Weekly', 'Monthly', 'Yearly'] as $option)
                                 <div class="form-check me-4">
                                     <input class="form-check-input" type="radio" name="pricing_type" value="{{ $option }}" >
-                                    <label class="form-check-label" style="margin-right:15px">{{ $option }}</label>
+                                    <label class="form-check-label" style="margin-right:15px">@lang('messages.' . $option)</label>
                                 </div>
                             @endforeach
                         </div>
@@ -327,12 +328,12 @@
                     <!-- Post Type -->
                         <div class="col-lg-12 mb-3">
                         <div class="section-box">
-                            <label class="form-label text-dark"><strong>Post Type</strong></label>
+                            <label class="form-label text-dark"><strong>@lang('messages.Post Type')</strong></label>
                             <div class="d-flex">
                                 @foreach(['Booking', 'Sale', 'Rent'] as $option)
                                     <div class="form-check me-3">
                                         <input class="form-check-input" type="radio" name="post_type" value="{{ $option }}" >
-                                        <label class="form-check-label"  style="margin-right:15px">{{ $option }}</label>
+                                        <label class="form-check-label"  style="margin-right:15px">@lang('messages.' . $option)</label>
                                     </div>
                                 @endforeach
                             </div>
@@ -341,31 +342,31 @@
 
                         <div class="col-lg-12 mb-3">
                             <div class="section-box">
-                                <h4>Boosting Option <i class="text-danger">*</i></h4>
+                                <h4>@lang('messages.Boosting Option')<i class="text-danger">*</i></h4>
 
                                 <!-- Top Ads, Super Ads, Urgent Ads Section -->
                                 <div class="row mt-4">
                                     <!-- Top Ads Box -->
                                     <div class="col-md-4 mb-3">
                                         <div class="box p-3 border border-success rounded equal-height">
-                                            <h5 class="text-success">Top Ads</h5>
-                                            <p class="text-muted">At every page, there are 4 top slots available for top ads. If you apply for top ads, your ad will appear on top of those slots, increasing responses. Top ads are bigger than free ads, with a green blinking border for more visibility.</p>
+                                            <h5 class="text-success">@lang('messages.Top Ads')</h5>
+                                            <p class="text-muted">@lang('messages.TopAds description')</p>
                                         </div>
                                     </div>
 
                                     <!-- Super Ads Box -->
                                     <div class="col-md-4 mb-3">
                                         <div class="box p-3 border border-primary rounded equal-height">
-                                            <h5 class="text-primary">Super Ads</h5>
-                                            <p class="text-muted">Super ads are designed to grab immediate attention, featuring a premium slot at the top with a blue blinking border and rocket symbol. They stand out as soon as they're promoted and also appear as free ads for extra visibility.</p>
+                                            <h5 class="text-primary">@lang('messages.Super Ads')</h5>
+                                            <p class="text-muted">@lang('messages.SuperAds description')</p>
                                         </div>
                                     </div>
 
                                     <!-- Urgent Ads Box -->
                                     <div class="col-md-4 mb-3">
                                         <div class="box p-3 border border-danger rounded equal-height">
-                                            <h5 class="text-danger">Urgent Ads</h5>
-                                            <p class="text-muted">We have some special promotions for selling urgently. Urgent ads have a blinking red border and an urgent badge, which is a great advantage to get more attention quickly.</p>
+                                            <h5 class="text-danger">@lang('messages.Urgent Ads')</h5>
+                                            <p class="text-muted">@lang('messages.UrgentAds description')</p>
                                         </div>
                                     </div>
                                 </div>
@@ -375,13 +376,13 @@
                                     <!-- Package Selection Column -->
                                     <div class="col-md-3">
                                         <div class="mb-3">
-                                            <h5 class="mb-2">Select a Package:</h5>
+                                            <h5 class="mb-2">@lang('messages.Select a Package'):</h5>
                                             
                                             <!-- Free Ad Option -->
                                             <div class="form-check mt-2">
                                                 <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
                                                 <label class="form-check-label text-dark" for="package_free">
-                                                    <h5>Free Ad</h5>
+                                                    <h5>@lang('messages.Free Ad')</h5>
                                                 </label>
                                             </div>
 
@@ -389,7 +390,7 @@
                                                 <div class="form-check mt-2">
                                                     <input class="form-check-input package-radio" type="radio" name="boosting_option" id="package_{{ $package->id }}" value="{{ $package->id }}" data-name="{{ $package->name }}">
                                                     <label class="form-check-label text-dark" for="package_{{ $package->id }}">
-                                                        <h5>{{ $package->name }}</h5>
+                                                        <h5>@lang('messages.' . $package->name)</h5>
                                                     </label>
                                                 </div>
                                             @endforeach
@@ -399,14 +400,14 @@
                                     <!-- Package Type Selection Column -->
                                     <div class="col-md-4">
                                         <div id="package-types" class="d-none">
-                                            <h4>Select Package Type:</h4>
+                                            <h4>@lang('messages.Select Package Type')</h4>
                                             @foreach($packages as $package)
                                                 <div class="package-types-for-{{ $package->id }} d-none">
                                                     @foreach($package->packageTypes as $packageType)
                                                         <div class="form-check mt-2">
                                                             <input class="form-check-input package-type-radio" type="radio" name="package_type" id="packageType_{{ $packageType->id }}" value="{{ $packageType->id }}" data-price="{{ $packageType->price }}"  data-duration="{{ $packageType->duration }}">
                                                             <label class="form-check-label text-dark" for="packageType_{{ $packageType->id }}">
-                                                                {{ $packageType->duration }} (LKR {{ number_format($packageType->price, 2) }})
+                                                                {{ $packageType->duration }} (@lang('messages.Rs') {{ number_format($packageType->price, 2) }})
                                                             </label>
                                                         </div>
                                                     @endforeach
@@ -426,7 +427,7 @@
                     <div class="col-lg-12 mt-4">
                         <button type="submit" id="publishBtn" class="theme-btn-one">
                             <i class="fas fa-check"></i>
-                            <span>Publish Your Ad</span>
+                            <span>@lang('messages.Publish Your Ad')</span>
                         </button>
                     </div>
                 </form>

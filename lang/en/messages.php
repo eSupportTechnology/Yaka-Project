@@ -144,6 +144,7 @@ return [
 
     'Rs' => 'Rs',
     'LKR' => 'LKR',
+    'price' => 'Price',
 
     'view' => 'View',
     'Fixed' => 'Fixed',
@@ -159,6 +160,27 @@ return [
     'Posted by' => 'Posted by',
     'Name' => 'Name',
     'Boost this ad' => 'Boost this ad',
+    'New' => 'New',
+    'Used' => 'Used',
+    'Pricing Type' => 'Pricing Type',
+    'Post Type' => 'Post Type',
+    'Booking' => 'Booking',
+    'Sale' => 'Sale',
+    'Rent' => 'Rent',
+    'Boosting Option' => 'Boosting Option',
+    'Select a Package' => 'Select a Package',
+    'Free Ad' => 'Free Ad',
+    'Top Ad' => 'Top Ads',
+    'Super' => 'Super Ads',
+    'Urgent' => 'Urgent Ads',
+    'Select Package Type'=>'Select Package Type',
+    'Upload Main Image'=>'Upload Main Image',
+    'Upload Sub Image'=>'Upload Sub Image',
+    'Publish Your Ad'=>'Publish Your Ad',
+
+
+
+
 
     'Make your ad stand out' => 'Make your ad stand out',
     'boosting_ad_message' => 'Get up to 10 times more responses by boosting your ad. Select one plan.',
@@ -184,4 +206,178 @@ return [
     'para11' => 'We are thrilled to have you here. As a valued member of our community, you now have access to the largest online marketplace in Sri Lanka, where countless opportunities await you.
                 Explore an extensive range of categories, from real estate and vehicles to electronics and fashion. Our platform connects you with local sellers and unique products, making it easier than ever to find exactly what you need. With user-friendly features, advanced search options, and exclusive offers, shopping has never been more convenient.
                 Thank you for joining yaka.lk —dive in and start discovering the best deals and services',
+
+    'Our Terms & Conditions' => 'Our Terms & Conditions',   
+    
+     //Terms & Conditions page
+
+     'Acceptance of Terms' => 'Acceptance of Terms',
+     'Acceptance line1'=>'By accessing or using [Yaka.lk] (“the Website”), you agree to be bound by these Terms and Conditions.',
+     'Acceptance line2'=>'If you do not agree to these terms, you may not use the Website',
+
+     'User Registration and Eligibility' => 'User Registration and Eligibility',
+     'Eligibility line1'=>'Users must be at least 18 years old to create an account.',
+     'Eligibility line2'=>'You agree to provide accurate and up-to-date information during registration.',
+     'Eligibility line3'=>'We reserve the right to terminate accounts that violate these terms.',
+
+     'Listing and Posting Rules' => 'Listing and Posting Rules',
+    'Posting Rules line1'=>'You are responsible for ensuring that the information provided in your listing is accurate and complete.',
+    'Posting Rules line2'=>'Illegal items, stolen goods, counterfeit products, and prohibited services are strictly forbidden.',
+    'Posting Rules line3'=>'We reserve the right to remove or suspend listings that violate these terms without notice.',
+
+    'Fees and Payment' => 'Fees and Payment',
+    'Fees line1' => 'Some listings may require a fee to post. All fees are non-refundable.',
+    'Fees line2' => 'Payments are processed securely through third-party payment gateways. We are not responsible for any transaction issues related to payment providers.',
+    
+    'User Responsibilities and Conduct' => 'User Responsibilities and Conduct',
+    'User line1' => 'You agree not to engage in fraudulent or deceptive activities, including false advertising or spamming.',
+    'User line2' => 'Users are responsible for verifying the authenticity of goods and services before proceeding with a transaction.',
+    'User line3' => 'We are not responsible for any disputes between buyers and sellers.',
+    
+    'Prohibited Content' => 'Prohibited Content',
+    'Prohibited line1' => 'You must not post content that is unlawful, defamatory, obscene, or infringes on third-party rights.',
+    'Prohibited line2' => 'We reserve the right to remove content at our discretion.',
+    
+    'Intellectual Property' => 'Intellectual Property',
+    'Intellectual line1' => 'All content on the Website, including logos, design, and text, is our intellectual property.',
+    'Intellectual line2' => 'You may not reproduce, distribute, or use the Website’s content without our permission.',
+    
+    'Disclaimers and Limitation of Liability' => 'Disclaimers and Limitation of Liability',
+    'Disclaimers line1' => 'We provide the Website “as is” and make no guarantees about the availability, reliability, or accuracy of listings.',
+    'Disclaimers line2' => 'We are not liable for any direct, indirect, or consequential damages arising from your use of the Website.',
+
+    'Third-Party Links and Services' => 'Third-Party Links and Services',
+    'ThirdParty line1' => 'The Website may contain links to third-party websites. We are not responsible for their content or practices.',
+    'ThirdParty line2' => 'Your dealings with third-party services are solely between you and the respective provider.',
+    
+    'Account Termination' => 'Account Termination',
+    'Termination line1' => 'We reserve the right to terminate accounts without notice if users violate these terms or engage in suspicious activity.',
+    'Termination line2' => 'Users may delete their accounts at any time by contacting support.',
+   
+
+
+
+    //boosting_ads page
+
+    'Jump Up Ads' => 'Jump Up Ads',
+    'JumpUp description' => 'Jump Up Ads allow you to move your ad back to the top of the list periodically, increasing visibility. This ensures your ad stays in front of potential buyers for a longer time.',
+
+    'Top Ads' => 'Top Ads',
+    'TopAds description' => 'At every page, there are 4 top slots available for top ads. If you apply for top ads, your ad will appear on top of those slots, increasing responses. Top ads are bigger than free ads, with a green blinking border for more visibility.',
+
+    'Super Ads' => 'Super Ads',
+    'SuperAds description' => 'Super ads are designed to grab immediate attention, featuring a premium slot at the top with a blue blinking border and rocket symbol. They stand out as soon as they\'re promoted and also appear as free ads for extra visibility.',
+
+    'Urgent Ads' => 'Urgent Ads',
+    'UrgentAds description' => 'We have some special promotions for selling urgently. Urgent ads have a blinking red border and an urgent badge, which is a great advantage to get more attention quickly.',
+
+    'How to Boost Your Ad?' => 'How to Boost Your Ad?',
+    'Upload Your Ad' => 'Upload Your Ad',
+    'Upload description' => 'Add your product or service details and images.',
+    'Choose a Boost Plan' => 'Choose a Boost Plan',
+    'ChoosePlan description' => 'Select a plan that best fits your needs.',
+    'Get More Views' => 'Get More Views',
+    'GetViews description' => 'Your ad gets higher visibility and engagement!',
+
+
+
+    //Ad Posting Criteria
+    'welcome_title' => 'Welcome to Our Advertising Platform!',
+    'welcome_description' => 'Please ensure your ad meets the following standards for a smooth experience.',
+
+    'posting_criteria_title' => 'Posting Criteria',
+    'posting_criteria_1' => 'Use correct quality pictures regarding the item.',
+    'posting_criteria_2' => 'Strictly only legal items.',
+    'posting_criteria_3' => 'Photos should match the item or service.',
+    'posting_criteria_4' => 'Do not post alcohol, tobacco, or related drugs.',
+    'posting_criteria_5' => 'Use correct contact numbers.',
+    'posting_criteria_6' => 'Do not post prohibited items.',
+    'posting_criteria_7' => 'Do not post several items in a single ad.',
+
+    'approval_process_title' => 'Ad Approval Process',
+    'approval_process_description' => 'Once you submit an ad, it goes through a <b>4-step approval process</b> to maintain quality. Ads are reviewed based on their content, legitimacy, and compliance with our policies.',
+
+    'approval_step_1' => 'Submit Ad',
+    'approval_step_2' => 'Review',
+    'approval_step_3' => 'Approval',
+    'approval_step_4' => 'Live',
+    'Posted on' => 'Posted on',
+    'No Expire Date' => 'No Expire Date',
+    'Expired' => 'Expired',
+    'Expires on' => 'Expires on',
+    'Active Ads' => 'Active Ads',
+    'Pending Ads' => 'Pending Ads',
+
+    'Edit Profile' => 'Edit Profile',
+    'First Name' => 'First Name',
+    'Last Name' => 'Last Name',
+    'Email' => 'Email',
+    'Company' => 'Company',
+    'District' => 'District',
+    'Select District' => 'Select District',
+    'City' => 'City',
+    'Select City' => 'Select City',
+    'Post Code' => 'Post Code',
+    'Country' => 'Country',
+    'Website' => 'Website',
+    'Phone' => 'Phone',
+    'Birthday' => 'Birthday',
+    'Profile Image' => 'Profile Image',
+    'Update Profile' => 'Update Profile',
+
+    'logout_confirmation' => 'Are you sure you want to logout?',
+    'yes_logout' => 'Yes, Logout',
+    'no_stay' => 'No, Stay',
+
+    //Additional information
+
+    'Additional Information' => 'Additional Information',
+    'Edition' => 'Edition',
+    'Features' => 'Features',
+    'Item Type' => 'Item Type',
+    'Device Type' => 'Device Type',
+    'Screen Size' => 'Screen Size',
+    'Capacity' => 'Capacity',
+    'Type' => 'Type',
+    'Textbook Type' => 'Textbook Type',
+    'Tuition Type' => 'Tuition Type',
+    'Size' => 'Size',
+    'Gender' => 'Gender',
+    'Furniture Type' => 'Furniture Type',
+    
+    'Land Type' => 'Land Type',
+    'Land Size' => 'Land Size',
+    'Address' => 'Address',
+    'Unit (Perches)' => 'Unit (Perches)',
+    'Unit Price' => 'Unit Price',
+    'Bedrooms' => 'Bedrooms',
+    'Bathrooms' => 'Bathrooms',
+    'House Size' => 'House Size',
+    'Size (sqft)' => 'Size (sqft)',
+    'Completion Status' => 'Completion Status',
+    'Furnished Status' => 'Furnished Status',
+    'Apartment Complex' => 'Apartment Complex',
+    'Property Type' => 'Property Type',
+    'Instrument Type' => 'Instrument Type',
+    'Type of Animal' => 'Type of Animal',
+    'Service type' => 'Service type',
+    'Trim / Edition (optional)' => 'Trim / Edition (optional)',
+    'Year of Manufacture' => 'Year of Manufacture',
+    'Mileage (km)' => 'Mileage (km)',
+    'Engine Capacity (cc)' => 'Engine Capacity (cc)',
+    'Fuel Type' => 'Fuel Type',
+    'Transmission' => 'Transmission',
+    'Body Type' => 'Body Type',
+    'Bike Type' => 'Bike Type',
+    'Model Year' => 'Model Year',
+    'Vehicle Type' => 'Vehicle Type',
+    'Service Type' => 'Service Type',
+    'Part or Accessory Type' => 'Part or Accessory Type',
+    'Maintenance and Repair Type' => 'Maintenance and Repair Type',
+
+
+
+
 ];
+
+

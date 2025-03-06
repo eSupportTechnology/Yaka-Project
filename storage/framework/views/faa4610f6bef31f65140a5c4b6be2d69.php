@@ -36,11 +36,11 @@
     <div class="auto-container">
         <div class="mr-0 content-box centred">
             <div class="title">
-                <h1>Terms & Conditions</h1>
+                <h1><?php echo app('translator')->get('messages.Terms & Conditions'); ?></h1>
             </div>
             <ul class="clearfix bread-crumb">
-                <li><a href="<?php echo e(route( '/')); ?>">Home</a></li>
-                <li>Terms & Conditions</li>
+                <li><a href="<?php echo e(route( '/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                <li><?php echo app('translator')->get('messages.Terms & Conditions'); ?></li>
             </ul>
         </div>
     </div>
@@ -50,71 +50,71 @@
     <div class="row">
       <div class="mt-5 col-md-12">
         <div class="sec-title">
-            <span>Terms & Conditions</span>
-            <h2>Our Terms & Conditions</h2>
+            <span><?php echo app('translator')->get('messages.Terms & Conditions'); ?></span>
+            <h2><?php echo app('translator')->get('messages.Our Terms & Conditions'); ?></h2>
         </div>
         <div class="mb-5 terms-content">
-          <h2 style="font-size: 27px;margin-top: 40px">1. Acceptance of Terms</h2>
+          <h2 style="font-size: 27px;margin-top: 40px">1. <?php echo app('translator')->get('messages.Acceptance of Terms'); ?></h2>
           <ul  class="custom-dots">
-            <li>By accessing or using [Yaka.lk] (“the Website”), you agree to be bound by these Terms and Conditions. </li>
-            <li>  If you do not agree to these terms, you may not use the Website.</li>
+            <li><?php echo app('translator')->get('messages.Acceptance line1'); ?></li>
+            <li><?php echo app('translator')->get('messages.Acceptance line2'); ?></li>
         </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">2. User Registration and Eligibility</h2>
+          <h2 style="font-size: 27px;margin-top: 40px">2. <?php echo app('translator')->get('messages.User Registration and Eligibility'); ?></h2>
           <ul  class="custom-dots">
-            <li>Users must be at least 18 years old to create an account.</li>
-            <li>You agree to provide accurate and up-to-date information during registration.</li>
-            <li>We reserve the right to terminate accounts that violate these terms.</li>
+            <li><?php echo app('translator')->get('messages.Eligibility line1'); ?></li>
+            <li><?php echo app('translator')->get('messages.Eligibility line2'); ?></li>
+            <li><?php echo app('translator')->get('messages.Eligibility line3'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">3. Listing and Posting Rules</h2>
+          <h2 style="font-size: 27px;margin-top: 40px">3. <?php echo app('translator')->get('messages.Listing and Posting Rules'); ?></h2>
           <ul  class="custom-dots">
-            <li>You are responsible for ensuring that the information provided in your listing is accurate and complete.</li>
-            <li>Illegal items, stolen goods, counterfeit products, and prohibited services are strictly forbidden.</li>
-            <li>We reserve the right to remove or suspend listings that violate these terms without notice.</li>
+            <li><?php echo app('translator')->get('messages.Posting Rules line1'); ?></li>
+            <li><?php echo app('translator')->get('messages.Posting Rules line2'); ?></li>
+            <li><?php echo app('translator')->get('messages.Posting Rules line3'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">4. Fees and Payment</h2>
-          <ul  class="custom-dots">
-            <li>Some listings may require a fee to post. All fees are non-refundable.</li>
-            <li>Payments are processed securely through third-party payment gateways. We are not responsible for any transaction issues related to payment providers.</li>
+          <h2 style="font-size: 27px; margin-top: 40px">4. <?php echo app('translator')->get('messages.Fees and Payment'); ?></h2>
+          <ul class="custom-dots">
+              <li><?php echo app('translator')->get('messages.Fees line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.Fees line2'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">5. User Responsibilities and Conduct</h2>
-          <ul  class="custom-dots">
-            <li>You agree not to engage in fraudulent or deceptive activities, including false advertising or spamming.</li>
-            <li>Users are responsible for verifying the authenticity of goods and services before proceeding with a transaction.</li>
-            <li>We are not responsible for any disputes between buyers and sellers.</li>
+          <h2 style="font-size: 27px; margin-top: 40px">5. <?php echo app('translator')->get('messages.User Responsibilities and Conduct'); ?></h2>
+          <ul class="custom-dots">
+              <li><?php echo app('translator')->get('messages.User line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.User line2'); ?></li>
+              <li><?php echo app('translator')->get('messages.User line3'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">6. Prohibited Content</h2>
-          <ul  class="custom-dots">
-            <li>You must not post content that is unlawful, defamatory, obscene, or infringes on third-party rights.</li>
-            <li>We reserve the right to remove content at our discretion.</li>
+          <h2 style="font-size: 27px; margin-top: 40px">6. <?php echo app('translator')->get('messages.Prohibited Content'); ?></h2>
+          <ul class="custom-dots">
+              <li><?php echo app('translator')->get('messages.Prohibited line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.Prohibited line2'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">7. Intellectual Property</h2>
-          <ul  class="custom-dots">
-            <li>All content on the Website, including logos, design, and text, is our intellectual property.</li>
-            <li>You may not reproduce, distribute, or use the Website’s content without our permission.</li>
+          <h2 style="font-size: 27px; margin-top: 40px">7. <?php echo app('translator')->get('messages.Intellectual Property'); ?></h2>
+          <ul class="custom-dots">
+              <li><?php echo app('translator')->get('messages.Intellectual line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.Intellectual line2'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">8. Disclaimers and Limitation of Liability</h2>
-          <ul  class="custom-dots">
-            <li>We provide the Website “as is” and make no guarantees about the availability, reliability, or accuracy of listings.</li>
-            <li>We are not liable for any direct, indirect, or consequential damages arising from your use of the Website.</li>
+          <h2 style="font-size: 27px; margin-top: 40px">8. <?php echo app('translator')->get('messages.Disclaimers and Limitation of Liability'); ?></h2>
+          <ul class="custom-dots">
+              <li><?php echo app('translator')->get('messages.Disclaimers line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.Disclaimers line2'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">9. Third-Party Links and Services</h2>
-          <ul  class="custom-dots">
-            <li>The Website may contain links to third-party websites. We are not responsible for their content or practices.</li>
-            <li>Your dealings with third-party services are solely between you and the respective provider.</li>
+          <h2 style="font-size: 27px; margin-top: 40px">9. <?php echo app('translator')->get('messages.Third-Party Links and Services'); ?></h2>
+          <ul class="custom-dots">
+              <li><?php echo app('translator')->get('messages.ThirdParty line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.ThirdParty line2'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">10. Account Termination</h2>
-          <ul  class="custom-dots">
-            <li>We reserve the right to terminate accounts without notice if users violate these terms or engage in suspicious activity.</li>
-            <li>Users may delete their accounts at any time by contacting support.</li>
+          <h2 style="font-size: 27px; margin-top: 40px">10. <?php echo app('translator')->get('messages.Account Termination'); ?></h2>
+          <ul class="custom-dots">
+              <li><?php echo app('translator')->get('messages.Termination line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.Termination line2'); ?></li>
           </ul>
         </div>
       </div>
