@@ -134,9 +134,10 @@ return [
     'Daily Essentials' => 'தினசரி அவசியங்கள்',
     'Education' => 'கல்வி',
     'Agriculture' => 'விவசாயம்',
-    'Jobs & Overseas jobs' => 'வேலைகள் மற்றும் வெளிநாட்டு வேலைகள்',
+    'Jobs & Overseas jobss' => 'வேலைகள் மற்றும் வெளிநாட்டு வேலைகள்',
     'Other Ads' => 'மற்ற விளம்பரங்கள்',
     'Browse Ads' => 'விளம்பரங்களை உலாவுக',
+    'Free Ads'=>'இலவச விளம்பரங்கள்',
 
     'Search' => 'தேடல்',
     'Search Keyword' => 'தேடல் முக்கிய சொல்',
