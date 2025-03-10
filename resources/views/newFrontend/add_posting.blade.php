@@ -49,11 +49,11 @@
             <div class="auto-container">
                 <div class="mr-0 content-box centred">
                     <div class="title">
-                        <h1>Ad Posting Allowances</h1>
+                        <h1>@lang('messages.Ad posting allowances')</h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="{{route( '/')}}">Home</a></li>
-                        <li>Ad Posting Allowances</li>
+                        <li><a href="{{route( '/')}}">@lang('messages.Home')</a></li>
+                        <li>@lang('messages.Ad posting allowances')</li>
                     </ul>
                 </div>
             </div>
@@ -65,7 +65,7 @@
     <div class="row">
         <div class="pt-5 pb-5 col-md-12">
             <div class="free-ad-section">
-                <p>Free ad posting is available in every category. Contact us to become a Yaka.lk subscriber and own your stall today.</p>
+                <p>@lang('messages.free_ad_posting')</p>
                 
                 <ul class="posting-allowances-list">
                     @php
@@ -73,7 +73,7 @@
                     @endphp
 
                     @foreach ($categories as $key => $cat)
-                        <li>{{ $key+1 }}. {{ $cat->name }} - Free Ads: {{ $cat->free_add_count }}</li>
+                    <li>{{ $key+1 }}. @lang('messages.' . $cat->name) - @lang('messages.Free Ads'): {{ $cat->free_add_count }}</li>
                     @endforeach
                 </ul>
             </div>

@@ -47,11 +47,11 @@
             <div class="auto-container">
                 <div class="mr-0 content-box centred">
                     <div class="title">
-                        <h1>Ad Posting Allowances</h1>
+                        <h1><?php echo app('translator')->get('messages.Ad posting allowances'); ?></h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="<?php echo e(route( '/')); ?>">Home</a></li>
-                        <li>Ad Posting Allowances</li>
+                        <li><a href="<?php echo e(route( '/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                        <li><?php echo app('translator')->get('messages.Ad posting allowances'); ?></li>
                     </ul>
                 </div>
             </div>
@@ -63,7 +63,7 @@
     <div class="row">
         <div class="pt-5 pb-5 col-md-12">
             <div class="free-ad-section">
-                <p>Free ad posting is available in every category. Contact us to become a Yaka.lk subscriber and own your stall today.</p>
+                <p><?php echo app('translator')->get('messages.free_ad_posting'); ?></p>
                 
                 <ul class="posting-allowances-list">
                     <?php
@@ -71,7 +71,7 @@
                     ?>
 
                     <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li><?php echo e($key+1); ?>. <?php echo e($cat->name); ?> - Free Ads: <?php echo e($cat->free_add_count); ?></li>
+                    <li><?php echo e($key+1); ?>. <?php echo app('translator')->get('messages.' . $cat->name); ?> - <?php echo app('translator')->get('messages.Free Ads'); ?>: <?php echo e($cat->free_add_count); ?></li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             </div>
