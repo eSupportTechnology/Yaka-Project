@@ -153,6 +153,7 @@ return [
     'Search by Title, Category, Subcategory, or Location' => 'මාතෘකාව, වර්ගය, උප වර්ගය, හෝ ස්ථානයෙන් සෙවීම',
 
     'Rs' => 'රු',
+    'LKR' => 'රු',
     'price' => 'මිල',
     
     'view' => 'නැරඹූ වාර ගණන',

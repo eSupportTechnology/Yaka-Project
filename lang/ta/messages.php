@@ -151,6 +151,7 @@ return [
     'Search by Title, Category, Subcategory, or Location' => 'தலைப்பு, வகை, உப வகை, அல்லது இருப்பிடத்தின் மூலம் தேடல்',
 
     'Rs' => 'ரூ',
+    'LKR' => 'ரூ',
     'price' => 'விலை',
 
     'view' => 'காட்சி',
