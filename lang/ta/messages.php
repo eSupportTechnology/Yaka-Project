@@ -385,5 +385,10 @@ return [
     'Part or Accessory Type' => 'பாகம் அல்லது அணிகலன் வகை',
     'Maintenance and Repair Type' => 'பராமரிப்பு மற்றும் பழுதுபார்க்கும் வகை',
 
+
+     //Search-results
     
+    'search_results' => 'தேடல் முடிவுகள்',
+    'search_for' => '":query"க்கான தேடல் முடிவுகள்',
+    'no_ads_found' => 'உங்கள் தேடலுக்கு பொருந்தும் விளம்பரங்கள் இல்லை.',
 ];

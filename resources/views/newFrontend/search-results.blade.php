@@ -74,8 +74,8 @@
 @section('content')
     <div class="auto-container">
         <div class="sec-title centred mt-4">
-            <span>Search Results</span>
-            <h2>Search Results for "{{ request('query') }}"</h2>
+            <span>@lang('messages.search_results')</span>
+            <h2>@lang('messages.search_results') "{{ request('query') }}"</h2>
           
         </div>
 
@@ -84,7 +84,7 @@
                 <div class="tab active-tab" id="tab-1">
                     <div class="clearfix row justify-content-center">
                         @if($ads->isEmpty())
-                            <p>No ads found matching your search.</p>
+                        <p>@lang('messages.no_ads_found')</p>
                         @else
                             @foreach($ads as $ad)
                                 <div class="col-lg-3 col-md-5 col-sm-12 feature-block justify-content-center">
@@ -119,7 +119,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Price:</span>LKR {{ $ad->price ?? 'N/A' }}</h5>
+                                                    <h5><span><p>@lang('messages.Price')</p>:</span>@lang('messages.LKR'){{ $ad->price ?? 'N/A' }}</h5>
                                                 </div>
                                             </div>
                                         </div>
