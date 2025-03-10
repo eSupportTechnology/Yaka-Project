@@ -127,9 +127,11 @@ return [
     'Daily Essentials' => 'Daily Essentials',
     'Education' => 'Education',
     'Agriculture' => 'Agriculture',
-    'Jobs & Overseas jobs' => 'Jobs & Overseas jobs',
+    'Jobs & Overseas jobss' => 'Jobs & Overseas jobs',
     'Other Ads' => 'Other Ads',
     'Browse Ads' => 'Browse Ads',
+    'Free Ads'=>'Free Ads',
+    'free_ad_posting' => 'Free ad posting is available in every category. Contact us to become a Yaka.lk subscriber and own your stall today.',
 
     'Search' => 'Search',
     'Search Keyword' => 'Search Keyword',
