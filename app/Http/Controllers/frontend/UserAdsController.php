@@ -37,12 +37,21 @@ class UserAdsController extends Controller
     public function fetchSubcategories($categoryId)
     {
         $category = Category::with('subcategories')->find($categoryId);
-
+    
         if (!$category) {
             return response()->json(['error' => 'Category not found'], 404);
         }
-        return response()->json($category->subcategories);
+    
+        $translatedSubcategories = $category->subcategories->map(function ($subcategory) {
+            return [
+                'id' => $subcategory->id,
+                'name' => __('messages.' . $subcategory->name) // Translate subcategory name
+            ];
+        });
+    
+        return response()->json($translatedSubcategories);
     }
+    
     
 
     public function ad_posts_location(Request $request)

@@ -184,7 +184,7 @@
                                                                     <input type="radio" name="subcategory" value="<?php echo e($subcategory->id); ?>"
                                                                         onchange="window.location='<?php echo e(route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id])); ?>'"
                                                                         <?php echo e(request()->input('subcategory') == $subcategory->id ? 'checked' : ''); ?>>
-                                                                    <span><?php echo e($subcategory->name); ?></span>
+                                                                <span> <?php echo app('translator')->get('messages.' . $subcategory->name); ?></span>
                                                                 </label>
                                                             </li>
                                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
