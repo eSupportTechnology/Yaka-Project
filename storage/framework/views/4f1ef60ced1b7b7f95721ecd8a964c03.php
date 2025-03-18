@@ -80,7 +80,7 @@
                                 <!-- Ad Title and Details -->
                                 <h3 class="mb-0"><?php echo e($ad->title); ?></h3>  
                                 <p class="fw-bold">
-                                <?php echo app('translator')->get('messages.Posted on'); ?> <?php echo e(\Carbon\Carbon::parse($ad->created_at)->translatedFormat('d M Y g:i a')); ?>
+                                <?php echo app('translator')->get('messages.Posted on'); ?>: <?php echo e(\Carbon\Carbon::parse($ad->created_at)->translatedFormat('d M Y g:i a')); ?>
 
 
 
