@@ -74,8 +74,8 @@
 @section('content')
     <div class="auto-container">
         <div class="sec-title centred mt-4">
-            <span>Search Results</span>
-            <h2>Search Results for "{{ request('query') }}"</h2>
+            <span>@lang('messages.search_results')</span>
+            <h2>@lang('messages.search_results') "{{ request('query') }}"</h2>
           
         </div>
 
@@ -119,7 +119,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Price:</span>LKR {{ $ad->price ?? 'N/A' }}</h5>
+                                                    <h5><span><p>@lang('messages.Price')</p>:</span>@lang('messages.LKR'){{ $ad->price ?? 'N/A' }}</h5>
                                                 </div>
                                             </div>
                                         </div>

@@ -379,6 +379,11 @@ return [
 
 
 
+    //Search-results
+    'search_results' => 'Search Results',
+    'search_for' => 'Search Results for ":query"',
+    'no_ads_found' => 'No ads found matching your search.',
+
 
 ];
 

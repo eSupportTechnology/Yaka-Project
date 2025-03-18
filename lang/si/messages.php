@@ -378,7 +378,10 @@ return [
     'Part or Accessory Type' => 'උපාංග හෝ කොටස් වර්ගය',
     'Maintenance and Repair Type' => 'නඩත්තු සහ අළුත්වැඩියා වර්ගය',
 
-    
+        //Search-results
+        'search_results' => 'සෙවීම් ප්‍රතිඵල',
+        'search_for' => '":query" සඳහා සෙවීම් ප්‍රතිඵල',
+        'no_ads_found' => 'ඔබගේ සෙවීම සඳහා ගැළපෙන දැන්වීම් නොමැත.',
 
 
 ];
