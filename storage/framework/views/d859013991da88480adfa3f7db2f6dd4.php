@@ -213,8 +213,8 @@
 <!-- header-top -->
 <div class="header-top">
     <div class="auto-container">
-        <div class="top-inner">
-            <div class="contact-info">
+        <div class="top-inner" style="font-size:14px">
+            <div class="contact-info" >
                 <span><i class="fas fa-phone"></i> <?php echo app('translator')->get('messages.Contact'); ?>: 070 5 321 321</span>
                 <span><i class="fas fa-envelope"></i> <?php echo app('translator')->get('messages.Email'); ?>: info@yaka.lk</span>
                 <span><i class="fas fa-map-marker-alt"></i> <?php echo app('translator')->get('messages.Location'); ?>: Colombo 10, Sri Lanka</span>   
@@ -226,19 +226,7 @@
                 <a href="<?php echo e(url('locale/ta')); ?>">தமிழ்</a>
             </div>
 
-          <div id="google_translate_element"></div>
-
-            <script type="text/javascript">
-            function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en',
-                includedLanguages: 'en,si,ta', 
-            }, 'google_translate_element');
-            }
-            </script>
-
-            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-
+         
 
             <div class="right-column clearfix">
 <!--<ul class="social-links clearfix">

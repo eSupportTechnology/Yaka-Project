@@ -222,7 +222,7 @@ img {
   position: relative;
   display: inline-block;
   overflow: hidden;
-  font-size: 16px;
+  font-size: 13px;
   line-height: 26px;
   font-family: 'Quicksand', sans-serif;
   font-weight: 500;
@@ -236,7 +236,7 @@ img {
 }
 
 .theme-btn-one i{
-  font-size: 14px;
+  font-size: 13px;
   margin-right: 8px;
   font-weight: 400;
 }
@@ -276,7 +276,7 @@ img {
 .pagination li a{
   position: relative;
   display: inline-block;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   height: 40px;
   width: 40px;
@@ -355,7 +355,7 @@ img {
   position: fixed;
   bottom: 105%;
   right: 30px;
-  font-size: 24px;
+  font-size: 20px;
   z-index: 99;
   color: #ffffff;
   text-align: center;
@@ -380,7 +380,7 @@ img {
 .sec-title span{
   position: relative;
   display: block;
-  font-size: 17px;
+  font-size: 15px;
   line-height: 26px;
   font-weight: 500;
   text-transform: uppercase;
@@ -390,14 +390,14 @@ img {
 .sec-title h2{
   position: relative;
   display: block;
-  font-size: 40px;
+  font-size: 35px;
   line-height: 50px;
   font-weight: 900;
   margin-bottom: 21px;
 }
 
 .sec-title p{
-  font-size: 15px;
+  font-size: 13px;
   line-height: 26px;
   margin: 0px;
 }
@@ -539,7 +539,7 @@ img {
   position:relative;
   display:block;
   text-align:center;
-  font-size:16px;
+  font-size:13px;
   line-height:30px;
   font-family: 'Quicksand', sans-serif;
   font-weight:600;
@@ -673,7 +673,7 @@ img {
   line-height:24px;
   font-weight:600;
   font-family: 'Quicksand', sans-serif;
-  font-size:16px;
+  font-size:14px;
   text-transform:capitalize;
   color:#061a3a;
   border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -703,7 +703,7 @@ img {
   top:14px;
   display:block;
   line-height:24px;
-  font-size:16px;
+  font-size:14px;
   font-weight:800;
   text-align:center;
   z-index:5;  
@@ -796,7 +796,7 @@ img {
   padding:7px 0px;
   line-height:24px;
   font-weight:600;
-  font-size:16px;
+  font-size:14px;
   text-transform:capitalize;
   color:#061a3a;
   text-align: left;
@@ -823,7 +823,7 @@ img {
   top:12px;
   display:block;
   line-height:24px;
-  font-size:16px;
+  font-size:14px;
   font-weight:900;
   z-index:5;  
 }
@@ -854,7 +854,7 @@ img {
   width:34px;
   height:30px;
   text-align:center;
-  font-size:18px;
+  font-size:15px;
   line-height:26px;
   color:#3b3b3b;
   cursor:pointer;
@@ -875,7 +875,7 @@ img {
 .menu-area .mobile-nav-toggler {
   position: relative;
   float: right;
-  font-size: 40px;
+  font-size: 35px;
   line-height: 50px;
   cursor: pointer;
   color: #3786ff;
@@ -935,7 +935,7 @@ img {
 .nav-outer .mobile-nav-toggler{
   position: relative;
   float: right;
-  font-size: 40px;
+  font-size: 35px;
   line-height: 50px;
   cursor: pointer;
   color:#3786ff;
@@ -1045,7 +1045,7 @@ img {
   line-height: 30px;
   width: 24px;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   color: #ffffff;
   cursor: pointer;
   z-index: 10;
@@ -1094,7 +1094,7 @@ img {
   display: block;
   line-height: 24px;
   padding: 10px 25px;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   color: #ffffff;
   text-transform: uppercase;
@@ -1106,7 +1106,7 @@ img {
 }
 
 .mobile-menu .navigation li ul li > a{
-  font-size: 16px;
+  font-size: 13px;
   margin-left: 20px;
   text-transform: capitalize;
 }
@@ -1136,7 +1136,7 @@ img {
   width:32px;
   height:32px;
   text-align:center;
-  font-size:16px;
+  font-size:13px;
   line-height:32px;
   color:#ffffff;
   background:rgba(255,255,255,0.10);
@@ -1178,7 +1178,7 @@ img {
 .mobile-menu .social-links li a{
   position:relative;
   line-height:32px;
-  font-size:16px;
+  font-size:13px;
   color:#ffffff;
   -webkit-transition: all 500ms ease;
   -moz-transition: all 500ms ease;
@@ -1202,7 +1202,7 @@ div#mCSB_1_container{
 
 .mobile-menu .contact-info h4 {
   position: relative;
-  font-size: 20px;
+  font-size: 17px;
   color: #ffffff;
   font-weight: 700;
   margin-bottom: 20px;
@@ -1211,7 +1211,7 @@ div#mCSB_1_container{
 .mobile-menu .contact-info ul li {
   position: relative;
   display: block;
-  font-size: 15px;
+  font-size: 13px;
   color: rgba(255,255,255,0.80);
   margin-bottom: 3px;
 }
@@ -1288,7 +1288,7 @@ div#mCSB_1_container{
   margin-right: 0px;
   margin-bottom: 0;
   color: #fff;
-  font-size: 17px;
+  font-size: 15px;
   line-height: 30px;
   font-weight: 500;
   cursor: pointer;
