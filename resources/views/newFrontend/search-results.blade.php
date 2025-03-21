@@ -84,7 +84,7 @@
                 <div class="tab active-tab" id="tab-1">
                     <div class="clearfix row justify-content-center">
                         @if($ads->isEmpty())
-                            <p class="mb-4">No ads found matching your search.</p>
+                        <p>@lang('messages.no_ads_found')</p>
                         @else
                             @foreach($ads as $ad)
                                 <div class="col-lg-3 col-md-5 col-sm-12 feature-block justify-content-center">
