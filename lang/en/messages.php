@@ -127,7 +127,7 @@ return [
     'Daily Essentials' => 'Daily Essentials',
     'Education' => 'Education',
     'Agriculture' => 'Agriculture',
-    'Jobs & Overseas jobss' => 'Jobs & Overseas jobs',
+    'Jobs & Overseas jobs' => 'Jobs & Overseas jobs',
     'Other Ads' => 'Other Ads',
     'Browse Ads' => 'Browse Ads',
     'Free Ads'=>'Free Ads',

@@ -135,7 +135,7 @@ return [
     'Daily Essentials' => 'දෛනික අවශ්‍යතා' , 
     'Education' => 'අධ්‍යාපනය' , 
     'Agriculture' => 'කෘෂිකර්මය' , 
-    'Jobs & Overseas jobss' => 'රැකියා සහ විදේශ රැකියා' , 
+    'Jobs & Overseas jobs' => 'රැකියා සහ විදේශ රැකියා' , 
     'Other Ads' => 'වෙනත් දැන්වීම්' ,
     'Browse Ads' => 'දැන්වීම් ',
     'Free Ads'=>'නොමිලේ දැන්වීම්',
