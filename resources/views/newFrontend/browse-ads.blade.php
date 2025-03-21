@@ -186,7 +186,7 @@
                                                                     <input type="radio" name="subcategory" value="{{ $subcategory->id }}"
                                                                         onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
                                                                         {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
-                                                                    <span>{{ $subcategory->name }}</span>
+                                                                <span> @lang('messages.' . $subcategory->name)</span>
                                                                 </label>
                                                             </li>
                                                         @endforeach

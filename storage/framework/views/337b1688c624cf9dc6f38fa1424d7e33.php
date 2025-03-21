@@ -73,8 +73,8 @@
 <?php $__env->startSection('content'); ?>
     <div class="auto-container">
         <div class="sec-title centred mt-4">
-            <span>Search Results</span>
-            <h2>Search Results for "<?php echo e(request('query')); ?>"</h2>
+            <span><?php echo app('translator')->get('messages.search_results'); ?></span>
+            <h2><?php echo app('translator')->get('messages.search_results'); ?> "<?php echo e(request('query')); ?>"</h2>
           
         </div>
 
@@ -83,7 +83,7 @@
                 <div class="tab active-tab" id="tab-1">
                     <div class="clearfix row justify-content-center">
                         <?php if($ads->isEmpty()): ?>
-                            <p class="mb-4">No ads found matching your search.</p>
+                        <p><?php echo app('translator')->get('messages.no_ads_found'); ?></p>
                         <?php else: ?>
                             <?php $__currentLoopData = $ads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="col-lg-3 col-md-5 col-sm-12 feature-block justify-content-center">
@@ -119,7 +119,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="lower-box">
-                                                    <h5><span>Price:</span>LKR <?php echo e($ad->price ?? 'N/A'); ?></h5>
+                                                    <h5><span><p><?php echo app('translator')->get('messages.Price'); ?></p>:</span><?php echo app('translator')->get('messages.LKR'); ?><?php echo e($ad->price ?? 'N/A'); ?></h5>
                                                 </div>
                                             </div>
                                         </div>

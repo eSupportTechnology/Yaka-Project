@@ -162,7 +162,7 @@
         <div class="row">
             <div class="col-lg-6 mb-3">
                 <div class="account-card alert fade show p-4" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-                    <h4>Main Categories</h4>
+                    <h4> <?php echo app('translator')->get('messages.Main Categories'); ?></h4>
 
                     <!-- Main Category List -->
                     <div class="main-categories">
@@ -229,7 +229,7 @@ function toggleSubcategories(categoryId, categoryElement) {
 
             // Check if there are subcategories
             if (data.length > 0) {
-                let subcategoryList = '<h4 class="mb-4">Subcategories</h4>';
+                let subcategoryList = '<h4 class="mb-4"><?php echo app('translator')->get('messages.Subcategories'); ?></h4>';
                 data.forEach(subcategory => {
                     subcategoryList += `
                         <div class="subcategory-item" onclick="selectSubcategory('${subcategory.id}', this)" style="color:black">
