@@ -39,10 +39,25 @@ class userDashboardController extends Controller
     public function getCities(Request $request)
     {
         if ($request->ajax()) {
+            \Log::info('Request Data:', $request->all()); // Debugging
+    
+            if (!$request->has('district_id')) {
+                return response()->json(['error' => 'Invalid request, district_id missing'], 400);
+            }
+    
             $cities = Cities::where('district_id', $request->district_id)->get();
+    
+            if ($cities->isEmpty()) {
+                return response()->json(['error' => 'No cities found for this district'], 404);
+            }
+    
             return response()->json($cities);
         }
+    
+        return response()->json(['error' => 'Invalid request'], 400);
     }
+    
+
     
     public function destroy($adsId)
     {
@@ -56,6 +71,8 @@ class userDashboardController extends Controller
     public function updateProfile(Request $request)
     {
         $user = auth()->user();
+
+        //dd($request);
     
         $request->validate([
             'first_name' => 'required|string|max:255',
@@ -83,6 +100,8 @@ class userDashboardController extends Controller
             'location' => $request->location,
             'sub_location' => $request->sublocation,
         ];
+
+        //dd($data);
     
         if ($request->hasFile('profileImage')) {
             // Delete old image if exists

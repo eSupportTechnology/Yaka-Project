@@ -67,6 +67,12 @@
 
                     </div>
                 <?php endif; ?>
+
+                <?php if($errors->has('phone_number') || $errors->has('password')): ?>
+                    <div class="alert alert-danger">
+                        Invalid phone number or password. Please try again.
+                    </div>
+                <?php endif; ?>
     
     <!-- Login Section -->
     <section class="login-section bg-color-2">
@@ -92,7 +98,12 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" required>
+                            <div style="position: relative;">
+                                <input type="password" id="password" name="password" required>
+                                <span id="togglePassword" style="position: absolute; right: 10px; top: 10px; cursor: pointer;">
+                                    <i class="fas fa-eye-slash"></i>
+                                </span>
+                            </div>
                             <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -145,6 +156,23 @@ unset($__errorArgs, $__bag); ?>
     <!-- main-js -->
 
     <script src="<?php echo e(asset('newFrontend/Clasifico/assets/js/script.js')); ?>"></script>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            var passwordField = document.getElementById('password');
+            var icon = this.querySelector('i');
+        
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        });
+        </script>
 </body>
 </html>
 
