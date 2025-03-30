@@ -199,6 +199,37 @@ return [
     'Description' => 'Description',
     'Back' => 'Back',
     'Proceed to Payment' => 'Proceed to Payment',
+    'Jump up' => 'Jump Up',
+    'Continue' => 'Continue',
+    'current_package' => 'Current Package',
+    'current_package_duration' => 'Current Package Duration',
+    'current_package_expired' => 'Current package expiration date',
+    'Ad Boost' => 'Ad Boost',
+    'Summary' => 'Summary',
+
+    'payment_details' => 'Payment Details',
+    'Payment' => 'Payment',
+    'name_on_card' => 'Name on Card',
+    'card_number' => 'Card Number',
+    'expiry_date' => 'Expiry Date',
+    'cvv' => 'CVV',
+    'total_amount' => 'Total Amount',
+    'pay' => 'Pay',
+    'back_to_summary' => 'Back to Summary',
+    'done' => 'Done',
+    'from' => 'From',
+    'from1' => '',
+
+    // Placeholders
+    'placeholder_name_on_card' => 'Enter your Name on Card',
+    'placeholder_card_number' => 'Enter your Card Number',
+    'placeholder_expiry_date' => 'Select Expiry Date',
+    'placeholder_cvv' => 'Enter CVV',
+
+
+
+    
+
 
     'ad post' => 'ad post',
     'my ads' => 'my ads',
