@@ -204,6 +204,34 @@ return [
     'Description' => 'விளக்கம்',
     'Back' => 'மீண்டும்',
     'Proceed to Payment' => 'பணம் செலுத்துவதற்குச் செல்லவும்',
+    'Continue' => 'தொடரவும்',
+    'current_package' => 'தற்போதைய தொகுப்பு',
+    'current_package_duration' => 'தற்போதைய தொகுப்பு கால அளவு',
+    'current_package_expired' => 'தற்போதைய தொகுப்பு காலாவதி தேதி',
+    'Ad Boost' => 'விளம்பர வளர்ச்சி',
+    'Summary' => 'சுருக்கம்',
+
+    'done' => 'வெற்றி பெற்றது',
+    'from' => '',
+    'from1' => 'இருந்து',
+
+    // Placeholders
+    'placeholder_name_on_card' => 'உங்கள் அட்டையின் பெயரை உள்ளிடவும்',
+    'placeholder_card_number' => 'உங்கள் அட்டை எண்ணை உள்ளிடவும்',
+    'placeholder_expiry_date' => 'காலாவதி தேதியைத் தேர்வு செய்யவும்',
+    'placeholder_cvv' => 'CVV உள்ளிடவும்',
+
+    
+
+    'payment_details' => 'கட்டண விவரங்கள்',
+    'Payment' => 'கட்டணம்',
+    'name_on_card' => 'அட்டை上的 பெயர்',
+    'card_number' => 'அட்டை எண்',
+    'expiry_date' => 'காலாவதி தேதி',
+    'cvv' => 'CVV',
+    'total_amount' => 'மொத்த தொகை',
+    'pay' => 'பணம் செலுத்து',
+    'back_to_summary' => 'சுருக்கத்திற்கு திரும்பு',
 
     'ad post' => 'டாஷ்போர்டு',
     'my ads' => 'என் விளம்பரங்கள்',

@@ -65,6 +65,12 @@
                         {{ session('error') }}
                     </div>
                 @endif
+
+                @if ($errors->has('phone_number') || $errors->has('password'))
+                    <div class="alert alert-danger">
+                        Invalid phone number or password. Please try again.
+                    </div>
+                @endif
     
     <!-- Login Section -->
     <section class="login-section bg-color-2">
@@ -83,7 +89,12 @@
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" required>
+                            <div style="position: relative;">
+                                <input type="password" id="password" name="password" required>
+                                <span id="togglePassword" style="position: absolute; right: 10px; top: 10px; cursor: pointer;">
+                                    <i class="fas fa-eye-slash"></i>
+                                </span>
+                            </div>
                             @error('password')
                                 <div class="error-message">{{ $message }}</div>
                             @enderror
@@ -129,6 +140,23 @@
     <!-- main-js -->
 
     <script src="{{ asset('newFrontend/Clasifico/assets/js/script.js') }}"></script>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            var passwordField = document.getElementById('password');
+            var icon = this.querySelector('i');
+        
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        });
+        </script>
 </body>
 </html>
 

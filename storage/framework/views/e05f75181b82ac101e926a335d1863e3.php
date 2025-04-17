@@ -1,4 +1,7 @@
 <?php $__env->startSection('content'); ?>
+
+
+  </style>
 <link href="<?php echo e(asset('newFrontend/Clasifico/assets/css/userdashboard.css')); ?>" rel="stylesheet">
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
@@ -140,29 +143,31 @@
                                     <input type="text" class="form-control" value="<?php echo e(old('company', $user->company)); ?>" name="company">
                                 </div>
                             </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="form-label"><?php echo app('translator')->get('messages.District'); ?></label>
-                                <select id="district" name="location" class="form-control custom-select">
-                                    <option value=""><?php echo app('translator')->get('messages.Select District'); ?></option>
-                                    <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php
-                                            $locale = App::getLocale();  
-                                            $districtName = 'name_' . $locale;  
-                                        ?>
-                                        <option value="<?php echo e($district->id); ?>" <?php echo e(request()->input('location') == $district->id ? 'selected' : ''); ?>>
-                                            <?php echo e($district->$districtName); ?>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label"><?php echo app('translator')->get('messages.District'); ?></label>
+                                    <select id="district" name="location" class="form-control custom-select">
+                                        <option value=""><?php echo app('translator')->get('messages.Select District'); ?></option>
+                                        <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php
+                                                $locale = App::getLocale();  
+                                                $districtName = 'name_' . $locale;  
+                                            ?>
+                                            <option value="<?php echo e($district->id); ?>" 
+                                                <?php echo e((old('location', $user->location ?? '') == $district->id) ? 'selected' : ''); ?>>
+                                                <?php echo e($district->$districtName); ?>
 
-                                        </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                            
 
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-label"><?php echo app('translator')->get('messages.City'); ?></label>
-                                <select id="cities" name="sublocation" class="form-control custom-select">
+                                <select id="cities" name="sublocation" class="form-control " >
                                     <option value=""><?php echo app('translator')->get('messages.Select City'); ?></option>
                                     <?php if($user->location): ?>
                                         <?php $__currentLoopData = App\Models\Cities::where('district_id', $user->location)->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -235,34 +240,58 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+<!-- Nice Select JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+
 <script>
-    $(document).ready(function () {
-        $('#district').on('change', function () {
-            var district_id = $(this).val();
-            if (district_id) {
-                $.ajax({
-                    url: '<?php echo e(route("get.cities")); ?>',
-                    type: "GET",
-                    data: { district_id: district_id },
-                    dataType: "json",
-                    success: function (data) {
-                        $('#cities').empty().append('<option value="">Select City</option>');
-                        $.each(data, function (key, value) {
-                            $('#cities').append('<option value="' + value.id + '">' + value.name_en + '</option>');
-                        });
-                    },
-                    error: function () {
-                        console.log("Error fetching cities.");
-                    }
-                });
-            } else {
-                $('#cities').empty().append('<option value="">Select City</option>');
-            }
-        });
+  $(document).ready(function () {
+    // Initialize nice-select on page load
+    $('select').niceSelect(); 
+
+    $('#district').on('change', function () {
+        var district_id = $(this).val();
+        if (district_id) {
+            $.ajax({
+                url: '<?php echo e(route("get.cities")); ?>',
+                type: "GET",
+                data: { district_id: district_id },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+
+                    // Clear and add new options
+                    $('#cities').empty().append('<option value="">Select City</option>');
+                    $.each(data, function (key, value) {
+                        $('#cities').append('<option value="' + value.id + '">' + value.name_en + '</option>');
+                    });
+
+                    // Rebuild Nice Select Dropdown
+                    $('#cities').niceSelect('update');  
+                },
+                error: function () {
+                    console.log("Error fetching cities.");
+                }
+            });
+        } else {
+            $('#cities').empty().append('<option value="">Select City</option>');
+            $('#cities').niceSelect('update'); // Reset dropdown
+        }
     });
+
+    // ✅ Fix: Update only the City dropdown UI
+    $('#cities').on('change', function () {
+        var selectedText = $('#cities option:selected').text();
+        $('#cities').next('.nice-select').find('.current').text(selectedText);
+    });
+});
+
+
 </script>
 
 <?php $__env->stopSection(); ?>
-
 
 <?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/user/profile.blade.php ENDPATH**/ ?>

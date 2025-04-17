@@ -1,6 +1,9 @@
 @extends ('newFrontend.master')
 
 @section('content')
+
+
+  </style>
 <link href="{{ asset('newFrontend/Clasifico/assets/css/userdashboard.css') }}" rel="stylesheet">
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
@@ -141,28 +144,30 @@
                                     <input type="text" class="form-control" value="{{ old('company', $user->company) }}" name="company">
                                 </div>
                             </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="form-label">@lang('messages.District')</label>
-                                <select id="district" name="location" class="form-control custom-select">
-                                    <option value="">@lang('messages.Select District')</option>
-                                    @foreach($districts as $district)
-                                        @php
-                                            $locale = App::getLocale();  
-                                            $districtName = 'name_' . $locale;  
-                                        @endphp
-                                        <option value="{{ $district->id }}" {{ request()->input('location') == $district->id ? 'selected' : '' }}>
-                                            {{ $district->$districtName }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label">@lang('messages.District')</label>
+                                    <select id="district" name="location" class="form-control custom-select">
+                                        <option value="">@lang('messages.Select District')</option>
+                                        @foreach($districts as $district)
+                                            @php
+                                                $locale = App::getLocale();  
+                                                $districtName = 'name_' . $locale;  
+                                            @endphp
+                                            <option value="{{ $district->id }}" 
+                                                {{ (old('location', $user->location ?? '') == $district->id) ? 'selected' : '' }}>
+                                                {{ $district->$districtName }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                            
 
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-label">@lang('messages.City')</label>
-                                <select id="cities" name="sublocation" class="form-control custom-select">
+                                <select id="cities" name="sublocation" class="form-control " >
                                     <option value="">@lang('messages.Select City')</option>
                                     @if($user->location)
                                         @foreach(App\Models\Cities::where('district_id', $user->location)->get() as $city)
@@ -234,32 +239,56 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+<!-- Nice Select JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+
 <script>
-    $(document).ready(function () {
-        $('#district').on('change', function () {
-            var district_id = $(this).val();
-            if (district_id) {
-                $.ajax({
-                    url: '{{ route("get.cities") }}',
-                    type: "GET",
-                    data: { district_id: district_id },
-                    dataType: "json",
-                    success: function (data) {
-                        $('#cities').empty().append('<option value="">Select City</option>');
-                        $.each(data, function (key, value) {
-                            $('#cities').append('<option value="' + value.id + '">' + value.name_en + '</option>');
-                        });
-                    },
-                    error: function () {
-                        console.log("Error fetching cities.");
-                    }
-                });
-            } else {
-                $('#cities').empty().append('<option value="">Select City</option>');
-            }
-        });
+  $(document).ready(function () {
+    // Initialize nice-select on page load
+    $('select').niceSelect(); 
+
+    $('#district').on('change', function () {
+        var district_id = $(this).val();
+        if (district_id) {
+            $.ajax({
+                url: '{{ route("get.cities") }}',
+                type: "GET",
+                data: { district_id: district_id },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+
+                    // Clear and add new options
+                    $('#cities').empty().append('<option value="">Select City</option>');
+                    $.each(data, function (key, value) {
+                        $('#cities').append('<option value="' + value.id + '">' + value.name_en + '</option>');
+                    });
+
+                    // Rebuild Nice Select Dropdown
+                    $('#cities').niceSelect('update');  
+                },
+                error: function () {
+                    console.log("Error fetching cities.");
+                }
+            });
+        } else {
+            $('#cities').empty().append('<option value="">Select City</option>');
+            $('#cities').niceSelect('update'); // Reset dropdown
+        }
     });
+
+    // ✅ Fix: Update only the City dropdown UI
+    $('#cities').on('change', function () {
+        var selectedText = $('#cities option:selected').text();
+        $('#cities').next('.nice-select').find('.current').text(selectedText);
+    });
+});
+
+
 </script>
 
 @endsection
-

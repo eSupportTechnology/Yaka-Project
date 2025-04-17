@@ -284,23 +284,23 @@
         <!-- Step-wise Navigation -->
         <ul class="custom-step-nav">
             <li class="nav-item">
-                <span class="custom-nav-link active">Ad Boost</span>
+                <span class="custom-nav-link active">@lang('messages.Ad Boost')</span>
             </li>
             <li class="nav-item">
-                <span class="custom-nav-link disabled" id="summaryStep">Summary</span>
+                <span class="custom-nav-link disabled" id="summaryStep">@lang('messages.Summary')</span>
             </li>
             <li class="nav-item">
-                <span class="custom-nav-link disabled" id="paymentStep">Payment</span>
+                <span class="custom-nav-link disabled" id="paymentStep">@lang('messages.Payment')</span>
             </li>
             <li class="nav-item">
-                <span class="custom-nav-link disabled">Done</span>
+                <span class="custom-nav-link disabled">@lang('messages.done')</span>
             </li>
         </ul>
 
         <!-- Main Plan Section -->
         <div class="custom-boost-options">
-            <h4 class="mb-0 text-center">Make your ad stand out!</h4>
-            <p class="mb-1 text-center">Get up to 10 times more responses by boosting your ad. Select one plan.</p>
+            <h4 class="mb-0 text-center">@lang('messages.Make your ad stand out')</h4>
+            <p class="mb-1 text-center">@lang('messages.boosting_ad_message')</p>
 
             @foreach($packages as $package)
                 <?php
@@ -326,18 +326,18 @@
                     <div>
                         <h5>
                             <img src="{{ asset($imageFile) }}" alt="{{ $package->name }}"> 
-                            {{ $package->name }}
+                            @lang('messages.' . $package->name)
                         </h5>
-                        <p class="mb-1">Boost your ad with the "{{ $package->name }}" package!</p>
-                        <strong>From Rs {{ number_format($minPrice, 2) }}</strong>
+                        <p class="mb-1">@lang('messages.Boost your ad with the') "{{ $package->name }}" @lang('messages.package')!</p>
+                        <strong>@lang('messages.from') @lang('messages.Rs') {{ number_format($minPrice, 2) }} @lang('messages.from1') </strong>
                     </div>
                     <div class="dropdown-wrapper">
                         <select class="form-select" id="packageSelect{{ $package->id }}" onchange="selectPlanDropdown({{ $package->id }}, '{{ $package->name }}', this)">
-                            <option value="">Select Plan</option>
+                            <option value="">@lang('messages.Select Plan')</option>
                             @foreach($packageTypes->filter(fn($type) => $type->package_id == $package->id) as $type)
                                 <option value="{{ $type->price }}" data-id="{{$type->id}}" data-duration="{{ $type->duration }}" 
                                     style="padding: 5px; font-size: 16px; color: #333; background-color: #f8f9fa;">
-                                    {{ $type->duration }} days | Rs- {{ $type->price }}
+                                    {{ $type->duration }} @lang('messages.Days') | @lang('messages.Rs')- {{ $type->price }}
                                 </option>
                             @endforeach
                         </select>
@@ -351,12 +351,12 @@
 
         <!-- Amount Summary -->
         <div class="custom-summary-box">
-            <h5>Amount: <span id="totalAmount" class="custom-text-success">Rs 0</span></h5>
-            <p id="selectedPlans">No plans selected</p>
+            <h5>@lang('messages.Amount'): <span id="totalAmount" class="custom-text-success">@lang('messages.Rs') 0</span></h5>
+            <p id="selectedPlans">@lang('messages.No plans selected')</p>
         </div>
 
         <!-- Continue Button -->
-        <button id="continueButton" class="custom-button custom-btn-success" disabled onclick="showSummary()">Continue</button>
+        <button id="continueButton" class="custom-button custom-btn-success" disabled onclick="showSummary()">@lang('messages.Continue')</button>
 
         <!-- Summary Section -->
         <div id="summarySection" style="display: none;">
@@ -366,21 +366,21 @@
                          style="width: 150px; height: auto; border-radius: 8px; object-fit: cover;">
                         
                     <div>
-                        <p style="color: black"><strong>Title:</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
-                        <p style="color: black"><strong>Price:</strong> <span id="summaryAdPrice" class="summary-text"></span></p>
-                        <p style="color: black"><strong>Description:</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
-                        <p style="color: black"><strong>Current Package:</strong> <span id="summaryAdCurrentPackage" class="summary-text"></span></p>
-                        <p style="color: black"><strong>Current Package Duration:</strong> <span id="summaryAdCurrentPackageType" class="summary-text"></span>days</p>
-                        <p style="color: black"><strong>Current Package expired:</strong> <span id="summaryAdCurrentPackageExpired" class="summary-text"></span></p>
+                        <p style="color: black"><strong>@lang('messages.Title'):</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
+                        <p style="color: black"><strong>@lang('messages.Price'):</strong> <span id="summaryAdPrice" class="summary-text"></span></p>
+                        <p style="color: black"><strong>@lang('messages.Description'):</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
+                        <p style="color: black"><strong>@lang('messages.current_package'):</strong> <span id="summaryAdCurrentPackage" class="summary-text"></span></p>
+                        <p style="color: black"><strong>@lang('messages.current_package_duration'):</strong> <span id="summaryAdCurrentPackageType" class="summary-text"></span>days</p>
+                        <p style="color: black"><strong>@lang('messages.current_package_expired'):</strong> <span id="summaryAdCurrentPackageExpired" class="summary-text"></span></p>
                     </div>
                 </div>
         
                 <p style="color: black" id="summarySelectedPlans">No plans selected</p>
-                <h5>Total Amount: <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
+                <h5>@lang('messages.Total'): <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
         
                 <div class="summary-buttons">
-                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">Back</button>
-                    <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary">Proceed to Payment</button>
+                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">@lang('messages.Back')</button>
+                    <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary">@lang('messages.Proceed to Payment')</button>
                 </div>
             </div>
         </div>
@@ -388,41 +388,41 @@
                 <!-- Payment Form Section -->
         <div id="paymentSection" style="display: none;">
             <div class="custom-summary-box modern-summary-box">
-                <h4>Payment Details</h4>
+                <h4>@lang('messages.payment_details')</h4>
                 <form id="paymentForm" action="YOUR_PAYMENT_PROCESSING_URL" method="POST">
                     <!-- User Name Field -->
                     <div class="form-group">
-                        <label for="name" class="form-label"> Name On Card</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name On Card" required>
+                        <label for="name" class="form-label">@lang('messages.name_on_card')</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="@lang('messages.placeholder_name_on_card')" required>
                     </div>
 
                     <!-- Card Number Field -->
                     <div class="form-group">
-                        <label for="cardNumber" class="form-label">Card Number</label>
-                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Enter your card number" required>
+                        <label for="cardNumber" class="form-label">@lang('messages.card_number')</label>
+                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="@lang('messages.placeholder_card_number')" required>
                     </div>
 
                     <!-- Expiry Date -->
                     <div class="form-group">
-                        <label for="expiryDate" class="form-label">Expiry Date</label>
-                        <input type="month" class="form-control" id="expiryDate" name="expiryDate" required>
+                        <label for="expiryDate" class="form-label">@lang('messages.expiry_date')</label>
+                        <input type="month" class="form-control" id="expiryDate" name="expiryDate"  required>
                     </div>
 
                     <!-- CVV Field -->
                     <div class="form-group">
-                        <label for="cvv" class="form-label">CVV</label>
-                        <input type="password" class="form-control" id="cvv" name="cvv" placeholder="Enter CVV" required>
+                        <label for="cvv" class="form-label">@lang('messages.cvv')</label>
+                        <input type="password" class="form-control" id="cvv" name="cvv" placeholder="@lang('messages.placeholder_cvv')" required>
                     </div>
 
                       <!-- Display Total Amount -->
-                    <h5>Total Amount: <span class="custom-text-success" id="paymentTotalAmount">Rs 0</span></h5>
+                    <h5>@lang('messages.total_amount'): <span class="custom-text-success" id="paymentTotalAmount">Rs 0</span></h5>
 
                     <div class="form-group mt-2">
-                        <button type="button" class="custom-button custom-btn-primary" onclick="updateBoost()">Pay</button>
+                        <button type="button" class="custom-button custom-btn-primary" onclick="updateBoost()">@lang('messages.pay')</button>
                     </div>
                     
                     <div class="form-group ">
-                        <button type="button" class="custom-button custom-btn-secondary" onclick="backToSummary()">Back to Summary</button>
+                        <button type="button" class="custom-button custom-btn-secondary" onclick="backToSummary()">@lang('messages.back_to_summary')</button>
                     </div>
                 </form>
             </div>

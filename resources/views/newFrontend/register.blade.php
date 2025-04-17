@@ -113,18 +113,30 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input type="password" name="password" required>
+                                    <div style="position: relative;">
+                                        <input type="password" id="password" name="password" required>
+                                        <span id="togglePassword" style="position: absolute; right: 10px; top: 10px; cursor: pointer;">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </span>
+                                    </div>
                                     @error('password')
                                         <div class="error-message">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                
                                 <div class="form-group">
                                     <label>Confirm Password</label>
-                                    <input type="password" name="password_confirmation" required>
+                                    <div style="position: relative;">
+                                        <input type="password" id="confirmPassword" name="password_confirmation" required>
+                                        <span id="toggleConfirmPassword" style="position: absolute; right: 10px; top: 10px; cursor: pointer;">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </span>
+                                    </div>
                                     @error('password_confirmation')
                                         <div class="error-message">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                
                                 <div class="form-group message-btn">
                                     <button type="submit" class="theme-btn-one">Sign Up</button>
                                 </div>
@@ -170,6 +182,31 @@
     <!-- main-js -->
 
     <script src="{{ asset('newFrontend/Clasifico/assets/js/script.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function togglePassword(inputId, toggleId) {
+                var passwordField = document.getElementById(inputId);
+                var toggleIcon = document.getElementById(toggleId).querySelector('i');
+        
+                document.getElementById(toggleId).addEventListener('click', function () {
+                    if (passwordField.type === 'password') {
+                        passwordField.type = 'text';
+                        toggleIcon.classList.remove('fa-eye-slash');
+                        toggleIcon.classList.add('fa-eye');
+                    } else {
+                        passwordField.type = 'password';
+                        toggleIcon.classList.remove('fa-eye');
+                        toggleIcon.classList.add('fa-eye-slash');
+                    }
+                });
+            }
+        
+            togglePassword('password', 'togglePassword');
+            togglePassword('confirmPassword', 'toggleConfirmPassword');
+        });
+        </script>
+        
 </body><!-- End of .page_wrapper -->
 </html>
 
