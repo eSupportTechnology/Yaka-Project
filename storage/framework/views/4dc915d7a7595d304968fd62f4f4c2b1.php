@@ -43,9 +43,9 @@
                         <div class="clearfix row">
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget logo-widget">
-                                    <figure class="footer-logo"><a href="index.html"><img src="{{asset('Logo-re.png')}}" alt=""></a></figure>
+                                    <figure class="footer-logo"><a href="index.html"><img src="<?php echo e(asset('Logo-re.png')); ?>" alt=""></a></figure>
                                     <div class="text">
-                                        <p>@lang('messages.para4')</p>
+                                        <p><?php echo app('translator')->get('messages.para4'); ?></p>
                                     </div>
                                     <ul class="clearfix social-links sidebar-social-media">
                                         <li><a href="https://www.facebook.com/profile.php?id=61565478456618" class="sidebar-icon fb-icon"><i class="fab fa-facebook-f"></i></a></li>
@@ -58,14 +58,14 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget links-widget ml-70">
                                     <div class="widget-title">
-                                        <h3>@lang('messages.Quick Links')</h3>
+                                        <h3><?php echo app('translator')->get('messages.Quick Links'); ?></h3>
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
-                                            <li><a href="{{route(name: 'about-us')}}">@lang('messages.About')</a></li>
-                                            <li><a href="{{route('contact-us')}}">@lang('messages.Contact Us')</a></li>
-                                            <li><a href="{{route('privacy-safety')}}">@lang('messages.Privacy & Safety')</a></li>
-                                            <li><a href="{{route('terms-conditions')}}">@lang('messages.Terms & Conditions')</a></li>
+                                            <li><a href="<?php echo e(route(name: 'about-us')); ?>"><?php echo app('translator')->get('messages.About'); ?></a></li>
+                                            <li><a href="<?php echo e(route('contact-us')); ?>"><?php echo app('translator')->get('messages.Contact Us'); ?></a></li>
+                                            <li><a href="<?php echo e(route('privacy-safety')); ?>"><?php echo app('translator')->get('messages.Privacy & Safety'); ?></a></li>
+                                            <li><a href="<?php echo e(route('terms-conditions')); ?>"><?php echo app('translator')->get('messages.Terms & Conditions'); ?></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -73,14 +73,14 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget links-widget ml-70">
                                     <div class="widget-title">
-                                        <h3>@lang('messages.General')</h3>
+                                        <h3><?php echo app('translator')->get('messages.General'); ?></h3>
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
-                                            <li><a href="{{route('tips')}}">@lang('messages.Tips')</a></li>
-                                            <li><a href="{{route('boosting_ads')}}">@lang('messages.Boosting ads')</a></li>
-                                            {{--  <li><a href="{{route('add_posting')}}">@lang('messages.Ad posting allowances')</a></li>  --}}
-                                            <li><a href="{{route('add_post')}}">@lang('messages.Ad posting criteria')</a></li>
+                                            <li><a href="<?php echo e(route('tips')); ?>"><?php echo app('translator')->get('messages.Tips'); ?></a></li>
+                                            <li><a href="<?php echo e(route('boosting_ads')); ?>"><?php echo app('translator')->get('messages.Boosting ads'); ?></a></li>
+                                            
+                                            <li><a href="<?php echo e(route('add_post')); ?>"><?php echo app('translator')->get('messages.Ad posting criteria'); ?></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget contact-widget">
                                     <div class="widget-title">
-                                        <h3>@lang('messages.Contact')</h3>
+                                        <h3><?php echo app('translator')->get('messages.Contact'); ?></h3>
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix info-list">
@@ -118,11 +118,11 @@
                     <div class="clearfix footer-inner">
                         <div class="copyright pull-left"><p>Copyright © 2025 . All Rights Reserved.</p></div>
                         <ul class="clearfix footer-nav pull-right">
-                            {{--  <li><a href="index.html"></a></li>
-                            <li><a href="index.html"></a></li>  --}}
+                            
                         </ul>
                     </div>
                 </div>
             </div>
         </footer>
         <!-- main-footer end -->
+<?php /**PATH C:\Users\ASUS\Desktop\eSupport\Yaka-Project\resources\views/newFrontend/footer.blade.php ENDPATH**/ ?>

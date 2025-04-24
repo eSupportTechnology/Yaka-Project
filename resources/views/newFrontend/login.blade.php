@@ -8,6 +8,7 @@
 <title>Yaka</title>
 
 <!-- Fav Icon -->
+<link rel="icon" href="{{ asset('Logo-icon.png') }}" type="image/x-icon">
 <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 
 <!-- Google Fonts -->
@@ -41,25 +42,25 @@
             <div class="user-form-content">
                 <a href="#"><img src="{{asset('Logo-re.png')}}" alt="logo"></a>
                 <h1>Advertise your assets <span>Buy what you want</span></h1>
-                <p>Biggest online marketplace in Sri Lanka</p> 
+                <p>Biggest online marketplace in Sri Lanka</p>
             </div>
         </div>
-    
+
         <div class="user-form-category">
             <div class="user-form-header">
                 <a href="#"><img src="{{asset('yaka-payment.png')}}" alt="logo"></a>
                 <a href="/"><i class="fas fa-arrow-left"style="color: red;"></i></a>
             </div>
-           
-    
+
+
             <div class="tab-pane active" id="register-tab">
-                
+
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
                 @endif
-    
+
                 @if (session('error'))
                     <div class="alert alert-danger">
                         {{ session('error') }}
@@ -71,7 +72,7 @@
                         Invalid phone number or password. Please try again.
                     </div>
                 @endif
-    
+
     <!-- Login Section -->
     <section class="login-section bg-color-2">
         <div class="auto-container">
@@ -113,7 +114,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- jQuery plugins -->
 <script src="{{ asset('newFrontend/Clasifico/assets/js/jquery.js') }}"></script>
 <script src="{{ asset('newFrontend/Clasifico/assets/js/popper.min.js') }}"></script>
@@ -145,7 +146,7 @@
         document.getElementById('togglePassword').addEventListener('click', function () {
             var passwordField = document.getElementById('password');
             var icon = this.querySelector('i');
-        
+
             if (passwordField.type === 'password') {
                 passwordField.type = 'text';
                 icon.classList.remove('fa-eye-slash');

@@ -219,15 +219,15 @@
     <div class="auto-container">
         <div class="top-inner" style="font-size:14px">
             <div class="contact-info" >
-                <span><i class="fas fa-phone"></i> @lang('messages.Contact'): 070 5 321 321</span>
-                <span><i class="fas fa-envelope"></i> @lang('messages.Email'): info@yaka.lk</span>
-                {{--  <span><i class="fas fa-map-marker-alt"></i> @lang('messages.Location'): Colombo 10, Sri Lanka</span>     --}}
+                <span><i class="fas fa-phone"></i> <?php echo app('translator')->get('messages.Contact'); ?>: 070 5 321 321</span>
+                <span><i class="fas fa-envelope"></i> <?php echo app('translator')->get('messages.Email'); ?>: info@yaka.lk</span>
+                
             </div>
 
             <div class="language-switcher">
-                <a href="{{ url('locale/en') }}">English</a> |
-                <a href="{{ url('locale/si') }}">සිංහල</a> |
-                <a href="{{ url('locale/ta') }}">தமிழ்</a>
+                <a href="<?php echo e(url('locale/en')); ?>">English</a> |
+                <a href="<?php echo e(url('locale/si')); ?>">සිංහල</a> |
+                <a href="<?php echo e(url('locale/ta')); ?>">தமிழ்</a>
             </div>
 
 
@@ -240,18 +240,19 @@
                     <li><a href="index-4.html"><i class="fab fa-youtube"></i></a></li>
                 </ul>-->
                 <div class="sign-in">
-                    @auth
+                    <?php if(auth()->guard()->check()): ?>
                     <div class="dropdown">
                         <a href="#" class="dropdown-toggle" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
-                            <i class="fas fa-user"></i> {{ Auth::user()->first_name }}
+                            <i class="fas fa-user"></i> <?php echo e(Auth::user()->first_name); ?>
+
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                         <li><a class="dropdown-item" href="{{ route('user.dashboard') }}" style="color: black !important; text-decoration:none">@lang('messages.Dashboard')</a></li>
+                         <li><a class="dropdown-item" href="<?php echo e(route('user.dashboard')); ?>" style="color: black !important; text-decoration:none"><?php echo app('translator')->get('messages.Dashboard'); ?></a></li>
                          <li>
-                            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                                @csrf
+                            <form action="<?php echo e(route('logout')); ?>" method="POST" style="display: inline;">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="dropdown-item" style="background: none; border: none; text-decoration: none; color: inherit;">
-                                    <i class="fas fa-sign-out-alt"></i> @lang('messages.Logout')
+                                    <i class="fas fa-sign-out-alt"></i> <?php echo app('translator')->get('messages.Logout'); ?>
                                 </button>
                             </form>
                         </li>
@@ -259,9 +260,9 @@
                         </ul>
                     </div>
 
-                    @else
-                        <a style="text-decoration: none;" href="{{ route('custom.login') }}"><i class="fas fa-user"></i> Sign In</a>
-                    @endauth
+                    <?php else: ?>
+                        <a style="text-decoration: none;" href="<?php echo e(route('custom.login')); ?>"><i class="fas fa-user"></i> Sign In</a>
+                    <?php endif; ?>
                 </div>
 
             </div>
@@ -275,16 +276,16 @@
         <div class="outer-box">
         <div class="container d-flex align-items-center justify-content-between">
         <!-- Logo -->
-        <a href="{{ route('/') }}"><div class="logo">
-        <img src="{{asset('Logo-re.png')}}" style="" alt="logo">
+        <a href="<?php echo e(route('/')); ?>"><div class="logo">
+        <img src="<?php echo e(asset('Logo-re.png')); ?>" style="" alt="logo">
         </div></a>
 
         <!-- Search Bar -->
-        <form action="{{ route('search') }}" method="GET">
+        <form action="<?php echo e(route('search')); ?>" method="GET">
             <div class="search-bar">
                 <input type="text" name="query" class="form-control"
-                    placeholder=" @lang('messages.Search by Title, Category, Subcategory, or Location')"
-                    value="{{ request('query') }}">
+                    placeholder=" <?php echo app('translator')->get('messages.Search by Title, Category, Subcategory, or Location'); ?>"
+                    value="<?php echo e(request('query')); ?>">
 
                 <!-- Search Icon -->
                 <button type="submit" class="search-icon-btn">
@@ -294,7 +295,7 @@
         </form>
 
             <div class="mt-2 btn-box">
-                <a href="{{ route('user.ad_posts.categories') }}" style="text-decoration:none" class="theme-btn-one"><i class="icon-1"></i>@lang('messages.Post Your Ads')</a>
+                <a href="<?php echo e(route('user.ad_posts.categories')); ?>" style="text-decoration:none" class="theme-btn-one"><i class="icon-1"></i><?php echo app('translator')->get('messages.Post Your Ads'); ?></a>
             </div>
         </div>
     </div>
@@ -305,14 +306,14 @@
     <div class="auto-container">
         <div class="outer-box">
             <div class="logo-box">
-                <figure class="logo"><a href="{{ route('/') }}"> <img src="{{asset('Logo-re.png')}}" style="" alt="logo"></a></figure>
+                <figure class="logo"><a href="<?php echo e(route('/')); ?>"> <img src="<?php echo e(asset('Logo-re.png')); ?>" style="" alt="logo"></a></figure>
             </div>
 
-            <form action="{{ route('search') }}" method="GET">
+            <form action="<?php echo e(route('search')); ?>" method="GET">
             <div class="search-bar">
                 <input type="text" name="query" class="form-control"
-                    placeholder="@lang('messages.Search by Title, Category, Subcategory, or Location')"
-                    value="{{ request('query') }}">
+                    placeholder="<?php echo app('translator')->get('messages.Search by Title, Category, Subcategory, or Location'); ?>"
+                    value="<?php echo e(request('query')); ?>">
 
                 <!-- Search Icon -->
                 <button type="submit" class="search-icon-btn">
@@ -323,7 +324,7 @@
 
 
             <div class="btn-box">
-                <a href="{{ route('user.ad_posts.categories') }}" style="text-decoration:none" class="theme-btn-one"><i class="icon-1"></i>@lang('messages.Post Your Ads')</a>
+                <a href="<?php echo e(route('user.ad_posts.categories')); ?>" style="text-decoration:none" class="theme-btn-one"><i class="icon-1"></i><?php echo app('translator')->get('messages.Post Your Ads'); ?></a>
             </div>
         </div>
     </div>
@@ -358,3 +359,4 @@
     </div>
 </nav>
 </div><!-- End Mobile Menu -->
+<?php /**PATH C:\Users\ASUS\Desktop\eSupport\Yaka-Project\resources\views/newFrontend/header.blade.php ENDPATH**/ ?>

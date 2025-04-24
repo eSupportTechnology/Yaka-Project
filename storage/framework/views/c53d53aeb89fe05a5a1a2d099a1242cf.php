@@ -1,6 +1,4 @@
-@extends('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
 
@@ -161,11 +159,11 @@
             <div class="auto-container">
                 <div class="mr-0 content-box centred">
                     <div class="title">
-                        <h1>@lang('messages.Boosting ads')</h1>
+                        <h1><?php echo app('translator')->get('messages.Boosting ads'); ?></h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="{{route( '/')}}">@lang('messages.Home')</a></li>
-                        <li>@lang('messages.Boosting ads')</li>
+                        <li><a href="<?php echo e(route( '/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                        <li><?php echo app('translator')->get('messages.Boosting ads'); ?></li>
                     </ul>
                 </div>
             </div>
@@ -175,13 +173,13 @@
         <section class="mb-0 ad-banner-container">
             <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
                 <div class="carousel-inner">
-                    @foreach($banners as $key => $banner)
-                        @if($banner->type == 0)
-                            <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                               <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($banner->type == 0): ?>
+                            <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                               <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="mx-auto d-block" alt="Banner Image">
                             </div>
-                        @endif
-                    @endforeach
+                        <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
         </section>
@@ -193,44 +191,44 @@
 
     <!-- Ads Details -->
     <div class="ad-type">
-        <h3>@lang('messages.Jump Up Ads')</h3>
-        <p>@lang('messages.JumpUp description')</p>
+        <h3><?php echo app('translator')->get('messages.Jump Up Ads'); ?></h3>
+        <p><?php echo app('translator')->get('messages.JumpUp description'); ?></p>
     </div>
 
     <div class="ad-type">
-        <h3>@lang('messages.Top Ads')</h3>
-        <p>@lang('messages.TopAds description')</p>
+        <h3><?php echo app('translator')->get('messages.Top Ads'); ?></h3>
+        <p><?php echo app('translator')->get('messages.TopAds description'); ?></p>
     </div>
 
     <div class="ad-type">
-        <h3>@lang('messages.Super Ads')</h3>
-        <p>@lang('messages.SuperAds description')</p>
+        <h3><?php echo app('translator')->get('messages.Super Ads'); ?></h3>
+        <p><?php echo app('translator')->get('messages.SuperAds description'); ?></p>
     </div>
 
     <div class="ad-type">
-        <h3>@lang('messages.Urgent Ads')</h3>
-        <p>@lang('messages.UrgentAds description')</p>
+        <h3><?php echo app('translator')->get('messages.Urgent Ads'); ?></h3>
+        <p><?php echo app('translator')->get('messages.UrgentAds description'); ?></p>
     </div>
 </div>
 
 <!-- Steps Section -->
 <section class="steps">
-    <h2>@lang('messages.How to Boost Your Ad?')</h2>
+    <h2><?php echo app('translator')->get('messages.How to Boost Your Ad?'); ?></h2>
     <div class="step-container">
         <div class="step">
             <i class="fas fa-upload"></i>
-            <h3>@lang('messages.Upload Your Ad')</h3>
-            <p>@lang('messages.Upload description')</p>
+            <h3><?php echo app('translator')->get('messages.Upload Your Ad'); ?></h3>
+            <p><?php echo app('translator')->get('messages.Upload description'); ?></p>
         </div>
         <div class="step">
             <i class="fas fa-bullhorn"></i>
-            <h3>@lang('messages.Choose a Boost Plan')</h3>
-            <p>@lang('messages.ChoosePlan description')</p>
+            <h3><?php echo app('translator')->get('messages.Choose a Boost Plan'); ?></h3>
+            <p><?php echo app('translator')->get('messages.ChoosePlan description'); ?></p>
         </div>
         <div class="step">
             <i class="fas fa-chart-line"></i>
-            <h3>@lang('messages.Get More Views')</h3>
-            <p>@lang('messages.GetViews description')</p>
+            <h3><?php echo app('translator')->get('messages.Get More Views'); ?></h3>
+            <p><?php echo app('translator')->get('messages.GetViews description'); ?></p>
         </div>
     </div>
 </section>
@@ -239,17 +237,19 @@
 <section class="mb-0 ad-banner-container">
     <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">
-            @foreach($banners as $key => $banner)
-                @if($banner->type == 0)
-                    <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                       <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+            <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($banner->type == 0): ?>
+                    <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                       <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="mx-auto d-block" alt="Banner Image">
                     </div>
-                @endif
-            @endforeach
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>
 <!-- ad - banner-section end -->
 
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\eSupport\Yaka-Project\resources\views/newFrontend/boosting_ads.blade.php ENDPATH**/ ?>

@@ -1,6 +1,4 @@
-@extends ('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     /* General Container Styling */
@@ -332,25 +330,25 @@
         <!-- Step-wise Navigation -->
         <ul class="custom-step-nav">
             <li class="nav-item">
-                <span class="custom-nav-link active">@lang('messages.Ad Boost')</span>
+                <span class="custom-nav-link active"><?php echo app('translator')->get('messages.Ad Boost'); ?></span>
             </li>
             <li class="nav-item">
-                <span class="custom-nav-link disabled" id="summaryStep">@lang('messages.Summary')</span>
+                <span class="custom-nav-link disabled" id="summaryStep"><?php echo app('translator')->get('messages.Summary'); ?></span>
             </li>
             <li class="nav-item">
-                <span class="custom-nav-link disabled" id="paymentStep">@lang('messages.Payment')</span>
+                <span class="custom-nav-link disabled" id="paymentStep"><?php echo app('translator')->get('messages.Payment'); ?></span>
             </li>
             <li class="nav-item">
-                <span class="custom-nav-link disabled">@lang('messages.done')</span>
+                <span class="custom-nav-link disabled"><?php echo app('translator')->get('messages.done'); ?></span>
             </li>
         </ul>
 
         <!-- Main Plan Section -->
         <div class="custom-boost-options">
-            <h4 class="mb-0 text-center">@lang('messages.Make your ad stand out')</h4>
-            <p class="mb-1 text-center">@lang('messages.boosting_ad_message')</p>
+            <h4 class="mb-0 text-center"><?php echo app('translator')->get('messages.Make your ad stand out'); ?></h4>
+            <p class="mb-1 text-center"><?php echo app('translator')->get('messages.boosting_ad_message'); ?></p>
 
-            @foreach($packages as $package)
+            <?php $__currentLoopData = $packages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php
                     $filteredTypes = $packageTypes->filter(function($type) use ($package) {
                         return $type->package_id == $package->id;
@@ -373,62 +371,63 @@
                 <div class="custom-boost-option">
                     <div>
                         <h5>
-                            <img src="{{ asset($imageFile) }}" alt="{{ $package->name }}">
-                            @lang('messages.' . $package->name)
+                            <img src="<?php echo e(asset($imageFile)); ?>" alt="<?php echo e($package->name); ?>">
+                            <?php echo app('translator')->get('messages.' . $package->name); ?>
                         </h5>
-                        <p class="mb-1">@lang('messages.Boost your ad with the') "{{ $package->name }}" @lang('messages.package')!</p>
-                        <strong>@lang('messages.from') @lang('messages.Rs') {{ number_format($minPrice, 2) }} @lang('messages.from1') </strong>
+                        <p class="mb-1"><?php echo app('translator')->get('messages.Boost your ad with the'); ?> "<?php echo e($package->name); ?>" <?php echo app('translator')->get('messages.package'); ?>!</p>
+                        <strong><?php echo app('translator')->get('messages.from'); ?> <?php echo app('translator')->get('messages.Rs'); ?> <?php echo e(number_format($minPrice, 2)); ?> <?php echo app('translator')->get('messages.from1'); ?> </strong>
                     </div>
                     <div class="dropdown-wrapper">
-                        <select class="form-select" id="packageSelect{{ $package->id }}" onchange="selectPlanDropdown({{ $package->id }}, '{{ $package->name }}', this)">
-                            <option value="">@lang('messages.Select Plan')</option>
-                            @foreach($packageTypes->filter(fn($type) => $type->package_id == $package->id) as $type)
-                                <option value="{{ $type->price }}" data-id="{{$type->id}}" data-duration="{{ $type->duration }}"
+                        <select class="form-select" id="packageSelect<?php echo e($package->id); ?>" onchange="selectPlanDropdown(<?php echo e($package->id); ?>, '<?php echo e($package->name); ?>', this)">
+                            <option value=""><?php echo app('translator')->get('messages.Select Plan'); ?></option>
+                            <?php $__currentLoopData = $packageTypes->filter(fn($type) => $type->package_id == $package->id); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($type->price); ?>" data-id="<?php echo e($type->id); ?>" data-duration="<?php echo e($type->duration); ?>"
                                     style="padding: 5px; font-size: 16px; color: #333; background-color: #f8f9fa;">
-                                    {{ $type->duration }} @lang('messages.Days') | @lang('messages.Rs')- {{ $type->price }}
+                                    <?php echo e($type->duration); ?> <?php echo app('translator')->get('messages.Days'); ?> | <?php echo app('translator')->get('messages.Rs'); ?>- <?php echo e($type->price); ?>
+
                                 </option>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
-                        <span class="remove-plan" id="removeIcon{{ $package->id }}" onclick="removePlan({{ $package->id }})" style="display: none;">❌</span>
+                        <span class="remove-plan" id="removeIcon<?php echo e($package->id); ?>" onclick="removePlan(<?php echo e($package->id); ?>)" style="display: none;">❌</span>
                     </div>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
 
 
 
         <!-- Amount Summary -->
         <div class="custom-summary-box">
-            <h5>@lang('messages.Amount'): <span id="totalAmount" class="custom-text-success">@lang('messages.Rs') 0</span></h5>
-            <p id="selectedPlans">@lang('messages.No plans selected')</p>
+            <h5><?php echo app('translator')->get('messages.Amount'); ?>: <span id="totalAmount" class="custom-text-success"><?php echo app('translator')->get('messages.Rs'); ?> 0</span></h5>
+            <p id="selectedPlans"><?php echo app('translator')->get('messages.No plans selected'); ?></p>
         </div>
 
         <!-- Continue Button -->
-        <button id="continueButton" class="custom-button custom-btn-success" disabled onclick="showSummary()">@lang('messages.Continue')</button>
+        <button id="continueButton" class="custom-button custom-btn-success" disabled onclick="showSummary()"><?php echo app('translator')->get('messages.Continue'); ?></button>
 
         <!-- Summary Section -->
         <div id="summarySection" style="display: none;">
             <div class="custom-summary-box modern-summary-box">
                 <div class="summary-details" style="display: flex; align-items: center; gap: 20px;">
-                    <img src=" {{ asset('storage/' . $mainImage) }}" alt="Main Image"
+                    <img src=" <?php echo e(asset('storage/' . $mainImage)); ?>" alt="Main Image"
                          style="width: 150px; height: auto; border-radius: 8px; object-fit: cover;">
 
                     <div>
-                        <p style="color: black"><strong>@lang('messages.Title'):</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
-                        <p style="color: black"><strong>@lang('messages.Price'):</strong> <span id="summaryAdPrice" class="summary-text"></span></p>
-                        <p style="color: black"><strong>@lang('messages.Description'):</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
-                        <p style="color: black"><strong>@lang('messages.current_package'):</strong> <span id="summaryAdCurrentPackage" class="summary-text"></span></p>
-                        <p style="color: black"><strong>@lang('messages.current_package_duration'):</strong> <span id="summaryAdCurrentPackageType" class="summary-text"></span>days</p>
-                        <p style="color: black"><strong>@lang('messages.current_package_expired'):</strong> <span id="summaryAdCurrentPackageExpired" class="summary-text"></span></p>
+                        <p style="color: black"><strong><?php echo app('translator')->get('messages.Title'); ?>:</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
+                        <p style="color: black"><strong><?php echo app('translator')->get('messages.Price'); ?>:</strong> <span id="summaryAdPrice" class="summary-text"></span></p>
+                        <p style="color: black"><strong><?php echo app('translator')->get('messages.Description'); ?>:</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
+                        <p style="color: black"><strong><?php echo app('translator')->get('messages.current_package'); ?>:</strong> <span id="summaryAdCurrentPackage" class="summary-text"></span></p>
+                        <p style="color: black"><strong><?php echo app('translator')->get('messages.current_package_duration'); ?>:</strong> <span id="summaryAdCurrentPackageType" class="summary-text"></span>days</p>
+                        <p style="color: black"><strong><?php echo app('translator')->get('messages.current_package_expired'); ?>:</strong> <span id="summaryAdCurrentPackageExpired" class="summary-text"></span></p>
                     </div>
                 </div>
 
                 <p style="color: black" id="summarySelectedPlans">No plans selected</p>
-                <h5>@lang('messages.Total'): <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
+                <h5><?php echo app('translator')->get('messages.Total'); ?>: <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
 
                 <div class="summary-buttons">
-                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">@lang('messages.Back')</button>
-                    <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary">@lang('messages.Proceed to Payment')</button>
+                    <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()"><?php echo app('translator')->get('messages.Back'); ?></button>
+                    <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary"><?php echo app('translator')->get('messages.Proceed to Payment'); ?></button>
                 </div>
             </div>
         </div>
@@ -436,41 +435,41 @@
                 <!-- Payment Form Section -->
         <div id="paymentSection" style="display: none;">
             <div class="custom-summary-box modern-summary-box">
-                <h4>@lang('messages.payment_details')</h4>
+                <h4><?php echo app('translator')->get('messages.payment_details'); ?></h4>
                 <form id="paymentForm" action="YOUR_PAYMENT_PROCESSING_URL" method="POST">
                     <!-- User Name Field -->
                     <div class="form-group">
-                        <label for="name" class="form-label">@lang('messages.name_on_card')</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="@lang('messages.placeholder_name_on_card')" required>
+                        <label for="name" class="form-label"><?php echo app('translator')->get('messages.name_on_card'); ?></label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="<?php echo app('translator')->get('messages.placeholder_name_on_card'); ?>" required>
                     </div>
 
                     <!-- Card Number Field -->
                     <div class="form-group">
-                        <label for="cardNumber" class="form-label">@lang('messages.card_number')</label>
-                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="@lang('messages.placeholder_card_number')" required>
+                        <label for="cardNumber" class="form-label"><?php echo app('translator')->get('messages.card_number'); ?></label>
+                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="<?php echo app('translator')->get('messages.placeholder_card_number'); ?>" required>
                     </div>
 
                     <!-- Expiry Date -->
                     <div class="form-group">
-                        <label for="expiryDate" class="form-label">@lang('messages.expiry_date')</label>
+                        <label for="expiryDate" class="form-label"><?php echo app('translator')->get('messages.expiry_date'); ?></label>
                         <input type="month" class="form-control" id="expiryDate" name="expiryDate"  required>
                     </div>
 
                     <!-- CVV Field -->
                     <div class="form-group">
-                        <label for="cvv" class="form-label">@lang('messages.cvv')</label>
-                        <input type="password" class="form-control" id="cvv" name="cvv" placeholder="@lang('messages.placeholder_cvv')" required>
+                        <label for="cvv" class="form-label"><?php echo app('translator')->get('messages.cvv'); ?></label>
+                        <input type="password" class="form-control" id="cvv" name="cvv" placeholder="<?php echo app('translator')->get('messages.placeholder_cvv'); ?>" required>
                     </div>
 
                       <!-- Display Total Amount -->
-                    <h5>@lang('messages.total_amount'): <span class="custom-text-success" id="paymentTotalAmount">Rs 0</span></h5>
+                    <h5><?php echo app('translator')->get('messages.total_amount'); ?>: <span class="custom-text-success" id="paymentTotalAmount">Rs 0</span></h5>
 
                     <div class="mt-2 form-group">
-                        <button type="button" class="custom-button custom-btn-primary" onclick="updateBoost()">@lang('messages.pay')</button>
+                        <button type="button" class="custom-button custom-btn-primary" onclick="updateBoost()"><?php echo app('translator')->get('messages.pay'); ?></button>
                     </div>
 
                     <div class="form-group ">
-                        <button type="button" class="custom-button custom-btn-secondary" onclick="backToSummary()">@lang('messages.back_to_summary')</button>
+                        <button type="button" class="custom-button custom-btn-secondary" onclick="backToSummary()"><?php echo app('translator')->get('messages.back_to_summary'); ?></button>
                     </div>
                 </form>
             </div>
@@ -485,9 +484,9 @@
 
 
 <script>
-    let ad = @json($ad);
-    let packages = @json($packages);
-    let packagesType = @json($packageTypes);
+    let ad = <?php echo json_encode($ad, 15, 512) ?>;
+    let packages = <?php echo json_encode($packages, 15, 512) ?>;
+    let packagesType = <?php echo json_encode($packageTypes, 15, 512) ?>;
     let selectedPlans = [];
     let totalAmount = 0;
     let selectedPackageId = null;
@@ -701,7 +700,7 @@ function removePlan(packageId) {
         return;
     }
 
-    fetch("{{ route('boosting.update') }}", {
+    fetch("<?php echo e(route('boosting.update')); ?>", {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
@@ -737,4 +736,6 @@ function removePlan(packageId) {
 
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\eSupport\Yaka-Project\resources\views/newFrontend/ads_boost_plans.blade.php ENDPATH**/ ?>

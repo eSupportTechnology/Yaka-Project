@@ -1,6 +1,4 @@
-@extends('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
 
@@ -197,11 +195,11 @@ ul.custom-dots li::before {
             <div class="auto-container">
                 <div class="mr-0 content-box centred">
                     <div class="title">
-                        <h1>@lang('messages.Privacy & Safety')</h1>
+                        <h1><?php echo app('translator')->get('messages.Privacy & Safety'); ?></h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="{{route( '/')}}">@lang('messages.Home')</a></li>
-                        <li>@lang('messages.Privacy & Safety')</li>
+                        <li><a href="<?php echo e(route( '/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                        <li><?php echo app('translator')->get('messages.Privacy & Safety'); ?></li>
                     </ul>
                 </div>
             </div>
@@ -213,13 +211,13 @@ ul.custom-dots li::before {
         <section class="mb-0 ad-banner-container">
             <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
                 <div class="carousel-inner">
-                    @foreach($banners as $key => $banner)
-                        @if($banner->type == 0)
-                            <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                               <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($banner->type == 0): ?>
+                            <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                               <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="mx-auto d-block" alt="Banner Image">
                             </div>
-                        @endif
-                    @endforeach
+                        <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
         </section>
@@ -229,43 +227,43 @@ ul.custom-dots li::before {
   <div class="row">
     <div class="mt-5 col-md-12">
         <div class="sec-title">
-        <span>@lang('messages.Privacy & Safety')</span>
-        <h2>@lang('Our') @lang('messages.Privacy & Safety')</h2>
+        <span><?php echo app('translator')->get('messages.Privacy & Safety'); ?></span>
+        <h2><?php echo app('translator')->get('Our'); ?> <?php echo app('translator')->get('messages.Privacy & Safety'); ?></h2>
         </div>
       <div class="mb-5 privacy-content">
-        <h2 style="font-size: 27px;margin-top: 40px">1. @lang('messages.Information We Collect')</h2>
+        <h2 style="font-size: 27px;margin-top: 40px">1. <?php echo app('translator')->get('messages.Information We Collect'); ?></h2>
         <ul  class="custom-dots">
-        <li><strong>@lang('messages.Personal Data'):</strong> @lang('messages.Name, email address, phone number, and payment information')</li>
-          <li><strong>@lang('messages.Usage Data'):</strong> @lang('messages.IP address, browser type, and interaction history with the Website')</li>
-          <li><strong>@lang('messages.Cookies'):</strong> @lang('messages.To enhance user experience and analyze traffic. You can manage cookies through your browser settings')</li>
+        <li><strong><?php echo app('translator')->get('messages.Personal Data'); ?>:</strong> <?php echo app('translator')->get('messages.Name, email address, phone number, and payment information'); ?></li>
+          <li><strong><?php echo app('translator')->get('messages.Usage Data'); ?>:</strong> <?php echo app('translator')->get('messages.IP address, browser type, and interaction history with the Website'); ?></li>
+          <li><strong><?php echo app('translator')->get('messages.Cookies'); ?>:</strong> <?php echo app('translator')->get('messages.To enhance user experience and analyze traffic. You can manage cookies through your browser settings'); ?></li>
         </ul>
 
-        <h2 style="font-size: 27px;margin-top: 40px">2. @lang('messages.How We Use Your Data')</h2>
+        <h2 style="font-size: 27px;margin-top: 40px">2. <?php echo app('translator')->get('messages.How We Use Your Data'); ?></h2>
         <ul class="custom-dots">
-          <li>@lang('messages.To manage user accounts and provide customer support')</li>
-          <li>@lang('messages.To process payments and publish listings')</li>
-          <li>@lang('messages.To improve Website functionality through analytics and user feedback')</li>
-          <li>@lang('messages.To send updates, notifications, or promotional offers (only with consent)')</li>
+          <li><?php echo app('translator')->get('messages.To manage user accounts and provide customer support'); ?></li>
+          <li><?php echo app('translator')->get('messages.To process payments and publish listings'); ?></li>
+          <li><?php echo app('translator')->get('messages.To improve Website functionality through analytics and user feedback'); ?></li>
+          <li><?php echo app('translator')->get('messages.To send updates, notifications, or promotional offers (only with consent)'); ?></li>
         </ul>
 
-        <h2 style="font-size: 27px;margin-top: 40px">3. @lang('messages.Data Sharing and Disclosure')</h2>
+        <h2 style="font-size: 27px;margin-top: 40px">3. <?php echo app('translator')->get('messages.Data Sharing and Disclosure'); ?></h2>
         <ul  class="custom-dots">
-          <li>@lang('messages.We do not sell your data to third parties')</li>
-          <li>@lang('messages.Data may be shared with payment processors, law enforcement, or service providers as necessary')</li>
-          <li>@lang('messages.In case of a merger or acquisition, your data may be transferred to the new entity')</li>
+          <li><?php echo app('translator')->get('messages.We do not sell your data to third parties'); ?></li>
+          <li><?php echo app('translator')->get('messages.Data may be shared with payment processors, law enforcement, or service providers as necessary'); ?></li>
+          <li><?php echo app('translator')->get('messages.In case of a merger or acquisition, your data may be transferred to the new entity'); ?></li>
         </ul>
 
-        <h2 style="font-size: 27px;margin-top: 40px">4. @lang('messages.Data Security')</h2>
+        <h2 style="font-size: 27px;margin-top: 40px">4. <?php echo app('translator')->get('messages.Data Security'); ?></h2>
         <ul  class="custom-dots">
-          <li>@lang('messages.We use encryption and other security measures to protect your personal data')</li>
-          <li>@lang('messages.Despite our efforts, no online service is entirely secure. We encourage users to protect their login information')</li>
+          <li><?php echo app('translator')->get('messages.We use encryption and other security measures to protect your personal data'); ?></li>
+          <li><?php echo app('translator')->get('messages.Despite our efforts, no online service is entirely secure. We encourage users to protect their login information'); ?></li>
         </ul>
 
-        <h2 style="font-size: 27px;margin-top: 40px">5. @lang('messages.User Rights')</h2>
+        <h2 style="font-size: 27px;margin-top: 40px">5. <?php echo app('translator')->get('messages.User Rights'); ?></h2>
         <ul  class="custom-dots">
-          <li><strong>@lang('messages.Access and Correction'):</strong>@lang('messages.You can access and update your personal information through your account')</li>
-          <li><strong>@lang('messages.Data Deletion'):</strong>@lang('messages.You may request the deletion of your personal data by contacting support') </li>
-          <li><strong>@lang('messages.Consent Withdrawal'):</strong>@lang('messages.You can opt out of marketing emails by clicking the unsubscribe link')
+          <li><strong><?php echo app('translator')->get('messages.Access and Correction'); ?>:</strong><?php echo app('translator')->get('messages.You can access and update your personal information through your account'); ?></li>
+          <li><strong><?php echo app('translator')->get('messages.Data Deletion'); ?>:</strong><?php echo app('translator')->get('messages.You may request the deletion of your personal data by contacting support'); ?> </li>
+          <li><strong><?php echo app('translator')->get('messages.Consent Withdrawal'); ?>:</strong><?php echo app('translator')->get('messages.You can opt out of marketing emails by clicking the unsubscribe link'); ?>
           </li>
         </ul>
       </div>
@@ -276,16 +274,18 @@ ul.custom-dots li::before {
 <section class="mb-0 ad-banner-container">
     <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">
-            @foreach($banners as $key => $banner)
-                @if($banner->type == 0)
-                    <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                       <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+            <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($banner->type == 0): ?>
+                    <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                       <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="mx-auto d-block" alt="Banner Image">
                     </div>
-                @endif
-            @endforeach
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>
 <!-- ad - banner-section end -->
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\eSupport\Yaka-Project\resources\views/newFrontend/privacy-safety.blade.php ENDPATH**/ ?>

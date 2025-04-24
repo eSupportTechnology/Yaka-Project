@@ -1,6 +1,4 @@
-@extends('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
 
   ul.custom-dots {
@@ -225,11 +223,11 @@
     <div class="auto-container">
         <div class="mr-0 content-box centred">
             <div class="title">
-                <h1>@lang('messages.Terms & Conditions')</h1>
+                <h1><?php echo app('translator')->get('messages.Terms & Conditions'); ?></h1>
             </div>
             <ul class="clearfix bread-crumb">
-                <li><a href="{{route( '/')}}">@lang('messages.Home')</a></li>
-                <li>@lang('messages.Terms & Conditions')</li>
+                <li><a href="<?php echo e(route( '/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                <li><?php echo app('translator')->get('messages.Terms & Conditions'); ?></li>
             </ul>
         </div>
     </div>
@@ -242,13 +240,13 @@
 <section class="mb-0 ad-banner-container">
     <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">
-            @foreach($banners as $key => $banner)
-                @if($banner->type == 0)
-                    <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                       <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+            <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($banner->type == 0): ?>
+                    <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                       <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="mx-auto d-block" alt="Banner Image">
                     </div>
-                @endif
-            @endforeach
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>
@@ -257,71 +255,71 @@
     <div class="row">
       <div class="mt-5 col-md-12">
         <div class="sec-title">
-            <span>@lang('messages.Terms & Conditions')</span>
-            <h2>@lang('messages.Our Terms & Conditions')</h2>
+            <span><?php echo app('translator')->get('messages.Terms & Conditions'); ?></span>
+            <h2><?php echo app('translator')->get('messages.Our Terms & Conditions'); ?></h2>
         </div>
         <div class="mb-5 terms-content">
-          <h2 style="font-size: 27px;margin-top: 40px">1. @lang('messages.Acceptance of Terms')</h2>
+          <h2 style="font-size: 27px;margin-top: 40px">1. <?php echo app('translator')->get('messages.Acceptance of Terms'); ?></h2>
           <ul  class="custom-dots">
-            <li>@lang('messages.Acceptance line1')</li>
-            <li>@lang('messages.Acceptance line2')</li>
+            <li><?php echo app('translator')->get('messages.Acceptance line1'); ?></li>
+            <li><?php echo app('translator')->get('messages.Acceptance line2'); ?></li>
         </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">2. @lang('messages.User Registration and Eligibility')</h2>
+          <h2 style="font-size: 27px;margin-top: 40px">2. <?php echo app('translator')->get('messages.User Registration and Eligibility'); ?></h2>
           <ul  class="custom-dots">
-            <li>@lang('messages.Eligibility line1')</li>
-            <li>@lang('messages.Eligibility line2')</li>
-            <li>@lang('messages.Eligibility line3')</li>
+            <li><?php echo app('translator')->get('messages.Eligibility line1'); ?></li>
+            <li><?php echo app('translator')->get('messages.Eligibility line2'); ?></li>
+            <li><?php echo app('translator')->get('messages.Eligibility line3'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px;margin-top: 40px">3. @lang('messages.Listing and Posting Rules')</h2>
+          <h2 style="font-size: 27px;margin-top: 40px">3. <?php echo app('translator')->get('messages.Listing and Posting Rules'); ?></h2>
           <ul  class="custom-dots">
-            <li>@lang('messages.Posting Rules line1')</li>
-            <li>@lang('messages.Posting Rules line2')</li>
-            <li>@lang('messages.Posting Rules line3')</li>
+            <li><?php echo app('translator')->get('messages.Posting Rules line1'); ?></li>
+            <li><?php echo app('translator')->get('messages.Posting Rules line2'); ?></li>
+            <li><?php echo app('translator')->get('messages.Posting Rules line3'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">4. @lang('messages.Fees and Payment')</h2>
+          <h2 style="font-size: 27px; margin-top: 40px">4. <?php echo app('translator')->get('messages.Fees and Payment'); ?></h2>
           <ul class="custom-dots">
-              <li>@lang('messages.Fees line1')</li>
-              <li>@lang('messages.Fees line2')</li>
+              <li><?php echo app('translator')->get('messages.Fees line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.Fees line2'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">5. @lang('messages.User Responsibilities and Conduct')</h2>
+          <h2 style="font-size: 27px; margin-top: 40px">5. <?php echo app('translator')->get('messages.User Responsibilities and Conduct'); ?></h2>
           <ul class="custom-dots">
-              <li>@lang('messages.User line1')</li>
-              <li>@lang('messages.User line2')</li>
-              <li>@lang('messages.User line3')</li>
+              <li><?php echo app('translator')->get('messages.User line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.User line2'); ?></li>
+              <li><?php echo app('translator')->get('messages.User line3'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">6. @lang('messages.Prohibited Content')</h2>
+          <h2 style="font-size: 27px; margin-top: 40px">6. <?php echo app('translator')->get('messages.Prohibited Content'); ?></h2>
           <ul class="custom-dots">
-              <li>@lang('messages.Prohibited line1')</li>
-              <li>@lang('messages.Prohibited line2')</li>
+              <li><?php echo app('translator')->get('messages.Prohibited line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.Prohibited line2'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">7. @lang('messages.Intellectual Property')</h2>
+          <h2 style="font-size: 27px; margin-top: 40px">7. <?php echo app('translator')->get('messages.Intellectual Property'); ?></h2>
           <ul class="custom-dots">
-              <li>@lang('messages.Intellectual line1')</li>
-              <li>@lang('messages.Intellectual line2')</li>
+              <li><?php echo app('translator')->get('messages.Intellectual line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.Intellectual line2'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">8. @lang('messages.Disclaimers and Limitation of Liability')</h2>
+          <h2 style="font-size: 27px; margin-top: 40px">8. <?php echo app('translator')->get('messages.Disclaimers and Limitation of Liability'); ?></h2>
           <ul class="custom-dots">
-              <li>@lang('messages.Disclaimers line1')</li>
-              <li>@lang('messages.Disclaimers line2')</li>
+              <li><?php echo app('translator')->get('messages.Disclaimers line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.Disclaimers line2'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">9. @lang('messages.Third-Party Links and Services')</h2>
+          <h2 style="font-size: 27px; margin-top: 40px">9. <?php echo app('translator')->get('messages.Third-Party Links and Services'); ?></h2>
           <ul class="custom-dots">
-              <li>@lang('messages.ThirdParty line1')</li>
-              <li>@lang('messages.ThirdParty line2')</li>
+              <li><?php echo app('translator')->get('messages.ThirdParty line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.ThirdParty line2'); ?></li>
           </ul>
 
-          <h2 style="font-size: 27px; margin-top: 40px">10. @lang('messages.Account Termination')</h2>
+          <h2 style="font-size: 27px; margin-top: 40px">10. <?php echo app('translator')->get('messages.Account Termination'); ?></h2>
           <ul class="custom-dots">
-              <li>@lang('messages.Termination line1')</li>
-              <li>@lang('messages.Termination line2')</li>
+              <li><?php echo app('translator')->get('messages.Termination line1'); ?></li>
+              <li><?php echo app('translator')->get('messages.Termination line2'); ?></li>
           </ul>
         </div>
       </div>
@@ -331,15 +329,17 @@
   <section class="mb-0 ad-banner-container">
       <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
           <div class="carousel-inner">
-              @foreach($banners as $key => $banner)
-                  @if($banner->type == 0)
-                      <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                         <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+              <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                  <?php if($banner->type == 0): ?>
+                      <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                         <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="mx-auto d-block" alt="Banner Image">
                       </div>
-                  @endif
-              @endforeach
+                  <?php endif; ?>
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </div>
       </div>
   </section>
   <!-- ad - banner-section end -->
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\eSupport\Yaka-Project\resources\views/newFrontend/terms-conditions.blade.php ENDPATH**/ ?>

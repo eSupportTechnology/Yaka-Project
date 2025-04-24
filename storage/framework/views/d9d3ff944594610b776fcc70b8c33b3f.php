@@ -1,6 +1,4 @@
-@extends('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     .ad-banner-container {
@@ -58,11 +56,11 @@
             <div class="auto-container">
                 <div class="mr-0 content-box centred">
                     <div class="title">
-                        <h1>@lang('messages.Ad posting criteria')</h1>
+                        <h1><?php echo app('translator')->get('messages.Ad posting criteria'); ?></h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="{{route( '/')}}">@lang('messages.Home')</a></li>
-                        <li>@lang('messages.Ad posting criteria')</li>
+                        <li><a href="<?php echo e(route( '/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                        <li><?php echo app('translator')->get('messages.Ad posting criteria'); ?></li>
                     </ul>
                 </div>
             </div>
@@ -72,13 +70,13 @@
         <section class="mb-0 ad-banner-container">
             <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
                 <div class="carousel-inner">
-                    @foreach($banners as $key => $banner)
-                        @if($banner->type == 0)
-                            <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                               <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($banner->type == 0): ?>
+                            <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                               <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="mx-auto d-block" alt="Banner Image">
                             </div>
-                        @endif
-                    @endforeach
+                        <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
         </section>
@@ -181,45 +179,47 @@
 
 <!-- Main Title & Posting Criteria -->
 <section class="criteria-section1 fade-in center-text" style="max-width: 1000px;">
-    <h2>@lang('messages.welcome_title')</h2>
-    <p>@lang('messages.welcome_description')</p>
+    <h2><?php echo app('translator')->get('messages.welcome_title'); ?></h2>
+    <p><?php echo app('translator')->get('messages.welcome_description'); ?></p>
     <ul class="text-center posting-criteria-list">
-        <li>@lang('messages.posting_criteria_1')</li>
-        <li>@lang('messages.posting_criteria_2')</li>
-        <li>@lang('messages.posting_criteria_3')</li>
-        <li>@lang('messages.posting_criteria_4')</li>
-        <li>@lang('messages.posting_criteria_5')</li>
-        <li>@lang('messages.posting_criteria_6')</li>
-        <li>@lang('messages.posting_criteria_7')</li>
+        <li><?php echo app('translator')->get('messages.posting_criteria_1'); ?></li>
+        <li><?php echo app('translator')->get('messages.posting_criteria_2'); ?></li>
+        <li><?php echo app('translator')->get('messages.posting_criteria_3'); ?></li>
+        <li><?php echo app('translator')->get('messages.posting_criteria_4'); ?></li>
+        <li><?php echo app('translator')->get('messages.posting_criteria_5'); ?></li>
+        <li><?php echo app('translator')->get('messages.posting_criteria_6'); ?></li>
+        <li><?php echo app('translator')->get('messages.posting_criteria_7'); ?></li>
     </ul>
 </section>
 
 <!-- Ad Approval Process -->
 <section class="criteria-section fade-in right-align" style="margin:50px 0; background-color: rgb(233, 233, 233); padding:30px 20px;">
-    <h2>@lang('messages.approval_process_title')</h2>
-    <p>@lang('messages.approval_process_description')</p>
+    <h2><?php echo app('translator')->get('messages.approval_process_title'); ?></h2>
+    <p><?php echo app('translator')->get('messages.approval_process_description'); ?></p>
     <div class="steps">
-        <div class="step"><span>1</span><p>@lang('messages.approval_step_1')</p></div>
-        <div class="step"><span>2</span><p>@lang('messages.approval_step_2')</p></div>
-        <div class="step"><span>3</span><p>@lang('messages.approval_step_3')</p></div>
-        <div class="step"><span>4</span><p>@lang('messages.approval_step_4')</p></div>
+        <div class="step"><span>1</span><p><?php echo app('translator')->get('messages.approval_step_1'); ?></p></div>
+        <div class="step"><span>2</span><p><?php echo app('translator')->get('messages.approval_step_2'); ?></p></div>
+        <div class="step"><span>3</span><p><?php echo app('translator')->get('messages.approval_step_3'); ?></p></div>
+        <div class="step"><span>4</span><p><?php echo app('translator')->get('messages.approval_step_4'); ?></p></div>
     </div>
 </section>
 <!-- ad - banner-section start -->
 <section class="mb-0 ad-banner-container">
     <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">
-            @foreach($banners as $key => $banner)
-                @if($banner->type == 0)
-                    <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                       <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+            <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($banner->type == 0): ?>
+                    <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                       <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="mx-auto d-block" alt="Banner Image">
                     </div>
-                @endif
-            @endforeach
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>
 <!-- ad - banner-section end -->
 
-    @endsection
+    <?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\eSupport\Yaka-Project\resources\views/newFrontend/add_post.blade.php ENDPATH**/ ?>

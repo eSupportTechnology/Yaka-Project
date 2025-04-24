@@ -1,6 +1,4 @@
-@extends('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
         /* Google Fonts */
@@ -89,11 +87,11 @@
             <div class="auto-container">
                 <div class="mr-0 content-box centred">
                     <div class="title">
-                        <h1>@lang('messages.Tips for Better Ads')</h1>
+                        <h1><?php echo app('translator')->get('messages.Tips for Better Ads'); ?></h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="{{route( '/')}}">@lang('messages.Home')</a></li>
-                        <li>@lang('messages.Tips')</li>
+                        <li><a href="<?php echo e(route( '/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                        <li><?php echo app('translator')->get('messages.Tips'); ?></li>
                     </ul>
                 </div>
             </div>
@@ -104,13 +102,13 @@
         <section class="mb-0 ad-banner-container">
             <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
                 <div class="carousel-inner">
-                    @foreach($banners as $key => $banner)
-                        @if($banner->type == 0)
-                            <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                               <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($banner->type == 0): ?>
+                            <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                               <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="mx-auto d-block" alt="Banner Image">
                             </div>
-                        @endif
-                    @endforeach
+                        <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
         </section>
@@ -119,27 +117,27 @@
 <section class="tips-section">
     <div class="container d-flex flex-column align-items-center">
         <div class="tips-box">
-            <h3>1. @lang('messages.Upload clear photos from different angles')</h3>
+            <h3>1. <?php echo app('translator')->get('messages.Upload clear photos from different angles'); ?></h3>
         </div>
 
         <div class="tips-box">
-            <h3>2. @lang('messages.Upload real photos')</h3>
+            <h3>2. <?php echo app('translator')->get('messages.Upload real photos'); ?></h3>
         </div>
 
         <div class="tips-box">
-            <h3>3. @lang('messages.Add actual and clear details to impress customers')</h3>
+            <h3>3. <?php echo app('translator')->get('messages.Add actual and clear details to impress customers'); ?></h3>
         </div>
 
         <div class="tips-box">
-            <h3>4. @lang('messages.Add working contact numbers')</h3>
+            <h3>4. <?php echo app('translator')->get('messages.Add working contact numbers'); ?></h3>
         </div>
 
         <div class="tips-box">
-            <h3>5. @lang('messages.Choose a competitive price')</h3>
+            <h3>5. <?php echo app('translator')->get('messages.Choose a competitive price'); ?></h3>
         </div>
 
         <div class="tips-box">
-            <h3>6. @lang('messages.Select the negotiable option for a better response')</h3>
+            <h3>6. <?php echo app('translator')->get('messages.Select the negotiable option for a better response'); ?></h3>
         </div>
     </div>
 </section>
@@ -148,17 +146,19 @@
 <section class="mb-0 ad-banner-container">
     <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">
-            @foreach($banners as $key => $banner)
-                @if($banner->type == 0)
-                    <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                       <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+            <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($banner->type == 0): ?>
+                    <div class="carousel-item ad-carousel-item <?php echo e($key == 0 ? 'active' : ''); ?>">
+                       <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" class="mx-auto d-block" alt="Banner Image">
                     </div>
-                @endif
-            @endforeach
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>
 <!-- ad - banner-section end -->
 
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\eSupport\Yaka-Project\resources\views/newFrontend/tips.blade.php ENDPATH**/ ?>

@@ -8,6 +8,7 @@
 <title>Yaka</title>
 
 <!-- Fav Icon -->
+<link rel="icon" href="{{ asset('Logo-icon.png') }}" type="image/x-icon">
 <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 
 <!-- Google Fonts -->
@@ -50,7 +51,7 @@
         <div class="user-form-content">
             <a href="#"><img src="{{asset('Logo-re.png')}}" alt="logo"></a>
             <h1>Advertise your assets <span>Buy what you want</span></h1>
-            <p>Biggest online marketplace in Sri Lanka</p> 
+            <p>Biggest online marketplace in Sri Lanka</p>
         </div>
     </div>
 
@@ -59,10 +60,10 @@
             <a href="#"><img src="{{asset('yaka-payment.png')}}" alt="logo"></a>
             <a href="/"><i class="fas fa-arrow-left"style="color: red;"></i></a>
         </div>
-       
+
 
         <div class="tab-pane active" id="register-tab">
-            
+
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -123,7 +124,7 @@
                                         <div class="error-message">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label>Confirm Password</label>
                                     <div style="position: relative;">
@@ -136,7 +137,7 @@
                                         <div class="error-message">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="form-group message-btn">
                                     <button type="submit" class="theme-btn-one">Sign Up</button>
                                 </div>
@@ -188,7 +189,7 @@
             function togglePassword(inputId, toggleId) {
                 var passwordField = document.getElementById(inputId);
                 var toggleIcon = document.getElementById(toggleId).querySelector('i');
-        
+
                 document.getElementById(toggleId).addEventListener('click', function () {
                     if (passwordField.type === 'password') {
                         passwordField.type = 'text';
@@ -201,12 +202,12 @@
                     }
                 });
             }
-        
+
             togglePassword('password', 'togglePassword');
             togglePassword('confirmPassword', 'toggleConfirmPassword');
         });
         </script>
-        
+
 </body><!-- End of .page_wrapper -->
 </html>
 
