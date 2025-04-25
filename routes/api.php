@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\SubCategoryController;
-use App\Http\Controllers\api\AdsController;
+use App\Http\Controllers\apiMobile\AdsController;
 use App\Http\Controllers\apiMobile\AuthController;
 use App\Http\Controllers\apiMobile\CategoryController;
 
@@ -65,6 +65,10 @@ Route::post('/register', [AuthController::class, 'register']);
 
 
 Route::get('/categories', [CategoryController::class, 'getAllCategories']);
+
+
+Route::get('/ads/search', [AdsController::class, 'searchByTitle']);
+
 
 
 
