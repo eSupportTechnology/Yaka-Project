@@ -16,12 +16,10 @@ class AuthController extends Controller
 {
     public function login(Request $request): JsonResponse
 {
-
     $validator = Validator::make($request->all(), [
         'login' => 'required|string',
         'password' => 'required|string',
     ]);
-
 
     if ($validator->fails()) {
         return response()->json([
@@ -31,14 +29,11 @@ class AuthController extends Controller
         ], 422);
     }
 
-
     $loginInput = $request->login;
     $fieldType = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone_number';
 
-    // find user by either email or phone number
     $user = User::where($fieldType, $loginInput)->first();
 
-    // Check if user exists and password is correct
     if ($user && Hash::check($request->password, $user->password) && $user->roles === 'user') {
         Auth::login($user);
 
@@ -46,10 +41,14 @@ class AuthController extends Controller
 
         $token = $user->createToken('mobile_token')->plainTextToken;
 
+        // Remove sensitive fields before returning user
+        $userData = $user->makeHidden(['password', 'remember_token']);
+
         return response()->json([
             'status' => 'success',
             'message' => 'Login successful.',
             'token' => $token,
+            'user' => $userData,
         ], 200);
     }
 
