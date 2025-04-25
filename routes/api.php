@@ -5,10 +5,10 @@ use App\Http\Controllers\api\BrandsModelsController;
 use App\Http\Controllers\api\LocattionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\SubCategoryController;
 use App\Http\Controllers\api\AdsController;
+use App\Http\Controllers\apiMobile\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/*
 //AuthController
 Route::post('/user/register',[AuthController::class ,'createUser']);
 Route::post('/user/login',[AuthController::class ,'loginUser']);
@@ -48,6 +49,20 @@ Route::get('/models/{brands}',[BrandsModelsController::class , 'GetModels']);
 Route::get('/province',[LocattionController::class , 'GetProvince']);
 Route::get('/districts',[LocattionController::class , 'GetDistrict']);
 Route::get('/city/{district}',[LocattionController::class , 'GetCity']);
+*/
+
+Route::get('/ping', function () {
+    return response()->json([
+        'message' => 'API is working!',
+        'status' => 'success'
+    ]);
+});
+
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::post('/register', [AuthController::class, 'register']);
 
 
 
