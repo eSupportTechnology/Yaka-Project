@@ -1,6 +1,4 @@
-@extends ('newFrontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <style>
         /* Set a fixed height for the carousel */
         #adsCarousel .carousel-inner {
@@ -123,10 +121,10 @@
         <div class="auto-container">
             <div class="mr-0 content-box centred">
                 <div class="title">
-                    <h1>{{ $category ? __('messages.' . $category->name) : __('messages.All Categories') }}</h1 </div>
+                    <h1><?php echo e($category ? __('messages.' . $category->name) : __('messages.All Categories')); ?></h1 </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
-                        <li>@lang('messages.Browse Ads')</li>
+                        <li><a href="<?php echo e(route('/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                        <li><?php echo app('translator')->get('messages.Browse Ads'); ?></li>
                     </ul>
                 </div>
             </div>
@@ -142,46 +140,48 @@
                 <div class="default-sidebar category-sidebar">
                     <div class="sidebar-search sidebar-widget">
                         <div class="widget-title">
-                            <h3>@lang('messages.Search')</h3>
+                            <h3><?php echo app('translator')->get('messages.Search'); ?></h3>
                         </div>
                         <div class="widget-content">
-                            <form action="{{ route('browse-ads') }}" method="GET" class="search-form">
+                            <form action="<?php echo e(route('browse-ads')); ?>" method="GET" class="search-form">
                                 <div class="form-group">
                                     <input type="search" name="search-field" style="padding-right: 20px"
-                                        placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
+                                        placeholder="<?php echo app('translator')->get('messages.Search Keyword'); ?>..." value="<?php echo e(request()->input('search-field')); ?>"
                                         oninput="this.form.submit()">
                                     <button type="submit" style="display:none;"><i class="icon-2"></i></button>
                                 </div>
                                 <div class="form-group">
                                     <i class="icon-3"></i>
                                     <select class="wide" name="location" onchange="this.form.submit()">
-                                        <option data-display="@lang('messages.Select Location')">@lang('messages.Select Location')</option>
-                                        @foreach ($districts as $district)
-                                            @php
+                                        <option data-display="<?php echo app('translator')->get('messages.Select Location'); ?>"><?php echo app('translator')->get('messages.Select Location'); ?></option>
+                                        <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php
                                                 $locale = App::getLocale();
                                                 $districtName = 'name_' . $locale;
-                                            @endphp
-                                            <option value="{{ $district->id }}"
-                                                {{ request()->input('location') == $district->id ? 'selected' : '' }}>
-                                                {{ $district->$districtName }}
+                                            ?>
+                                            <option value="<?php echo e($district->id); ?>"
+                                                <?php echo e(request()->input('location') == $district->id ? 'selected' : ''); ?>>
+                                                <?php echo e($district->$districtName); ?>
+
                                             </option>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
-                                {{-- City Dropdown --}}
+                                
                                 <div class="form-group">
                                     <select class="wide" name="city" id="city">
-                                        <option data-display="@lang('messages.Select City')">@lang('messages.Select City')</option>
-                                        @foreach ($citys as $city)
-                                            @php
+                                        <option data-display="<?php echo app('translator')->get('messages.Select City'); ?>"><?php echo app('translator')->get('messages.Select City'); ?></option>
+                                        <?php $__currentLoopData = $citys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php
                                                 $locale = App::getLocale();
                                                 $cityName = 'name_' . $locale;
-                                            @endphp
-                                            <option value="{{ $city->id }}"
-                                                {{ request()->input('location') == $city->id ? 'selected' : '' }}>
-                                                {{ $city->$cityName }}
+                                            ?>
+                                            <option value="<?php echo e($city->id); ?>"
+                                                <?php echo e(request()->input('location') == $city->id ? 'selected' : ''); ?>>
+                                                <?php echo e($city->$cityName); ?>
+
                                             </option>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
                             </form>
@@ -190,62 +190,62 @@
 
                     <div class="sidebar-category sidebar-widget">
                         <div class="widget-title">
-                            <h3>@lang('messages.Categories')</h3>
+                            <h3><?php echo app('translator')->get('messages.Categories'); ?></h3>
                         </div>
                         <div class="widget-content">
                             <ul class="category-list">
                                 <li>
                                     <label>
                                         <input type="radio" name="category" value="all"
-                                            onchange="window.location='{{ route('browse-ads') }}'"
-                                            {{ !request()->input('category') ? 'checked' : '' }}>
-                                        <span class="text-dark">@lang('messages.All Categories')</span>
+                                            onchange="window.location='<?php echo e(route('browse-ads')); ?>'"
+                                            <?php echo e(!request()->input('category') ? 'checked' : ''); ?>>
+                                        <span class="text-dark"><?php echo app('translator')->get('messages.All Categories'); ?></span>
 
                                     </label>
                                 </li>
 
-                                @foreach ($categories->take(14) as $category)
-                                    <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
+                                <?php $__currentLoopData = $categories->take(14); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="<?php echo e($category->subcategories->isNotEmpty() ? 'dropdown' : ''); ?>">
                                         <label>
-                                            <input type="radio" name="category" value="{{ $category->id }}"
-                                                onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
-                                                {{ request()->input('category') == $category->id ? 'checked' : '' }}>
-                                            <span> @lang('messages.' . $category->name)</span>
+                                            <input type="radio" name="category" value="<?php echo e($category->id); ?>"
+                                                onchange="window.location='<?php echo e(route('browse-ads', ['category' => $category->id])); ?>'"
+                                                <?php echo e(request()->input('category') == $category->id ? 'checked' : ''); ?>>
+                                            <span> <?php echo app('translator')->get('messages.' . $category->name); ?></span>
                                         </label>
 
-                                        @if ($category->subcategories->isNotEmpty())
+                                        <?php if($category->subcategories->isNotEmpty()): ?>
                                             <ul>
-                                                @foreach ($category->subcategories as $subcategory)
+                                                <?php $__currentLoopData = $category->subcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <li>
                                                         <label>
                                                             <input type="radio" name="subcategory"
-                                                                value="{{ $subcategory->id }}"
-                                                                onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
-                                                                {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
-                                                            <span> @lang('messages.' . $subcategory->name)</span>
+                                                                value="<?php echo e($subcategory->id); ?>"
+                                                                onchange="window.location='<?php echo e(route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id])); ?>'"
+                                                                <?php echo e(request()->input('subcategory') == $subcategory->id ? 'checked' : ''); ?>>
+                                                            <span> <?php echo app('translator')->get('messages.' . $subcategory->name); ?></span>
                                                         </label>
                                                     </li>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </ul>
-                                        @endif
+                                        <?php endif; ?>
                                     </li>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
                     </div>
 
 
                     <div class="col-md-12">
-                        @php
+                        <?php
                             $banner = $banners->isNotEmpty() ? $banners->random() : null;
-                        @endphp
+                        ?>
 
-                        @if ($banner)
+                        <?php if($banner): ?>
                             <div class="banner">
-                                <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
+                                <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" alt="Banner Image"
                                     class="img-fluid banner-img">
                             </div>
-                        @endif
+                        <?php endif; ?>
                     </div>
 
                 </div>
@@ -255,10 +255,11 @@
                 <div class="category-details-content">
                     <div class="clearfix item-shorting">
                         <div class="text pull-left">
-                            <h6>@lang('messages.Buy, Sell, Rent or Find Anything in Sri Lanka')</h6>
-                            <p><span>@lang('messages.Search Results'):</span> @lang('messages.Showing')
-                                {{ $ads->firstItem() }}-{{ $ads->lastItem() }} @lang('messages.of') {{ $ads->total() }}
-                                @lang('messages.Listings')</p>
+                            <h6><?php echo app('translator')->get('messages.Buy, Sell, Rent or Find Anything in Sri Lanka'); ?></h6>
+                            <p><span><?php echo app('translator')->get('messages.Search Results'); ?>:</span> <?php echo app('translator')->get('messages.Showing'); ?>
+                                <?php echo e($ads->firstItem()); ?>-<?php echo e($ads->lastItem()); ?> <?php echo app('translator')->get('messages.of'); ?> <?php echo e($ads->total()); ?>
+
+                                <?php echo app('translator')->get('messages.Listings'); ?></p>
                         </div>
                         <div class="clearfix right-column pull-right">
                         </div>
@@ -274,66 +275,69 @@
                                     data-bs-interval="2000">
                                     <!-- Indicators -->
                                     <div class="carousel-indicators">
-                                        @foreach ($urgentAds as $key => $ad)
-                                            @if ($ad->ads_package == 4)
+                                        <?php $__currentLoopData = $urgentAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php if($ad->ads_package == 4): ?>
                                                 <!-- Filter ads with ads_package = 4 -->
                                                 <button type="button" data-bs-target="#adsCarousel"
-                                                    data-bs-slide-to="{{ $key }}"
-                                                    class="{{ $key === 0 ? 'active' : '' }}"
-                                                    aria-current="{{ $key === 0 ? 'true' : '' }}"
-                                                    aria-label="Slide {{ $key + 1 }}"></button>
-                                            @endif
-                                        @endforeach
+                                                    data-bs-slide-to="<?php echo e($key); ?>"
+                                                    class="<?php echo e($key === 0 ? 'active' : ''); ?>"
+                                                    aria-current="<?php echo e($key === 0 ? 'true' : ''); ?>"
+                                                    aria-label="Slide <?php echo e($key + 1); ?>"></button>
+                                            <?php endif; ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
 
                                     <!-- Carousel Items -->
                                     <div class="carousel-inner">
-                                        @foreach ($urgentAds as $key => $ad)
-                                            @if ($ad->ads_package == 4)
+                                        <?php $__currentLoopData = $urgentAds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php if($ad->ads_package == 4): ?>
                                                 <!-- Filter ads with ads_package = 4 -->
-                                                <div class="carousel-item {{ $key === 0 ? 'active' : '' }} blink-border">
-                                                    @if ($ad->post_type)
+                                                <div class="carousel-item <?php echo e($key === 0 ? 'active' : ''); ?> blink-border">
+                                                    <?php if($ad->post_type): ?>
                                                         <button class="sale"
                                                             style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                                                            {{ $ad->post_type }}
+                                                            <?php echo e($ad->post_type); ?>
+
                                                         </button>
-                                                    @endif
+                                                    <?php endif; ?>
                                                     <!-- Wrap the entire content with an anchor tag -->
-                                                    <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
+                                                    <a href="<?php echo e(route('ads.details', ['adsId' => $ad->adsId])); ?>"
                                                         style="display: block; height: 100%; text-decoration: none;">
                                                         <div class="carousel-item-content">
                                                             <!-- Image -->
-                                                            <img src="{{ asset('storage/' . $ad->mainImage) }}"
-                                                                class="d-block w-100" alt="{{ $ad->title }}"
+                                                            <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>"
+                                                                class="d-block w-100" alt="<?php echo e($ad->title); ?>"
                                                                 style="min-height: 450px;height:auto; object-fit: cover;">
 
                                                             <!-- Dark Overlay -->
                                                             <div class="carousel-overlay"></div>
 
                                                             <!-- Top-left image -->
-                                                            <img src="{{ asset('3.png') }}" alt="Urgent Ad"
+                                                            <img src="<?php echo e(asset('3.png')); ?>" alt="Urgent Ad"
                                                                 class="top-left-image"
                                                                 style="z-index:999; height:80px; width:auto">
 
                                                             <!-- Ad Details Overlay -->
                                                             <div class="carousel-caption d-none d-md-block text-start">
-                                                                <p>{{ $ad->title }}</p>
-                                                                <p>@lang('messages.Rs') {{ number_format($ad->price, 2) }}
+                                                                <p><?php echo e($ad->title); ?></p>
+                                                                <p><?php echo app('translator')->get('messages.Rs'); ?> <?php echo e(number_format($ad->price, 2)); ?>
+
                                                                 </p>
                                                                 <p><i class="fas fa-map-marker-alt"></i>
-                                                                    @php
+                                                                    <?php
                                                                         $locale = App::getLocale();
                                                                         $locationName = 'name_' . $locale;
-                                                                    @endphp
+                                                                    ?>
 
-                                                                    {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}
+                                                                    <?php echo e($ad->main_location ? $ad->main_location->$locationName : 'N/A'); ?>
+
                                                                 </p>
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </div>
-                                            @endif
-                                        @endforeach
+                                            <?php endif; ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
 
                                     <!-- Carousel Controls -->
@@ -351,16 +355,16 @@
 
                             <!-- Banner (Column 2) -->
                             <div class="col-md-4">
-                                @php
+                                <?php
                                     $banner = $banners->isNotEmpty() ? $banners->random() : null;
-                                @endphp
+                                ?>
 
-                                @if ($banner)
+                                <?php if($banner): ?>
                                     <div class="banner">
-                                        <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
+                                        <img src="<?php echo e(asset('banners/' . $banner->img)); ?>" alt="Banner Image"
                                             class="img-fluid banner-img">
                                     </div>
-                                @endif
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -370,51 +374,52 @@
                         <div class="grid-item feature-style-two four-column pd-0" style="display: flex; flex-wrap: wrap;">
                             <div class="clearfix row"
                                 style="width: 100%; display: flex; flex-wrap: wrap; ">
-                                @foreach ($ads as $ad)
-                                    @if (is_null($ad->package_expire_at) || \Carbon\Carbon::now()->lessThanOrEqualTo($ad->package_expire_at))
+                                <?php $__currentLoopData = $ads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if(is_null($ad->package_expire_at) || \Carbon\Carbon::now()->lessThanOrEqualTo($ad->package_expire_at)): ?>
                                         <!-- Display the ad if the package is not expired or expiry date is null -->
                                         <div class="col-lg-3 col-md-6 col-sm-12 feature-block"
                                             style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
                                             <div class="feature-block-one"
                                                 style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                                                <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
-                                                    class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}"
+                                                <a href="<?php echo e(route('ads.details', ['adsId' => $ad->adsId])); ?>"
+                                                    class="<?php echo e($ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '')); ?>"
                                                     style="display: block; height: 100%; text-decoration: none;">
                                                     <div class="inner-box"
                                                         style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
-                                                        @if ($ad->post_type)
+                                                        <?php if($ad->post_type): ?>
                                                             <button class="sale"
                                                                 style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                                                                {{ $ad->post_type }}
+                                                                <?php echo e($ad->post_type); ?>
+
                                                             </button>
-                                                        @endif
+                                                        <?php endif; ?>
                                                         <div class="image-box" style="flex-grow: 0;">
                                                             <figure class="image">
-                                                                <img src="{{ asset('storage/' . $ad->mainImage) }}"
+                                                                <img src="<?php echo e(asset('storage/' . $ad->mainImage)); ?>"
                                                                     style="height: 170px; object-fit: cover;"
-                                                                    alt="{{ $ad->title }}">
+                                                                    alt="<?php echo e($ad->title); ?>">
                                                             </figure>
 
-                                                            @if ($ad->ads_package == 3)
+                                                            <?php if($ad->ads_package == 3): ?>
                                                                 <!-- Top Ad Badge -->
                                                                 <div class="icon">
                                                                     <div class="icon-shape"></div>
-                                                                    <i class=""> <img src="{{ asset('01.png') }}"
+                                                                    <i class=""> <img src="<?php echo e(asset('01.png')); ?>"
                                                                             alt="Top Ad"></i>
                                                                 </div>
-                                                            @elseif($ad->ads_package == 6)
+                                                            <?php elseif($ad->ads_package == 6): ?>
                                                                 <!-- Super Ad Badge -->
                                                                 <div class="icon">
                                                                     <div class="icon-shape"></div>
-                                                                    <i class=""> <img src="{{ asset('02.png') }}"
+                                                                    <i class=""> <img src="<?php echo e(asset('02.png')); ?>"
                                                                             alt="Super Ad"></i>
                                                                 </div>
-                                                            @endif
+                                                            <?php endif; ?>
                                                         </div>
 
                                                         <div class="lower-content" style="flex-grow: 1;">
                                                             <div class="category"><i class="fas fa-tags"></i>
-                                                                <p>@lang('messages.' . $ad->category->name)</p>
+                                                                <p><?php echo app('translator')->get('messages.' . $ad->category->name); ?></p>
                                                             </div>
                                                             <h4
                                                                 style="
@@ -426,23 +431,26 @@
                                             max-height: 55px;
                                             margin-top: 20px;
                                             margin-bottom: 10px;">
-                                                                {{ $ad->title }}</h4>
+                                                                <?php echo e($ad->title); ?></h4>
                                                             <ul class="clearfix info">
                                                                 <li><i
-                                                                        class="far fa-clock"></i>{{ $ad->created_at->diffForHumans() }}
+                                                                        class="far fa-clock"></i><?php echo e($ad->created_at->diffForHumans()); ?>
+
                                                                 </li>
                                                                 <li>
                                                                     <i class="fas fa-map-marker-alt"></i>
-                                                                    @php
+                                                                    <?php
                                                                         $locale = App::getLocale();
                                                                         $locationName = 'name_' . $locale;
-                                                                    @endphp
+                                                                    ?>
 
-                                                                    {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}
+                                                                    <?php echo e($ad->main_location ? $ad->main_location->$locationName : 'N/A'); ?>
+
                                                                 </li>
                                                             </ul>
                                                             <div class="lower-box" style="margin-top: auto;">
-                                                                <h5>@lang('messages.Rs') {{ number_format($ad->price, 2) }}
+                                                                <h5><?php echo app('translator')->get('messages.Rs'); ?> <?php echo e(number_format($ad->price, 2)); ?>
+
                                                                 </h5>
                                                             </div>
                                                         </div>
@@ -451,8 +459,8 @@
                                                 </a>
                                             </div>
                                         </div>
-                                    @endif
-                                @endforeach
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </div>
                         </div>
@@ -463,28 +471,28 @@
                     <!-- Pagination -->
                     <div class="pagination-wrapper centred">
                         <ul class="clearfix pagination">
-                            @if ($ads->onFirstPage())
+                            <?php if($ads->onFirstPage()): ?>
                                 <li class="disabled"><a href="#"><i class="far fa-angle-left"></i>Prev</a></li>
-                            @else
+                            <?php else: ?>
                                 <li><a
-                                        href="{{ $ads->previousPageUrl() . '&location=' . request('location') . '&category=' . request('category') . '&subcategory=' . request('subcategory') }}"><i
+                                        href="<?php echo e($ads->previousPageUrl() . '&location=' . request('location') . '&category=' . request('category') . '&subcategory=' . request('subcategory')); ?>"><i
                                             class="far fa-angle-left"></i>Prev</a></li>
-                            @endif
+                            <?php endif; ?>
 
-                            @foreach ($ads->getUrlRange(1, $ads->lastPage()) as $page => $url)
-                                <li class="{{ $page == $ads->currentPage() ? 'current' : '' }}">
+                            <?php $__currentLoopData = $ads->getUrlRange(1, $ads->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <li class="<?php echo e($page == $ads->currentPage() ? 'current' : ''); ?>">
                                     <a
-                                        href="{{ $url . '&location=' . request('location') . '&category=' . request('category') . '&subcategory=' . request('subcategory') }}">{{ $page }}</a>
+                                        href="<?php echo e($url . '&location=' . request('location') . '&category=' . request('category') . '&subcategory=' . request('subcategory')); ?>"><?php echo e($page); ?></a>
                                 </li>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                            @if ($ads->hasMorePages())
+                            <?php if($ads->hasMorePages()): ?>
                                 <li><a
-                                        href="{{ $ads->nextPageUrl() . '&location=' . request('location') . '&category=' . request('category') . '&subcategory=' . request('subcategory') }}">Next<i
+                                        href="<?php echo e($ads->nextPageUrl() . '&location=' . request('location') . '&category=' . request('category') . '&subcategory=' . request('subcategory')); ?>">Next<i
                                             class="far fa-angle-right"></i></a></li>
-                            @else
+                            <?php else: ?>
                                 <li class="disabled"><a href="#">Next<i class="far fa-angle-right"></i></a></li>
-                            @endif
+                            <?php endif; ?>
                         </ul>
                     </div>
 
@@ -504,4 +512,6 @@
             ride: 'carousel' // Enable auto sliding
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/browse-ads.blade.php ENDPATH**/ ?>
