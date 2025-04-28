@@ -1,7 +1,5 @@
-@extends ('newFrontend.master')
-
-@section('content')
-<link href="{{ asset('newFrontend/Clasifico/assets/css/userdashboard.css') }}" rel="stylesheet">
+<?php $__env->startSection('content'); ?>
+<link href="<?php echo e(asset('newFrontend/Clasifico/assets/css/userdashboard.css')); ?>" rel="stylesheet">
 <style>
 
 
@@ -113,11 +111,11 @@
         <div class="auto-container">
             <div class="mr-0 content-box centred">
                 <div class="title">
-                    <h1>@lang('messages.Dashboard')</h1>
+                    <h1><?php echo app('translator')->get('messages.Dashboard'); ?></h1>
                 </div>
                 <ul class="clearfix bread-crumb">
-                    <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
-                    <li>@lang('messages.Dashboard')</li>
+                    <li><a href="<?php echo e(route('/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                    <li><?php echo app('translator')->get('messages.Dashboard'); ?></li>
                 </ul>
             </div>
         </div>
@@ -131,26 +129,26 @@
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
                                   <div class="dash-avatar">
-                                        @if(Auth::check() && Auth::user()->profileImage)
-                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}"
+                                        <?php if(Auth::check() && Auth::user()->profileImage): ?>
+                                            <a href="#"><img src="<?php echo e(asset('storage/profile_images/' . Auth::user()->profileImage)); ?>"
                                             alt="user"></a>
-                                        @else
-                                            <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
-                                        @endif
+                                        <?php else: ?>
+                                            <a href="#"><img src="<?php echo e(asset('web/images/user.png')); ?>" alt="user"></a>
+                                        <?php endif; ?>
                                     </div>
 
                                     <div class="dash-intro">
-                                        <h4><a href="#">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a></h4>
-                                        <h5>{{ Auth::user()->email }}</h5>
+                                        <h4><a href="#"><?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?></a></h4>
+                                        <h5><?php echo e(Auth::user()->email); ?></h5>
 
                                         <ul class="dash-meta">
                                             <li>
                                                 <i class="fas fa-phone"></i>
-                                                <span>{{ Auth::user()->phone_number }}</span>
+                                                <span><?php echo e(Auth::user()->phone_number); ?></span>
                                             </li>
                                             <li>
                                                 <i class="fas fa-envelope"></i>
-                                                <span>{{ Auth::user()->email }}</span>
+                                                <span><?php echo e(Auth::user()->email); ?></span>
                                             </li>
                                         </ul>
                                     </div>
@@ -181,13 +179,13 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
-                                <li><a href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
-                                <li><a  class="active" href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
-                                <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
-                                <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>
-                                <li><a href="">@lang('messages.message')</a></li>
+                                <li><a href="<?php echo e(route('user.dashboard')); ?>"><?php echo app('translator')->get('messages.Dashboard'); ?></a></li>
+                                <li><a  class="active" href="<?php echo e(route('user.ad_posts.categories')); ?>"><?php echo app('translator')->get('messages.ad post'); ?></a></li>
+                                <li><a href="<?php echo e(route('user.my_ads')); ?>" ><?php echo app('translator')->get('messages.my ads'); ?></a></li>
+                                <li><a href="<?php echo e(route('user.profile')); ?>"><?php echo app('translator')->get('messages.Profile'); ?></a></li>
+                                <li><a href=""><?php echo app('translator')->get('messages.message'); ?></a></li>
                                 <li>
-                                    <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
+                                    <a href="<?php echo e(route('user.logout')); ?>"><?php echo app('translator')->get('messages.Logout'); ?></a>
                                 </li>
 
                             </ul>
@@ -203,20 +201,20 @@
         <div class="row">
             <div class="mb-3 col-lg-6">
                 <div class="p-4 account-card alert fade show" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-                    <h4> @lang('messages.Main Categories')</h4>
+                    <h4> <?php echo app('translator')->get('messages.Main Categories'); ?></h4>
 
                     <!-- Main Category List -->
                 <div class="main-categories">
-                    @foreach($categories->take(14) as $category)
+                    <?php $__currentLoopData = $categories->take(14); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="category-item-wrapper">
-                            <div class="category-item" onclick="toggleSubcategories('{{ $category->id }}', this)">
+                            <div class="category-item" onclick="toggleSubcategories('<?php echo e($category->id); ?>', this)">
                                 <div class="main-category-name" style="color:black;font-weight: 500; margin: 8px 0;">
-                                    @lang('messages.' . $category->name)
+                                    <?php echo app('translator')->get('messages.' . $category->name); ?>
                                 </div>
                             </div>
-                            <div id="subcategories-{{ $category->id }}" class="subcategory-list"></div>
+                            <div id="subcategories-<?php echo e($category->id); ?>" class="subcategory-list"></div>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
 
                 </div>
@@ -336,5 +334,7 @@ function submitSelection() {
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/user/ad_posts_categories.blade.php ENDPATH**/ ?>
