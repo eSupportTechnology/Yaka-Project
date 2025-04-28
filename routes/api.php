@@ -67,7 +67,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/categories', [CategoryController::class, 'getAllCategories']);
 
 
-Route::get('/ads/search', [AdsController::class, 'searchByTitle']);
+Route::post('/ads/search', [AdsController::class, 'searchByTitle']);
 
 
 
