@@ -1,8 +1,7 @@
-@extends('newFrontend.master')
 <!-- Add this inside your <head> -->
-    {{--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">  --}}
+    
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 <style>
@@ -55,11 +54,11 @@
             <div class="auto-container">
                 <div class="mr-0 content-box centred">
                     <div class="title">
-                        <h1>@lang('messages.Contact Us')</h1>
+                        <h1><?php echo app('translator')->get('messages.Contact Us'); ?></h1>
                     </div>
                     <ul class="clearfix bread-crumb">
-                        <li><a href="{{route( '/')}}">@lang('messages.Home')</a></li>
-                        <li>@lang('messages.Contact Us')</li>
+                        <li><a href="<?php echo e(route( '/')); ?>"><?php echo app('translator')->get('messages.Home'); ?></a></li>
+                        <li><?php echo app('translator')->get('messages.Contact Us'); ?></li>
                     </ul>
                 </div>
             </div>
@@ -74,8 +73,8 @@
                     <div class="col-lg-4 col-md-12 col-sm-12 info-column">
                         <div class="contact-info-inner">
                             <div class="sec-title">
-                                <span>@lang('messages.Contact Us')</span>
-                                <h2>@lang('messages.Our Contacts & Location')</h2>
+                                <span><?php echo app('translator')->get('messages.Contact Us'); ?></span>
+                                <h2><?php echo app('translator')->get('messages.Our Contacts & Location'); ?></h2>
                             </div>
                             <!--<div class="single-box">
                                 <h3>Opening hours</h3>
@@ -85,7 +84,7 @@
                                 </ul>
                             </div>-->
                             <div class="single-box">
-                                <h3>@lang('messages.Contact info')</h3>
+                                <h3><?php echo app('translator')->get('messages.Contact info'); ?></h3>
                                 <ul class="clearfix list">
                                     <li ><i class="fas fa-map-marker-alt"  style="margin-right: 10px;" ></i>Colombo 10,Sri Lanka </li>
                                     <li ><a href="mailto:Info@yaka.lk" class="contat-icon "  ><i class="fas fa-envelope" style="margin-right: 15px;"></i>Info@yaka.lk</a></li>
@@ -95,7 +94,7 @@
                                 </ul>
                             </div>
                             <div class="single-box">
-                                <h3>@lang('messages.Social contact')</h3>
+                                <h3><?php echo app('translator')->get('messages.Social contact'); ?></h3>
                                 <ul class="clearfix sidebar-social-media" style="list-style-type: none; margin: 0; padding: 0; display: flex; justify-content: flex-start;">
                                     <li style="margin-right: 10px;"><a href="https://www.facebook.com/profile.php?id=61565478456618" class="sidebar-icon fb-icon"><i class="fab fa-facebook-f"></i></a></li>
                                     <li style="margin-right: 10px;"><a href="index.html" class="sidebar-icon twitter-icon"><i class="fab fa-twitter"></i></a></li>
@@ -108,32 +107,32 @@
                     </div>
                     <div class="col-lg-8 col-md-12 col-sm-12 form-column">
                         <div class="form-inner">
-                            <h2>@lang('messages.Get in Touch')</h2>
-                            <form method="post" action="{{ route('contact.send') }}" id="contact-form" class="default-form">
-                                @csrf
+                            <h2><?php echo app('translator')->get('messages.Get in Touch'); ?></h2>
+                            <form method="post" action="<?php echo e(route('contact.send')); ?>" id="contact-form" class="default-form">
+                                <?php echo csrf_field(); ?>
                                 <div class="clearfix row">
                                     <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        <label>@lang('messages.Name')*</label>
+                                        <label><?php echo app('translator')->get('messages.Name'); ?>*</label>
                                         <input type="text" name="username" required="">
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        <label>@lang('messages.Email') *</label>
+                                        <label><?php echo app('translator')->get('messages.Email'); ?> *</label>
                                         <input type="email" name="email" required="">
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                        <label>@lang('messages.Phone')</label>
+                                        <label><?php echo app('translator')->get('messages.Phone'); ?></label>
                                         <input type="text" name="phone" required="">
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                        <label>@lang('messages.Subject')</label>
+                                        <label><?php echo app('translator')->get('messages.Subject'); ?></label>
                                         <input type="text" name="subject" required="">
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                        <label>@lang('messages.Message') ...</label>
+                                        <label><?php echo app('translator')->get('messages.Message'); ?> ...</label>
                                         <textarea name="message"></textarea>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-                                        <button class="theme-btn-one" type="submit" name="submit-form">@lang('messages.Submit')</button>
+                                        <button class="theme-btn-one" type="submit" name="submit-form"><?php echo app('translator')->get('messages.Submit'); ?></button>
                                     </div>
                                 </div>
                             </form>
@@ -163,4 +162,6 @@
 
 
 
- @endsection
+ <?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('newFrontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Yaka-Project\resources\views/newFrontend/contact-us.blade.php ENDPATH**/ ?>
