@@ -35,7 +35,7 @@ class ContactController extends Controller
                         ->replyTo($validated['email']); // Set the reply-to address to the user's email
             });
 
-            Log::info('Contact email sent successfully to marasinghasasun01@gmail.com');
+            Log::info('Contact email sent successfully to admin@example.com');
         } catch (\Exception $e) {
             Log::error('Failed to send contact email', ['error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Failed to send your message. Please try again later.');
