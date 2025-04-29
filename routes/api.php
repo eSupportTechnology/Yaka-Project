@@ -71,10 +71,14 @@ Route::get('/categories', [CategoryController::class, 'getAllCategories']);
 Route::post('/ads/search', [AdsController::class, 'searchByTitle']);
 
 
-//Users
-Route::middleware('auth:sanctum')->get('/user/{id}', [UserController::class, 'getUserById']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    //Users
+    Route::get('/user/{id}', [UserController::class, 'getUserById']);
 
 
+});
 
 
 
