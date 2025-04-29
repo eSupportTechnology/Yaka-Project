@@ -46,5 +46,26 @@ class AdsController extends Controller
     ], 200);
 }
 
+//delete ads
+public function deleteById($id)
+{
+    $ad = Ads::find($id);
+
+    if (!$ad) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Ad not found.'
+        ], 404);
+    }
+
+    $ad->delete();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Ad deleted successfully.'
+    ], 200);
+}
+
+
 
 }

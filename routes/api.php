@@ -77,6 +77,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //Users
     Route::get('/user/{id}', [UserController::class, 'getUserById']);
 
+    //ads
+    Route::delete('/delete-ads/{id}',[AdsController::class,'deleteById']);
 
 });
 
