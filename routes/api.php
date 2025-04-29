@@ -10,6 +10,7 @@ use App\Http\Controllers\api\SubCategoryController;
 use App\Http\Controllers\apiMobile\AdsController;
 use App\Http\Controllers\apiMobile\AuthController;
 use App\Http\Controllers\apiMobile\CategoryController;
+use App\Http\Controllers\apiMobile\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,10 @@ Route::get('/categories', [CategoryController::class, 'getAllCategories']);
 
 
 Route::post('/ads/search', [AdsController::class, 'searchByTitle']);
+
+
+//Users
+Route::middleware('auth:sanctum')->get('/user/{id}', [UserController::class, 'getUserById']);
 
 
 
