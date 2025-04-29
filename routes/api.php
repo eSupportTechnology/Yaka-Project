@@ -76,6 +76,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //Users
     Route::get('/user/{id}', [UserController::class, 'getUserById']);
+    Route::put('/user-edit/{id}', [UserController::class, 'update']); //edit user account details
 
     //ads
     Route::delete('/delete-ads/{id}',[AdsController::class,'deleteById']);
