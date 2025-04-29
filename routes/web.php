@@ -40,7 +40,7 @@ Route::post('/register', [RegisteredUserController::class, 'register']);
 
 
 Route::get('/',[HomeController::class,'home'])->name('/');
- 
+
 Route::get('/ads/{id}', [AdsController::class, 'show'])->name('ads.details');
 Route::get('/search', [AdsController::class, 'search'])->name('search');
 
@@ -66,6 +66,10 @@ Route::get('/ad_post_criteria',[HomeController::class,'add_post'])->name('add_po
 Route::get('/browse_ads', [AdsController::class, 'browseAds'])->name('browse-ads');
 Route::get('/browse_ads_details/{adsId}', [AdsController::class, 'show_details'])->name('ads.details');
 
+// Mobile number verify
+Route::get('/verify-mobile', [CustomAuthController::class, 'verifyMobile'])->name('verify-mobile');
+Route::post('/verify-mobile-send-code', [CustomAuthController::class, 'verifyMobileSendCode'])->name('verify-mobile.send-code');
+Route::post('/verify-mobile-check-code', [CustomAuthController::class, 'verifyMobileCheckCode'])->name('verify-mobile.check-code');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -93,30 +97,30 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-models', function(Request $request) {
         $brandId = $request->get('brand_id');  // Get the brand ID
         $subCatId = $request->get('sub_cat_id');  // Get the subcategory ID
-        
+
         Log::info('Fetching models', [
             'brand_id' => $brandId,
             'sub_cat_id' => $subCatId
         ]);
-        
+
         if (!$brandId || !$subCatId) {
             return response()->json(['error' => 'Brand ID and Subcategory ID are required.'], 400);
         }
-        
+
         // Fetch models based on the brand and subcategory IDs
         $models = \App\Models\BrandsModels::where('brandsId', $brandId)
             ->where('sub_cat_id', $subCatId)
             ->get();
-        
+
         Log::info('Fetched models successfully', ['models' => $models]);
-        
+
         return response()->json($models);
     })->name('get.models');
 
     //paymentController
     Route::get('/payment', [PaymentProcessingController::class, 'show'])->name('payment.page');
     Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
-    
+
 });
 
 
@@ -181,7 +185,7 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     //usersManagementController
     Route::get('/dashboard/ads/{code?}',[adsManagementController::class ,'index'])->name('dashboard.ads');
     Route::get('/dashboard/ads/{status}/{id}',[adsManagementController::class ,'status'])->name('dashboard.ads.status');
- 
+
 
     //brandManagementController
     Route::get('/dashboard/configuration/brands/{name?}',[brandsManagementController::class ,'index'])->name('dashboard.configuration.brands-and-models');
@@ -220,7 +224,7 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::get('/dashboard/sub-packages/delete/{url}',[subPackageManagementController::class ,'delete'])->name('dashboard.sub-package.delete');
     Route::post('/dashboard/sub-package/delete/{url}',[subPackageManagementController::class,'deleteSubPackage'])->name('dashboard.package.delete-subpackage');
 
-     
+
     //Ads Types Management
     Route::get('/dashboard/adsTypeManagement/{name?}',[adsTypesManagementController::class,'index'])->name('dashboard.adsTypes');
     Route::get('/dashboard/adsTypeManagement/type/create',[adsTypesManagementController::class,'create'])->name('dashboard.adsTypes.create');
@@ -231,7 +235,7 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::get('/dashboard/adsTypeManagement/delete/{url}',[adsTypesManagementController::class,'delete'])->name('dashboard.adsTypes.delete');
     Route::post('/dashboard/adsTypeManagement/delete/{url}',[adsTypesManagementController::class,'deleteType'])->name('dashboard.adsTypes.deleteType');
 
-    
+
 
     //bannerManagementController
     Route::get('/dashboard/banner',[bannerManagementController::class ,'index'])->name('dashboard.banner');
