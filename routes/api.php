@@ -80,6 +80,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //ads
     Route::delete('/delete-ads/{id}',[AdsController::class,'deleteById']);
+    Route::post('/post-ad', [AdsController::class, 'postAd']); //post ads
+
 
 });
 
