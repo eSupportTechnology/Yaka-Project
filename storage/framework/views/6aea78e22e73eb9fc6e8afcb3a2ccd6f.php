@@ -10,6 +10,18 @@
             height: 100%;
         }
 
+        .widget-title h3 {
+            padding: 10px 0;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+                .widget-title {
+            overflow: visible; /* prevent cropping */
+        }   
+
+
+
         /* Set a fixed height for the banner */
         .banner-img {
             height: 400px;
@@ -139,7 +151,7 @@
             <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
                 <div class="default-sidebar category-sidebar">
                     <div class="sidebar-search sidebar-widget">
-                        <div class="widget-title">
+                        <div class="widget-title ">
                             <h3><?php echo app('translator')->get('messages.Search'); ?></h3>
                         </div>
                         <div class="widget-content">
