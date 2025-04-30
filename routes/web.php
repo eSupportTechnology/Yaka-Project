@@ -25,6 +25,10 @@ use App\Http\Controllers\frontend\UserDashboardController;
 use App\Http\Controllers\frontend\AdsController;
 use App\Http\Controllers\LocaleController;
 
+use App\Http\Controllers\ContactController;
+
+Route::post('/send-contact', [ContactController::class, 'send'])->name('contact.send');
+
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 
 Route::get('/custom-login', function () {
