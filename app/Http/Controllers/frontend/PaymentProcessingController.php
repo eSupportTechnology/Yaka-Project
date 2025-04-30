@@ -10,7 +10,7 @@ use App\Models\Ads;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Carbon\Carbon; 
+use Carbon\Carbon;
 
 
 class PaymentProcessingController extends Controller
@@ -25,11 +25,11 @@ class PaymentProcessingController extends Controller
         $adData = json_decode($request->query('ad_data'), true); // Retrieve stored ad data
 
         return view('newFrontend.user.payment', compact(
-            'selectedPackageName', 
-            'selectedPackageDuration', 
-            'selectedPackagePrice', 
-            'packageType', 
-            
+            'selectedPackageName',
+            'selectedPackageDuration',
+            'selectedPackagePrice',
+            'packageType',
+
             'adData'
         ));
     }
@@ -39,31 +39,31 @@ class PaymentProcessingController extends Controller
         try {
             // Decode ad data
             $adData = json_decode($request->input('ad_data'), true);
-    
+
             if (!$adData) {
                 return redirect()->back()->with('error', 'Invalid ad data.');
             }
-    
+
             // Simulate Payment Processing (Replace with real payment gateway logic)
             $paymentSuccess = true; // Simulated payment success
-    
+
             if ($paymentSuccess) {
                 // Save the ad after payment success
                 $this->saveAd($adData);
-    
+
                 // Redirect to user's ads page with success message
                 return redirect()->route('user.my_ads')->with('success', 'Payment successful! Your ad has been posted.');
             }
-    
+
             // If payment fails, redirect back with an error message
             return redirect()->back()->with('error', 'Payment failed! Please try again.');
-    
+
         } catch (\Exception $e) {
             Log::error('Payment processing error', ['error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
         }
     }
-    
+
 
     private function saveAd($adData)
     {
@@ -76,12 +76,12 @@ class PaymentProcessingController extends Controller
                 }
             }
 
-            
+
 
             // Save Ad in Database
             Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
-                'user_id' => auth()->user()->id, 
+                'user_id' => auth()->user()->id,
                 'title' => $adData['title'],
                 'price' => $adData['price'],
                 'description' => $adData['description'],
@@ -104,9 +104,17 @@ class PaymentProcessingController extends Controller
 
             Log::info('Ad saved successfully.');
              return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
-           
+
         } catch (\Exception $e) {
             Log::error('Error in saving ad', ['error' => $e->getMessage()]);
         }
+    }
+
+    /**
+     * Process Payment information
+     */
+    public function getPaymentInfo(Request $request)
+    {
+        Log::info("Payment Status: ".$request);
     }
 }

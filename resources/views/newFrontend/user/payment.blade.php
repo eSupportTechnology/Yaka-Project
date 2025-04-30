@@ -41,7 +41,7 @@
     }
 
 </style>
-
+<script src="https://sandboxipgsdk.payable.lk/sdk/v4/payable-checkout.js"></script>
 <div class="container mt-5">
     <div class="payment-container mb-4" id="main-payment-content">
         <h2 class="mb-4 text-center">Complete Your Payment</h2>
@@ -76,7 +76,7 @@
         </div>
 
         <!-- Initial Pay Now Button -->
-        <button type="button" id="show-card-page" class="btn btn-success w-100">Pay Now</button>
+        <button onclick="returnForm()" type="button" id="show-card-page" class="btn btn-success w-100 pay_now">Pay Now</button>
     </div>
 
     <!-- Payment Form Page (Initially Hidden) -->
@@ -93,7 +93,7 @@
 
         <form action="{{ route('payment.complete') }}" method="POST">
             @csrf
-           
+
             <input type="hidden" name="package_type" value="{{ $packageType }}">
             <input type="hidden" name="ad_data" value="{{ json_encode($adData) }}">
 
@@ -113,11 +113,35 @@
         </form>
     </div>
 </div>
-
 <script>
+
+    function returnForm() {
+       const payment = {
+            logoUrl: "https://yaka.lk/Logo-re.png",
+            returnUrl: "https://yaka.lk/user/my_ads",
+            checkValue: "8d55d6f6607b5872168f6b69053680ca",
+            orderDescription: "Payment for Yaka",
+            invoiceId: "8d55d6f6607b58",
+            merchantKey: "2850686EDCB8570C",
+            customerFirstName: "Gayashan",
+            customerLastName: "Abeywicckrama",
+            customerMobilePhone: "0715925451",
+            customerEmail: "gayashancs7@gmail.com",
+            billingAddressStreet: "Thalgaskoratratuwa",
+            billingAddressCity: "Walasmulla",
+            billingAddressCountry: "LKA",
+            amount: "100.00",
+            currencyCode: "LKR",
+            paymentType: "1",
+            notifyUrl: "https://yaka.lk/api/payment/notify"
+        };
+        payablePayment(payment);
+    }
+</script>
+{{-- <script>
     document.getElementById("show-card-page").addEventListener("click", function () {
         document.getElementById("main-payment-content").style.display = "none"; // Hide all other content
         document.getElementById("card-details-page").style.display = "block"; // Show only the card details form
     });
-</script>
+</script> --}}
 @endsection
