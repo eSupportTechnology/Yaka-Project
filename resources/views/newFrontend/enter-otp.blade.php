@@ -54,10 +54,13 @@
 
 
             <div class="tab-pane active" id="register-tab">
-
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 @endif
 
@@ -67,54 +70,34 @@
                     </div>
                 @endif
 
-                @if ($errors->has('phone_number') || $errors->has('password'))
-                    <div class="alert alert-danger">
-                        Invalid phone number or password. Please try again.
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
                     </div>
                 @endif
 
-                @if (session('active_error'))
-                    <div class="alert alert-danger">
-                        {{ session('active_error') }} <a href="{{ route('verify-mobile') }}">Verify</a>
-                    </div>
-                @endif
 
-    <!-- Login Section -->
+    <!-- Verify Section -->
     <section class="login-section bg-color-2">
         <div class="auto-container">
             <div class="inner-container">
                 <div class="inner-box">
-                    <h2>Log in</h2>
-                    <form action="{{ route('custom.login') }}" method="POST" class="login-form">
+                    <h2>Enter Verification Code</h2>
+                    <form action="{{ route('verify-mobile.check-code') }}" method="POST" class="login-form">
                         @csrf
                         <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="text" name="phone_number" required>
+                            <label>Verification Code</label>
+                            <input type="text" name="verification_code" required>
                             @error('phone_number')
                                 <div class="error-message">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <div style="position: relative;">
-                                <input type="password" id="password" name="password" required>
-                                <span id="togglePassword" style="position: absolute; right: 10px; top: 10px; cursor: pointer;">
-                                    <i class="fas fa-eye-slash"></i>
-                                </span>
-                            </div>
-                            @error('password')
-                                <div class="error-message">{{ $message }}</div>
-                            @enderror
-                        </div>
                         <div class="form-group message-btn">
-                            <button type="submit" class="theme-btn-one">Login Now</button>
+                            <button type="submit" class="theme-btn-one">Verify</button>
                         </div>
                     </form>
-                    <div class="other-content centred">
-                        <div class="text"><span>or</span></div>
-                        <div class="othre-text">
-                            <p>Don’t have an account? <a href="{{ route('register') }}">Register Now</a></p>
-                        </div>
+                    <div class="other-text centred mt-3">
+                        <p>Already verified? <a href="{{ route('login') }}">Sign In</a></p>
                     </div>
                 </div>
             </div>

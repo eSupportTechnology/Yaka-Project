@@ -1,15 +1,21 @@
 <?php
 
-use App\Http\Controllers\api\AdPostController;
-use App\Http\Controllers\api\BrandsModelsController;
-use App\Http\Controllers\api\LocattionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\AdsController;
+use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\AdPostController;
+use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\LocattionController;
+use App\Http\Controllers\api\SubCategoryController;
+use App\Http\Controllers\api\BrandsModelsController;
+use App\Http\Controllers\frontend\PaymentProcessingController;
 //use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\SubCategoryController;
 use App\Http\Controllers\apiMobile\AdsController;
 use App\Http\Controllers\apiMobile\AuthController;
 use App\Http\Controllers\apiMobile\CategoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +76,9 @@ Route::get('/categories', [CategoryController::class, 'getAllCategories']);
 Route::post('/ads/search', [AdsController::class, 'searchByTitle']);
 
 
+
+// Payament info
+Route::post('/payment/notify',[PaymentProcessingController::class , 'getPaymentInfo']);
 
 
 

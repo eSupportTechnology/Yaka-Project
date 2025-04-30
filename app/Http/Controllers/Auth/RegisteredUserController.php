@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-  
+
 
      public function store(Request $request): RedirectResponse
      {
@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
                  'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
                  'password' => ['required', 'confirmed', Rules\Password::defaults()],
              ]);
-     
+
              // Log validation success
              Log::info('Validation passed for user registration', [
                  'first_name' => $request->first_name,
@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
                  'email' => $request->email,
                  'phone_number' => $request->phone_number,
              ]);
-     
+
              // Create the user with custom fields
              $user = User::create([
                  'first_name' => $request->first_name,
@@ -59,27 +59,27 @@ class RegisteredUserController extends Controller
                  'password' => Hash::make($request->password),
                  'roles' => 'user',
              ]);
-     
+
              Log::info('User successfully created', ['user_id' => $user->id]);
-     
+
              event(new Registered($user));
-     
+
              Auth::login($user);
-     
+
              // Redirect to the correct login route
-             return redirect()->route('user.login');
-             
+             return redirect()->route('verify-mobile')->with('success', 'Registration completed. Enter your Mobile number again for verify mobile');
+
          } catch (\Exception $e) {
              // Log the error details
              Log::error('Error during user registration', [
                  'error_message' => $e->getMessage(),
                  'trace' => $e->getTraceAsString(),
              ]);
-     
+
              // Optionally, you can return a redirect or view with error messages
              return redirect()->back()->withErrors(['error' => 'An error occurred during registration.']);
          }
      }
-     
-    
+
+
 }
