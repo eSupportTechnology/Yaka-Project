@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\api\AdPostController;
-use App\Http\Controllers\api\BrandsModelsController;
-use App\Http\Controllers\api\LocattionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\api\CategoryController;
-use App\Http\Controllers\api\SubCategoryController;
 use App\Http\Controllers\api\AdsController;
+use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\AdPostController;
+use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\LocattionController;
+use App\Http\Controllers\api\SubCategoryController;
+use App\Http\Controllers\api\BrandsModelsController;
+use App\Http\Controllers\frontend\PaymentProcessingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,9 @@ Route::get('/models/{brands}',[BrandsModelsController::class , 'GetModels']);
 Route::get('/province',[LocattionController::class , 'GetProvince']);
 Route::get('/districts',[LocattionController::class , 'GetDistrict']);
 Route::get('/city/{district}',[LocattionController::class , 'GetCity']);
+
+// Payament info
+Route::post('/payment/notify',[PaymentProcessingController::class , 'getPaymentInfo']);
 
 
 
