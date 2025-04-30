@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 
-class AuthController extends Controller
+class AuthControllerMobile extends Controller
 {
     public function login(Request $request): JsonResponse
 {

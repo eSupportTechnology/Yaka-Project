@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 
-class CategoryController extends Controller
+class CategoryControllerMobile extends Controller
 {
     public function getAllCategories(): JsonResponse
     {

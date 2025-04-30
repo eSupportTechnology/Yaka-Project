@@ -11,10 +11,21 @@ use App\Http\Controllers\api\SubCategoryController;
 use App\Http\Controllers\api\BrandsModelsController;
 use App\Http\Controllers\frontend\PaymentProcessingController;
 //use App\Http\Controllers\api\CategoryController;
-use App\Http\Controllers\api\SubCategoryController;
-use App\Http\Controllers\apiMobile\AdsController;
-use App\Http\Controllers\apiMobile\AuthController;
-use App\Http\Controllers\apiMobile\CategoryController;
+//use App\Http\Controllers\api\SubCategoryController;
+
+//before
+// use App\Http\Controllers\apiMobile\AdsController;
+// use App\Http\Controllers\apiMobile\AuthController;
+// use App\Http\Controllers\apiMobile\CategoryController;
+
+
+//update fix
+// change Controllers Name
+use App\Http\Controllers\apiMobile\AdsControllerMobile; 
+use App\Http\Controllers\apiMobile\AuthControllerMobile;
+use App\Http\Controllers\apiMobile\CategoryControllerMobile;
+
+
 
 
 /*
@@ -65,15 +76,15 @@ Route::get('/ping', function () {
     ]);
 });
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthControllerMobile::class, 'login']);
+Route::post('/logout', [AuthControllerMobile::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/register', [AuthControllerMobile::class, 'register']);
 
 
-Route::get('/categories', [CategoryController::class, 'getAllCategories']);
+Route::get('/categories', [CategoryControllerMobile::class, 'getAllCategories']);
 
 
-Route::post('/ads/search', [AdsController::class, 'searchByTitle']);
+Route::post('/ads/search', [AdsControllerMobile::class, 'searchByTitle']);
 
 
 

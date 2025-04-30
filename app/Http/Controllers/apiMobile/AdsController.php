@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ads;
 use Illuminate\Http\Request;
 
-class AdsController extends Controller
+class AdsControllerMobile extends Controller
 {
     public function searchByTitle(Request $request)
 {
