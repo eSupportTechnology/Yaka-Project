@@ -4,7 +4,7 @@ name: 🚀 Deploy to Server
 on:
   push:
     branches:
-      - production  # Replace 'production' with your branch name
+      - feature/ipg-integration  # Replace 'production' with your branch name
 
 jobs:
   deploy:
