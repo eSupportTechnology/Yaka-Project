@@ -75,6 +75,12 @@
                     </div>
                 <?php endif; ?>
 
+                <?php if(session('active_error')): ?>
+                    <div class="alert alert-danger">
+                        <?php echo e(session('active_error')); ?> <a href="<?php echo e(route('verify-mobile')); ?>">Verify</a>
+                    </div>
+                <?php endif; ?>
+
     <!-- Login Section -->
     <section class="login-section bg-color-2">
         <div class="auto-container">
