@@ -125,7 +125,7 @@
             merchantKey: "2850686EDCB8570C",
             customerFirstName: "Gayashan",
             customerLastName: "Abeywicckrama",
-            customerMobilePhone: "0715925451",
+            customerMobilePhone: "0715925453",
             customerEmail: "gayashancs7@gmail.com",
             billingAddressStreet: "Thalgaskoratratuwa",
             billingAddressCity: "Walasmulla",
