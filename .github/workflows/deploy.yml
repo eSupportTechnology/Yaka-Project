@@ -1,38 +1,34 @@
-name: 🚀 Deploy to Server
+name: Deploy via SSH
 
-# Trigger the workflow when code is pushed to the 'production' branch
 on:
   push:
     branches:
-      - feature/ipg-integration  # Replace 'production' with your branch name
+      - feature/ipg-integration
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📦 Checkout the code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: 🔐 Setup SSH
-      run: |
-        # Start the SSH agent
-        eval "$(ssh-agent -s)"
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-        # Add the SSH private key to the agent without asking for a passphrase interactively
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" | ssh-add -
-
-        # Add the passphrase to the SSH agent (if necessary) without interaction
-        echo "${{ secrets.SSH_KEY_PASSPHRASE }}" | ssh-add -p
-
-        # Add the host to known hosts to avoid SSH prompts
-        mkdir -p ~/.ssh
-        ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-
-    - name: 🚚 Deploy using rsync over SSH
-      run: |
-        # Deploy files using rsync with the custom SSH port
-        rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_ed25519" --delete ./ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
-
-    - name: ✅ Deployment Completed
-      run: echo "🚀 Deployment was successful!"
+      - name: Deploy code via SSH
+        env:
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          ssh -p $SSH_PORT $SSH_USERNAME@$SSH_HOST <<EOF
+            cd $DEPLOY_PATH
+            git pull origin feature/ipg-integration
+            # Run any other deployment commands here
+          EOF
