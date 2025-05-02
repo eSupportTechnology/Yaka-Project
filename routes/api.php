@@ -7,14 +7,8 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\AdPostController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\LocattionController;
-use App\Http\Controllers\api\SubCategoryController;
 use App\Http\Controllers\api\BrandsModelsController;
 use App\Http\Controllers\frontend\PaymentProcessingController;
-//use App\Http\Controllers\api\CategoryController;
-use App\Http\Controllers\api\SubCategoryController;
-use App\Http\Controllers\apiMobile\AdsController;
-use App\Http\Controllers\apiMobile\AuthController;
-use App\Http\Controllers\apiMobile\CategoryController;
 
 
 /*
