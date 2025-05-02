@@ -19,10 +19,10 @@ jobs:
         # Start the SSH agent
         eval "$(ssh-agent -s)"
 
-        # Add the SSH private key to the agent
+        # Add the SSH private key to the agent without asking for a passphrase interactively
         echo "${{ secrets.SSH_PRIVATE_KEY }}" | ssh-add -
 
-        # Add the passphrase to the SSH agent (only if a passphrase is set)
+        # Add the passphrase to the SSH agent (if necessary) without interaction
         echo "${{ secrets.SSH_KEY_PASSPHRASE }}" | ssh-add -p
 
         # Add the host to known hosts to avoid SSH prompts
