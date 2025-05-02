@@ -117,8 +117,8 @@
 
     function returnForm() {
        const payment = {
-            logoUrl: "https://yaka.lk/Logo-re.png",
-            returnUrl: "https://yaka.lk/user/my_ads",
+            logoUrl: "https://yakalk.esupportsystem.shop/Logo-re.png",
+            returnUrl: "https://yakalk.esupportsystem.shop/user/my_ads",
             checkValue: "8d55d6f6607b5872168f6b69053680ca",
             orderDescription: "Payment for Yaka",
             invoiceId: "8d55d6f6607b58",
@@ -133,7 +133,7 @@
             amount: "100.00",
             currencyCode: "LKR",
             paymentType: "1",
-            notifyUrl: "https://yaka.lk/api/payment/notify"
+            notifyUrl: "https://yakalk.esupportsystem.shop/api/payment/notify"
         };
         payablePayment(payment);
     }
