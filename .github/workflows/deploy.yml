@@ -1,33 +1,38 @@
 name: 🚀 Deploy to Server
 
+# Trigger the workflow when code is pushed to the 'production' branch
 on:
   push:
     branches:
-      - feature/ipg-integration  # Trigger only on push to 'production' branch
+      - production  # Replace 'production' with your branch name
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📦 Checkout code
+    - name: 📦 Checkout the code
       uses: actions/checkout@v3
 
-    - name: 🔐 Setup SSH Agent
+    - name: 🔐 Setup SSH
       run: |
         # Start the SSH agent
         eval "$(ssh-agent -s)"
 
-        # Add SSH private key
+        # Add the SSH private key to the agent
         echo "${{ secrets.SSH_PRIVATE_KEY }}" | ssh-add -
 
-        # Provide the passphrase for the SSH key
-        echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add -p
+        # Add the passphrase to the SSH agent (only if a passphrase is set)
+        echo "${{ secrets.SSH_KEY_PASSPHRASE }}" | ssh-add -p
 
-        # Make sure the known hosts file is present
+        # Add the host to known hosts to avoid SSH prompts
         mkdir -p ~/.ssh
-        ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+        ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-    - name: 🚚 Deploy using rsync
+    - name: 🚚 Deploy using rsync over SSH
       run: |
-        rsync -avz --delete ./ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
+        # Deploy files using rsync with the custom SSH port
+        rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_ed25519" --delete ./ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+    - name: ✅ Deployment Completed
+      run: echo "🚀 Deployment was successful!"
