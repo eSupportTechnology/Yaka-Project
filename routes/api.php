@@ -11,6 +11,7 @@ use App\Http\Controllers\apiMobile\AdsController;
 use App\Http\Controllers\apiMobile\AuthController;
 use App\Http\Controllers\apiMobile\CategoryController;
 use App\Http\Controllers\apiMobile\UserController;
+use App\Http\Controllers\apiMobile\UserPhoneNumberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //ads
     Route::delete('/delete-ads/{id}',[AdsController::class,'deleteById']);
     Route::post('/post-ad', [AdsController::class, 'postAd']); //post ads
+
+    //phone
+    Route::prefix('user-phone-numbers')->group(function () {
+        Route::get('/{userId}', [UserPhoneNumberController::class, 'index']); // Get all phone numbers for a user
+        Route::post('/', [UserPhoneNumberController::class, 'store']);        // Add a new phone number
+        Route::put('/{id}', [UserPhoneNumberController::class, 'update']);    // Update a phone number
+        Route::delete('/{id}', [UserPhoneNumberController::class, 'destroy']); // Delete a phone number
+    });
 
 
 });

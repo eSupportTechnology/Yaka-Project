@@ -77,4 +77,14 @@ class User extends Authenticatable
     {
         return $this->roles == ADMIN ? true : false;
     }
+
+    public function phoneNumbers()
+{
+    return $this->hasMany(UserPhoneNumber::class);
+}
+
+public function primaryPhoneNumber()
+{
+    return $this->hasOne(UserPhoneNumber::class)->where('is_primary', true);
+}
 }
