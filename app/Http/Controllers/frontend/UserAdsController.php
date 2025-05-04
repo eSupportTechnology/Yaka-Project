@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\frontend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Cities;
+use Carbon\Carbon;
 use App\Models\Ads;
-use App\Models\AdDetail;
-use App\Models\FormField;
+use App\Models\Cities;
 use App\Models\Package;
-use App\Models\PackageType;
+use App\Models\AdDetail;
 use App\Models\Category;
 use App\Models\Districts;
+use App\Models\FormField;
+use App\Models\PackageType;
+use Illuminate\Support\Str;
+use App\Services\OtpService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 class UserAdsController extends Controller
 {
@@ -287,7 +288,7 @@ class UserAdsController extends Controller
                 }
             }
             Log::info('Ad details saved successfully');
-
+            OtpService::sendSingleSms(auth()->user()->phone_number, "Your ad has been successfully submitted! It will go live after admin approval. Thank you for using our platform.");
             return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
     } catch (\Exception $e) {
         Log::error('Error in store method', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);

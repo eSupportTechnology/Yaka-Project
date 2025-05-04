@@ -7,6 +7,7 @@ use App\Models\Ads;
 use App\Models\Payment;
 use App\Models\PaymentInfo;
 use Illuminate\Support\Str;
+use App\Services\OtpService;
 use Illuminate\Http\Request;
 use App\Services\IpgHashService;
 use Illuminate\Support\Facades\Log;
@@ -83,8 +84,6 @@ class PaymentProcessingController extends Controller
                 }
             }
 
-
-
             // Save Ad in Database
             Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
@@ -109,7 +108,7 @@ class PaymentProcessingController extends Controller
                 'sublocation' => $adData['sublocation'],
                 'status' => '0',
             ]);
-
+            OtpService::sendSingleSms(auth()->user()->phone_number, "Payment received for '{$invoiceId}'. Your ad will be published after admin approval. Thank you!");
             Log::info('Ad saved successfully.');
             //  return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
 
