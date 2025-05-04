@@ -128,7 +128,7 @@ class PaymentProcessingController extends Controller
         if($statusMessage == 'SUCCESS') {
             $paymentInfo = PaymentInfo::where('invoice_id', $invoiceNo)->first();
             if($paymentInfo) {
-                $paymentInfo->payment_info = 1;
+                $paymentInfo->payment_status = 1;
                 $paymentInfo->save();
             }
         }

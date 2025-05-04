@@ -21,7 +21,7 @@ use App\Http\Controllers\adminPanel\bannerManagementController;
 use App\Http\Controllers\Auth\CustomAuthController;
 
 use App\Http\Controllers\frontend\UserAdsController;
-use App\Http\Controllers\frontend\UserDashboardController;
+use App\Http\Controllers\frontend\userDashboardController;
 use App\Http\Controllers\frontend\AdsController;
 use App\Http\Controllers\LocaleController;
 
@@ -77,11 +77,11 @@ Route::post('/verify-mobile-check-code', [CustomAuthController::class, 'verifyMo
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
-    Route::get('/user/logout', [UserDashboardController::class, 'logout'])->name('user.logout');
-    Route::get('/user/profile', [UserDashboardController::class, 'profile'])->name('user.profile');
-    Route::get('/get-cities', [UserDashboardController::class, 'getCities'])->name('get.cities');
-    Route::post('/user/profile/update', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
+    Route::get('/user/dashboard', [userDashboardController::class, 'index'])->name('user.dashboard');
+    Route::get('/user/logout', [userDashboardController::class, 'logout'])->name('user.logout');
+    Route::get('/user/profile', [userDashboardController::class, 'profile'])->name('user.profile');
+    Route::get('/get-cities', [userDashboardController::class, 'getCities'])->name('get.cities');
+    Route::post('/user/profile/update', [userDashboardController::class, 'updateProfile'])->name('user.profile.update');
 
     Route::get('/user/ad_posts/categories', [UserAdsController::class, 'ad_posts_categories'])->name('user.ad_posts.categories');
     Route::get('/fetch-subcategories/{categoryId}', [UserAdsController::class, 'fetchSubcategories']);
@@ -92,8 +92,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/ad_posts', [UserAdsController::class, 'ad_posts'])->name('user.ad_posts');
     Route::post('/user/ad-posts', [UserAdsController::class, 'store'])->name('user.ad_posts.store');
 
-    Route::get('/user/my_ads', [UserDashboardController::class, 'my_ads'])->name('user.my_ads');
-    Route::delete('/ads/{adsId}/delete', [UserDashboardController::class, 'destroy'])->name('ads.delete');
+    Route::get('/user/my_ads', [userDashboardController::class, 'my_ads'])->name('user.my_ads');
+    Route::delete('/ads/{adsId}/delete', [userDashboardController::class, 'destroy'])->name('ads.delete');
 
 
     Route::get('/get-brands', [AdsController::class, 'getBrands'])->name('get.brands');
