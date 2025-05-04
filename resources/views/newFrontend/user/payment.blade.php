@@ -106,7 +106,7 @@
             </div>
         </div>
 
-        <form action="{{ route('payment.complete') }}" method="POST">
+        {{-- <form action="{{ route('payment.complete') }}" method="POST">
             @csrf
 
             <input type="hidden" name="package_type" value="{{ $packageType }}">
@@ -125,7 +125,7 @@
             <input type="text" id="cvc" class="form-control mb-3" placeholder="123" required>
 
             <button type="submit" class="btn btn-success w-100">Confirm Payment</button>
-        </form>
+        </form> --}}
     </div>
 </div>
 <script>
