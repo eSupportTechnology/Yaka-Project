@@ -123,7 +123,8 @@ Route::middleware(['auth'])->group(function () {
 
     //paymentController
     Route::get('/payment', [PaymentProcessingController::class, 'show'])->name('payment.page');
-    Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
+    // Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
+    Route::get('/payment/checking', [PaymentProcessingController::class, 'complete'])->name('payment.checking');
 
 });
 

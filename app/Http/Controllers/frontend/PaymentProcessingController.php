@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\PaymentInfo;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Services\IpgHashService;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -25,8 +26,8 @@ class PaymentProcessingController extends Controller
         $selectedPackageDuration = session('selected_package_duration');
         $adData = session('ad_data');
 
-        $checkValue = date('YmsHsi');
-        $invoiceId = "YKAD".$checkValue;
+        $invoiceId = "YKAD".date('YmsHsi');
+        $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
         PaymentInfo::create([
             'check_value' => $checkValue,
             'invoice_id' => $invoiceId,
@@ -50,6 +51,7 @@ class PaymentProcessingController extends Controller
     public function complete(Request $request)
     {
         try {
+            dd($request);
             // Decode ad data
             $adData = json_decode($request->input('ad_data'), true);
 
