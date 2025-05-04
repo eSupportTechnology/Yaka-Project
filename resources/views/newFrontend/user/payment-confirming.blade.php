@@ -54,4 +54,10 @@
         </div>
     </div>
 </div>
+<script>
+    // Refresh the page after 30 seconds (30,000 milliseconds)
+    setTimeout(function () {
+        location.reload();
+    }, 30000);
+</script>
 @endsection
