@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\frontend;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Log;
-use App\Models\Payment;
+use Carbon\Carbon;
 use App\Models\Ads;
+use App\Models\Payment;
+use App\Models\PaymentInfo;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 
 class PaymentProcessingController extends Controller
@@ -26,9 +27,14 @@ class PaymentProcessingController extends Controller
 
         $checkValue = date('YmsHsi');
         $invoiceId = "YKAD".$checkValue;
+        PaymentInfo::create([
+            'check_value' => $checkValue,
+            'invoice_id' => $invoiceId,
+        ]);
 
         session(['checkValue' => $checkValue]);
         session(['invoiceId' => $invoiceId]);
+        session([$invoiceId.'add_date' => $adData]);
 
         return view('newFrontend.user.payment', compact(
             'selectedPackageName',

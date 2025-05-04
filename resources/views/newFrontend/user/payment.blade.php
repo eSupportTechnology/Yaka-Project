@@ -85,7 +85,7 @@
                 <label for="billing_city">Billing Address City<span style="color:red; font-size:18px;">*</span></label>
                 <input class="form-control" type="text" name="billing_city" id="billing_city">
                 <label for="billing_country">Billing Address Country<span style="color:red; font-size:18px;">*</span></label>
-                <input class="form-control" type="text" name="billing_country" id="billing_country" value="Sri Lanka">
+                <input class="form-control" type="text" name="billing_country" id="billing_country" value="LKA" readonly>
             </div>
         </div>
 
