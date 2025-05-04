@@ -121,10 +121,11 @@ class PaymentProcessingController extends Controller
     public function getPaymentInfo(Request $request)
     {
         Log::info("Payment Status: ".$request);
-        $data = json_decode($request, true); // decode as array
 
-        $invoiceNo = $data['invoiceNo'] ?? null;
-        $statusMessage = $data['statusMessage'] ?? null;
+
+        $invoiceNo = $request['invoiceNo'] ?? null;
+        $statusMessage = $request['statusMessage'] ?? null;
+
         if($statusMessage == 'SUCCESS') {
             $paymentInfo = PaymentInfo::where('invoice_id', $invoiceNo)->first();
             if($paymentInfo) {
