@@ -117,23 +117,23 @@
 
     function returnForm() {
        const payment = {
-            logoUrl: "https://yakalk.esupportsystem.shop/Logo-re.png",
-            returnUrl: "https://yakalk.esupportsystem.shop/user/my_ads",
-            checkValue: "8d55d6f6607b5872168f6b69053680ca",
+            logoUrl: "{{ config('ipg.logo-url') }}",
+            returnUrl: "{{ config('ipg.retun-url') }}",
+            checkValue: "{{ session('checkValue') }}",
             orderDescription: "Payment for Yaka",
-            invoiceId: "8d55d6f6607b58",
-            merchantKey: "2850686EDCB8570C",
-            customerFirstName: "Gayashan",
-            customerLastName: "Abeywicckrama",
-            customerMobilePhone: "0715925453",
-            customerEmail: "gayashancs7@gmail.com",
+            invoiceId: "{{ session('invoiceId') }}",
+            merchantKey: "{{ config('ipg.merchant-key') }}",
+            customerFirstName: "{{ auth()->user()->first_name }}",
+            customerLastName: "{{ auth()->user()->last_name }}",
+            customerMobilePhone: "{{ auth()->user()->phone_number }}",
+            customerEmail: "{{ auth()->user()->email }}",
             billingAddressStreet: "Thalgaskoratratuwa",
             billingAddressCity: "Walasmulla",
             billingAddressCountry: "LKA",
-            amount: "100.00",
+            amount: "{{ $selectedPackagePrice }}",
             currencyCode: "LKR",
             paymentType: "1",
-            notifyUrl: "https://yakalk.esupportsystem.shop/api/payment/notify"
+            notifyUrl: "{{ config('ipg.notify-url') }}"
         };
         payablePayment(payment);
     }

@@ -17,20 +17,27 @@ class PaymentProcessingController extends Controller
 {
     public function show(Request $request)
     {
-        $packageId = request('package_id');
-        $packageType = request('package_type');
-        $selectedPackageName = request('selected_package_name');
-        $selectedPackagePrice = request('selected_package_price');
-        $selectedPackageDuration = request('selected_package_duration');
-        $adData = json_decode($request->query('ad_data'), true); // Retrieve stored ad data
+        $packageId = session('package_id');
+        $packageType = session('package_type');
+        $selectedPackageName = session('selected_package_name');
+        $selectedPackagePrice = session('selected_package_price');
+        $selectedPackageDuration = session('selected_package_duration');
+        $adData = session('ad_data');
+
+        $checkValue = date('YmsHsi');
+        $invoiceId = "YKAD".$checkValue;
+
+        session(['checkValue' => $checkValue]);
+        session(['invoiceId' => $invoiceId]);
 
         return view('newFrontend.user.payment', compact(
             'selectedPackageName',
             'selectedPackageDuration',
             'selectedPackagePrice',
             'packageType',
-
-            'adData'
+            'adData',
+            'checkValue',
+            'invoiceId',
         ));
     }
 
