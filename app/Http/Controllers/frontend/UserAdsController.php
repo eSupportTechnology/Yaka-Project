@@ -203,7 +203,7 @@ class UserAdsController extends Controller
                 }
             }
 
-            $mainImagePath = $request->file('main_image')->storeAs('ads/main_images',
+            $mainImagePath = $request->file('main_image')->storeAs('app/public/ads/main_images',
             $request->file('main_image')->getClientOriginalName(), 'public');
 
             $subImagesPaths = [];
