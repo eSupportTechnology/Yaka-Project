@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ads extends Model
 {
-    protected $table = 'ads'; 
-    protected $primaryKey = 'adsId'; 
+    protected $table = 'ads';
+    protected $primaryKey = 'adsId';
     public $incrementing = false;
 
     protected $fillable = [
         'adsId',
+        'invoice_id',
         'user_id',
         'title',
         'url',
@@ -37,7 +38,7 @@ class Ads extends Model
     ];
 
     protected $casts = [
-        'subImage' => 'array', 
+        'subImage' => 'array',
     ];
 
     // Relationship with Category
@@ -84,14 +85,14 @@ class Ads extends Model
 
     public function brand()
     {
-        return $this->belongsTo(BrandsModels::class, 'brand', 'id'); 
+        return $this->belongsTo(BrandsModels::class, 'brand', 'id');
     }
 
     public function model()
     {
-        return $this->belongsTo(BrandsModels::class, 'model', 'id'); 
+        return $this->belongsTo(BrandsModels::class, 'model', 'id');
     }
-    
+
 
 
     // Accessor for subImage to get it as an array
@@ -158,9 +159,9 @@ class Ads extends Model
     }
 
 
-   
 
-   
+
+
 
     // Relationship with AdsPackage
     public function adsPackage()

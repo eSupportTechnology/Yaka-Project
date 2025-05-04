@@ -31,6 +31,7 @@ class PaymentProcessingController extends Controller
         PaymentInfo::create([
             'check_value' => $checkValue,
             'invoice_id' => $invoiceId,
+            'ad_data' => $adData,
         ]);
 
         session(['checkValue' => $checkValue]);
@@ -57,9 +58,9 @@ class PaymentProcessingController extends Controller
                 return view('newFrontend.user.payment-confirming');
             } else if($paymentInfo->payment_status == 1) {
                 // Decode ad data
-                $adData = session($invoiceId.'ad_data');
+                $adData = $paymentInfo->ad_data;
                 Log::info($adData);
-                $this->saveAd($adData);
+                $this->saveAd($adData, $invoiceId);
                 return redirect()->route('user.my_ads')->with('success', 'Payment successful! Your ad has been posted.');
             } else {
                 return view('newFrontend.user.payment-error');
@@ -71,7 +72,7 @@ class PaymentProcessingController extends Controller
     }
 
 
-    private function saveAd($adData)
+    private function saveAd($adData, $invoiceId)
     {
         try {
             $packageExpireAt = null;
@@ -87,6 +88,7 @@ class PaymentProcessingController extends Controller
             // Save Ad in Database
             Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
+                'invoice_id' => $invoiceId,
                 'user_id' => auth()->user()->id,
                 'title' => $adData['title'],
                 'price' => $adData['price'],

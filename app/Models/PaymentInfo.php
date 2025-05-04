@@ -10,5 +10,9 @@ class PaymentInfo extends Model
         'check_value',
         'invoice_id',
         'payment_status',
+        'ad_data',
+    ];
+    protected $casts = [
+        'ad_data' => 'array',
     ];
 }
