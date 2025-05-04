@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('ads', function (Blueprint $table) {
-            $table->string('invoice_id');
+            $table->string('invoice_id')->nullable();
         });
     }
 
