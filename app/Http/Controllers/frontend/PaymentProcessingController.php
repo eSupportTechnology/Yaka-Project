@@ -35,7 +35,7 @@ class PaymentProcessingController extends Controller
 
         session(['checkValue' => $checkValue]);
         session(['invoiceId' => $invoiceId]);
-        session([$invoiceId.'add_date' => $adData]);
+        session([$invoiceId.'add_data' => $adData]);
 
         return view('newFrontend.user.payment', compact(
             'selectedPackageName',
@@ -51,28 +51,18 @@ class PaymentProcessingController extends Controller
     public function complete(Request $request)
     {
         try {
-            dd($request);
-            // Decode ad data
-            $adData = json_decode($request->input('ad_data'), true);
-
-            if (!$adData) {
-                return redirect()->back()->with('error', 'Invalid ad data.');
-            }
-
-            // Simulate Payment Processing (Replace with real payment gateway logic)
-            $paymentSuccess = true; // Simulated payment success
-
-            if ($paymentSuccess) {
-                // Save the ad after payment success
+            $invoiceId = request()->query('invId');
+            $paymentInfo = PaymentInfo::where('invoice_id', $invoiceId)->first();
+            if($paymentInfo->payment_status == 0) {
+                return view('newFrontend.user.payment-confirming');
+            } else if($paymentInfo->payment_status == 1) {
+                // Decode ad data
+                $adData = session($invoiceId.'ad_data');
                 $this->saveAd($adData);
-
-                // Redirect to user's ads page with success message
                 return redirect()->route('user.my_ads')->with('success', 'Payment successful! Your ad has been posted.');
+            } else {
+                return view('newFrontend.user.payment-error');
             }
-
-            // If payment fails, redirect back with an error message
-            return redirect()->back()->with('error', 'Payment failed! Please try again.');
-
         } catch (\Exception $e) {
             Log::error('Payment processing error', ['error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
@@ -118,7 +108,7 @@ class PaymentProcessingController extends Controller
             ]);
 
             Log::info('Ad saved successfully.');
-             return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
+            //  return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
 
         } catch (\Exception $e) {
             Log::error('Error in saving ad', ['error' => $e->getMessage()]);
