@@ -78,7 +78,7 @@ class AdsController extends Controller
             });
         }
 
-        $ads = $adsQuery->paginate(10);
+        $ads = $adsQuery->paginate(30);
 
         $category = Category::find($selectedCategory);
 
