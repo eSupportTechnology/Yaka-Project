@@ -207,6 +207,16 @@
 .goog-te-banner-frame {
     display: none !important; /* Hide the Google Translate top banner */
 }
+@media (max-width: 1200px) {
+    .outer-box .container {
+        flex-direction: column;
+    }
+}
+@media (max-width: 769px) {
+    .search-bar input {
+        width: 400px;
+    }
+}
 </style>
 
 

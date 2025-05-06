@@ -60,7 +60,6 @@ class PaymentProcessingController extends Controller
             } else if($paymentInfo->payment_status == 1) {
                 // Decode ad data
                 $adData = $paymentInfo->ad_data;
-                Log::info($adData);
                 $this->saveAd($adData, $invoiceId);
                 return redirect()->route('user.my_ads')->with('success', 'Payment successful! Your ad has been posted.');
             } else {

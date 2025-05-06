@@ -155,10 +155,18 @@
     }
 
     .ad-carousel-item img {
-        width: 800px !important;
-        height: 120px !important;
+        /* width: 800px !important;
+        height: 120px !important; */
         object-fit: cover;
         margin: 0 auto;
+    }
+    @media (min-width: 766px) {
+        .ad-carousel-item img {
+            width: 800px !important;
+            height: 120px !important;
+            object-fit: cover;
+            margin: 0 auto;
+        }
     }
 
     .top-banner .left .carousel-item img {
@@ -351,8 +359,40 @@
                 font-weight: bold;
                 clip-path: polygon(100% 0%, 100% 100%, 50% 80%, 0 100%, 0 0);
             }
+            @media (max-width: 766px) {
+  .clearfix.inner-content.responsive-category {
+    justify-content: flex-start; /* Align items to the start */
+    gap: 8px; /* Add spacing between items */
+  }
 
+  .category-block-one {
+    flex: 0 0 calc(50% - 4px); /* Two columns with gap consideration */
+    max-width: calc(50% - 4px); /* Ensure items don't exceed half width */
+    box-sizing: border-box;
+  }
+}
 
+@media (max-width: 766px) {
+    .responsive-category {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .category-block-one {
+        margin: 4px !important;
+        padding: 8px !important;
+    }
+
+    .category-block-one h5 {
+        min-height: auto !important;
+        font-size: 13px !important;
+        margin: 4px 0 !important;
+    }
+
+    .category-block-one .icon-box img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+}
     </style>
 
         <!-- banner-section -->
@@ -394,41 +434,34 @@
                     <h2>@lang('messages.Explore by Category')</h2>
                 </div>
 
-                <div class="clearfix inner-content" style="display: flex; flex-wrap: wrap; justify-content: center;">
-            @foreach($categories->take(14) as $category )
+                <div class="clearfix inner-content responsive-category" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 30px; padding: 8px; justify-items: center;">
+                    @foreach($categories->take(14) as $category)
+                        <div class="category-block-one" style="width: 100%; break-inside: avoid;">
+                            <a href="{{ route('browse-ads', ['category' => $category->id]) }}" style="text-decoration: none;">
+                                <div class="inner-box">
+                                    <div class="shape">
+                                        <div class="shape-1" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-1.png') }}');"></div>
+                                        <div class="shape-2" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-2.png') }}');"></div>
+                                    </div>
 
+                                    <div class="icon-box">
+                                        <img src="{{ asset('images/Category/' . $category->image ?? 'default.png') }}"
+                                            alt="{{ $category->name }}"
+                                            style="width: 70px; height: 70px; object-fit: contain;">
+                                    </div>
 
+                                    <h5 style="min-height: 60px; display: -webkit-box;
+                                            -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+                                            overflow: hidden; text-overflow: ellipsis; ">
+                                        @lang('messages.' . $category->name)
+                                    </h5>
 
-
-
-                <div class="category-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                    <a href="{{ route('browse-ads', ['category' => $category->id]) }}" style="text-decoration: none;">
-                        <div class="inner-box">
-                            <div class="shape">
-                                <div class="shape-1" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-1.png') }}');"></div>
-                                <div class="shape-2" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-2.png') }}');"></div>
-                            </div>
-
-                            <div class="icon-box">
-                                <img src="{{ asset('images/Category/' . $category->image ?? 'default.png') }}"
-                                    alt="{{ $category->name }}"
-                                    style="width: 70px; height: 70px; object-fit: contain;">
-                            </div>
-
-                            <h5 style="min-height: 60px; display: -webkit-box;
-                                    -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-                                    overflow: hidden; text-overflow: ellipsis; ">
-                                 @lang('messages.' . $category->name)
-                            </h5>
-
-                            <span>{{ $category->ads_count }}</span>
+                                    <span>{{ $category->ads_count }}</span>
+                                </div>
+                            </a>
                         </div>
-                    </a>
+                    @endforeach
                 </div>
-
-
-            @endforeach
-        </div>
 </section>
 <!-- category-section end -->
 
@@ -454,7 +487,7 @@
         </div>
 
         <div class="right">
-            <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-top:-320px;margin-left:-200px;">
+            <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-top:-320px;">
                 <div class="carousel-inner">
                     @foreach($topAds as $index => $ad)
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
@@ -470,13 +503,12 @@
                         {{ $ad->post_type }}
                         </button>
                         @endif
+                                    <p style="color:white;">{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                    <h3 style="color:white;font-weight:bold;">{{ $ad->title }}</h3>
 
-                                <p style="color:white;">{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                <h3 style="color:white;font-weight:bold;">{{ $ad->title }}</h3>
-
-                                <p class="price" style="color:rgb(130, 128, 226);">LKR {{ number_format($ad->price, 2) }}</p>
-                                <p style="color:white;"><i class="fas fa-clock"></i>
-                                {{ $ad->created_at->diffForHumans() }}</p>
+                                    <p class="price" style="color:rgb(130, 128, 226);">LKR {{ number_format($ad->price, 2) }}</p>
+                                    <p style="color:white;"><i class="fas fa-clock"></i>
+                                    {{ $ad->created_at->diffForHumans() }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -490,8 +522,9 @@
                         </div>
                     @endforeach
                 </div>
-
-            <p style="margin-top:18px;font-size:16px; text-align:justify; width: 560px;">@lang('messages.para1')
+            <div class="para1">
+                <p style="margin-top:18px;font-size:16px; text-align:justify;">@lang('messages.para1')
+            </div>
             </p>
         </div> <!-- Closing right div -->
 
@@ -551,7 +584,9 @@
                         </div>
                     @endforeach
                 </div>
-                <p style="margin-top:18px;font-size:16px; text-align:justify; width: 550px;">@lang('messages.para2')
+                <div class="para2">
+                    <p style="margin-top:18px;font-size:16px; text-align:justify;">@lang('messages.para2')
+                </div>
                 </p>
             </div>
         </div>
@@ -661,7 +696,33 @@
             </div>
         </section>
         <!-- advertisement - banner-section end -->
+        <script>
+            // Function to adjust paragraph width
+            function adjustParagraphWidth() {
+                const paragraph1 = document.querySelector('.para1 p');
+                const paragraph2 = document.querySelector('.para2 p');
+                if (window.innerWidth < 700) {
+                    console.log(window.innerWidth);
+                    paragraph1.style.maxWidth = ((window.innerWidth)-200) + 'px';
+                    paragraph2.style.maxWidth = ((window.innerWidth)-200) + 'px';
+                } else {
+                    // Reset to original width (560px) when screen is 700px or wider
+                    paragraph1.style.maxWidth = '560px';
+                    paragraph2.style.maxWidth = '560px';
+                }
+                if(window.innerWidth < 500) {
+                    paragraph2.style.marginLeft = 500-((window.innerWidth)) + 'px';
+                } else {
+                    paragraph2.style.marginLeft = '0px';
+                }
+            }
 
+            // Initial call when page loads
+            adjustParagraphWidth();
+
+            // Add event listener for window resize
+            window.addEventListener('resize', adjustParagraphWidth);
+        </script>
         <script>
 document.addEventListener("DOMContentLoaded", function () {
     function initializeCarousel(wrapperSelector, containerSelector, cardSelector, carouselSelector, smallCarouselSelector) {

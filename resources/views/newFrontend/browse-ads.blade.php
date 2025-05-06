@@ -115,6 +115,74 @@
             border: 2px solid red;
             animation: blink 1s infinite;
         }
+        /* Mobile-specific styles */
+        @media (max-width: 1200px) {
+            .feature-block {
+                flex: 0 0 100% !important; /* Full width for mobile */
+                max-width: 100% !important;
+                margin-bottom: 15px !important;
+                height: fit-content !important;
+            }
+
+            .feature-block-one .inner-box {
+                flex-direction: row !important; /* Horizontal layout */
+                gap: 15px;
+            }
+
+            .image-box {
+                width: 40% !important;
+                flex-shrink: 0;
+            }
+
+            .image-box img {
+                height: 120px !important; /* Reduced image height */
+                width: 100% !important;
+            }
+
+            .lower-content {
+                width: 60% !important;
+                padding-right: 10px !important;
+            }
+
+            /* Adjust sale button position */
+            .sale {
+                top: 5px !important;
+                right: 5px !important;
+            }
+
+            /* Hide less important elements */
+            .category, .far.fa-clock {
+                display: none !important;
+            }
+
+            h4 {
+                -webkit-line-clamp: 3 !important; /* Show more text */
+                margin-top: 0 !important;
+                font-size: 15px !important;
+            }
+            .icon img {
+                height: 20px !important;
+            }
+            .time-dff {
+                margin-left: -25px !important;
+            }
+
+            .lower-content {
+                padding:unset !important;
+            }
+            .lower-box {
+                padding:unset !important;
+            }
+            .btn-box a {
+                width: max-content;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar-side {
+                display: none;
+            }
+        }
     </style>
 
 
@@ -305,7 +373,7 @@
                                                             <!-- Image -->
                                                             <img src="{{ asset('storage/' . $ad->mainImage) }}"
                                                                 class="d-block w-100" alt="{{ $ad->title }}"
-                                                                style="min-height: 450px;height:auto; object-fit: cover;">
+                                                                style="min-height: 450px;height:auto; object-fit: contain;">
 
                                                             <!-- Dark Overlay -->
                                                             <div class="carousel-overlay"></div>
@@ -368,20 +436,13 @@
 
                         <!-- Grid Items -->
                         <div class="grid-item feature-style-two four-column pd-0" style="display: flex; flex-wrap: wrap;">
-                            <div class="clearfix row"
-                                style="width: 100%; display: flex; flex-wrap: wrap; ">
+                            <div class="clearfix row" style="width: 100%; display: flex; flex-wrap: wrap;">
                                 @foreach ($ads as $ad)
                                     @if (is_null($ad->package_expire_at) || \Carbon\Carbon::now()->lessThanOrEqualTo($ad->package_expire_at))
-                                        <!-- Display the ad if the package is not expired or expiry date is null -->
-                                        <div class="col-lg-3 col-md-6 col-sm-12 feature-block"
-                                            style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
-                                            <div class="feature-block-one"
-                                                style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                                                <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
-                                                    class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}"
-                                                    style="display: block; height: 100%; text-decoration: none;">
-                                                    <div class="inner-box"
-                                                        style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
+                                        <div class="col-lg-3 col-md-6 col-sm-12 feature-block" style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
+                                            <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
+                                                <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}" style="display: block; height: 100%; text-decoration: none;">
+                                                    <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
                                                         @if ($ad->post_type)
                                                             <button class="sale"
                                                                 style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
@@ -391,7 +452,7 @@
                                                         <div class="image-box" style="flex-grow: 0;">
                                                             <figure class="image">
                                                                 <img src="{{ asset('storage/' . $ad->mainImage) }}"
-                                                                    style="height: 170px; object-fit: cover;"
+                                                                    style="height: 170px; object-fit: contain;"
                                                                     alt="{{ $ad->title }}">
                                                             </figure>
 
@@ -428,7 +489,7 @@
                                             margin-bottom: 10px;">
                                                                 {{ $ad->title }}</h4>
                                                             <ul class="clearfix info">
-                                                                <li><i
+                                                                <li class="time-dff"><i
                                                                         class="far fa-clock"></i>{{ $ad->created_at->diffForHumans() }}
                                                                 </li>
                                                                 <li>
