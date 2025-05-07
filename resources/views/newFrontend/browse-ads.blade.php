@@ -2,7 +2,6 @@
 
 @section('content')
     <style>
-        /* Set a fixed height for the carousel */
         #adsCarousel .carousel-inner {
             height: 400px;
         }
@@ -12,15 +11,14 @@
             height: 100%;
         }
 
-        /* Set a fixed height for the banner */
         .banner-img {
             height: 400px;
             object-fit: cover;
         }
-        @media(max-width: 768px) {
+        /* @media(max-width: 768px) {
             width: 100%;
 
-        }
+        } */
 
         /* Dark overlay for carousel items */
         .carousel-overlay {
@@ -187,101 +185,106 @@
             }
         }
         .mobile-filter-toggle {
-    display: none;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-}
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
 
-.red-filter-button {
-    background: #e74c3c; /* Red color */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    transition: background 0.3s ease;
-}
+        .red-filter-button {
+            background: #e74c3c; /* Red color */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: background 0.3s ease;
+        }
 
-.red-filter-button:hover {
-    background: #c0392b; /* Darker red on hover */
-}
+        .red-filter-button:hover {
+            background: #c0392b; /* Darker red on hover */
+        }
 
-.filter-icon {
-    width: 20px;
-    height: 20px;
-    fill: white;
-}
+        .filter-icon {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
 
-/* Show only on mobile */
-@media (max-width: 991px) {
-    .mobile-filter-toggle {
-        display: flex;
-    }
+        /* Show only on mobile */
+        @media (max-width: 991px) {
+            .mobile-filter-toggle {
+                display: flex;
+            }
 
-    .sidebar-search,
-    .sidebar-category {
-        display: none;
-    }
-}
+            .sidebar-search,
+            .sidebar-category {
+                display: none;
+            }
+        }
 
-/* Hide sidebar on mobile */
-@media (max-width: 992px) {
-    .sidebar-search, .sidebar-category {
-        display: none;
-    }
-    .mobile-filter-toggle {
-        display: block;
-    }
-}
+        /* Hide sidebar on mobile */
+        @media (max-width: 992px) {
+            .sidebar-search, .sidebar-category {
+                display: none;
+            }
+            .mobile-filter-toggle {
+                display: block;
+            }
+        }
 
-/* Modal Styles */
-.filter-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 9999;
-}
+        /* Modal Styles */
+        .filter-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 9999;
+        }
 
-.modal-content {
-    background-color: #fff;
-    margin: 15% auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 80vh;
-    overflow-y: auto;
-    border-radius: 5px;
-    position: relative;
-}
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 5px;
+            position: relative;
+        }
 
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-}
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
 
-.close-modal {
-    font-size: 28px;
-    cursor: pointer;
-    color: #666;
-}
+        .close-modal {
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+        }
 
-.close-modal:hover {
-    color: #000;
-}
+        .close-modal:hover {
+            color: #000;
+        }
+        /* Disable Bootstrap carousel sliding animation */
+        .carousel.no-animation .carousel-item {
+            transition: none !important;
+            -webkit-transition: none !important;
+        }
 
     </style>
 
@@ -291,7 +294,7 @@
         <div class="auto-container">
             <div class="mr-0 content-box centred">
                 <div class="title">
-                    <h1>{{ $category ? __('messages.' . $category->name) : __('messages.All Categories') }}</h1 </div>
+                    <h1>{{ $category ? __('messages.' . $category->name) : __('messages.All Categories') }}</h1> </div>
                     <ul class="clearfix bread-crumb">
                         <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
                         <li>@lang('messages.Browse Ads')</li>
@@ -540,15 +543,19 @@
                     </div>
 
                     <div class="col-md-12">
-                        @php
-                            $banner = $banners->isNotEmpty() ? $banners->random() : null;
-                        @endphp
-
-                        @if ($banner)
-                            <div class="banner">
-                                <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
-                                    class="img-fluid banner-img">
+                        @if ($banners)
+                        <div id="bannerCarousel" class="carousel slide no-animation" data-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach($banners as $key => $banner)
+                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                        <div class="banner d-flex justify-content-center">
+                                            <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
+                                                 class="img-fluid banner-img">
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
+                        </div>
                         @endif
                     </div>
 
@@ -655,15 +662,24 @@
 
                             <!-- Banner (Column 2) -->
                             <div class="col-md-4">
-                                @php
-                                    $banner = $banners->isNotEmpty() ? $banners->random() : null;
-                                @endphp
 
-                                @if ($banner)
-                                    <div class="banner" style="display: flex;justify-content: center;">
+                                @if ($banners)
+                                <div id="bannerCarousel" class="carousel slide no-animation" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        @foreach($banners as $key => $banner)
+                                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                <div class="banner d-flex justify-content-center">
+                                                    <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
+                                                         class="img-fluid banner-img">
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                    {{-- <div class="banner" style="display: flex;justify-content: center;">
                                         <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
                                             class="img-fluid banner-img">
-                                    </div>
+                                    </div> --}}
                                 @endif
                             </div>
                         </div>

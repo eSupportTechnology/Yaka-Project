@@ -416,6 +416,36 @@
             padding-bottom: 100%; /* Square aspect ratio for small phones */
         }
     }
+    @media (max-width: 965px) {
+        .ad-head {
+            display: none !important;
+        }
+        .mobile-hide {
+            display: none !important;
+        }
+    }
+    @media (max-width: 965px) {
+        .ad-head-mob {
+            display: block !important;
+        }
+    }
+    @media (max-width: 393px) {
+        .ad-head-mob h2 {
+            font-size: 18px;
+        }
+        .ad-head-mob span {
+            font-size: 18px;
+        }
+    }
+    @media (min-width: 965px) {
+        .inner-box {
+            margin-top: -350px;
+        }
+    }
+    .carousel.no-animation .carousel-item {
+    transition: none !important;
+    -webkit-transition: none !important;
+}
     </style>
 
         <!-- banner-section -->
@@ -588,14 +618,14 @@
         <div class="right" style="flex: 1;margin-top:180px;margin-left:-324px;"> <!-- Heading and Banner on the Right -->
             @foreach($superbanners as $key => $banner)
                 @if($banner->type == 1)  <!-- Only display banners with type 1 -->
-                    <div style="margin-top:25px;" class="carousel-item {{ $key == 1 ? 'active' : '' }}">
-                        <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+                    <div style="margin-top:-10px;" class="carousel-item {{ $key == 1 ? 'active' : '' }}">
+                        <img style="height:50%; object-fit: contain;" class="mobile-hide" src="{{ asset('banners/' . $banner->img) }}" class="d-block w-50" alt="Banner Image">
                     </div>
                 @endif
             @endforeach
         </div>
         <div class="ad-head">
-            <h2 class="heading" style="margin-top:90px;margin-left:0px; "><b>@lang('messages.indextitle') <br>
+            <h2 class="heading" style="margin-top:0px;margin-left:0px; "><b>@lang('messages.indextitle') <br>
             @lang('messages.Best') <span> @lang('messages.Super') Ads</span></b></h2>
         </div>
 
@@ -639,6 +669,25 @@
         </div>
     </div>
 
+    </div>
+    <div style="display: none;" class="row ad-head-mob">
+        <div class="col-md-12" style="display: flex; align-items:center; margin-top:-100px; flex-direction:column;">
+            <div class="ad-head-mob">
+                <h2 class="heading" style="margin-top:90px;margin-left:0px; "><b>@lang('messages.indextitle') <br>
+                @lang('messages.Best') <span> @lang('messages.Super') Ads</span></b></h2>
+            </div>
+            <div id="mobileBannerCarousel" class="carousel slide ad-head-mob-banner no-animation" data-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach($superbanners as $key => $banner)
+                        @if($banner->type == 1)
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -750,15 +799,15 @@
                 const paragraph2 = document.querySelector('.para2 p');
                 if (window.innerWidth < 700) {
                     console.log(window.innerWidth);
-                    paragraph1.style.maxWidth = ((window.innerWidth)-200) + 'px';
-                    paragraph2.style.maxWidth = ((window.innerWidth)-200) + 'px';
+                    paragraph1.style.maxWidth = ((window.innerWidth)-120) + 'px';
+                    paragraph2.style.maxWidth = ((window.innerWidth)-120) + 'px';
                 } else {
                     // Reset to original width (560px) when screen is 700px or wider
                     paragraph1.style.maxWidth = '560px';
                     paragraph2.style.maxWidth = '560px';
                 }
-                if(window.innerWidth < 650) {
-                    paragraph2.style.marginLeft = 650-((window.innerWidth)) + 'px';
+                if(window.innerWidth < 521) {
+                    paragraph2.style.marginLeft = 530-((window.innerWidth)) + 'px';
                 } else {
                     paragraph2.style.marginLeft = '0px';
                 }
