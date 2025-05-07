@@ -389,10 +389,33 @@
     }
 
     .category-block-one .icon-box img {
-        width: 40px !important;
-        height: 40px !important;
+        width: 70px !important;
+        height: 70px !important;
+    }
+    /* .inner-box {
+        width: 100px !important;
+    } */
+    .right {
+        margin-left: -112px !important;
     }
 }
+@media (max-width: 632px) {
+        .ad-box {
+            max-width: 100% !important;
+            background-size: cover;
+            padding-bottom: 75%; /* Adjust aspect ratio for mobile */
+        }
+
+        .ad-box > div {
+            padding: 10px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .ad-box {
+            padding-bottom: 100%; /* Square aspect ratio for small phones */
+        }
+    }
     </style>
 
         <!-- banner-section -->
@@ -476,7 +499,7 @@
             @foreach($topbanners as $key => $banner)
                 @if($banner->type == 1)
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                        <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+                        <img  src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
                     </div>
                 @endif
             @endforeach
@@ -491,24 +514,46 @@
                 <div class="carousel-inner">
                     @foreach($topAds as $index => $ad)
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                        <div class="ad-box" style="margin-right:150px; width: 560px; height: 300px; background: url('{{ asset('storage/' . $ad->mainImage) }}') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
-                        <!-- Shadow Overlay -->
-                            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
-                            <div class="badge">
-                                <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
-                            </div>
+                            <div class="ad-box" style="
+                                width: 100%;
+                                max-width: 560px;
+                                height: 0;
+                                padding-bottom: 53.57%; /* 300/560 = 0.5357 (maintain aspect ratio) */
+                                background: url('{{ asset('storage/' . $ad->mainImage) }}') no-repeat center center/contain;
+                                position: relative;
+                                color: white;
+                                margin: 0 auto;
+                                overflow: hidden;
+                            ">
+                                <div style="
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    right: 0;
+                                    bottom: 0;
+                                    padding: 15px;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: flex-end;
+                                ">
+                                    <!-- Shadow Overlay -->
+                                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
+                                    <div class="badge">
+                                        <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
+                                    </div>
 
-                        @if($ad->post_type)
-                        <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                        {{ $ad->post_type }}
-                        </button>
-                        @endif
-                                    <p style="color:white;">{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                    <h3 style="color:white;font-weight:bold;">{{ $ad->title }}</h3>
+                                    @if($ad->post_type)
+                                    <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                    {{ $ad->post_type }}
+                                    </button>
+                                    @endif
+                                        <p style="color:white;">{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                        <h3 style="color:white;font-weight:bold;">{{ $ad->title }}</h3>
 
-                                    <p class="price" style="color:rgb(130, 128, 226);">LKR {{ number_format($ad->price, 2) }}</p>
-                                    <p style="color:white;"><i class="fas fa-clock"></i>
-                                    {{ $ad->created_at->diffForHumans() }}</p>
+                                        <p class="price" style="color:rgb(130, 128, 226);">LKR {{ number_format($ad->price, 2) }}</p>
+                                        <p style="color:white;"><i class="fas fa-clock"></i>
+                                        {{ $ad->created_at->diffForHumans() }}</p>
+                                    </div>
                             </div>
                         </div>
                     @endforeach
@@ -543,14 +588,16 @@
         <div class="right" style="flex: 1;margin-top:180px;margin-left:-324px;"> <!-- Heading and Banner on the Right -->
             @foreach($superbanners as $key => $banner)
                 @if($banner->type == 1)  <!-- Only display banners with type 1 -->
-                    <div class="carousel-item {{ $key == 1 ? 'active' : '' }}">
+                    <div style="margin-top:25px;" class="carousel-item {{ $key == 1 ? 'active' : '' }}">
                         <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
                     </div>
                 @endif
             @endforeach
         </div>
-        <h2 class="heading" style="margin-top:90px;margin-left:0px; "><b>@lang('messages.indextitle') <br>
-        @lang('messages.Best') <span> @lang('messages.Super') Ads</span></b></h2>
+        <div class="ad-head">
+            <h2 class="heading" style="margin-top:90px;margin-left:0px; "><b>@lang('messages.indextitle') <br>
+            @lang('messages.Best') <span> @lang('messages.Super') Ads</span></b></h2>
+        </div>
 
         <div class="left" style="flex: 1;"> <!-- Ads on the Left -->
             <div id="superAdsCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -577,7 +624,7 @@
                 </div>
             </div>
 
-            <div class="small-carousel-wrapper" style="overflow: hidden; width: 580px; margin-top: -21px;margin-left:124px;">
+            <div class="small-carousel-wrapper" style="overflow: hidden; width: 580px; margin-top: -21px;margin-left:56px;">
                 <div class="card-container d-flex" style="display: flex; transition: transform 0.5s ease-in-out;">
                     @foreach($superAds as $index => $adss)
                         <div class="ad-card" data-index="{{ $index }}" style="background: url('{{ asset('storage/' . $adss->mainImage) }}') no-repeat center center/cover; height: 100px; width: 100px; margin: -2px; border: 3px solid transparent; transition: border 0.3s;">
@@ -586,8 +633,8 @@
                 </div>
                 <div class="para2">
                     <p style="margin-top:18px;font-size:16px; text-align:justify;">@lang('messages.para2')
+                    </p>
                 </div>
-                </p>
             </div>
         </div>
     </div>
@@ -710,10 +757,15 @@
                     paragraph1.style.maxWidth = '560px';
                     paragraph2.style.maxWidth = '560px';
                 }
-                if(window.innerWidth < 500) {
-                    paragraph2.style.marginLeft = 500-((window.innerWidth)) + 'px';
+                if(window.innerWidth < 650) {
+                    paragraph2.style.marginLeft = 650-((window.innerWidth)) + 'px';
                 } else {
                     paragraph2.style.marginLeft = '0px';
+                }
+                if(window.innerWidth < 650) {
+                    document.querySelector('#topAdsCarousel').style.maxWidth=((window.innerWidth))-100 + 'px';
+                } else {
+                    document.querySelector('#topAdsCarousel').style.maxWidth='560px';
                 }
             }
 
