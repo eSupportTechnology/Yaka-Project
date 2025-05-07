@@ -16,7 +16,10 @@
         .banner-img {
             height: 400px;
             object-fit: cover;
+        }
+        @media(max-width: 768px) {
             width: 100%;
+
         }
 
         /* Dark overlay for carousel items */
@@ -657,7 +660,7 @@
                                 @endphp
 
                                 @if ($banner)
-                                    <div class="banner">
+                                    <div class="banner" style="display: flex;justify-content: center;">
                                         <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
                                             class="img-fluid banner-img">
                                     </div>

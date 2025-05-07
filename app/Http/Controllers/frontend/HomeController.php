@@ -94,7 +94,8 @@ class HomeController extends Controller
     }
     public function contactUs()
     {
-        return view('newFrontend.contact-us');
+        $banners = \App\Models\Banners::where('type', 0)->get();
+        return view('newFrontend.contact-us', compact('banners'));
     }
 
     public function privacySafety()

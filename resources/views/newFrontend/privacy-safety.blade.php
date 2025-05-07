@@ -189,7 +189,20 @@ ul.custom-dots li::before {
         padding-top: 4px;
     }
 }
-
+.ad-carousel-item img {
+        /* width: 800px !important;
+        height: 120px !important; */
+        object-fit: contain;
+        margin: 0 auto;
+    }
+@media (min-width: 766px) {
+        .ad-carousel-item img {
+            width: 800px !important;
+            height: 120px !important;
+            object-fit: contain;
+            margin: 0 auto;
+        }
+    }
 
 </style>
 <!-- Page Title -->

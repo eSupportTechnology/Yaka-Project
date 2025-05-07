@@ -80,7 +80,20 @@
     margin-left: 20px; /* Center the image horizontally */
 
 }
-
+.ad-carousel-item img {
+        /* width: 800px !important;
+        height: 120px !important; */
+        object-fit: contain;
+        margin: 0 auto;
+    }
+@media (min-width: 766px) {
+        .ad-carousel-item img {
+            width: 800px !important;
+            height: 120px !important;
+            object-fit: contain;
+            margin: 0 auto;
+        }
+    }
 
     </style>
 
