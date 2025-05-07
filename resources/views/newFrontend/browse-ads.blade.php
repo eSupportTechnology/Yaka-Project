@@ -179,10 +179,107 @@
         }
 
         @media (max-width: 992px) {
-            .sidebar-side {
+            .sidebar-side-mobile {
                 display: none;
             }
         }
+        .mobile-filter-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.red-filter-button {
+    background: #e74c3c; /* Red color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: background 0.3s ease;
+}
+
+.red-filter-button:hover {
+    background: #c0392b; /* Darker red on hover */
+}
+
+.filter-icon {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+/* Show only on mobile */
+@media (max-width: 991px) {
+    .mobile-filter-toggle {
+        display: flex;
+    }
+
+    .sidebar-search,
+    .sidebar-category {
+        display: none;
+    }
+}
+
+/* Hide sidebar on mobile */
+@media (max-width: 992px) {
+    .sidebar-search, .sidebar-category {
+        display: none;
+    }
+    .mobile-filter-toggle {
+        display: block;
+    }
+}
+
+/* Modal Styles */
+.filter-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 9999;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 5px;
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.close-modal {
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
     </style>
 
 
@@ -199,15 +296,152 @@
                 </div>
             </div>
     </section>
+    <!-- ad - banner-section start -->
+    <section class="mb-0 ad-banner-container">
+        <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                @foreach($all_banners as $key => $banner)
+                    @if($banner->type == 0)
+                        <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
+                           <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <!-- ad - banner-section end -->
     <!-- End Page Title -->
+<!-- Add this before your sidebar section -->
+<!-- Add this in your HTML -->
+<div class="mobile-filter-toggle">
+    <button id="filterToggle" class="red-filter-button">
+        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+        </svg>
+        <span>Filters</span>
+    </button>
+</div>
+<!-- Add this at the bottom of your page -->
+<div class="filter-modal" id="filterModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Filters</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="mt-4 mb-4 auto-container">
+                <div class="clearfix row">
 
+                    <div class="col-md-12 sidebar-side">
+                        <div class="default-sidebar category-sidebar">
+                            <div class="sidebar-search sidebar-widget">
+                                <div class="widget-title">
+                                    <h3>@lang('messages.Search')</h3>
+                                </div>
+                                <div class="widget-content">
+                                    <form action="{{ route('browse-ads') }}" method="GET" class="search-form">
+                                        <div class="form-group">
+                                            <input type="search" name="search-field" style="padding-right: 20px"
+                                                placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
+                                                oninput="this.form.submit()">
+                                            <button type="submit" style="display:none;"><i class="icon-2"></i></button>
+                                        </div>
+                                        <div class="form-group">
+                                            <i class="icon-3"></i>
+                                            <select class="wide" name="location" onchange="this.form.submit()">
+                                                <option data-display="@lang('messages.Select Location')">@lang('messages.Select Location')</option>
+                                                @foreach ($districts as $district)
+                                                    @php
+                                                        $locale = App::getLocale();
+                                                        $districtName = 'name_' . $locale;
+                                                    @endphp
+                                                    <option value="{{ $district->id }}"
+                                                        {{ request()->input('location') == $district->id ? 'selected' : '' }}>
+                                                        {{ $district->$districtName }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        {{-- City Dropdown --}}
+                                        <div class="form-group">
+                                            <select class="wide" name="city" id="city">
+                                                <option data-display="@lang('messages.Select City')">@lang('messages.Select City')</option>
+                                                @foreach ($citys as $city)
+                                                    @php
+                                                        $locale = App::getLocale();
+                                                        $cityName = 'name_' . $locale;
+                                                    @endphp
+                                                    <option value="{{ $city->id }}"
+                                                        {{ request()->input('location') == $city->id ? 'selected' : '' }}>
+                                                        {{ $city->$cityName }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
 
+                            <div class="sidebar-category sidebar-widget">
+                                <div class="widget-title">
+                                    <h3>@lang('messages.Categories')</h3>
+                                </div>
+                                <div class="widget-content">
+                                    <ul class="category-list">
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="category" value="all"
+                                                    onchange="window.location='{{ route('browse-ads') }}'"
+                                                    {{ !request()->input('category') ? 'checked' : '' }}>
+                                                <span class="text-dark">@lang('messages.All Categories')</span>
+
+                                            </label>
+                                        </li>
+
+                                        @foreach ($categories->take(14) as $category)
+                                            <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
+                                                <label>
+                                                    <input type="radio" name="category" value="{{ $category->id }}"
+                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
+                                                        {{ request()->input('category') == $category->id ? 'checked' : '' }}>
+                                                    <span> @lang('messages.' . $category->name)</span>
+                                                </label>
+
+                                                @if ($category->subcategories->isNotEmpty())
+                                                    <ul>
+                                                        @foreach ($category->subcategories as $subcategory)
+                                                            <li>
+                                                                <label>
+                                                                    <input type="radio" name="subcategory"
+                                                                        value="{{ $subcategory->id }}"
+                                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
+                                                                        {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
+                                                                    <span> @lang('messages.' . $subcategory->name)</span>
+                                                                </label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <div class="mt-4 mb-4 auto-container">
         <div class="clearfix row">
 
-            <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
+            <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side sidebar-side-mobile">
                 <div class="default-sidebar category-sidebar">
+
                     <div class="sidebar-search sidebar-widget">
                         <div class="widget-title">
                             <h3>@lang('messages.Search')</h3>
@@ -301,7 +535,6 @@
                             </ul>
                         </div>
                     </div>
-
 
                     <div class="col-md-12">
                         @php
@@ -564,5 +797,40 @@
             interval: 2000, // Set interval for auto sliding (5 seconds)
             ride: 'carousel' // Enable auto sliding
         });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const filterToggle = document.getElementById('filterToggle');
+    const filterModal = document.getElementById('filterModal');
+    const closeModal = document.querySelector('.close-modal');
+
+    // Open modal
+    filterToggle.addEventListener('click', () => {
+        filterModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    });
+
+    // Close modal
+    closeModal.addEventListener('click', () => {
+        filterModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    // Close when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === filterModal) {
+            filterModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && filterModal.style.display === 'block') {
+            filterModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+});
     </script>
 @endsection
