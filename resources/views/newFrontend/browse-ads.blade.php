@@ -186,10 +186,6 @@
         }
         .mobile-filter-toggle {
             display: none;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
         }
 
         .red-filter-button {
@@ -220,6 +216,7 @@
         @media (max-width: 991px) {
             .mobile-filter-toggle {
                 display: flex;
+                flex-direction: row;
             }
 
             .sidebar-search,
@@ -320,19 +317,12 @@
     <!-- End Page Title -->
 <!-- Add this before your sidebar section -->
 <!-- Add this in your HTML -->
-<div class="mobile-filter-toggle">
-    <button id="filterToggle" class="red-filter-button">
-        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
-        </svg>
-        <span>Filters</span>
-    </button>
-</div>
+
 <!-- Add this at the bottom of your page -->
 <div class="filter-modal" id="filterModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Filters</h3>
+            <h3>Location Filters</h3>
             <span class="close-modal">&times;</span>
         </div>
         <div class="modal-body">
@@ -389,6 +379,69 @@
                                 </div>
                             </div>
 
+                            {{-- <div class="sidebar-category sidebar-widget">
+                                <div class="widget-title">
+                                    <h3>@lang('messages.Categories')</h3>
+                                </div>
+                                <div class="widget-content">
+                                    <ul class="category-list">
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="category" value="all"
+                                                    onchange="window.location='{{ route('browse-ads') }}'"
+                                                    {{ !request()->input('category') ? 'checked' : '' }}>
+                                                <span class="text-dark">@lang('messages.All Categories')</span>
+
+                                            </label>
+                                        </li>
+
+                                        @foreach ($categories->take(14) as $category)
+                                            <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
+                                                <label>
+                                                    <input type="radio" name="category" value="{{ $category->id }}"
+                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
+                                                        {{ request()->input('category') == $category->id ? 'checked' : '' }}>
+                                                    <span> @lang('messages.' . $category->name)</span>
+                                                </label>
+
+                                                @if ($category->subcategories->isNotEmpty())
+                                                    <ul>
+                                                        @foreach ($category->subcategories as $subcategory)
+                                                            <li>
+                                                                <label>
+                                                                    <input type="radio" name="subcategory"
+                                                                        value="{{ $subcategory->id }}"
+                                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
+                                                                        {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
+                                                                    <span> @lang('messages.' . $subcategory->name)</span>
+                                                                </label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="filter-modal" id="filterModalCat">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Catogory Filters</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="mt-4 mb-4 auto-container">
+                <div class="clearfix row">
+                    <div class="col-md-12 sidebar-side">
+                        <div class="default-sidebar category-sidebar">
                             <div class="sidebar-category sidebar-widget">
                                 <div class="widget-title">
                                     <h3>@lang('messages.Categories')</h3>
@@ -561,7 +614,20 @@
 
                 </div>
             </div>
-
+            <div class="row" style="margin: auto;">
+                <div class="col-6 mobile-filter-toggle">
+                    <button id="filterToggle" class="red-filter-button">
+                        <i style="font-size:14px" class="fa">&#xf041;</i>
+                        <span>Locations</span>
+                    </button>
+                </div>
+                <div class="col-6 mobile-filter-toggle">
+                    <button id="filterToggleCat" class="red-filter-button">
+                        <i style="font-size:14px" class="fa">&#xf022;</i>
+                        <span>Catgories</span>
+                    </button>
+                </div>
+            </div>
             <div class="col-lg-9 col-md-12 col-sm-12 content-side">
                 <div class="category-details-content">
                     <div class="clearfix item-shorting">
@@ -819,37 +885,72 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    const filterToggle = document.getElementById('filterToggle');
-    const filterModal = document.getElementById('filterModal');
-    const closeModal = document.querySelector('.close-modal');
+            const filterToggle = document.getElementById('filterToggle');
+            const filterModal = document.getElementById('filterModal');
+            const closeModal = document.querySelector('.close-modal');
 
-    // Open modal
-    filterToggle.addEventListener('click', () => {
-        filterModal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-    });
+            // Open modal
+            filterToggle.addEventListener('click', () => {
+                filterModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
 
-    // Close modal
-    closeModal.addEventListener('click', () => {
-        filterModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    });
+            // Close modal
+            closeModal.addEventListener('click', () => {
+                filterModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
 
-    // Close when clicking outside
-    window.addEventListener('click', (event) => {
-        if (event.target === filterModal) {
-            filterModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    });
+            // Close when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === filterModal) {
+                    filterModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
 
-    // Close on escape key
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && filterModal.style.display === 'block') {
-            filterModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    });
-});
+            // Close on escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && filterModal.style.display === 'block') {
+                    filterModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterToggleCat = document.getElementById('filterToggleCat');
+            const filterModalCat = document.getElementById('filterModalCat');
+            const closeModal = document.querySelector('.close-modal');
+
+            // Open modal
+            filterToggleCat.addEventListener('click', () => {
+                filterModalCat.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+
+            // Close modal
+            closeModal.addEventListener('click', () => {
+                filterModalCat.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            // Close when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === filterModalCat) {
+                    filterModalCat.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Close on escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && filterModalCat.style.display === 'block') {
+                    filterModalCat.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
     </script>
 @endsection
