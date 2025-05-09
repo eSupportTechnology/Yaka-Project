@@ -48,7 +48,20 @@
     border-radius: 50%;
 
 }
-
+.ad-carousel-item img {
+        /* width: 800px !important;
+        height: 120px !important; */
+        object-fit: contain;
+        margin: 0 auto;
+    }
+@media (min-width: 766px) {
+        .ad-carousel-item img {
+            width: 800px !important;
+            height: 120px !important;
+            object-fit: contain;
+            margin: 0 auto;
+        }
+    }
 </style>
 <!-- Page Title -->
         <section class="page-title style-two banner-part" style="background-image: url(newFrontend/Clasifico/assets/images/background/page-title.jpg);">
@@ -65,7 +78,19 @@
             </div>
         </section>
         <!-- End Page Title -->
-
+        <section class="mb-0 ad-banner-container">
+            <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                    @foreach($banners as $key => $banner)
+                        @if($banner->type == 0)
+                            <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
+                               <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </section>
 
         <!-- contact-section -->
         <section class="contact-section bg-color-2">

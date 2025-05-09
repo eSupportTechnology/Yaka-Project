@@ -3,7 +3,7 @@
 @section('content')
 <style>
     .payment-container {
-        max-width: 600px;
+        max-width: 800px;
         margin: auto;
         background: #fff;
         padding: 20px;
@@ -41,6 +41,7 @@
     }
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://sandboxipgsdk.payable.lk/sdk/v4/payable-checkout.js"></script>
 <div class="container mt-5">
     <div class="payment-container mb-4" id="main-payment-content">
@@ -54,7 +55,7 @@
         @endif
 
         <!-- Display Ad Details -->
-        @if($adData)
+        {{-- @if($adData)
         <div class="card mb-4">
             <div class="card-body">
                 <h4>Ad Details</h4>
@@ -63,7 +64,7 @@
                 <p><strong>Description:</strong> {{ $adData['description'] }}</p>
             </div>
         </div>
-        @endif
+        @endif --}}
 
         <!-- Display Package Details -->
         <div class="card mb-4">
@@ -72,6 +73,20 @@
                 <p><strong>Package Name:</strong> {{ $selectedPackageName }}</p>
                 <p><strong>Package Duration:</strong> {{ $selectedPackageDuration }} {{ $selectedPackageDuration > 1 ? 'days' : 'day' }}</p>
                 <p><strong>Package Price:</strong> LKR {{ number_format($selectedPackagePrice, 2) }}</p>
+            </div>
+        </div>
+
+        <!-- Get Billing Details Details -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4>Enter Billing Details</h4>
+                <input type="hidden" name="return_url" id="return_url" value="https://yakalk.esupportsystem.shop/payment/checking?invId={{ $invoiceId }}">
+                <label for="billing_street">Billing Address Street<span style="color:red; font-size:18px;">*</span></label>
+                <input class="form-control" type="text" name="billing_street" id="billing_street">
+                <label for="billing_city">Billing Address City<span style="color:red; font-size:18px;">*</span></label>
+                <input class="form-control" type="text" name="billing_city" id="billing_city">
+                <label for="billing_country">Billing Address Country<span style="color:red; font-size:18px;">*</span></label>
+                <input class="form-control" type="text" name="billing_country" id="billing_country" value="LKA" readonly>
             </div>
         </div>
 
@@ -91,7 +106,7 @@
             </div>
         </div>
 
-        <form action="{{ route('payment.complete') }}" method="POST">
+        {{-- <form action="{{ route('payment.complete') }}" method="POST">
             @csrf
 
             <input type="hidden" name="package_type" value="{{ $packageType }}">
@@ -110,30 +125,44 @@
             <input type="text" id="cvc" class="form-control mb-3" placeholder="123" required>
 
             <button type="submit" class="btn btn-success w-100">Confirm Payment</button>
-        </form>
+        </form> --}}
     </div>
 </div>
 <script>
 
     function returnForm() {
+        const billingStreet = document.getElementById('billing_street').value.trim();
+        const billingCity = document.getElementById('billing_city').value.trim();
+        const billingCountry = document.getElementById('billing_country').value.trim();
+
+        const returnUrl = document.getElementById('return_url').value.trim();
+
+        if (!billingStreet || !billingCity || !billingCountry) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Billing Information',
+                text: 'Please fill in all required billing details.',
+            });
+            return; // Stop if validation fails
+        }
        const payment = {
-            logoUrl: "https://yaka.lk/Logo-re.png",
-            returnUrl: "https://yaka.lk/user/my_ads",
-            checkValue: "8d55d6f6607b5872168f6b69053680ca",
+            logoUrl: "{{ config('ipg.logo-url') }}",
+            returnUrl: returnUrl,
+            checkValue: "{{ session('checkValue') }}",
             orderDescription: "Payment for Yaka",
-            invoiceId: "8d55d6f6607b58",
-            merchantKey: "2850686EDCB8570C",
-            customerFirstName: "Gayashan",
-            customerLastName: "Abeywicckrama",
-            customerMobilePhone: "0715925451",
-            customerEmail: "gayashancs7@gmail.com",
-            billingAddressStreet: "Thalgaskoratratuwa",
-            billingAddressCity: "Walasmulla",
-            billingAddressCountry: "LKA",
-            amount: "100.00",
+            invoiceId: "{{ session('invoiceId') }}",
+            merchantKey: "{{ config('ipg.merchant-key') }}",
+            customerFirstName: "{{ auth()->user()->first_name }}",
+            customerLastName: "{{ auth()->user()->last_name }}",
+            customerMobilePhone: "{{ auth()->user()->phone_number }}",
+            customerEmail: "{{ auth()->user()->email }}",
+            billingAddressStreet: billingStreet,
+            billingAddressCity: billingCity,
+            billingAddressCountry: billingCountry,
+            amount: "{{ $selectedPackagePrice }}",
             currencyCode: "LKR",
             paymentType: "1",
-            notifyUrl: "https://yaka.lk/api/payment/notify"
+            notifyUrl: "{{ config('ipg.notify-url') }}"
         };
         payablePayment(payment);
     }

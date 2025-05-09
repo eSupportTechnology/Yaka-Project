@@ -155,10 +155,18 @@
     }
 
     .ad-carousel-item img {
-        width: 800px !important;
-        height: 120px !important;
+        /* width: 800px !important;
+        height: 120px !important; */
         object-fit: cover;
         margin: 0 auto;
+    }
+    @media (min-width: 766px) {
+        .ad-carousel-item img {
+            width: 800px !important;
+            height: 120px !important;
+            object-fit: cover;
+            margin: 0 auto;
+        }
     }
 
     .top-banner .left .carousel-item img {
@@ -351,8 +359,93 @@
                 font-weight: bold;
                 clip-path: polygon(100% 0%, 100% 100%, 50% 80%, 0 100%, 0 0);
             }
+            @media (max-width: 766px) {
+  .clearfix.inner-content.responsive-category {
+    justify-content: flex-start; /* Align items to the start */
+    gap: 8px; /* Add spacing between items */
+  }
 
+  .category-block-one {
+    flex: 0 0 calc(50% - 4px); /* Two columns with gap consideration */
+    max-width: calc(50% - 4px); /* Ensure items don't exceed half width */
+    box-sizing: border-box;
+  }
+}
 
+@media (max-width: 766px) {
+    .responsive-category {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .category-block-one {
+        margin: 4px !important;
+        padding: 8px !important;
+    }
+
+    .category-block-one h5 {
+        min-height: auto !important;
+        font-size: 13px !important;
+        margin: 4px 0 !important;
+    }
+
+    .category-block-one .icon-box img {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    /* .inner-box {
+        width: 100px !important;
+    } */
+    .right {
+        margin-left: -112px !important;
+    }
+}
+@media (max-width: 632px) {
+        .ad-box {
+            max-width: 100% !important;
+            background-size: cover;
+            padding-bottom: 75%; /* Adjust aspect ratio for mobile */
+        }
+
+        .ad-box > div {
+            padding: 10px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .ad-box {
+            padding-bottom: 100%; /* Square aspect ratio for small phones */
+        }
+    }
+    @media (max-width: 965px) {
+        .ad-head {
+            display: none !important;
+        }
+        .mobile-hide {
+            display: none !important;
+        }
+    }
+    @media (max-width: 965px) {
+        .ad-head-mob {
+            display: block !important;
+        }
+    }
+    @media (max-width: 393px) {
+        .ad-head-mob h2 {
+            font-size: 18px;
+        }
+        .ad-head-mob span {
+            font-size: 18px;
+        }
+    }
+    @media (min-width: 965px) {
+        .inner-box {
+            margin-top: -350px;
+        }
+    }
+    .carousel.no-animation .carousel-item {
+    transition: none !important;
+    -webkit-transition: none !important;
+}
     </style>
 
         <!-- banner-section -->
@@ -394,41 +487,34 @@
                     <h2>@lang('messages.Explore by Category')</h2>
                 </div>
 
-                <div class="clearfix inner-content" style="display: flex; flex-wrap: wrap; justify-content: center;">
-            @foreach($categories->take(14) as $category )
+                <div class="clearfix inner-content responsive-category" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 30px; padding: 8px; justify-items: center;">
+                    @foreach($categories->take(14) as $category)
+                        <div class="category-block-one" style="width: 100%; break-inside: avoid;">
+                            <a href="{{ route('browse-ads', ['category' => $category->id]) }}" style="text-decoration: none;">
+                                <div class="inner-box">
+                                    <div class="shape">
+                                        <div class="shape-1" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-1.png') }}');"></div>
+                                        <div class="shape-2" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-2.png') }}');"></div>
+                                    </div>
 
+                                    <div class="icon-box">
+                                        <img src="{{ asset('images/Category/' . $category->image ?? 'default.png') }}"
+                                            alt="{{ $category->name }}"
+                                            style="width: 70px; height: 70px; object-fit: contain;">
+                                    </div>
 
+                                    <h5 style="min-height: 60px; display: -webkit-box;
+                                            -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+                                            overflow: hidden; text-overflow: ellipsis; ">
+                                        @lang('messages.' . $category->name)
+                                    </h5>
 
-
-
-                <div class="category-block-one wow fadeInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                    <a href="{{ route('browse-ads', ['category' => $category->id]) }}" style="text-decoration: none;">
-                        <div class="inner-box">
-                            <div class="shape">
-                                <div class="shape-1" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-1.png') }}');"></div>
-                                <div class="shape-2" style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-2.png') }}');"></div>
-                            </div>
-
-                            <div class="icon-box">
-                                <img src="{{ asset('images/Category/' . $category->image ?? 'default.png') }}"
-                                    alt="{{ $category->name }}"
-                                    style="width: 70px; height: 70px; object-fit: contain;">
-                            </div>
-
-                            <h5 style="min-height: 60px; display: -webkit-box;
-                                    -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-                                    overflow: hidden; text-overflow: ellipsis; ">
-                                 @lang('messages.' . $category->name)
-                            </h5>
-
-                            <span>{{ $category->ads_count }}</span>
+                                    <span>{{ $category->ads_count }}</span>
+                                </div>
+                            </a>
                         </div>
-                    </a>
+                    @endforeach
                 </div>
-
-
-            @endforeach
-        </div>
 </section>
 <!-- category-section end -->
 
@@ -443,7 +529,7 @@
             @foreach($topbanners as $key => $banner)
                 @if($banner->type == 1)
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                        <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+                        <img  src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
                     </div>
                 @endif
             @endforeach
@@ -454,29 +540,50 @@
         </div>
 
         <div class="right">
-            <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-top:-320px;margin-left:-200px;">
+            <div id="topAdsCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-top:-320px;">
                 <div class="carousel-inner">
                     @foreach($topAds as $index => $ad)
                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                        <div class="ad-box" style="margin-right:150px; width: 560px; height: 300px; background: url('{{ asset('storage/' . $ad->mainImage) }}') no-repeat center center/cover; position: relative; color: white; padding: 15px; display: flex; flex-direction: column; justify-content: flex-end;">
-                        <!-- Shadow Overlay -->
-                            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
-                            <div class="badge">
-                                <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
-                            </div>
+                            <div class="ad-box" style="
+                                width: 100%;
+                                max-width: 560px;
+                                height: 0;
+                                padding-bottom: 53.57%; /* 300/560 = 0.5357 (maintain aspect ratio) */
+                                background: url('{{ asset('storage/' . $ad->mainImage) }}') no-repeat center center/contain;
+                                position: relative;
+                                color: white;
+                                margin: 0 auto;
+                                overflow: hidden;
+                            ">
+                                <div style="
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    right: 0;
+                                    bottom: 0;
+                                    padding: 15px;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: flex-end;
+                                ">
+                                    <!-- Shadow Overlay -->
+                                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;"></div>
+                                    <div class="badge">
+                                        <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
+                                    </div>
 
-                        @if($ad->post_type)
-                        <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                        {{ $ad->post_type }}
-                        </button>
-                        @endif
+                                    @if($ad->post_type)
+                                    <button class="sale" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                    {{ $ad->post_type }}
+                                    </button>
+                                    @endif
+                                        <p style="color:white;">{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                        <h3 style="color:white;font-weight:bold;">{{ $ad->title }}</h3>
 
-                                <p style="color:white;">{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                <h3 style="color:white;font-weight:bold;">{{ $ad->title }}</h3>
-
-                                <p class="price" style="color:rgb(130, 128, 226);">LKR {{ number_format($ad->price, 2) }}</p>
-                                <p style="color:white;"><i class="fas fa-clock"></i>
-                                {{ $ad->created_at->diffForHumans() }}</p>
+                                        <p class="price" style="color:rgb(130, 128, 226);">LKR {{ number_format($ad->price, 2) }}</p>
+                                        <p style="color:white;"><i class="fas fa-clock"></i>
+                                        {{ $ad->created_at->diffForHumans() }}</p>
+                                    </div>
                             </div>
                         </div>
                     @endforeach
@@ -490,8 +597,9 @@
                         </div>
                     @endforeach
                 </div>
-
-            <p style="margin-top:18px;font-size:16px; text-align:justify; width: 560px;">@lang('messages.para1')
+            <div class="para1">
+                <p style="margin-top:18px;font-size:16px; text-align:justify;">@lang('messages.para1')
+            </div>
             </p>
         </div> <!-- Closing right div -->
 
@@ -510,14 +618,16 @@
         <div class="right" style="flex: 1;margin-top:180px;margin-left:-324px;"> <!-- Heading and Banner on the Right -->
             @foreach($superbanners as $key => $banner)
                 @if($banner->type == 1)  <!-- Only display banners with type 1 -->
-                    <div class="carousel-item {{ $key == 1 ? 'active' : '' }}">
-                        <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+                    <div style="margin-top:-10px;" class="carousel-item {{ $key == 1 ? 'active' : '' }}">
+                        <img style="height:50%; object-fit: contain;" class="mobile-hide" src="{{ asset('banners/' . $banner->img) }}" class="d-block w-50" alt="Banner Image">
                     </div>
                 @endif
             @endforeach
         </div>
-        <h2 class="heading" style="margin-top:90px;margin-left:0px; "><b>@lang('messages.indextitle') <br>
-        @lang('messages.Best') <span> @lang('messages.Super') Ads</span></b></h2>
+        <div class="ad-head">
+            <h2 class="heading" style="margin-top:0px;margin-left:0px; "><b>@lang('messages.indextitle') <br>
+            @lang('messages.Best') <span> @lang('messages.Super') Ads</span></b></h2>
+        </div>
 
         <div class="left" style="flex: 1;"> <!-- Ads on the Left -->
             <div id="superAdsCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -544,19 +654,40 @@
                 </div>
             </div>
 
-            <div class="small-carousel-wrapper" style="overflow: hidden; width: 580px; margin-top: -21px;margin-left:124px;">
+            <div class="small-carousel-wrapper" style="overflow: hidden; width: 580px; margin-top: -21px;margin-left:56px;">
                 <div class="card-container d-flex" style="display: flex; transition: transform 0.5s ease-in-out;">
                     @foreach($superAds as $index => $adss)
                         <div class="ad-card" data-index="{{ $index }}" style="background: url('{{ asset('storage/' . $adss->mainImage) }}') no-repeat center center/cover; height: 100px; width: 100px; margin: -2px; border: 3px solid transparent; transition: border 0.3s;">
                         </div>
                     @endforeach
                 </div>
-                <p style="margin-top:18px;font-size:16px; text-align:justify; width: 550px;">@lang('messages.para2')
-                </p>
+                <div class="para2">
+                    <p style="margin-top:18px;font-size:16px; text-align:justify;">@lang('messages.para2')
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 
+    </div>
+    <div style="display: none;" class="row ad-head-mob">
+        <div class="col-md-12" style="display: flex; align-items:center; margin-top:-100px; flex-direction:column;">
+            <div class="ad-head-mob">
+                <h2 class="heading" style="margin-top:90px;margin-left:0px; "><b>@lang('messages.indextitle') <br>
+                @lang('messages.Best') <span> @lang('messages.Super') Ads</span></b></h2>
+            </div>
+            <div id="mobileBannerCarousel" class="carousel slide ad-head-mob-banner no-animation" data-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach($superbanners as $key => $banner)
+                        @if($banner->type == 1)
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <img src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100" alt="Banner Image">
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -661,7 +792,38 @@
             </div>
         </section>
         <!-- advertisement - banner-section end -->
+        <script>
+            // Function to adjust paragraph width
+            function adjustParagraphWidth() {
+                const paragraph1 = document.querySelector('.para1 p');
+                const paragraph2 = document.querySelector('.para2 p');
+                if (window.innerWidth < 700) {
+                    console.log(window.innerWidth);
+                    paragraph1.style.maxWidth = ((window.innerWidth)-120) + 'px';
+                    paragraph2.style.maxWidth = ((window.innerWidth)-120) + 'px';
+                } else {
+                    // Reset to original width (560px) when screen is 700px or wider
+                    paragraph1.style.maxWidth = '560px';
+                    paragraph2.style.maxWidth = '560px';
+                }
+                if(window.innerWidth < 521) {
+                    paragraph2.style.marginLeft = 530-((window.innerWidth)) + 'px';
+                } else {
+                    paragraph2.style.marginLeft = '0px';
+                }
+                if(window.innerWidth < 650) {
+                    document.querySelector('#topAdsCarousel').style.maxWidth=((window.innerWidth))-100 + 'px';
+                } else {
+                    document.querySelector('#topAdsCarousel').style.maxWidth='560px';
+                }
+            }
 
+            // Initial call when page loads
+            adjustParagraphWidth();
+
+            // Add event listener for window resize
+            window.addEventListener('resize', adjustParagraphWidth);
+        </script>
         <script>
 document.addEventListener("DOMContentLoaded", function () {
     function initializeCarousel(wrapperSelector, containerSelector, cardSelector, carouselSelector, smallCarouselSelector) {

@@ -48,10 +48,10 @@
                                         <p>@lang('messages.para4')</p>
                                     </div>
                                     <ul class="clearfix social-links sidebar-social-media">
-                                        <li><a href="https://www.facebook.com/profile.php?id=61565478456618" class="sidebar-icon fb-icon"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="index.html" class="sidebar-icon twitter-icon"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="https://www.instagram.com/yaka.lk6/" class="sidebar-icon insta-icon"><i class="fab fa-instagram"></i></a></li>
-                                        <li><a href="https://youtube.com/@yakalk-g5d?si=rQOXNvOlU_B7fcMo" class="sidebar-icon utube-icon"><i class="fab fa-youtube"></i></a></li>
+                                        <li><a target="_blank" href="https://www.facebook.com/profile.php?id=61565478456618&mibextid=LQQJ4d" class="sidebar-icon fb-icon"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a target="_blank" href="index.html" class="sidebar-icon twitter-icon"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a target="_blank" href="https://www.instagram.com/yaka.lk6?igsh=MzRlODBiNWFlZA==" class="sidebar-icon insta-icon"><i class="fab fa-instagram"></i></a></li>
+                                        <li><a target="_blank" href="https://youtube.com/@yakalk-g5d?si=QRoMU9JO3-OrJnLv" class="sidebar-icon utube-icon"><i class="fab fa-youtube"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -109,6 +109,10 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div style="gap: 25px; position:relative;" class="app-logo d-flex justify-content-center g-5 mt-4">
+                            <img style="width: 15%;" src="{{ asset('public/images/play_logo.png') }}" alt="Playstore Logo">
+                            <img style="width: 15%;" src="{{ asset('public/images/ilogo.png') }}" alt="Playstore Logo">
                         </div>
                     </div>
                 </div>

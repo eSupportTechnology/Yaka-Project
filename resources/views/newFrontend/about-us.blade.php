@@ -3,15 +3,15 @@
 @section('content')
 <style>
     .ad-banner-container {
-    width: 100%;
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 0;
-    margin-top: 0px;
-    margin-bottom: 30px;
-}
+        width: 100%;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 0;
+        margin-top: 0px;
+        margin-bottom: 30px;
+    }
 
 .ad-banner {
     width: 60%;  /* Reduced width */
@@ -49,7 +49,20 @@
     margin-left: 20px; /* Center the image horizontally */
 
 }
-
+.ad-carousel-item img {
+        /* width: 800px !important;
+        height: 120px !important; */
+        object-fit: contain;
+        margin: 0 auto;
+    }
+@media (min-width: 766px) {
+        .ad-carousel-item img {
+            width: 800px !important;
+            height: 120px !important;
+            object-fit: contain;
+            margin: 0 auto;
+        }
+    }
 </style>
 
         <!-- Page Title -->

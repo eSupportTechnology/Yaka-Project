@@ -74,15 +74,19 @@
 
         <div class="auto-container">
             <div class="mt-3 mb-4 col-md-12 d-flex justify-content-center">
-                @php
-                $banner = $banners->isNotEmpty() ? $banners->random() : null;
-                @endphp
-
-                @if($banner)
-                    <div class="banner">
-                        <img src="{{ asset('banners/' . $banner->img) }}" style="" alt="Banner Image" class="img-fluid banner-img">
+                <section class="mb-0 ad-banner-container">
+                    <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                        <div class="carousel-inner">
+                            @foreach($banners as $key => $banner)
+                                @if($banner->type == 0)
+                                    <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                       <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
-                @endif
+                </section>
             </div>
 
 
@@ -256,7 +260,7 @@
                             $otherbanners = $otherbanners->isNotEmpty() ? $otherbanners->random() : null;
                             @endphp
 
-                            @if($banner)
+                            @if($otherbanners)
                                 <div class="banner">
                                     <img src="{{ asset('banners/' . $otherbanners->img) }}" style="width:510px" alt="Banner Image" class="img-fluid banner-img">
                                 </div>

@@ -2,34 +2,35 @@
 
 namespace App\Http\Controllers\frontend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Cities;
+use Carbon\Carbon;
 use App\Models\Ads;
-use App\Models\AdDetail;
-use App\Models\FormField;
+use App\Models\Cities;
 use App\Models\Package;
-use App\Models\PackageType;
+use App\Models\AdDetail;
 use App\Models\Category;
 use App\Models\Districts;
+use App\Models\FormField;
+use App\Models\PackageType;
+use Illuminate\Support\Str;
+use App\Services\OtpService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Carbon\Carbon; 
 
 class UserAdsController extends Controller
 {
-   
+
     public function ad_posts_categories(Request $request)
     {
         $categories = \App\Models\Category::where('status', 1)
             ->where('mainId', 0)
             ->with(['subcategories' => function($query) {
-                $query->where('status', 1); 
+                $query->where('status', 1);
             }])
             ->get();
-    
+
         return view('newFrontend.user.ad_posts_categories', compact('categories'));
     }
 
@@ -37,29 +38,29 @@ class UserAdsController extends Controller
     public function fetchSubcategories($categoryId)
     {
         $category = Category::with('subcategories')->find($categoryId);
-    
+
         if (!$category) {
             return response()->json(['error' => 'Category not found'], 404);
         }
-    
+
         $translatedSubcategories = $category->subcategories->map(function ($subcategory) {
             return [
                 'id' => $subcategory->id,
                 'name' => __('messages.' . $subcategory->name) // Translate subcategory name
             ];
         });
-    
+
         return response()->json($translatedSubcategories);
     }
-    
-    
+
+
 
     public function ad_posts_location(Request $request)
     {
         $districts = \App\Models\Districts::with('cities')->get();
         return view('newFrontend.user.ad_posts_location', compact('districts'));
     }
-    
+
     public function fetchCities($districtId)
     {
         // Fetch cities related to the district
@@ -69,24 +70,24 @@ class UserAdsController extends Controller
         }
         return response()->json([]);
     }
-    
+
 
     public function ad_posts(Request $request)
     {
         $categories = \App\Models\Category::where('status', 1)->where('mainId', 0)->get();
-        
+
         $subcategories = collect();
         if ($request->cat_id) {
             $subcategories = \App\Models\Category::where('mainId', $request->cat_id)->get();
         }
-    
+
         $brands = collect();
         if ($request->sub_cat_id) {
             $brands = \App\Models\BrandsModels::where('sub_cat_id', $request->sub_cat_id)
-                        ->where('brandsId', 0) 
+                        ->where('brandsId', 0)
                         ->get();
         }
-    
+
         // Get models based on brandId and subCatId
         $models = collect();
         if ($request->brand && $request->sub_cat_id) {
@@ -94,16 +95,16 @@ class UserAdsController extends Controller
                         ->where('sub_cat_id', $request->sub_cat_id)
                         ->get();
         }
-    
+
         $formFields = \App\Models\FormField::where('main_category_id', $request->cat_id)
                         ->where('subcategory_id', $request->sub_cat_id)
                         ->get();
-        
+
         $packages = \App\Models\Package::with('packageTypes')
-            ->where('name', '!=', 'Jump Up')  
-            ->where('id', '!=', 5)            
+            ->where('name', '!=', 'Jump Up')
+            ->where('id', '!=', 5)
             ->get();
-    
+
         return view('newFrontend.user.ad_posts', [
             'categories' => $categories,
             'subcategories' => $subcategories,
@@ -117,7 +118,7 @@ class UserAdsController extends Controller
             'sublocation' => $request->query('sublocation', 0)
         ]);
     }
-    
+
 
 
     public function store(Request $request)
@@ -130,16 +131,16 @@ class UserAdsController extends Controller
         }
 
         // Extract query parameters
-        $cat_id = $request->query('cat_id'); 
+        $cat_id = $request->query('cat_id');
         $sub_cat_id = $request->query('sub_cat_id');
         $location = $request->query('location');
         $sublocation = $request->query('sublocation');
         $selectedPackageName = $request->input('selected_package_name');
         $selectedPackagePrice = $request->input('selected_package_price');
         $selectedPackageDuration = $request->input('selected_package_duration');
-           
+
         Log::info('Store method called', ['request_data' => $request->all(), 'query_params' => $request->query()]);
-        
+
         $formFields = FormField::all();
         $dynamicRules = [];
 
@@ -188,11 +189,11 @@ class UserAdsController extends Controller
         // Validate the request data
         $validated = $request->validate($validationRules);
 
-        
+
 
         // If Free Ad, Save Directly
        // return $this->saveAd($validated, $cat_id, $sub_cat_id, $location, $sublocation);
-         
+
             // Get the package type duration
             $packageExpireAt = null; // Default null value
 
@@ -202,12 +203,12 @@ class UserAdsController extends Controller
                     $packageExpireAt = Carbon::now()->addDays($packageType->duration);
                 }
             }
-    
-            $mainImagePath = $request->file('main_image')->storeAs('ads/main_images', 
+
+            $mainImagePath = $request->file('main_image')->storeAs('app/public/ads/main_images',
             $request->file('main_image')->getClientOriginalName(), 'public');
 
             $subImagesPaths = [];
-        
+
             if ($request->hasFile('sub_images')) {
                 foreach ($request->file('sub_images') as $file) {
                     if ($file->isValid()) { // Ensure the file is valid
@@ -225,24 +226,34 @@ class UserAdsController extends Controller
                         $adData['sub_images'] = $subImagesPaths;
 
                         // Redirect user to payment page
-                        return redirect()->route('payment.page', [
-                            'package_id' => $request->boosting_option,
-                            'package_type' => $request->package_type,
-                            'selected_package_name' => $request->input('selected_package_name'),
-                            'selected_package_price' => $request->input('selected_package_price'),
-                            'selected_package_duration' => $request->input('selected_package_duration'),
+                        // return redirect()->route('payment.page', [
+                        //     'package_id' => $request->boosting_option,
+                        //     'package_type' => $request->package_type,
+                        //     'selected_package_name' => $request->input('selected_package_name'),
+                        //     'selected_package_price' => $request->input('selected_package_price'),
+                        //     'selected_package_duration' => $request->input('selected_package_duration'),
 
-                            'ad_data' => json_encode($adData), // Pass ad data for later use
-                        ]);
+                        //     'ad_data' => json_encode($adData), // Pass ad data for later use
+                        // ]);
+                        return redirect()->route('payment.page')
+                            ->with([
+                                'package_id' => $request->boosting_option,
+                                'package_type' => $request->package_type,
+                                'selected_package_name' => $request->input('selected_package_name'),
+                                'selected_package_price' => $request->input('selected_package_price'),
+                                'selected_package_duration' => $request->input('selected_package_duration'),
+                                'ad_data' => $adData,
+                            ]);
 
-                        
+
+
                     }
 
-            
+
             // Create the Ad with package expiration date
             $ad = Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
-                'user_id' => auth()->user()->id, 
+                'user_id' => auth()->user()->id,
                 'title'         => $validated['title'],
                 'price'         => $validated['price'],
                 'description'   => $validated['description'],
@@ -255,18 +266,18 @@ class UserAdsController extends Controller
                 'condition'     => $validated['condition'] ?? null,
                 'ads_package'   => $request->boosting_option,
                 'package_type'  => $request->package_type,
-                'package_expire_at' => $packageExpireAt, 
-                'cat_id'        => $cat_id,        
-                'sub_cat_id'    => $sub_cat_id,    
-                'location'      => $location,      
-                'sublocation'   => $sublocation,    
+                'package_expire_at' => $packageExpireAt,
+                'cat_id'        => $cat_id,
+                'sub_cat_id'    => $sub_cat_id,
+                'location'      => $location,
+                'sublocation'   => $sublocation,
                 'status'        => '0',
             ]);
-    
+
             foreach ($formFields as $field) {
                 $inputName = 'field_' . $field->id;
                 $fieldValue = $request->input($inputName);
-                
+
                 // Only insert if the value is not null or empty
                 if (!is_null($fieldValue) && $fieldValue !== '') {
                     AdDetail::create([
@@ -277,7 +288,7 @@ class UserAdsController extends Controller
                 }
             }
             Log::info('Ad details saved successfully');
-    
+            OtpService::sendSingleSms(auth()->user()->phone_number, "Your ad has been successfully submitted! It will go live after admin approval. Thank you for using our platform.");
             return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
     } catch (\Exception $e) {
         Log::error('Error in store method', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
@@ -303,7 +314,7 @@ public function boostingUpdate(Request $request)
 
         // Get the package type duration from the PackageType model
         $packageType = \App\Models\PackageType::find($validated['package_type']);
-        
+
         // Check if the package type exists and calculate the expiration date
         if ($packageType) {
             $packageExpireAt = Carbon::now()->addDays($packageType->duration);
@@ -332,8 +343,8 @@ public function boostingUpdate(Request $request)
         return response()->json(['success' => false, 'message' => 'Something went wrong! Please try again.'], 500);
     }
 }
-    
 
- 
-    
+
+
+
 }

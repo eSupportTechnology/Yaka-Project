@@ -7,21 +7,10 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\AdPostController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\LocattionController;
-use App\Http\Controllers\api\SubCategoryController;
 use App\Http\Controllers\api\BrandsModelsController;
 use App\Http\Controllers\frontend\PaymentProcessingController;
-//use App\Http\Controllers\api\CategoryController;
-//use App\Http\Controllers\api\SubCategoryController;
 
-//before
-// use App\Http\Controllers\apiMobile\AdsController;
-// use App\Http\Controllers\apiMobile\AuthController;
-// use App\Http\Controllers\apiMobile\CategoryController;
-
-
-//update fix
-// change Controllers Name
-use App\Http\Controllers\apiMobile\AdsControllerMobile; 
+use App\Http\Controllers\apiMobile\AdsControllerMobile;
 use App\Http\Controllers\apiMobile\AuthControllerMobile;
 use App\Http\Controllers\apiMobile\CategoryControllerMobile;
 

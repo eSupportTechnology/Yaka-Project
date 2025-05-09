@@ -2,62 +2,69 @@
 
 namespace App\Http\Controllers\frontend;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Log;
-use App\Models\Payment;
+use Carbon\Carbon;
 use App\Models\Ads;
+use App\Models\Payment;
+use App\Models\PaymentInfo;
+use Illuminate\Support\Str;
+use App\Services\OtpService;
+use Illuminate\Http\Request;
+use App\Services\IpgHashService;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 
 class PaymentProcessingController extends Controller
 {
     public function show(Request $request)
     {
-        $packageId = request('package_id');
-        $packageType = request('package_type');
-        $selectedPackageName = request('selected_package_name');
-        $selectedPackagePrice = request('selected_package_price');
-        $selectedPackageDuration = request('selected_package_duration');
-        $adData = json_decode($request->query('ad_data'), true); // Retrieve stored ad data
+        $packageId = session('package_id');
+        $packageType = session('package_type');
+        $selectedPackageName = session('selected_package_name');
+        $selectedPackagePrice = session('selected_package_price');
+        $selectedPackageDuration = session('selected_package_duration');
+        $adData = session('ad_data');
+
+        $invoiceId = "YKAD".date('YmsHsi');
+        $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
+        PaymentInfo::create([
+            'check_value' => $checkValue,
+            'invoice_id' => $invoiceId,
+            'ad_data' => $adData,
+        ]);
+
+        session(['checkValue' => $checkValue]);
+        session(['invoiceId' => $invoiceId]);
+        session([$invoiceId.'add_data' => $adData]);
 
         return view('newFrontend.user.payment', compact(
             'selectedPackageName',
             'selectedPackageDuration',
             'selectedPackagePrice',
             'packageType',
-
-            'adData'
+            'adData',
+            'checkValue',
+            'invoiceId',
         ));
     }
 
     public function complete(Request $request)
     {
         try {
-            // Decode ad data
-            $adData = json_decode($request->input('ad_data'), true);
-
-            if (!$adData) {
-                return redirect()->back()->with('error', 'Invalid ad data.');
-            }
-
-            // Simulate Payment Processing (Replace with real payment gateway logic)
-            $paymentSuccess = true; // Simulated payment success
-
-            if ($paymentSuccess) {
-                // Save the ad after payment success
-                $this->saveAd($adData);
-
-                // Redirect to user's ads page with success message
+            $invoiceId = request()->query('invId');
+            $paymentInfo = PaymentInfo::where('invoice_id', $invoiceId)->first();
+            if($paymentInfo->payment_status == 0) {
+                return view('newFrontend.user.payment-confirming');
+            } else if($paymentInfo->payment_status == 1) {
+                // Decode ad data
+                $adData = $paymentInfo->ad_data;
+                $this->saveAd($adData, $invoiceId);
                 return redirect()->route('user.my_ads')->with('success', 'Payment successful! Your ad has been posted.');
+            } else {
+                return view('newFrontend.user.payment-error');
             }
-
-            // If payment fails, redirect back with an error message
-            return redirect()->back()->with('error', 'Payment failed! Please try again.');
-
         } catch (\Exception $e) {
             Log::error('Payment processing error', ['error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
@@ -65,7 +72,7 @@ class PaymentProcessingController extends Controller
     }
 
 
-    private function saveAd($adData)
+    private function saveAd($adData, $invoiceId)
     {
         try {
             $packageExpireAt = null;
@@ -76,11 +83,10 @@ class PaymentProcessingController extends Controller
                 }
             }
 
-
-
             // Save Ad in Database
             Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
+                'invoice_id' => $invoiceId,
                 'user_id' => auth()->user()->id,
                 'title' => $adData['title'],
                 'price' => $adData['price'],
@@ -101,9 +107,9 @@ class PaymentProcessingController extends Controller
                 'sublocation' => $adData['sublocation'],
                 'status' => '0',
             ]);
-
+            OtpService::sendSingleSms(auth()->user()->phone_number, "Payment received for '{$invoiceId}'. Your ad will be published after admin approval. Thank you!");
             Log::info('Ad saved successfully.');
-             return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
+            //  return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
 
         } catch (\Exception $e) {
             Log::error('Error in saving ad', ['error' => $e->getMessage()]);
@@ -116,5 +122,17 @@ class PaymentProcessingController extends Controller
     public function getPaymentInfo(Request $request)
     {
         Log::info("Payment Status: ".$request);
+
+
+        $invoiceNo = $request['invoiceNo'] ?? null;
+        $statusMessage = $request['statusMessage'] ?? null;
+
+        if($statusMessage == 'SUCCESS') {
+            $paymentInfo = PaymentInfo::where('invoice_id', $invoiceNo)->first();
+            if($paymentInfo) {
+                $paymentInfo->payment_status = 1;
+                $paymentInfo->save();
+            }
+        }
     }
 }

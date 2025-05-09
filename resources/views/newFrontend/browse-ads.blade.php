@@ -2,7 +2,6 @@
 
 @section('content')
     <style>
-        /* Set a fixed height for the carousel */
         #adsCarousel .carousel-inner {
             height: 400px;
         }
@@ -20,7 +19,7 @@
 
                 .widget-title {
             overflow: visible; /* prevent cropping */
-        }   
+        }
 
 
 
@@ -28,8 +27,11 @@
         .banner-img {
             height: 400px;
             object-fit: cover;
-            width: 100%;
         }
+        /* @media(max-width: 768px) {
+            width: 100%;
+
+        } */
 
         /* Dark overlay for carousel items */
         .carousel-overlay {
@@ -127,6 +129,173 @@
             border: 2px solid red;
             animation: blink 1s infinite;
         }
+        /* Mobile-specific styles */
+        @media (max-width: 1200px) {
+            .feature-block {
+                flex: 0 0 100% !important; /* Full width for mobile */
+                max-width: 100% !important;
+                margin-bottom: 15px !important;
+                height: fit-content !important;
+            }
+
+            .feature-block-one .inner-box {
+                flex-direction: row !important; /* Horizontal layout */
+                gap: 15px;
+            }
+
+            .image-box {
+                width: 40% !important;
+                flex-shrink: 0;
+            }
+
+            .image-box img {
+                height: 120px !important; /* Reduced image height */
+                width: 100% !important;
+            }
+
+            .lower-content {
+                width: 60% !important;
+                padding-right: 10px !important;
+            }
+
+            /* Adjust sale button position */
+            .sale {
+                top: 5px !important;
+                right: 5px !important;
+            }
+
+            /* Hide less important elements */
+            .category, .far.fa-clock {
+                display: none !important;
+            }
+
+            h4 {
+                -webkit-line-clamp: 3 !important; /* Show more text */
+                margin-top: 0 !important;
+                font-size: 15px !important;
+            }
+            .icon img {
+                height: 20px !important;
+            }
+            .time-dff {
+                margin-left: -25px !important;
+            }
+
+            .lower-content {
+                padding:unset !important;
+            }
+            .lower-box {
+                padding:unset !important;
+            }
+            .btn-box a {
+                width: max-content;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar-side-mobile {
+                display: none;
+            }
+        }
+        .mobile-filter-toggle {
+            display: none;
+        }
+
+        .red-filter-button {
+            background: #e74c3c; /* Red color */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: background 0.3s ease;
+        }
+
+        .red-filter-button:hover {
+            background: #c0392b; /* Darker red on hover */
+        }
+
+        .filter-icon {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        /* Show only on mobile */
+        @media (max-width: 991px) {
+            .mobile-filter-toggle {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .sidebar-search,
+            .sidebar-category {
+                display: none;
+            }
+        }
+
+        /* Hide sidebar on mobile */
+        @media (max-width: 992px) {
+            .sidebar-search, .sidebar-category {
+                display: none;
+            }
+            .mobile-filter-toggle {
+                display: block;
+            }
+        }
+
+        /* Modal Styles */
+        .filter-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 9999;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .close-modal {
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close-modal:hover {
+            color: #000;
+        }
+        /* Disable Bootstrap carousel sliding animation */
+        .carousel.no-animation .carousel-item {
+            transition: none !important;
+            -webkit-transition: none !important;
+        }
+
     </style>
 
 
@@ -135,7 +304,7 @@
         <div class="auto-container">
             <div class="mr-0 content-box centred">
                 <div class="title">
-                    <h1>{{ $category ? __('messages.' . $category->name) : __('messages.All Categories') }}</h1 </div>
+                    <h1>{{ $category ? __('messages.' . $category->name) : __('messages.All Categories') }}</h1> </div>
                     <ul class="clearfix bread-crumb">
                         <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
                         <li>@lang('messages.Browse Ads')</li>
@@ -143,15 +312,208 @@
                 </div>
             </div>
     </section>
+    <!-- ad - banner-section start -->
+    <section class="mb-0 ad-banner-container">
+        <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                @foreach($all_banners as $key => $banner)
+                    @if($banner->type == 0)
+                        <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
+                           <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <!-- ad - banner-section end -->
     <!-- End Page Title -->
+<!-- Add this before your sidebar section -->
+<!-- Add this in your HTML -->
 
+<!-- Add this at the bottom of your page -->
+<div class="filter-modal" id="filterModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Location Filters</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="mt-4 mb-4 auto-container">
+                <div class="clearfix row">
 
+                    <div class="col-md-12 sidebar-side">
+                        <div class="default-sidebar category-sidebar">
+                            <div class="sidebar-search sidebar-widget">
+                                <div class="widget-title">
+                                    <h3>@lang('messages.Search')</h3>
+                                </div>
+                                <div class="widget-content">
+                                    <form action="{{ route('browse-ads') }}" method="GET" class="search-form">
+                                        <div class="form-group">
+                                            <input type="search" name="search-field" style="padding-right: 20px"
+                                                placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
+                                                oninput="this.form.submit()">
+                                            <button type="submit" style="display:none;"><i class="icon-2"></i></button>
+                                        </div>
+                                        <div class="form-group">
+                                            <i class="icon-3"></i>
+                                            <select class="wide" name="location" onchange="this.form.submit()">
+                                                <option data-display="@lang('messages.Select Location')">@lang('messages.Select Location')</option>
+                                                @foreach ($districts as $district)
+                                                    @php
+                                                        $locale = App::getLocale();
+                                                        $districtName = 'name_' . $locale;
+                                                    @endphp
+                                                    <option value="{{ $district->id }}"
+                                                        {{ request()->input('location') == $district->id ? 'selected' : '' }}>
+                                                        {{ $district->$districtName }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        {{-- City Dropdown --}}
+                                        <div class="form-group">
+                                            <select class="wide" name="city" id="city">
+                                                <option data-display="@lang('messages.Select City')">@lang('messages.Select City')</option>
+                                                @foreach ($citys as $city)
+                                                    @php
+                                                        $locale = App::getLocale();
+                                                        $cityName = 'name_' . $locale;
+                                                    @endphp
+                                                    <option value="{{ $city->id }}"
+                                                        {{ request()->input('location') == $city->id ? 'selected' : '' }}>
+                                                        {{ $city->$cityName }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            {{-- <div class="sidebar-category sidebar-widget">
+                                <div class="widget-title">
+                                    <h3>@lang('messages.Categories')</h3>
+                                </div>
+                                <div class="widget-content">
+                                    <ul class="category-list">
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="category" value="all"
+                                                    onchange="window.location='{{ route('browse-ads') }}'"
+                                                    {{ !request()->input('category') ? 'checked' : '' }}>
+                                                <span class="text-dark">@lang('messages.All Categories')</span>
+
+                                            </label>
+                                        </li>
+
+                                        @foreach ($categories->take(14) as $category)
+                                            <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
+                                                <label>
+                                                    <input type="radio" name="category" value="{{ $category->id }}"
+                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
+                                                        {{ request()->input('category') == $category->id ? 'checked' : '' }}>
+                                                    <span> @lang('messages.' . $category->name)</span>
+                                                </label>
+
+                                                @if ($category->subcategories->isNotEmpty())
+                                                    <ul>
+                                                        @foreach ($category->subcategories as $subcategory)
+                                                            <li>
+                                                                <label>
+                                                                    <input type="radio" name="subcategory"
+                                                                        value="{{ $subcategory->id }}"
+                                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
+                                                                        {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
+                                                                    <span> @lang('messages.' . $subcategory->name)</span>
+                                                                </label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="filter-modal" id="filterModalCat">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Catogory Filters</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="mt-4 mb-4 auto-container">
+                <div class="clearfix row">
+                    <div class="col-md-12 sidebar-side">
+                        <div class="default-sidebar category-sidebar">
+                            <div class="sidebar-category sidebar-widget">
+                                <div class="widget-title">
+                                    <h3>@lang('messages.Categories')</h3>
+                                </div>
+                                <div class="widget-content">
+                                    <ul class="category-list">
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="category" value="all"
+                                                    onchange="window.location='{{ route('browse-ads') }}'"
+                                                    {{ !request()->input('category') ? 'checked' : '' }}>
+                                                <span class="text-dark">@lang('messages.All Categories')</span>
+
+                                            </label>
+                                        </li>
+
+                                        @foreach ($categories->take(14) as $category)
+                                            <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
+                                                <label>
+                                                    <input type="radio" name="category" value="{{ $category->id }}"
+                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
+                                                        {{ request()->input('category') == $category->id ? 'checked' : '' }}>
+                                                    <span> @lang('messages.' . $category->name)</span>
+                                                </label>
+
+                                                @if ($category->subcategories->isNotEmpty())
+                                                    <ul>
+                                                        @foreach ($category->subcategories as $subcategory)
+                                                            <li>
+                                                                <label>
+                                                                    <input type="radio" name="subcategory"
+                                                                        value="{{ $subcategory->id }}"
+                                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
+                                                                        {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
+                                                                    <span> @lang('messages.' . $subcategory->name)</span>
+                                                                </label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <div class="mt-4 mb-4 auto-container">
         <div class="clearfix row">
 
-            <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
+            <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side sidebar-side-mobile">
                 <div class="default-sidebar category-sidebar">
+
                     <div class="sidebar-search sidebar-widget">
                         <div class="widget-title ">
                             <h3>@lang('messages.Search')</h3>
@@ -246,23 +608,39 @@
                         </div>
                     </div>
 
-
                     <div class="col-md-12">
-                        @php
-                            $banner = $banners->isNotEmpty() ? $banners->random() : null;
-                        @endphp
-
-                        @if ($banner)
-                            <div class="banner">
-                                <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
-                                    class="img-fluid banner-img">
+                        @if ($banners)
+                        <div id="bannerCarousel" class="carousel slide no-animation" data-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach($banners as $key => $banner)
+                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                        <div class="banner d-flex justify-content-center">
+                                            <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
+                                                 class="img-fluid banner-img">
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
+                        </div>
                         @endif
                     </div>
 
                 </div>
             </div>
-
+            <div class="row" style="margin: auto;">
+                <div class="col-6 mobile-filter-toggle">
+                    <button id="filterToggle" class="red-filter-button">
+                        <i style="font-size:14px" class="fa">&#xf041;</i>
+                        <span>Locations</span>
+                    </button>
+                </div>
+                <div class="col-6 mobile-filter-toggle">
+                    <button id="filterToggleCat" class="red-filter-button">
+                        <i style="font-size:14px" class="fa">&#xf022;</i>
+                        <span>Catgories</span>
+                    </button>
+                </div>
+            </div>
             <div class="col-lg-9 col-md-12 col-sm-12 content-side">
                 <div class="category-details-content">
                     <div class="clearfix item-shorting">
@@ -317,7 +695,7 @@
                                                             <!-- Image -->
                                                             <img src="{{ asset('storage/' . $ad->mainImage) }}"
                                                                 class="d-block w-100" alt="{{ $ad->title }}"
-                                                                style="min-height: 450px;height:auto; object-fit: cover;">
+                                                                style="min-height: 450px;height:auto; object-fit: contain;">
 
                                                             <!-- Dark Overlay -->
                                                             <div class="carousel-overlay"></div>
@@ -363,15 +741,24 @@
 
                             <!-- Banner (Column 2) -->
                             <div class="col-md-4">
-                                @php
-                                    $banner = $banners->isNotEmpty() ? $banners->random() : null;
-                                @endphp
 
-                                @if ($banner)
-                                    <div class="banner">
+                                @if ($banners)
+                                <div id="bannerCarousel" class="carousel slide no-animation" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        @foreach($banners as $key => $banner)
+                                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                <div class="banner d-flex justify-content-center">
+                                                    <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
+                                                         class="img-fluid banner-img">
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                    {{-- <div class="banner" style="display: flex;justify-content: center;">
                                         <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
                                             class="img-fluid banner-img">
-                                    </div>
+                                    </div> --}}
                                 @endif
                             </div>
                         </div>
@@ -380,20 +767,13 @@
 
                         <!-- Grid Items -->
                         <div class="grid-item feature-style-two four-column pd-0" style="display: flex; flex-wrap: wrap;">
-                            <div class="clearfix row"
-                                style="width: 100%; display: flex; flex-wrap: wrap; ">
+                            <div class="clearfix row" style="width: 100%; display: flex; flex-wrap: wrap;">
                                 @foreach ($ads as $ad)
                                     @if (is_null($ad->package_expire_at) || \Carbon\Carbon::now()->lessThanOrEqualTo($ad->package_expire_at))
-                                        <!-- Display the ad if the package is not expired or expiry date is null -->
-                                        <div class="col-lg-3 col-md-6 col-sm-12 feature-block"
-                                            style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
-                                            <div class="feature-block-one"
-                                                style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                                                <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
-                                                    class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}"
-                                                    style="display: block; height: 100%; text-decoration: none;">
-                                                    <div class="inner-box"
-                                                        style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
+                                        <div class="col-lg-3 col-md-6 col-sm-12 feature-block" style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
+                                            <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
+                                                <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}" style="display: block; height: 100%; text-decoration: none;">
+                                                    <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
                                                         @if ($ad->post_type)
                                                             <button class="sale"
                                                                 style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
@@ -403,7 +783,7 @@
                                                         <div class="image-box" style="flex-grow: 0;">
                                                             <figure class="image">
                                                                 <img src="{{ asset('storage/' . $ad->mainImage) }}"
-                                                                    style="height: 170px; object-fit: cover;"
+                                                                    style="height: 170px; object-fit: contain;"
                                                                     alt="{{ $ad->title }}">
                                                             </figure>
 
@@ -440,7 +820,7 @@
                                             margin-bottom: 10px;">
                                                                 {{ $ad->title }}</h4>
                                                             <ul class="clearfix info">
-                                                                <li><i
+                                                                <li class="time-dff"><i
                                                                         class="far fa-clock"></i>{{ $ad->created_at->diffForHumans() }}
                                                                 </li>
                                                                 <li>
@@ -514,6 +894,76 @@
         var carousel = new bootstrap.Carousel(myCarousel, {
             interval: 2000, // Set interval for auto sliding (5 seconds)
             ride: 'carousel' // Enable auto sliding
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterToggle = document.getElementById('filterToggle');
+            const filterModal = document.getElementById('filterModal');
+            const closeModal = document.querySelector('.close-modal');
+
+            // Open modal
+            filterToggle.addEventListener('click', () => {
+                filterModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+
+            // Close modal
+            closeModal.addEventListener('click', () => {
+                filterModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            // Close when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === filterModal) {
+                    filterModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Close on escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && filterModal.style.display === 'block') {
+                    filterModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterToggleCat = document.getElementById('filterToggleCat');
+            const filterModalCat = document.getElementById('filterModalCat');
+            const closeModal = document.querySelector('.close-modal');
+
+            // Open modal
+            filterToggleCat.addEventListener('click', () => {
+                filterModalCat.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+
+            // Close modal
+            closeModal.addEventListener('click', () => {
+                filterModalCat.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            // Close when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === filterModalCat) {
+                    filterModalCat.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Close on escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && filterModalCat.style.display === 'block') {
+                    filterModalCat.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
         });
     </script>
 @endsection

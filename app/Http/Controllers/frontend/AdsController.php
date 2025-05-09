@@ -78,13 +78,15 @@ class AdsController extends Controller
             });
         }
 
-        $ads = $adsQuery->paginate(9);
+        $ads = $adsQuery->paginate(30);
 
         $category = Category::find($selectedCategory);
 
         $banners = Banners::where('type', 1)->get();
 
-        return view('newFrontend.browse-ads', compact('categories', 'urgentAds', 'ads', 'districts', 'banners', 'category','citys'));
+        $all_banners = \App\Models\Banners::where('type', 0)->get();
+
+        return view('newFrontend.browse-ads', compact('categories', 'urgentAds','all_banners', 'ads', 'districts', 'banners', 'category','citys'));
     }
 
 
