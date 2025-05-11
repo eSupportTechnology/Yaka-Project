@@ -30,8 +30,8 @@ class AdsController extends Controller
         $citys = Cities::all();
 
         // Fetch urgent ads based on the selected category and package expiry date check
-        $urgentAdsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
-            ->where('ads_package', 4)
+        $superAdsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
+            ->where('ads_package', 6)
             ->where('status', 1)
             ->where(function($query) {
                 $query->whereNull('package_expire_at')
@@ -40,10 +40,10 @@ class AdsController extends Controller
             ->latest();
 
         if (!empty($selectedCategory)) {
-            $urgentAdsQuery->where('cat_id', $selectedCategory);
+            $superAdsQuery->where('cat_id', $selectedCategory);
         }
 
-        $urgentAds = $urgentAdsQuery->get();
+        $superAds = $superAdsQuery->get();
 
         $adsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
             ->where('status', 1)
@@ -86,7 +86,7 @@ class AdsController extends Controller
 
         $all_banners = \App\Models\Banners::where('type', 0)->get();
 
-        return view('newFrontend.browse-ads', compact('categories', 'urgentAds','all_banners', 'ads', 'districts', 'banners', 'category','citys'));
+        return view('newFrontend.browse-ads', compact('categories', 'superAds','all_banners', 'ads', 'districts', 'banners', 'category','citys'));
     }
 
 

@@ -97,6 +97,20 @@
                 border-color: transparent;
             }
         }
+        @keyframes blinking-border-red {
+            0% {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: red;
+            }
+
+            /* Blue */
+            100% {
+                border-color: transparent;
+            }
+        }
 
         /* Apply Blinking Borders */
         .top-ad {
@@ -111,9 +125,15 @@
             border-radius: 10px;
         }
 
+        .urgent-ad {
+            animation: blinking-border-red 1.5s infinite;
+            border: 2px solid transparent;
+            border-radius: 10px;
+        }
+
         @keyframes blink {
             0% {
-                border-color: red;
+                border-color: blue;
             }
 
             50% {
@@ -121,12 +141,12 @@
             }
 
             100% {
-                border-color: red;
+                border-color: blue;
             }
         }
 
         .blink-border {
-            border: 2px solid red;
+            border: 2px solid blue;
             animation: blink 1s infinite;
         }
         /* Mobile-specific styles */
@@ -295,7 +315,71 @@
             transition: none !important;
             -webkit-transition: none !important;
         }
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: red;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            z-index:1;
+            clip-path: polygon(100% 0%, 100% 100%, 50% 80%, 0 100%, 0 0);
+        }
+        /* Add these styles to your CSS file */
+        .blink-border-wrapper {
+            position: relative;
+            border: 3px solid #007bff;
+            border-radius: 4px;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: 0px;
+            height: 100%;
+            animation: blink 1.5s infinite;
+            margin: 2px; /* Prevents border clipping in carousel */
+        }
 
+        .image-container {
+            position: relative;
+            height: calc(100% - 6px); /* Accounts for border + padding */
+            width: calc(100% - 6px);
+            margin: auto;
+        }
+
+        .carousel-item-content img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            position: relative;
+            z-index: 1;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 20%, transparent 50%);
+            z-index: 1;
+        }
+
+        @keyframes blink {
+            0% { border-color: #007bff; }
+            50% { border-color: rgba(0, 123, 255, 0.3); }
+            100% { border-color: #007bff; }
+        }
+
+        /* Existing carousel item positioning */
+        .carousel-item {
+            transition: transform 0.6s ease;
+        }
+        @media(min-width:1201px) {
+            .n-sale {
+                margin-right:127px;
+            }
+        }
     </style>
 
 
@@ -664,8 +748,8 @@
                                     data-bs-interval="2000">
                                     <!-- Indicators -->
                                     <div class="carousel-indicators">
-                                        @foreach ($urgentAds as $key => $ad)
-                                            @if ($ad->ads_package == 4)
+                                        @foreach ($superAds as $key => $ad)
+                                            @if ($ad->ads_package == 6)
                                                 <!-- Filter ads with ads_package = 4 -->
                                                 <button type="button" data-bs-target="#adsCarousel"
                                                     data-bs-slide-to="{{ $key }}"
@@ -678,55 +762,48 @@
 
                                     <!-- Carousel Items -->
                                     <div class="carousel-inner">
-                                        @foreach ($urgentAds as $key => $ad)
-                                            @if ($ad->ads_package == 4)
-                                                <!-- Filter ads with ads_package = 4 -->
-                                                <div class="carousel-item {{ $key === 0 ? 'active' : '' }} blink-border">
-                                                    @if ($ad->post_type)
-                                                        <button class="sale"
-                                                            style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                                                            {{ $ad->post_type }}
-                                                        </button>
-                                                    @endif
-                                                    <!-- Wrap the entire content with an anchor tag -->
-                                                    <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
-                                                        style="display: block; height: 100%; text-decoration: none;">
-                                                        <div class="carousel-item-content">
-                                                            <!-- Image -->
-                                                            <img src="{{ asset('storage/' . $ad->mainImage) }}"
-                                                                class="d-block w-100" alt="{{ $ad->title }}"
-                                                                style="min-height: 450px;height:auto; object-fit: contain;">
-
-                                                            <!-- Dark Overlay -->
-                                                            <div class="carousel-overlay"></div>
-
-                                                            <!-- Top-left image -->
-                                                            <img src="{{ asset('3.png') }}" alt="Urgent Ad"
-                                                                class="top-left-image"
-                                                                style="z-index:999; height:80px; width:auto">
-
-                                                            <!-- Ad Details Overlay -->
-                                                            <div class="carousel-caption d-none d-md-block text-start">
-                                                                <p>{{ $ad->title }}</p>
-                                                                <p>@lang('messages.Rs') {{ number_format($ad->price, 2) }}
-                                                                </p>
-                                                                <p><i class="fas fa-map-marker-alt"></i>
-                                                                    @php
-                                                                        $locale = App::getLocale();
-                                                                        $locationName = 'name_' . $locale;
-                                                                    @endphp
-
-                                                                    {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}
-                                                                </p>
+                                        @foreach ($superAds as $key => $ad)
+                                            @if ($ad->ads_package == 6)
+                                                <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                                                    <div class="blink-border-wrapper"> <!-- Border wrapper added -->
+                                                        @if ($ad->post_type)
+                                                            <button class="sale"
+                                                                style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                                                {{ $ad->post_type }}
+                                                            </button>
+                                                        @endif
+                                                        <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
+                                                            style="display: block; height: 100%; text-decoration: none;">
+                                                            <div class="carousel-item-content">
+                                                                <div class="image-container"> <!-- Image wrapper added -->
+                                                                    <img src="{{ asset('storage/' . $ad->mainImage) }}"
+                                                                        class="d-block w-100" alt="{{ $ad->title }}">
+                                                                </div>
+                                                                <div class="carousel-overlay"></div>
+                                                                <div class="badge">
+                                                                    <img src="{{ asset('02.png') }}" alt="Top Ad"
+                                                                        style="width: 20px; height: 20px;">
+                                                                </div>
+                                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                                    <p>{{ $ad->title }}</p>
+                                                                    <p>@lang('messages.Rs') {{ number_format($ad->price, 2) }}</p>
+                                                                    <p><i class="fas fa-map-marker-alt"></i>
+                                                                        @php
+                                                                            $locale = App::getLocale();
+                                                                            $locationName = 'name_' . $locale;
+                                                                        @endphp
+                                                                        {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}
+                                                                    </p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             @endif
                                         @endforeach
                                     </div>
 
-                                    <!-- Carousel Controls -->
+                                    {{-- <!-- Carousel Controls -->
                                     <button class="carousel-control-prev" type="button" data-bs-target="#adsCarousel"
                                         data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -734,7 +811,7 @@
                                     <button class="carousel-control-next" type="button" data-bs-target="#adsCarousel"
                                         data-bs-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    </button>
+                                    </button> --}}
                                 </div>
                             </div>
 
@@ -772,11 +849,11 @@
                                     @if (is_null($ad->package_expire_at) || \Carbon\Carbon::now()->lessThanOrEqualTo($ad->package_expire_at))
                                         <div class="col-lg-3 col-md-6 col-sm-12 feature-block" style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
                                             <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                                                <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 6 ? 'super-ad' : '') }}" style="display: block; height: 100%; text-decoration: none;">
+                                                <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 4 ? 'urgent-ad' : '') }}" style="display: block; height: 100%; text-decoration: none;">
                                                     <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
                                                         @if ($ad->post_type)
-                                                            <button class="sale"
-                                                                style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                                            <button class="sale @if($ad->ads_package == 4) n-sale @endif"
+                                                                style="position:absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
                                                                 {{ $ad->post_type }}
                                                             </button>
                                                         @endif
@@ -794,12 +871,8 @@
                                                                     <i class=""> <img src="{{ asset('01.png') }}"
                                                                             alt="Top Ad"></i>
                                                                 </div>
-                                                            @elseif($ad->ads_package == 6)
-                                                                <!-- Super Ad Badge -->
-                                                                <div class="icon">
-                                                                    <div class="icon-shape"></div>
-                                                                    <i class=""> <img src="{{ asset('02.png') }}"
-                                                                            alt="Super Ad"></i>
+                                                            @elseif($ad->ads_package == 4)
+                                                                <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent
                                                                 </div>
                                                             @endif
                                                         </div>
