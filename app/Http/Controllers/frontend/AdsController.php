@@ -31,7 +31,7 @@ class AdsController extends Controller
         $searchTerm = $request->input('search-field');
 
         $selectedCityName = 'Locations';
-        $selectedCategory = 'Categories';
+        $selectedCategoryName = 'Categories';
         if(isset($selectedCity)) {
             $selectedCityName = City::where('id', $selectedCity)->first()->$searchName;
         }
