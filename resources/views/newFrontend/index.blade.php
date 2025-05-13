@@ -879,38 +879,6 @@
       </script>
     <!-- advertisement - banner-section end -->
     <script>
-        // Function to adjust paragraph width
-        function adjustParagraphWidth() {
-            const paragraph1 = document.querySelector('.para1 p');
-            const paragraph2 = document.querySelector('.para2 p');
-            if (window.innerWidth < 700) {
-                console.log(window.innerWidth);
-                paragraph1.style.maxWidth = ((window.innerWidth) - 120) + 'px';
-                paragraph2.style.maxWidth = ((window.innerWidth) - 120) + 'px';
-            } else {
-                // Reset to original width (560px) when screen is 700px or wider
-                paragraph1.style.maxWidth = '560px';
-                paragraph2.style.maxWidth = '560px';
-            }
-            if (window.innerWidth < 521) {
-                paragraph2.style.marginLeft = 530 - ((window.innerWidth)) + 'px';
-            } else {
-                paragraph2.style.marginLeft = '0px';
-            }
-            if (window.innerWidth < 650) {
-                document.querySelector('#topAdsCarousel').style.maxWidth = ((window.innerWidth)) - 100 + 'px';
-            } else {
-                document.querySelector('#topAdsCarousel').style.maxWidth = '560px';
-            }
-        }
-
-        // Initial call when page loads
-        adjustParagraphWidth();
-
-        // Add event listener for window resize
-        window.addEventListener('resize', adjustParagraphWidth);
-    </script>
-    <script>
         document.addEventListener("DOMContentLoaded", function() {
             function initializeCarousel(wrapperSelector, containerSelector, cardSelector, carouselSelector,
                 smallCarouselSelector) {

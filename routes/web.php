@@ -24,6 +24,7 @@ use App\Http\Controllers\frontend\UserAdsController;
 use App\Http\Controllers\frontend\userDashboardController;
 use App\Http\Controllers\frontend\AdsController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\LocationController;
 
 use App\Http\Controllers\ContactController;
 
@@ -125,6 +126,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/payment', [PaymentProcessingController::class, 'show'])->name('payment.page');
     // Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
     Route::get('/payment/checking', [PaymentProcessingController::class, 'complete'])->name('payment.checking');
+
+    // Ads Search
+    Route::get('/api/districts', [LocationController::class, 'searchDistricts']);
+    Route::get('/api/get-districts', [LocationController::class, 'getDistricts']);
+    Route::get('/api/cities', [LocationController::class, 'getCitiesByDistrict']);
 
 });
 

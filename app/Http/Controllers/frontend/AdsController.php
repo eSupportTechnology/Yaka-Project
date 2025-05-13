@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Models\Package;
 use App\Models\PackageType;
 use App\Models\BrandsModels;
+use Illuminate\Support\Facades\App;
+use App\Models\City;
 
 class AdsController extends Controller
 {
@@ -19,11 +21,23 @@ class AdsController extends Controller
 
     public function browseAds(Request $request)
     {
+        $locale = App::getLocale();
+        $searchName = 'name_'.$locale;
         // Get selected filters from the request
         $selectedLocation = $request->input('location');
+        $selectedCity = $request->input('city');
         $selectedCategory = $request->input('category');
         $selectedSubCategory = $request->input('subcategory');
         $searchTerm = $request->input('search-field');
+
+        $selectedCityName = 'Locations';
+        $selectedCategory = 'Categories';
+        if(isset($selectedCity)) {
+            $selectedCityName = City::where('id', $selectedCity)->first()->$searchName;
+        }
+        if(isset($selectedCategory)) {
+            $selectedCategoryName = Category::where('mainId', $selectedCategory)->first()->name;
+        }
 
         $categories = Category::where('mainId', 0)->get();
         $districts = Districts::all();
@@ -57,9 +71,9 @@ class AdsController extends Controller
 
 
         if (!empty($selectedLocation)) {
-            $adsQuery->where(function ($query) use ($selectedLocation) {
+            $adsQuery->where(function ($query) use ($selectedLocation, $selectedCity) {
                 $query->where('location', $selectedLocation)
-                    ->orWhere('sublocation', $selectedLocation);
+                    ->orWhere('sublocation', $selectedCity);
             });
         }
 
@@ -86,7 +100,7 @@ class AdsController extends Controller
 
         $all_banners = \App\Models\Banners::where('type', 0)->get();
 
-        return view('newFrontend.browse-ads', compact('categories', 'superAds','all_banners', 'ads', 'districts', 'banners', 'category','citys'));
+        return view('newFrontend.browse-ads', compact('categories', 'superAds','all_banners', 'ads', 'districts', 'banners', 'category','citys', 'selectedCityName', 'selectedCategoryName'));
     }
 
 

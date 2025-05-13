@@ -380,6 +380,44 @@
                 margin-right:127px;
             }
         }
+        #location-filter {
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .results-container {
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .district-item, .city-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .district-item:hover, .city-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .back-button {
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            background: #7E0202;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #district-search {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
     </style>
 
 
@@ -423,106 +461,17 @@
             <span class="close-modal">&times;</span>
         </div>
         <div class="modal-body">
-            <div class="mt-4 mb-4 auto-container">
-                <div class="clearfix row">
+            <div id="location-filter-mob">
+                <!-- District Search -->
+                <div class="district-section form-group">
+                    <input class="form-control" type="text" id="district-search-mob" value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
+                    <div id="district-results-mob" class="results-container"></div>
+                </div>
 
-                    <div class="col-md-12 sidebar-side">
-                        <div class="default-sidebar category-sidebar">
-                            <div class="sidebar-search sidebar-widget">
-                                <div class="widget-title">
-                                    <h3>@lang('messages.Search')</h3>
-                                </div>
-                                <div class="widget-content">
-                                    <form action="{{ route('browse-ads') }}" method="GET" class="search-form">
-                                        <div class="form-group">
-                                            <input type="search" name="search-field" style="padding-right: 20px"
-                                                placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
-                                                oninput="this.form.submit()">
-                                            <button type="submit" style="display:none;"><i class="icon-2"></i></button>
-                                        </div>
-                                        <div class="form-group">
-                                            <i class="icon-3"></i>
-                                            <select class="wide" name="location" onchange="this.form.submit()">
-                                                <option data-display="@lang('messages.Select Location')">@lang('messages.Select Location')</option>
-                                                @foreach ($districts as $district)
-                                                    @php
-                                                        $locale = App::getLocale();
-                                                        $districtName = 'name_' . $locale;
-                                                    @endphp
-                                                    <option value="{{ $district->id }}"
-                                                        {{ request()->input('location') == $district->id ? 'selected' : '' }}>
-                                                        {{ $district->$districtName }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        {{-- City Dropdown --}}
-                                        <div class="form-group">
-                                            <select class="wide" name="city" id="city">
-                                                <option data-display="@lang('messages.Select City')">@lang('messages.Select City')</option>
-                                                @foreach ($citys as $city)
-                                                    @php
-                                                        $locale = App::getLocale();
-                                                        $cityName = 'name_' . $locale;
-                                                    @endphp
-                                                    <option value="{{ $city->id }}"
-                                                        {{ request()->input('location') == $city->id ? 'selected' : '' }}>
-                                                        {{ $city->$cityName }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-
-                            {{-- <div class="sidebar-category sidebar-widget">
-                                <div class="widget-title">
-                                    <h3>@lang('messages.Categories')</h3>
-                                </div>
-                                <div class="widget-content">
-                                    <ul class="category-list">
-                                        <li>
-                                            <label>
-                                                <input type="radio" name="category" value="all"
-                                                    onchange="window.location='{{ route('browse-ads') }}'"
-                                                    {{ !request()->input('category') ? 'checked' : '' }}>
-                                                <span class="text-dark">@lang('messages.All Categories')</span>
-
-                                            </label>
-                                        </li>
-
-                                        @foreach ($categories->take(14) as $category)
-                                            <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
-                                                <label>
-                                                    <input type="radio" name="category" value="{{ $category->id }}"
-                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
-                                                        {{ request()->input('category') == $category->id ? 'checked' : '' }}>
-                                                    <span> @lang('messages.' . $category->name)</span>
-                                                </label>
-
-                                                @if ($category->subcategories->isNotEmpty())
-                                                    <ul>
-                                                        @foreach ($category->subcategories as $subcategory)
-                                                            <li>
-                                                                <label>
-                                                                    <input type="radio" name="subcategory"
-                                                                        value="{{ $subcategory->id }}"
-                                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
-                                                                        {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
-                                                                    <span> @lang('messages.' . $subcategory->name)</span>
-                                                                </label>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                @endif
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div> --}}
-                        </div>
-                    </div>
+                <!-- City Selection (Hidden Initially) -->
+                <div class="city-section" style="display: none;">
+                    <button class="back-button">&larr; Back</button>
+                    <div id="city-results-mob" class="results-container"></div>
                 </div>
             </div>
         </div>
@@ -603,14 +552,16 @@
                             <h3>@lang('messages.Search')</h3>
                         </div>
                         <div class="widget-content">
-                            <form action="{{ route('browse-ads') }}" method="GET" class="search-form">
+                            <form action="{{ route('browse-ads') }}" method="GET" class="search-form" id="search-form">
+                                <input type="hidden" name="location" id="location">
+                                <input type="hidden" name="city" id="cityId">
                                 <div class="form-group">
                                     <input type="search" name="search-field" style="padding-right: 20px"
                                         placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
                                         oninput="this.form.submit()">
                                     <button type="submit" style="display:none;"><i class="icon-2"></i></button>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <i class="icon-3"></i>
                                     <select class="wide" name="location" onchange="this.form.submit()">
                                         <option data-display="@lang('messages.Select Location')">@lang('messages.Select Location')</option>
@@ -625,10 +576,10 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
                                 {{-- City Dropdown --}}
-                                <div class="form-group">
-                                    <select class="wide" name="city" id="city">
+                                {{-- <div class="form-group">
+                                    <select class="wide" name="city" id="city" onchange="this.form.submit()">
                                         <option data-display="@lang('messages.Select City')">@lang('messages.Select City')</option>
                                         @foreach ($citys as $city)
                                             @php
@@ -641,8 +592,21 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
                             </form>
+                            <div id="location-filter">
+                                <!-- District Search -->
+                                <div class="district-section form-group">
+                                    <input class="form-control" type="text" id="district-search" value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
+                                    <div id="district-results" class="results-container"></div>
+                                </div>
+
+                                <!-- City Selection (Hidden Initially) -->
+                                <div class="city-section" style="display: none;">
+                                    <button class="back-button">&larr; Back</button>
+                                    <div id="city-results" class="results-container"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -715,13 +679,13 @@
                 <div class="col-6 mobile-filter-toggle">
                     <button id="filterToggle" class="red-filter-button">
                         <i style="font-size:14px" class="fa">&#xf041;</i>
-                        <span>Locations</span>
+                        <span>{{ $selectedCityName ?? 'Locations' }}</span>
                     </button>
                 </div>
                 <div class="col-6 mobile-filter-toggle">
                     <button id="filterToggleCat" class="red-filter-button">
                         <i style="font-size:14px" class="fa">&#xf022;</i>
-                        <span>Catgories</span>
+                        <span>{{ $selectedCategoryName ?? 'Categories' }}</span>
                     </button>
                 </div>
             </div>
@@ -782,7 +746,7 @@
                                                                 <div class="carousel-overlay"></div>
                                                                 <div class="badge">
                                                                     <img src="{{ asset('02.png') }}" alt="Top Ad"
-                                                                        style="width: 20px; height: 20px;">
+                                                                        style="width: 30px; height: 30px;">
                                                                 </div>
                                                                 <div class="carousel-caption d-none d-md-block text-start">
                                                                     <p>{{ $ad->title }}</p>
@@ -959,8 +923,8 @@
 
         </div>
     </div>
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('js/search-ads.js') }}"></script>
     <!-- Script to Initialize Carousel -->
     <script>
         var myCarousel = document.querySelector('#adsCarousel');
