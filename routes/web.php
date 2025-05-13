@@ -127,15 +127,15 @@ Route::middleware(['auth'])->group(function () {
     // Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
     Route::get('/payment/checking', [PaymentProcessingController::class, 'complete'])->name('payment.checking');
 
-    // Ads Search
-    Route::get('/api/districts', [LocationController::class, 'searchDistricts']);
-    Route::get('/api/get-districts', [LocationController::class, 'getDistricts']);
-    Route::get('/api/cities', [LocationController::class, 'getCitiesByDistrict']);
+
 
 });
 
 
-
+// Ads Search
+Route::get('/api/districts', [LocationController::class, 'searchDistricts']);
+Route::get('/api/get-districts', [LocationController::class, 'getDistricts']);
+Route::get('/api/cities', [LocationController::class, 'getCitiesByDistrict']);
 
 
 use App\Http\Controllers\Auth\AdminLoginController;
