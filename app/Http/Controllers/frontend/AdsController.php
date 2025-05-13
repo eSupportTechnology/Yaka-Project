@@ -36,7 +36,7 @@ class AdsController extends Controller
             $selectedCityName = City::where('id', $selectedCity)->first()->$searchName;
         }
         if(isset($selectedCategory)) {
-            $selectedCategoryName = Category::where('id', $selectedCategory)->first()->name;
+            $selectedCategoryName = Category::where('mainId', $selectedCategory)->first()->name;
         }
 
         $categories = Category::where('mainId', 0)->get();
