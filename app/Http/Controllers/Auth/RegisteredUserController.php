@@ -62,7 +62,7 @@ class RegisteredUserController extends Controller
 
              Log::info('User successfully created', ['user_id' => $user->id]);
 
-             event(new Registered($user));
+            //  event(new Registered($user));
 
              Auth::login($user);
 
@@ -77,7 +77,7 @@ class RegisteredUserController extends Controller
              ]);
 
              // Optionally, you can return a redirect or view with error messages
-             return redirect()->back()->withErrors(['error' => 'An error occurred during registration.']);
+             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
          }
      }
 
