@@ -213,7 +213,7 @@ class UserAdsController extends Controller
 
             // Step 3: Add watermark text
             $image->text('YAKA.LK', 10, 10, function ($font) {
-                $font->filename(public_path('fonts/arial.ttf')); // Note: filename() instead of file()
+                $font->filename(asset('public/fonts/arial.ttf'));
                 $font->size(24);
                 $font->color('#FF0000');
                 $font->align('left');
