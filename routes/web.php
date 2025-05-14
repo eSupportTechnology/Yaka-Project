@@ -147,6 +147,9 @@ Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('adm
 
 Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
+    Route::get('/user-chart-data', [dashboardController::class, 'fetchChartData']);
+    Route::get('/paid-ad-chart-data', [dashboardController::class, 'fetchChartDataPaidAd']);
+    Route::get('/free-ad-chart-data', [dashboardController::class, 'fetchChartDataFreeAd']);
 
     //adminManagementController
     Route::get('/dashboard/admins',[adminManagementController::class ,'index'])->name('dashboard.admins');
