@@ -14,10 +14,13 @@ use App\Models\PackageType;
 use Illuminate\Support\Str;
 use App\Services\OtpService;
 use Illuminate\Http\Request;
+use Intervention\Image\Image;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class UserAdsController extends Controller
 {
@@ -203,17 +206,45 @@ class UserAdsController extends Controller
                     $packageExpireAt = Carbon::now()->addDays($packageType->duration);
                 }
             }
+            $manager = new ImageManager(new Driver());
 
-            $mainImagePath = $request->file('main_image')->storeAs('app/public/ads/main_images',
-            $request->file('main_image')->getClientOriginalName(), 'public');
+            // Step 2: Read uploaded image
+            $image = $manager->read($request->file('main_image')->getPathname());
+
+            // Step 3: Add watermark text
+            $image->text('YAKA.LK', 10, 10, function ($font) {
+                $font->filename(public_path('fonts/arial.ttf')); // Note: filename() instead of file()
+                $font->size(24);
+                $font->color('#FF0000');
+                $font->align('left');
+                $font->valign('top');
+            });
+            // $mainImagePath = $request->file('main_image')->storeAs('app/public/ads/main_images',
+            // $image->toJpeg(), 'public');
+
+            $filename = uniqid() . '.jpg';
+            Storage::disk('public')->put('ads/main_images/' . $filename, $image->toJpeg());
+            $mainImagePath = 'ads/main_images/' . $filename;
 
             $subImagesPaths = [];
 
             if ($request->hasFile('sub_images')) {
+                $manager = new ImageManager(new Driver());
                 foreach ($request->file('sub_images') as $file) {
-                    if ($file->isValid()) { // Ensure the file is valid
-                        $path = $file->storeAs('ads/sub_images', $file->getClientOriginalName(), 'public');
-                        $subImagesPaths[] = $path; // Add the path to the array
+                    if ($file->isValid()) {
+                        $image = $manager->read($file->getPathname());
+                        $image->text('YAKA.LK', 10, 10, function ($font) {
+                            $font->filename(public_path('fonts/arial.ttf'));
+                            $font->size(24);
+                            $font->color('#FF0000');
+                            $font->align('left');
+                            $font->valign('top');
+                        });
+                        $filename = uniqid() . '_' . $file->getClientOriginalName();
+
+                        Storage::disk('public')->put('ads/sub_images/' . $filename, $image->toJpeg());
+
+                        $subImagesPaths[] = 'ads/sub_images/' . $filename;
                     }
                 }
             }
