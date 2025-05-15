@@ -79,7 +79,7 @@ class PaymentProcessingController extends Controller
             if ($adData['boosting_option'] != '0') {
                 $packageType = \App\Models\PackageType::find($adData['package_type']);
                 if ($packageType) {
-                    $packageExpireAt = now()->addDays($packageType->duration);
+                    $packageExpireAt = now()->addDays((int)($packageType->duration));
                 }
             }
 
