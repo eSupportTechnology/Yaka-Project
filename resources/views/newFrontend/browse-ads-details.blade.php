@@ -127,7 +127,7 @@
                                 <div class="slider-content">
                                     <div class="product-image watermark">
                                         <figure class="image">
-                                            <img id="mainImage" src="{{ url('storage/' . $mainImage) }}" alt="Main Image" style="height: 500px; width: 100%; object-fit: cover;">
+                                            <img id="mainImage" src="{{ storage_public_url($mainImage) }}" alt="Main Image" style="height: 500px; width: 100%; object-fit: cover;">
                                         </figure>
                                     </div>
 
@@ -138,7 +138,7 @@
                                                     <li class="thumb-item">
                                                         <a data-slide-index="{{ $index }}" href="#" class="thumbnail">
                                                             <figure>
-                                                                <img src="{{ url('storage/' . $subImage) }}" alt="Thumbnail {{ $index + 1 }}" style="height: 150px; width: auto; object-fit: contain;">
+                                                                <img src="{{ storage_public_url($subImage) }}" alt="Thumbnail {{ $index + 1 }}" style="height: 150px; width: auto; object-fit: contain;">
                                                             </figure>
                                                         </a>
                                                     </li>
@@ -285,7 +285,7 @@
                         <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
                             <div class="image-box" style="flex-grow: 0;">
                                 <figure class="image">
-                                    <img src="{{ url('storage/' . $relatedAd->mainImage) }}"
+                                    <img src="{{ storage_public_url($relatedAd->mainImage) }}"
                                     style="height: 150px; object-fit: cover;" alt="{{ $relatedAd->title }}">
                                 </figure>
 
