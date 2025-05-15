@@ -6,7 +6,7 @@
 
 
     .active-category {
-        background-color:rgb(175, 76, 76) !important; 
+        background-color:rgb(175, 76, 76) !important;
         color: white !important;
     }
 
@@ -92,11 +92,11 @@
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
                                   <div class="dash-avatar">
-                                        @if(Auth::check() && Auth::user()->profileImage) 
-                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
+                                        @if(Auth::check() && Auth::user()->profileImage)
+                                            <a href="#"><img src="{{ url('storage/profile_images/' . Auth::user()->profileImage) }}"
                                             alt="user"></a>
                                         @else
-                                            <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
+                                            <a href="#"><img src="{{ url('web/images/user.png') }}" alt="user"></a>
                                         @endif
                                     </div>
 
@@ -135,8 +135,8 @@
                     </div>
                 </div>
             </div>
-      
-            
+
+
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -150,7 +150,7 @@
                                 <li>
                                     <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
-                                
+
                             </ul>
                         </div>
                     </div>
@@ -171,12 +171,12 @@
                     <div class="main-categories">
                         @foreach($districts as $district)
                             @php
-                                $locale = App::getLocale();  
-                                $districtName = 'name_' . $locale;  
+                                $locale = App::getLocale();
+                                $districtName = 'name_' . $locale;
                             @endphp
                             <div class="category-item" onclick="toggleCities('{{ $district->id }}', this)">
                                 <div class="main-category-name" style="color:black; font-weight: 500; margin: 0px 0;">
-                                    {{ $district->$districtName ?? $district->name_en }} 
+                                    {{ $district->$districtName ?? $district->name_en }}
                                 </div>
                             </div>
                         @endforeach
@@ -235,14 +235,14 @@
                     subcategorySection.innerHTML = '';
 
                     // Get the current locale
-                    const locale = document.documentElement.lang || 'en'; 
-                    
+                    const locale = document.documentElement.lang || 'en';
+
                     if (data.length > 0) {
                         let cityList = '<h4 class="mb-4">@lang('messages.City')</h4>';
-                        
+
                         data.forEach(city => {
                             // Dynamically use the translated name based on the current locale
-                            const cityName = city[`name_${locale}`] || city.name_en; 
+                            const cityName = city[`name_${locale}`] || city.name_en;
 
                             // Add the city name dynamically
                             cityList += `
@@ -251,7 +251,7 @@
                                 </div>
                             `;
                         });
-                        
+
                         subcategorySection.innerHTML = cityList;
                     } else {
                         subcategorySection.innerHTML = '<p>No cities found</p>';

@@ -53,7 +53,7 @@
     padding: 15px;
     border-left: 2px solid #dc3545;
     /* background-color: #fff8f8; */
-    
+
 }
 
 .subcategory-title {
@@ -132,10 +132,10 @@
                                 <div class="dash-header-left">
                                   <div class="dash-avatar">
                                         @if(Auth::check() && Auth::user()->profileImage)
-                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}"
+                                            <a href="#"><img src="{{ url('storage/profile_images/' . Auth::user()->profileImage) }}"
                                             alt="user"></a>
                                         @else
-                                            <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
+                                            <a href="#"><img src="{{ url('web/images/user.png') }}" alt="user"></a>
                                         @endif
                                     </div>
 
@@ -222,7 +222,7 @@
                 </div>
             </div>
 
-            
+
 
             <!-- Submit Button -->
             <div class="mt-2 mb-4 col-lg-12">

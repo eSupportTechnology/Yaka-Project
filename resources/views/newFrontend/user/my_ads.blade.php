@@ -19,7 +19,7 @@
 
 .card-img-top {
     object-fit: cover;
-    height: 200px; 
+    height: 200px;
 }
 
 .card {
@@ -33,14 +33,14 @@
 
 @media (min-width: 992px) {
     .col-md-4 {
-        flex: 0 0 32%; 
+        flex: 0 0 32%;
         max-width: 32%;
     }
 }
 
 @media (max-width: 991px) {
     .col-md-4 {
-        flex: 0 0 48%; 
+        flex: 0 0 48%;
         max-width: 48%;
     }
 }
@@ -77,8 +77,8 @@
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
                                   <div class="dash-avatar">
-                                        @if(Auth::check() && Auth::user()->profileImage) 
-                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
+                                        @if(Auth::check() && Auth::user()->profileImage)
+                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}"
                                             alt="user"></a>
                                         @else
                                             <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
@@ -120,8 +120,8 @@
                     </div>
                 </div>
             </div>
-      
-            
+
+
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -135,7 +135,7 @@
                                 <li>
                                     <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
-                                
+
                             </ul>
                         </div>
                     </div>
@@ -165,13 +165,13 @@
                         <div class="col-md-4 mb-4">
                             <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}">
                                 <div class="card ad-card">
-                                    <img src="{{ asset('storage/' . $ad->mainImage) }}" class="card-img-top" alt="Ad Image">
+                                    <img src="{{ url('storage/' . $ad->mainImage) }}" class="card-img-top" alt="Ad Image">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $ad->title }}</h5>
                                         <p class="card-text">@lang('messages.price'): @lang('messages.Rs') {{ number_format($ad->price, 2) }}</p>
-                                        <p class="card-text text-muted">@lang('messages.Location'):  
+                                        <p class="card-text text-muted">@lang('messages.Location'):
                                             @php
-                                                $locale = App::getLocale(); 
+                                                $locale = App::getLocale();
                                                 $locationName = 'name_' . $locale;
                                             @endphp
                                                 {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }} </p>
@@ -196,7 +196,7 @@
                                         <form action="{{ route('ads.delete', ['adsId' => $ad->adsId]) }}" method="POST" class="d-inline mt-2">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ad?')"> 
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ad?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
@@ -221,9 +221,9 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $ad->title }}</h5>
                                         <p class="card-text">@lang('messages.price'): @lang('messages.Rs') {{ number_format($ad->price, 2) }}</p>
-                                        <p class="card-text text-muted">@lang('messages.Location'):  
+                                        <p class="card-text text-muted">@lang('messages.Location'):
                                         @php
-                                                $locale = App::getLocale(); 
+                                                $locale = App::getLocale();
                                                 $locationName = 'name_' . $locale;
                                             @endphp
                                                 {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }} </p>
@@ -248,7 +248,7 @@
                                         <form action="{{ route('ads.delete', ['adsId' => $ad->adsId]) }}" method="POST" class="d-inline mt-2">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ad?')"> 
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ad?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
@@ -264,7 +264,7 @@
         </div>
 
 
-    </div> 
+    </div>
 </section>
 
 

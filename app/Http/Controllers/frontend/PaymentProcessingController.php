@@ -53,7 +53,7 @@ class PaymentProcessingController extends Controller
     public function complete(Request $request)
     {
         try {
-            $invoiceId = request()->query('invId');
+            $invoiceId = $request->query('invId');
             $paymentInfo = PaymentInfo::where('invoice_id', $invoiceId)->first();
             if($paymentInfo->payment_status == 0) {
                 return view('newFrontend.user.payment-confirming');

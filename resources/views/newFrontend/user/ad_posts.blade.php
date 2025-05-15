@@ -23,11 +23,11 @@
 }
 
 .form-check-input {
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
     .equal-height {
-        min-height: 220px; 
+        min-height: 220px;
     }
 
 
@@ -36,7 +36,7 @@
 @php
     $cat_id = request()->get('cat_id');
     $sub_cat_id = request()->get('sub_cat_id');
-   
+
 @endphp
 
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
@@ -61,8 +61,8 @@
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
                                   <div class="dash-avatar">
-                                        @if(Auth::check() && Auth::user()->profileImage) 
-                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
+                                        @if(Auth::check() && Auth::user()->profileImage)
+                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}"
                                             alt="user"></a>
                                         @else
                                             <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
@@ -104,8 +104,8 @@
                     </div>
                 </div>
             </div>
-      
-            
+
+
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -119,7 +119,7 @@
                                 <li>
                                     <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
-                                
+
                             </ul>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
         </div>
     </section>
 
-     
+
 <div class="setting-part">
     <div class="container" >
         <div class="row">
@@ -172,21 +172,22 @@
                                 <div class="col-lg-6 mb-3">
                                     <div class="form-group">
                                         <label class="form-label text-dark"><strong>@lang('messages.Model')</strong></label>
-                                        <select id="model" name="model" class="form-control custom-select">
+                                        {{--  <select id="model" name="model" class="form-control custom-select">
                                             <option value="">@lang('messages.Model')</option>
                                             @foreach($models as $model)
                                                 <option value="{{ $model->id }}" @if(request()->model == $model->id) selected @endif>
                                                     {{ $model->name }}
                                                 </option>
                                             @endforeach
-                                        </select>
+                                        </select>  --}}
+                                        <input type="text" id="model" name="model"" class="form-control" >
                                     </div>
                                 </div>
 
 
                             </div>
-                            
-                        
+
+
                         </div>
                     </div>
 
@@ -206,14 +207,14 @@
                                 <input type="number" name="price" class="form-control" required>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
                                 <label class="form-label text-dark"><strong>@lang('messages.Description') <i class="text-danger">*</i></strong></label>
                                 <textarea name="description" class="form-control" rows="4" required></textarea>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-12 mb-3">
                             <div class="form-group">
                                 <label class="form-label text-dark"><strong>@lang('messages.Upload Main Image') <i class="text-danger">*</i></strong></label>
@@ -245,17 +246,17 @@
                                     </div>
                                 @endforeach
                             </div>
-                        
+
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-12 mb-3">
                         <div class="section-box">
                             <label class="form-label text-dark"><strong>Additional Information</strong></label>
                                 <!-- Render the form fields -->
                                 @foreach($formFields as $field)
                                     <div class="form-group">
-                                       
+
                                         <!-- Check field type and render appropriate input box -->
                                         @if($field->field_type == 'text')
                                             <label for="field_{{ $field->id }}">{{ $field->field_name }}</label>
@@ -307,7 +308,7 @@
                         </div>
                     </div>
 
-                   
+
               <!-- Pricing Type -->
                 <div class="col-lg-12 mb-3">
                     <div class="section-box">
@@ -324,7 +325,7 @@
                 </div>
 
 
-                  
+
                     <!-- Post Type -->
                         <div class="col-lg-12 mb-3">
                         <div class="section-box">
@@ -377,7 +378,7 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <h5 class="mb-2">@lang('messages.Select a Package'):</h5>
-                                            
+
                                             <!-- Free Ad Option -->
                                             <div class="form-check mt-2">
                                                 <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
@@ -416,8 +417,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                
+
+
 
                             </div>
                         </div>
@@ -445,14 +446,14 @@
 $(document).ready(function() {
     let urlParams = new URLSearchParams(window.location.search);
     let subCatId = urlParams.get('sub_cat_id');
-    let selectedBrandId = "{{ request()->brand }}"; 
+    let selectedBrandId = "{{ request()->brand }}";
     let selectedModelId = "{{ request()->model }}";
 
     // Function to Fetch Models dynamically without reloading the page
     function fetchModels(brandId, subCatId) {
         if (brandId && subCatId) {
             $.ajax({
-                url: "{{ route('get.models') }}", 
+                url: "{{ route('get.models') }}",
                 type: "GET",
                 data: { brand_id: brandId, sub_cat_id: subCatId },
                 success: function(data) {
@@ -461,7 +462,7 @@ $(document).ready(function() {
                     if (data.length > 0) {
                         // Dynamically append the models to the dropdown
                         $.each(data, function(key, value) {
-                            let selected = selectedModelId == value.id ? "selected" : ""; 
+                            let selected = selectedModelId == value.id ? "selected" : "";
                             $('#model').append('<option value="' + value.id + '" ' + selected + '>' + value.name + '</option>');
                         });
                     } else {
@@ -480,11 +481,11 @@ $(document).ready(function() {
         if (brandId) {
             // Update URL with selected brand_id
             let newUrl = new URL(window.location.href);
-            newUrl.searchParams.set('brand', brandId); 
-            window.history.pushState({}, '', newUrl);  
-            
+            newUrl.searchParams.set('brand', brandId);
+            window.history.pushState({}, '', newUrl);
+
             // Trigger page refresh after URL is updated
-            location.reload(); 
+            location.reload();
         }
     });
 
@@ -525,7 +526,7 @@ $(document).ready(function() {
 });
 </script>
 <script>
-let allFiles = []; 
+let allFiles = [];
 
 document.getElementById('sub_images').addEventListener('change', function(event) {
     const previewContainer = document.getElementById('sub_images_preview');
@@ -549,7 +550,7 @@ document.getElementById('sub_images').addEventListener('change', function(event)
             img.style.width = '100px';
             img.style.height = '100px';
             img.style.margin = '5px';
-            previewContainer.appendChild(img); 
+            previewContainer.appendChild(img);
         };
 
         reader.readAsDataURL(file);
@@ -564,24 +565,24 @@ document.getElementById('sub_images').addEventListener('change', function(event)
     document.addEventListener("DOMContentLoaded", function () {
         const packageRadios = document.querySelectorAll(".package-radio");
         const packageTypeRadios = document.querySelectorAll(".package-type-radio");
-        
+
         packageRadios.forEach(radio => {
             radio.addEventListener("change", function () {
                 document.getElementById("selected_package_name").value = this.dataset.name;
             });
         });
-    
+
         packageTypeRadios.forEach(radio => {
             radio.addEventListener("change", function () {
                 document.getElementById("selected_package_price").value = this.dataset.price;
                 document.getElementById("selected_package_duration").value = this.dataset.duration; // Store package duration
                 console.log("Selected Duration:", document.getElementById("selected_package_duration").value);
-            
+
             });
         });
     });
     </script>
-    
+
 
 
 

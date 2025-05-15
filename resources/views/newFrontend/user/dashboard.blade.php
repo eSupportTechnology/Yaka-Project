@@ -26,11 +26,11 @@
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
                                   <div class="dash-avatar">
-                                        @if(Auth::check() && Auth::user()->profileImage) 
-                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
+                                        @if(Auth::check() && Auth::user()->profileImage)
+                                            <a href="#"><img src="{{ url('storage/profile_images/' . Auth::user()->profileImage) }}"
                                             alt="user"></a>
                                         @else
-                                            <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
+                                            <a href="#"><img src="{{ url('web/images/user.png') }}" alt="user"></a>
                                         @endif
                                     </div>
 
@@ -69,8 +69,8 @@
                     </div>
                 </div>
             </div>
-      
-            
+
+
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -84,7 +84,7 @@
                                 <li>
                                     <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
-                                
+
                             </ul>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
     <section class="dashboard-part mt-4 mb-4">
         <div class="container mb-4">
 
-            @if (session('success'))  
+            @if (session('success'))
                 <div class="alert alert-success" role="alert" style="margin-top: 20px;padding: 18px;0border-radius: 6px;">
                     {{ session('success') }}
                 </div>
@@ -105,11 +105,11 @@
                     {{ session('error') }}
                 </div>
             @endif
-            
+
             <div class="row mt-5 " >
-              
+
                 <div class="col-lg-4">
-                    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+                    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
                     <dotlottie-player src="https://lottie.host/07462177-04f3-4b21-93c1-8455179693c0/EUCuUmDPlB.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
                 </div>
                 <div class="col-lg-8">
@@ -120,7 +120,7 @@
                 </div>
             </div>
 
-            
+
 
         </div>
     </section>

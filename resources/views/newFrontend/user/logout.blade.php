@@ -32,11 +32,11 @@
                                 <div class="col-lg-5">
                                 <div class="dash-header-left">
                                   <div class="dash-avatar">
-                                        @if(Auth::check() && Auth::user()->profileImage) 
-                                            <a href="#"><img src="{{ asset('storage/profile_images/' . Auth::user()->profileImage) }}" 
+                                        @if(Auth::check() && Auth::user()->profileImage)
+                                            <a href="#"><img src="{{ url('storage/profile_images/' . Auth::user()->profileImage) }}"
                                             alt="user"></a>
                                         @else
-                                            <a href="#"><img src="{{ asset('web/images/user.png') }}" alt="user"></a>
+                                            <a href="#"><img src="{{ url('web/images/user.png') }}" alt="user"></a>
                                         @endif
                                     </div>
 
@@ -75,8 +75,8 @@
                     </div>
                 </div>
             </div>
-      
-            
+
+
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -90,7 +90,7 @@
                                 <li>
                                     <a  class="active" href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
-                                
+
                             </ul>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                 </a>
             </div>
         </div>
-    </div> 
+    </div>
 </section>
 
 

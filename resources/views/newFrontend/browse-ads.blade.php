@@ -441,7 +441,7 @@
                 @foreach($all_banners as $key => $banner)
                     @if($banner->type == 0)
                         <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                           <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                           <img src="{{ url('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
                         </div>
                     @endif
                 @endforeach
@@ -740,7 +740,7 @@
                                                             style="display: block; height: 100%; text-decoration: none;">
                                                             <div class="carousel-item-content">
                                                                 <div class="image-container"> <!-- Image wrapper added -->
-                                                                    <img src="{{ asset('storage/' . $ad->mainImage) }}"
+                                                                    <img src="{{ url('storage/' . $ad->mainImage) }}"
                                                                         class="d-block w-100" alt="{{ $ad->title }}">
                                                                 </div>
                                                                 <div class="carousel-overlay"></div>
@@ -823,7 +823,7 @@
                                                         @endif
                                                         <div class="image-box" style="flex-grow: 0;">
                                                             <figure class="image">
-                                                                <img src="{{ asset('storage/' . $ad->mainImage) }}"
+                                                                <img src="{{ url('storage/' . $ad->mainImage) }}"
                                                                     style="height: 170px; object-fit: contain;"
                                                                     alt="{{ $ad->title }}">
                                                             </figure>

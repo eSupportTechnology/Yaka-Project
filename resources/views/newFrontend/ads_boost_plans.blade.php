@@ -410,7 +410,7 @@
         <div id="summarySection" style="display: none;">
             <div class="custom-summary-box modern-summary-box">
                 <div class="summary-details" style="display: flex; align-items: center; gap: 20px;">
-                    <img src=" {{ asset('storage/' . $mainImage) }}" alt="Main Image"
+                    <img src=" {{ url('storage/' . $mainImage) }}" alt="Main Image"
                          style="width: 150px; height: auto; border-radius: 8px; object-fit: cover;">
 
                     <div>
