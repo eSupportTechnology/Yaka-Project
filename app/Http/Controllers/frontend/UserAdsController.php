@@ -194,6 +194,7 @@ class UserAdsController extends Controller
 
 
 
+
         // If Free Ad, Save Directly
        // return $this->saveAd($validated, $cat_id, $sub_cat_id, $location, $sublocation);
 
@@ -203,7 +204,7 @@ class UserAdsController extends Controller
             if ($request->boosting_option != '0') {
                 $packageType = \App\Models\PackageType::find($validated['package_type']);
                 if ($packageType) {
-                    $packageExpireAt = Carbon::now()->addDays($packageType->duration);
+                    $packageExpireAt = Carbon::now()->addDays((int)($packageType->duration));
                 }
             }
             $manager = new ImageManager(new Driver());
@@ -282,6 +283,7 @@ class UserAdsController extends Controller
 
 
             // Create the Ad with package expiration date
+
             $ad = Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
                 'user_id' => auth()->user()->id,

@@ -180,7 +180,7 @@
                                                 </option>
                                             @endforeach
                                         </select>  --}}
-                                        <input type="text" id="model" name="model"" class="form-control" >
+                                        <input type="text" id="model" name="model" class="form-control" >
                                     </div>
                                 </div>
 
