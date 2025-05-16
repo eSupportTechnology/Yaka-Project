@@ -17,8 +17,9 @@
             line-height: 1.4;
         }
 
-                .widget-title {
-            overflow: visible; /* prevent cropping */
+        .widget-title {
+            overflow: visible;
+            /* prevent cropping */
         }
 
 
@@ -28,10 +29,11 @@
             height: 400px;
             object-fit: cover;
         }
-        /* @media(max-width: 768px) {
-            width: 100%;
 
-        } */
+        /* @media(max-width: 768px) {
+                width: 100%;
+
+            } */
 
         /* Dark overlay for carousel items */
         .carousel-overlay {
@@ -97,6 +99,7 @@
                 border-color: transparent;
             }
         }
+
         @keyframes blinking-border-red {
             0% {
                 border-color: transparent;
@@ -149,17 +152,20 @@
             border: 2px solid blue;
             animation: blink 1s infinite;
         }
+
         /* Mobile-specific styles */
         @media (max-width: 1200px) {
             .feature-block {
-                flex: 0 0 100% !important; /* Full width for mobile */
+                flex: 0 0 100% !important;
+                /* Full width for mobile */
                 max-width: 100% !important;
                 margin-bottom: 15px !important;
                 height: fit-content !important;
             }
 
             .feature-block-one .inner-box {
-                flex-direction: row !important; /* Horizontal layout */
+                flex-direction: row !important;
+                /* Horizontal layout */
                 gap: 15px;
             }
 
@@ -169,7 +175,8 @@
             }
 
             .image-box img {
-                height: 120px !important; /* Reduced image height */
+                height: 120px !important;
+                /* Reduced image height */
                 width: 100% !important;
             }
 
@@ -185,28 +192,34 @@
             }
 
             /* Hide less important elements */
-            .category, .far.fa-clock {
+            .category,
+            .far.fa-clock {
                 display: none !important;
             }
 
             h4 {
-                -webkit-line-clamp: 3 !important; /* Show more text */
+                -webkit-line-clamp: 3 !important;
+                /* Show more text */
                 margin-top: 0 !important;
                 font-size: 15px !important;
             }
+
             .icon img {
                 height: 20px !important;
             }
+
             .time-dff {
                 margin-left: -25px !important;
             }
 
             .lower-content {
-                padding:unset !important;
+                padding: unset !important;
             }
+
             .lower-box {
-                padding:unset !important;
+                padding: unset !important;
             }
+
             .btn-box a {
                 width: max-content;
             }
@@ -217,12 +230,14 @@
                 display: none;
             }
         }
+
         .mobile-filter-toggle {
             display: none;
         }
 
         .red-filter-button {
-            background: #e74c3c; /* Red color */
+            background: #e74c3c;
+            /* Red color */
             color: white;
             padding: 10px 20px;
             border: none;
@@ -231,12 +246,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             transition: background 0.3s ease;
         }
 
         .red-filter-button:hover {
-            background: #c0392b; /* Darker red on hover */
+            background: #c0392b;
+            /* Darker red on hover */
         }
 
         .filter-icon {
@@ -260,9 +276,12 @@
 
         /* Hide sidebar on mobile */
         @media (max-width: 992px) {
-            .sidebar-search, .sidebar-category {
+
+            .sidebar-search,
+            .sidebar-category {
                 display: none;
             }
+
             .mobile-filter-toggle {
                 display: block;
             }
@@ -276,7 +295,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             z-index: 9999;
         }
 
@@ -310,11 +329,13 @@
         .close-modal:hover {
             color: #000;
         }
+
         /* Disable Bootstrap carousel sliding animation */
         .carousel.no-animation .carousel-item {
             transition: none !important;
             -webkit-transition: none !important;
         }
+
         .badge {
             position: absolute;
             top: 10px;
@@ -324,9 +345,10 @@
             padding: 10px;
             border-radius: 5px;
             font-weight: bold;
-            z-index:1;
+            z-index: 1;
             clip-path: polygon(100% 0%, 100% 100%, 50% 80%, 0 100%, 0 0);
         }
+
         /* Add these styles to your CSS file */
         .blink-border-wrapper {
             position: relative;
@@ -337,14 +359,18 @@
             padding: 0px;
             height: 100%;
             animation: blink 1.5s infinite;
-            margin: 2px; /* Prevents border clipping in carousel */
+            margin: 2px;
+            /* Prevents border clipping in carousel */
         }
 
         .image-container {
             position: relative;
-            height: calc(100% - 6px); /* Accounts for border + padding */
-            width: calc(100% - 6px);
-            margin: auto;
+            height: 250px;
+            /* or any fixed height */
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            /* Optional */
         }
 
         .carousel-item-content img {
@@ -366,20 +392,30 @@
         }
 
         @keyframes blink {
-            0% { border-color: #007bff; }
-            50% { border-color: rgba(0, 123, 255, 0.3); }
-            100% { border-color: #007bff; }
+            0% {
+                border-color: #007bff;
+            }
+
+            50% {
+                border-color: rgba(0, 123, 255, 0.3);
+            }
+
+            100% {
+                border-color: #007bff;
+            }
         }
 
         /* Existing carousel item positioning */
         .carousel-item {
             transition: transform 0.6s ease;
         }
+
         @media(min-width:1201px) {
             .n-sale {
-                margin-right:127px;
+                margin-right: 127px;
             }
         }
+
         #location-filter {
             max-width: 500px;
             margin: 20px auto;
@@ -392,13 +428,15 @@
             overflow-y: auto;
         }
 
-        .district-item, .city-item {
+        .district-item,
+        .city-item {
             padding: 10px;
             cursor: pointer;
             border-bottom: 1px solid #eee;
         }
 
-        .district-item:hover, .city-item:hover {
+        .district-item:hover,
+        .city-item:hover {
             background-color: #f5f5f5;
         }
 
@@ -426,22 +464,23 @@
         <div class="auto-container">
             <div class="mr-0 content-box centred">
                 <div class="title">
-                    <h1>{{ $category ? __('messages.' . $category->name) : __('messages.All Categories') }}</h1> </div>
-                    <ul class="clearfix bread-crumb">
-                        <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
-                        <li>@lang('messages.Browse Ads')</li>
-                    </ul>
+                    <h1>{{ $category ? __('messages.' . $category->name) : __('messages.All Categories') }}</h1>
                 </div>
+                <ul class="clearfix bread-crumb">
+                    <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
+                    <li>@lang('messages.Browse Ads')</li>
+                </ul>
             </div>
+        </div>
     </section>
     <!-- ad - banner-section start -->
     <section class="mb-0 ad-banner-container">
         <div id="ad-banner-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
             <div class="carousel-inner">
-                @foreach($all_banners as $key => $banner)
-                    @if($banner->type == 0)
+                @foreach ($all_banners as $key => $banner)
+                    @if ($banner->type == 0)
                         <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                           <img src="{{ url('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                            <img src="{{ url('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
                         </div>
                     @endif
                 @endforeach
@@ -450,87 +489,89 @@
     </section>
     <!-- ad - banner-section end -->
     <!-- End Page Title -->
-<!-- Add this before your sidebar section -->
-<!-- Add this in your HTML -->
+    <!-- Add this before your sidebar section -->
+    <!-- Add this in your HTML -->
 
-<!-- Add this at the bottom of your page -->
-<div class="filter-modal" id="filterModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Location Filters</h3>
-            <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div id="location-filter-mob">
-                <!-- District Search -->
-                <div class="district-section form-group">
-                    <input class="form-control" type="text" id="district-search-mob" value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
-                    <div id="district-results-mob" class="results-container"></div>
-                </div>
+    <!-- Add this at the bottom of your page -->
+    <div class="filter-modal" id="filterModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Location Filters</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="location-filter-mob">
+                    <!-- District Search -->
+                    <div class="district-section form-group">
+                        <input class="form-control" type="text" id="district-search-mob"
+                            value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
+                        <div id="district-results-mob" class="results-container"></div>
+                    </div>
 
-                <!-- City Selection (Hidden Initially) -->
-                <div class="city-section" style="display: none;">
-                    <button class="back-button">&larr; Back</button>
-                    <div id="city-results-mob" class="results-container"></div>
+                    <!-- City Selection (Hidden Initially) -->
+                    <div class="city-section" style="display: none;">
+                        <button class="back-button">&larr; Back</button>
+                        <div id="city-results-mob" class="results-container"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="filter-modal" id="filterModalCat">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Catogory Filters</h3>
-            <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div class="mt-4 mb-4 auto-container">
-                <div class="clearfix row">
-                    <div class="col-md-12 sidebar-side">
-                        <div class="default-sidebar category-sidebar">
-                            <div class="sidebar-category sidebar-widget">
-                                <div class="widget-title">
-                                    <h3>@lang('messages.Categories')</h3>
-                                </div>
-                                <div class="widget-content">
-                                    <ul class="category-list">
-                                        <li>
-                                            <label>
-                                                <input type="radio" name="category" value="all"
-                                                    onchange="window.location='{{ route('browse-ads') }}'"
-                                                    {{ !request()->input('category') ? 'checked' : '' }}>
-                                                <span class="text-dark">@lang('messages.All Categories')</span>
-
-                                            </label>
-                                        </li>
-
-                                        @foreach ($categories->take(14) as $category)
-                                            <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
+    <div class="filter-modal" id="filterModalCat">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Catogory Filters</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="mt-4 mb-4 auto-container">
+                    <div class="clearfix row">
+                        <div class="col-md-12 sidebar-side">
+                            <div class="default-sidebar category-sidebar">
+                                <div class="sidebar-category sidebar-widget">
+                                    <div class="widget-title">
+                                        <h3>@lang('messages.Categories')</h3>
+                                    </div>
+                                    <div class="widget-content">
+                                        <ul class="category-list">
+                                            <li>
                                                 <label>
-                                                    <input type="radio" name="category" value="{{ $category->id }}"
-                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
-                                                        {{ request()->input('category') == $category->id ? 'checked' : '' }}>
-                                                    <span> @lang('messages.' . $category->name)</span>
-                                                </label>
+                                                    <input type="radio" name="category" value="all"
+                                                        onchange="window.location='{{ route('browse-ads') }}'"
+                                                        {{ !request()->input('category') ? 'checked' : '' }}>
+                                                    <span class="text-dark">@lang('messages.All Categories')</span>
 
-                                                @if ($category->subcategories->isNotEmpty())
-                                                    <ul>
-                                                        @foreach ($category->subcategories as $subcategory)
-                                                            <li>
-                                                                <label>
-                                                                    <input type="radio" name="subcategory"
-                                                                        value="{{ $subcategory->id }}"
-                                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
-                                                                        {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
-                                                                    <span> @lang('messages.' . $subcategory->name)</span>
-                                                                </label>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                @endif
+                                                </label>
                                             </li>
-                                        @endforeach
-                                    </ul>
+
+                                            @foreach ($categories->take(14) as $category)
+                                                <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
+                                                    <label>
+                                                        <input type="radio" name="category" value="{{ $category->id }}"
+                                                            onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
+                                                            {{ request()->input('category') == $category->id ? 'checked' : '' }}>
+                                                        <span> @lang('messages.' . $category->name)</span>
+                                                    </label>
+
+                                                    @if ($category->subcategories->isNotEmpty())
+                                                        <ul>
+                                                            @foreach ($category->subcategories as $subcategory)
+                                                                <li>
+                                                                    <label>
+                                                                        <input type="radio" name="subcategory"
+                                                                            value="{{ $subcategory->id }}"
+                                                                            onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
+                                                                            {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
+                                                                        <span> @lang('messages.' . $subcategory->name)</span>
+                                                                    </label>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -539,7 +580,6 @@
             </div>
         </div>
     </div>
-</div>
 
     <div class="mt-4 mb-4 auto-container">
         <div class="clearfix row">
@@ -597,7 +637,8 @@
                             <div id="location-filter">
                                 <!-- District Search -->
                                 <div class="district-section form-group">
-                                    <input class="form-control" type="text" id="district-search" value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
+                                    <input class="form-control" type="text" id="district-search"
+                                        value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
                                     <div id="district-results" class="results-container"></div>
                                 </div>
 
@@ -658,18 +699,18 @@
 
                     <div class="col-md-12">
                         @if ($banners)
-                        <div id="bannerCarousel" class="carousel slide no-animation" data-ride="carousel">
-                            <div class="carousel-inner">
-                                @foreach($banners as $key => $banner)
-                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                        <div class="banner d-flex justify-content-center">
-                                            <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
-                                                 class="img-fluid banner-img">
+                            <div id="bannerCarousel" class="carousel slide no-animation" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    @foreach ($banners as $key => $banner)
+                                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                            <div class="banner d-flex justify-content-center">
+                                                <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
+                                                    class="img-fluid banner-img">
+                                            </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
                         @endif
                     </div>
 
@@ -740,7 +781,7 @@
                                                             style="display: block; height: 100%; text-decoration: none;">
                                                             <div class="carousel-item-content">
                                                                 <div class="image-container"> <!-- Image wrapper added -->
-                                                                    <img src="{{ asset('storage/'.$ad->mainImage) }}"
+                                                                    <img style="max-height: 385px !important;" src="{{ asset('storage/'.$ad->mainImage) }}"
                                                                         class="d-block w-100" alt="{{ $ad->title }}">
                                                                 </div>
                                                                 <div class="carousel-overlay"></div>
@@ -750,7 +791,8 @@
                                                                 </div>
                                                                 <div class="carousel-caption d-none d-md-block text-start">
                                                                     <p>{{ $ad->title }}</p>
-                                                                    <p>@lang('messages.Rs') {{ number_format($ad->price, 2) }}</p>
+                                                                    <p>@lang('messages.Rs')
+                                                                        {{ number_format($ad->price, 2) }}</p>
                                                                     <p><i class="fas fa-map-marker-alt"></i>
                                                                         @php
                                                                             $locale = App::getLocale();
@@ -784,18 +826,18 @@
                             <div class="col-md-4">
 
                                 @if ($banners)
-                                <div id="bannerCarousel" class="carousel slide no-animation" data-ride="carousel">
-                                    <div class="carousel-inner">
-                                        @foreach($banners as $key => $banner)
-                                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                                <div class="banner d-flex justify-content-center">
-                                                    <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
-                                                         class="img-fluid banner-img">
+                                    <div id="bannerCarousel" class="carousel slide no-animation" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            @foreach ($banners as $key => $banner)
+                                                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                    <div class="banner d-flex justify-content-center">
+                                                        <img src="{{ asset('banners/' . $banner->img) }}"
+                                                            alt="Banner Image" class="img-fluid banner-img">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
                                     {{-- <div class="banner" style="display: flex;justify-content: center;">
                                         <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
                                             class="img-fluid banner-img">
@@ -811,19 +853,25 @@
                             <div class="clearfix row" style="width: 100%; display: flex; flex-wrap: wrap;">
                                 @foreach ($ads as $ad)
                                     @if (is_null($ad->package_expire_at) || \Carbon\Carbon::now()->lessThanOrEqualTo($ad->package_expire_at))
-                                        <div class="col-lg-3 col-md-6 col-sm-12 feature-block" style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
-                                            <div class="feature-block-one" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                                                <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}" class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 4 ? 'urgent-ad' : '') }}" style="display: block; height: 100%; text-decoration: none;">
-                                                    <div class="inner-box" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
+                                        <div class="col-lg-3 col-md-6 col-sm-12 feature-block"
+                                            style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
+                                            <div class="feature-block-one"
+                                                style="display: flex; flex-direction: column; height: 100%; width: 100%;">
+                                                <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
+                                                    class="{{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 4 ? 'urgent-ad' : '') }}"
+                                                    style="display: block; height: 100%; text-decoration: none;">
+                                                    <div class="inner-box"
+                                                        style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
                                                         @if ($ad->post_type)
-                                                            <button class="sale @if($ad->ads_package == 4) n-sale @endif"
+                                                            <button
+                                                                class="sale @if ($ad->ads_package == 4) n-sale @endif"
                                                                 style="position:absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
                                                                 {{ $ad->post_type }}
                                                             </button>
                                                         @endif
                                                         <div class="image-box" style="flex-grow: 0;">
                                                             <figure class="image">
-                                                                <img src="{{ asset('storage/'.$ad->mainImage) }}"
+                                                                <img src="{{ asset('storage/' . $ad->mainImage) }}"
                                                                     style="height: 170px; object-fit: contain;"
                                                                     alt="{{ $ad->title }}">
                                                             </figure>
@@ -836,7 +884,8 @@
                                                                             alt="Top Ad"></i>
                                                                 </div>
                                                             @elseif($ad->ads_package == 4)
-                                                                <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent
+                                                                <div class="feature"
+                                                                    style="background-color: rgb(171, 18, 18);">Urgent
                                                                 </div>
                                                             @endif
                                                         </div>

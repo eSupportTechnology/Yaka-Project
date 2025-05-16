@@ -11,6 +11,7 @@ class PaymentInfo extends Model
         'invoice_id',
         'payment_status',
         'ad_data',
+        'user_id',
     ];
     protected $casts = [
         'ad_data' => 'array',

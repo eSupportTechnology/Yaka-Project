@@ -1,7 +1,6 @@
 @extends ('newFrontend.master')
 
 @section('content')
-
     <style>
         .banner-section {
             background: linear-gradient(to bottom, rgb(102, 17, 17), rgb(171, 18, 18), rgb(253, 6, 6));
@@ -161,7 +160,7 @@
 
         .ad-carousel-item img {
             /* width: 800px !important;
-                                height: 120px !important; */
+                                        height: 120px !important; */
             object-fit: cover;
             margin: 0 auto;
         }
@@ -424,8 +423,8 @@
             }
 
             /* .inner-box {
-                                width: 100px !important;
-                            } */
+                                        width: 100px !important;
+                                    } */
             .right {
                 margin-left: -112px !important;
             }
@@ -487,6 +486,7 @@
             transition: none !important;
             -webkit-transition: none !important;
         }
+
         .carousel-thumbnails {
             display: flex;
             justify-content: center;
@@ -494,6 +494,7 @@
             margin-top: 15px;
             flex-wrap: wrap;
         }
+
         .top-carousel-thumbnails {
             display: flex;
             justify-content: center;
@@ -502,57 +503,68 @@
             flex-wrap: wrap;
         }
 
-    .carousel-thumbnails img {
-      width: 60px;
-      height: 40px;
-      object-fit: cover;
-      cursor: pointer;
-      opacity: 0.6;
-      border: 2px solid transparent;
-      transition: 0.3s;
-    }
-    .top-carousel-thumbnails img {
-      width: 60px;
-      height: 40px;
-      object-fit: cover;
-      cursor: pointer;
-      opacity: 0.6;
-      border: 2px solid transparent;
-      transition: 0.3s;
-    }
+        .carousel-thumbnails img {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0.6;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
 
-    .carousel-thumbnails img.active {
-      opacity: 1;
-      border-color: #e2200e;
-    }
-    .top-carousel-thumbnails img.active {
-      opacity: 1;
-      border-color: #e2200e;
-    }
+        .top-carousel-thumbnails img {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0.6;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
 
-    @media (max-width: 576px) {
-      .carousel-thumbnails img {
-        width: 40px;
-        height: 30px;
-      }
-      .top-carousel-thumbnails img {
-        width: 40px;
-        height: 30px;
-      }
-      .badge-top-left {
-        width: 30px;
-        top: 5px;
-        left: 5px;
-      }
-    }
-    .badge-top-left {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      width: 50px; /* Adjust based on your badge size */
-      height: auto;
-      z-index: 10;
-    }
+        .carousel-thumbnails img.active {
+            opacity: 1;
+            border-color: #e2200e;
+        }
+
+        .top-carousel-thumbnails img.active {
+            opacity: 1;
+            border-color: #e2200e;
+        }
+
+        @media (max-width: 576px) {
+            .carousel-thumbnails img {
+                width: 40px;
+                height: 30px;
+            }
+
+            .top-carousel-thumbnails img {
+                width: 40px;
+                height: 30px;
+            }
+
+            .badge-top-left {
+                width: 30px;
+                top: 5px;
+                left: 5px;
+            }
+        }
+
+        .badge-top-left {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            /* Adjust based on your badge size */
+            height: auto;
+            z-index: 10;
+        }
+    </style>
+
+
+
+
     </style>
 
     <!-- banner-section -->
@@ -635,18 +647,20 @@
                     <div id="superAds" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($superAds as $index => $adss)
-                                <div class="carousel-item @if ($index == 0)
-                                        active
-                                    @endif">
-                                    <a href="/browse_ads_details/{{ $adss->adsId }}"><div
+                                <div class="carousel-item @if ($index == 0) active @endif">
+                                    <a href="/browse_ads_details/{{ $adss->adsId }}">
+                                        <div
                                             style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;">
-                                        </div></a>
+                                        </div>
+                                    </a>
                                     <div class="badge">
-                                        <img src="{{ asset('02.png') }}" alt="Top Ad"
-                                            style="width: 20px; height: 20px;">
+                                        <img src="{{ asset('02.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
                                     </div>
-                                    <a href="#"><img src="{{ asset('storage/'.$adss->mainImage) }}" class="d-block w-100" alt="Slide 1"></a>
-                                    <div class="details p-2">
+                                    <a href="#">
+                                        <img src="{{ storage_public_url($adss->mainImage) }}" class="d-block w-100"
+                                            style="height: 300px; object-fit: cover;" alt="Slide 1">
+                                    </a>
+                                    <div class="p-2 details">
                                         <button class="sale"
                                             style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
                                             Sale
@@ -654,7 +668,8 @@
                                         <p style="color:white;">{{ $adss->category->name ?? 'Uncategorized' }} &raquo;
                                             {{ $adss->subcategory->name ?? '' }}</p>
                                         <h3 style="color:white;font-weight:bold;font-size:1.1rem;">{{ $adss->title }}</h3>
-                                        <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;">@lang('messages.Rs')
+                                        <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;">
+                                            @lang('messages.Rs')
                                             {{ number_format($adss->price, 2) }}</p>
                                         <p style="color:white;"><i class="fas fa-clock"></i>
                                             {{ $adss->created_at->diffForHumans() }}</p>
@@ -662,14 +677,14 @@
                                 </div>
                             @endforeach
                         </div>
-                      </div>
-                      <div class="carousel-thumbnails mt-3">
+                    </div>
+                    <div class="mt-3 carousel-thumbnails">
                         @foreach ($superAds as $index => $adss)
-                            <img width="100%" src="{{ asset('storage/'.$adss->mainImage) }}" data-bs-target="#superAds" data-bs-slide-to="{{ $index }}" class="@if ($index == 0)
-                                active
-                            @endif" alt="Thumb 1">
+                            <img width="100%" src="{{ storage_public_url($adss->mainImage) }}" data-bs-target="#superAds"
+                                data-bs-slide-to="{{ $index }}" style="height: 100px; object-fit: cover;"
+                                class="@if ($index == 0) active @endif" alt="Thumb 1">
                         @endforeach
-                      </div>
+                    </div>
                 </div>
                 <div class="second-row">
                     <p style="font-size:16px; text-align:justify;">@lang('messages.para2')
@@ -685,19 +700,18 @@
                     <div id="super-banner" class="carousel slide no-animation" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($superbanners as $index => $banner)
-                                <div class="carousel-item @if ($index == 0)
-                                        active
-                                    @endif">
-                                    <img width="20%" src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100 mx-auto" alt="Slide 1">
+                                <div class="carousel-item @if ($index == 0) active @endif">
+                                    <img width="20%" src="{{ asset('banners/' . $banner->img) }}"
+                                        class="mx-auto d-block w-100" alt="Slide 1">
                                 </div>
                             @endforeach
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <section class="topad-section mt-5">
+    <section class="mt-5 topad-section">
         <div class="row auto-container">
             <div class="col-md-6 d-flex flex-column justify-content-center align-items-center ">
                 <div class="first-row">
@@ -708,15 +722,14 @@
                         <div class="carousel-inner">
                             @foreach ($topbanners as $index => $banner)
                                 @if ($banner->type == 1)
-                                    <div class="carousel-item @if ($index == 0)
-                                            active
-                                        @endif">
-                                        <img width="20%" src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100 mx-auto" alt="Slide 1">
+                                    <div class="carousel-item @if ($index == 0) active @endif">
+                                        <img width="20%" src="{{ asset('banners/' . $banner->img) }}"
+                                            class="mx-auto d-block w-100" alt="Slide 1">
                                     </div>
                                 @endif
                             @endforeach
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 d-flex flex-column-reverse justify-content-center">
@@ -724,26 +737,29 @@
                     <div id="topAds" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($topAds as $index => $ad)
-                                <div class="carousel-item @if ($index == 0)
-                                        active
-                                    @endif">
-                                    <a href="/browse_ads_details/{{ $ad->adsId }}"><div
+                                <div class="carousel-item @if ($index == 0) active @endif">
+                                    <a href="/browse_ads_details/{{ $ad->adsId }}">
+                                        <div
                                             style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;">
-                                        </div></a>
+                                        </div>
+                                    </a>
                                     <div class="badge">
                                         <img src="{{ asset('01.png') }}" alt="Top Ad"
                                             style="width: 20px; height: 20px;">
                                     </div>
-                                    <a href="#"><img src="{{ asset('storage/'.$ad->mainImage) }}" class="d-block w-100" alt="Slide 1"></a>
-                                    <div class="details p-2">
+                                    <a href="#"><img src="{{ storage_public_url($ad->mainImage) }}}"
+                                            class="d-block w-100" style="height: 300px; object-fit: cover;"  alt="Slide 1"></a>
+                                    <div class="p-2 details">
                                         <button class="sale"
                                             style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
                                             Sale
                                         </button>
                                         <p style="color:white;">{{ $ad->category->name ?? 'Uncategorized' }} &raquo;
                                             {{ $ad->subcategory->name ?? '' }}</p>
-                                        <h3 style="color:white;font-weight:bold;font-size:1.1rem;">{{ $ad->title }}</h3>
-                                        <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;">@lang('messages.Rs')
+                                        <h3 style="color:white;font-weight:bold;font-size:1.1rem;">{{ $ad->title }}
+                                        </h3>
+                                        <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;">
+                                            @lang('messages.Rs')
                                             {{ number_format($ad->price, 2) }}</p>
                                         <p style="color:white;"><i class="fas fa-clock"></i>
                                             {{ $ad->created_at->diffForHumans() }}</p>
@@ -751,14 +767,14 @@
                                 </div>
                             @endforeach
                         </div>
-                      </div>
-                      <div class="top-carousel-thumbnails mt-3">
+                    </div>
+                    <div class="mt-3 top-carousel-thumbnails">
                         @foreach ($topAds as $index => $ad)
-                            <img width="100%" src="{{ asset('storage/'.$ad->mainImage) }}" data-bs-target="#topAds" data-bs-slide-to="{{ $index }}" class="@if ($index == 0)
-                                active
-                            @endif" alt="Thumb 1">
+                            <img width="100%" style="height: 80px; object-fit: cover; border-radius: 5px;" src="{{ storage_public_url($ad->mainImage) }}" data-bs-target="#topAds"
+                                data-bs-slide-to="{{ $index }}"
+                                class="@if ($index == 0) active @endif" alt="Thumb 1">
                         @endforeach
-                      </div>
+                    </div>
                 </div>
                 <div class="second-row">
                     <p style="font-size:16px; text-align:justify;">@lang('messages.para1')
@@ -790,7 +806,7 @@
                                         <div class="inner-box">
                                             <div class="image-box">
                                                 <figure class="image"><img
-                                                        src="{{ asset('storage/'.$ads->mainImage) }}" alt=""
+                                                        src="{{ storage_public_url($ads->mainImage) }}" alt=""
                                                         style="width: 370px; height: 220px; object-fit: contain;"></figure>
 
                                                 <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent
@@ -863,20 +879,20 @@
         const carousel = document.querySelector('#superAds');
         const thumbnails = document.querySelectorAll('.carousel-thumbnails img');
 
-        carousel.addEventListener('slid.bs.carousel', function (e) {
-          thumbnails.forEach(img => img.classList.remove('active'));
-          thumbnails[e.to].classList.add('active');
+        carousel.addEventListener('slid.bs.carousel', function(e) {
+            thumbnails.forEach(img => img.classList.remove('active'));
+            thumbnails[e.to].classList.add('active');
         });
-      </script>
-      <script>
+    </script>
+    <script>
         const topCarousel = document.querySelector('#topAds');
         const topThumbnails = document.querySelectorAll('.top-carousel-thumbnails img');
 
-        topCarousel.addEventListener('slid.bs.carousel', function (e) {
+        topCarousel.addEventListener('slid.bs.carousel', function(e) {
             topThumbnails.forEach(img => img.classList.remove('active'));
             topThumbnails[e.to].classList.add('active');
         });
-      </script>
+    </script>
     <!-- advertisement - banner-section end -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -978,10 +994,8 @@
         });
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-<script>
-    new WOW().init();
-</script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
 @endsection

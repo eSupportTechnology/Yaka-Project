@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use Carbon\Carbon;
 use App\Models\Ads;
+use App\Models\User;
 use App\Models\Payment;
 use App\Models\PaymentInfo;
 use Illuminate\Support\Str;
@@ -33,6 +34,7 @@ class PaymentProcessingController extends Controller
             'check_value' => $checkValue,
             'invoice_id' => $invoiceId,
             'ad_data' => $adData,
+            'user_id' => auth()->user()->id
         ]);
 
         session(['checkValue' => $checkValue]);
@@ -59,8 +61,7 @@ class PaymentProcessingController extends Controller
                 return view('newFrontend.user.payment-confirming');
             } else if($paymentInfo->payment_status == 1) {
                 // Decode ad data
-                $adData = $paymentInfo->ad_data;
-                $this->saveAd($adData, $invoiceId);
+
                 return redirect()->route('user.my_ads')->with('success', 'Payment successful! Your ad has been posted.');
             } else {
                 return view('newFrontend.user.payment-error');
@@ -72,7 +73,7 @@ class PaymentProcessingController extends Controller
     }
 
 
-    private function saveAd($adData, $invoiceId)
+    private function saveAd($adData, $invoiceId, $userId)
     {
         try {
             $packageExpireAt = null;
@@ -82,12 +83,12 @@ class PaymentProcessingController extends Controller
                     $packageExpireAt = now()->addDays((int)($packageType->duration));
                 }
             }
-
+            $user = User::where('id', $userId)->first();
             // Save Ad in Database
             Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
                 'invoice_id' => $invoiceId,
-                'user_id' => auth()->user()->id,
+                'user_id' => $userId,
                 'title' => $adData['title'],
                 'price' => $adData['price'],
                 'description' => $adData['description'],
@@ -107,7 +108,7 @@ class PaymentProcessingController extends Controller
                 'sublocation' => $adData['sublocation'],
                 'status' => '0',
             ]);
-            OtpService::sendSingleSms(auth()->user()->phone_number, "Payment received for '{$invoiceId}'. Your ad will be published after admin approval. Thank you!");
+            OtpService::sendSingleSms($user->phone_number, "Payment received for '{$invoiceId}'. Your ad will be published after admin approval. Thank you!");
             Log::info('Ad saved successfully.');
             //  return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
 
@@ -122,14 +123,16 @@ class PaymentProcessingController extends Controller
     public function getPaymentInfo(Request $request)
     {
         Log::info("Payment Status: ".$request);
-
-
         $invoiceNo = $request['invoiceNo'] ?? null;
         $statusMessage = $request['statusMessage'] ?? null;
 
         if($statusMessage == 'SUCCESS') {
             $paymentInfo = PaymentInfo::where('invoice_id', $invoiceNo)->first();
             if($paymentInfo) {
+
+                $adData = $paymentInfo->ad_data;
+                $this->saveAd($adData, $paymentInfo->invoice_id, $paymentInfo->user_id);
+
                 $paymentInfo->payment_status = 1;
                 $paymentInfo->save();
             }

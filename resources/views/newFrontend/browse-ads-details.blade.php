@@ -127,7 +127,7 @@
                                 <div class="slider-content">
                                     <div class="product-image watermark">
                                         <figure class="image">
-                                            <img id="mainImage" src="{{ asset('storage/'.$mainImage) }}" alt="Main Image" style="height: 500px; width: 100%; object-fit: cover;">
+                                            <img id="mainImage" src="{{ asset('storage/'.$mainImage) }}" alt="Main Image" style="height: 300px; width: 100%; object-fit: cover;">
                                         </figure>
                                     </div>
 
