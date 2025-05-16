@@ -27,6 +27,7 @@ use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ContactController;
+use Illuminate\Http\Request;
 
 Route::post('/send-contact', [ContactController::class, 'send'])->name('contact.send');
 
