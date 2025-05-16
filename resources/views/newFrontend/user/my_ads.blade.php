@@ -57,11 +57,11 @@
 
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
-            <div class="content-box centred mr-0">
+            <div class="mr-0 content-box centred">
                 <div class="title">
                     <h1>@lang('messages.Dashboard')</h1>
                 </div>
-                <ul class="bread-crumb clearfix">
+                <ul class="clearfix bread-crumb">
                     <li><a href="{{ route('/') }}">@lang('messages.Home')</a></li>
                     <li>@lang('messages.Dashboard')</li>
                 </ul>
@@ -70,7 +70,7 @@
     </section>
     <!-- End Page Title -->
 
-        <section class="dash-header-part mb-4">
+        <section class="mb-4 dash-header-part">
                     <div class="container" >
                         <div class="dash-header-card"  style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); min-height:230px; height:auto" >
                             <div class="row">
@@ -144,7 +144,7 @@
         </div>
     </section>
 
-    <section class="dashboard-part mt-4">
+    <section class="mt-4 dashboard-part">
     <div class="container mb-4">
         <!-- Tabs Navigation -->
         <ul class="nav nav-tabs" id="adsTabs" role="tablist">
@@ -157,12 +157,12 @@
         </ul>
 
         <!-- Tabs Content -->
-        <div class="tab-content mt-3" id="adsTabsContent">
+        <div class="mt-3 tab-content" id="adsTabsContent">
             <!-- Active Ads Tab -->
             <div class="tab-pane fade show active" id="active-ads" role="tabpanel" aria-labelledby="active-ads-tab">
                 <div class="row">
                     @forelse($activeAds as $ad)
-                        <div class="col-md-4 mb-4">
+                        <div class="mb-4 col-md-4">
                             <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}">
                                 <div class="card ad-card">
                                     <img src="{{ storage_public_url($ad->mainImage) }}" class="card-img-top" alt="Ad Image">
@@ -193,7 +193,7 @@
                                                 </p>
 
                                         <!-- Delete Button -->
-                                        <form action="{{ route('ads.delete', ['adsId' => $ad->adsId]) }}" method="POST" class="d-inline mt-2">
+                                        <form action="{{ route('ads.delete', ['adsId' => $ad->adsId]) }}" method="POST" class="mt-2 d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ad?')">
@@ -214,7 +214,7 @@
             <div class="tab-pane fade" id="pending-ads" role="tabpanel" aria-labelledby="pending-ads-tab">
                 <div class="row">
                     @forelse($pendingAds as $ad)
-                        <div class="col-md-4 mb-4">
+                        <div class="mb-4 col-md-4">
                             <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}">
                                 <div class="card ad-card">
                                     <img src="{{ storage_public_url($ad->mainImage) }}" class="card-img-top" alt="Ad Image">
@@ -245,7 +245,7 @@
                                                 </p>
 
                                         <!-- Delete Button -->
-                                        <form action="{{ route('ads.delete', ['adsId' => $ad->adsId]) }}" method="POST" class="d-inline mt-2">
+                                        <form action="{{ route('ads.delete', ['adsId' => $ad->adsId]) }}" method="POST" class="mt-2 d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ad?')">

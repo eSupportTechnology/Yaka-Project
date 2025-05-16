@@ -25,7 +25,7 @@ use App\Http\Controllers\frontend\userDashboardController;
 use App\Http\Controllers\frontend\AdsController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LocationController;
-
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ContactController;
 
 Route::post('/send-contact', [ContactController::class, 'send'])->name('contact.send');
@@ -94,6 +94,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/ad-posts', [UserAdsController::class, 'store'])->name('user.ad_posts.store');
 
     Route::get('/user/my_ads', [userDashboardController::class, 'my_ads'])->name('user.my_ads');
+
+
+
     Route::delete('/ads/{adsId}/delete', [userDashboardController::class, 'destroy'])->name('ads.delete');
 
 
