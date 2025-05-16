@@ -653,7 +653,7 @@
                                         <img src="{{ asset('02.png') }}" alt="Top Ad"
                                             style="width: 20px; height: 20px;">
                                     </div>
-                                    <a href="#"><img src="{{ storage_public_url($adss->mainImage) }}" class="d-block w-100" alt="Slide 1"></a>
+                                    <a href="#"><img src="{{ asset('storage/' . $adss->mainImage) }}" class="d-block w-100" alt="Slide 1"></a>
                                     <div class="p-2 details">
                                         <button class="sale"
                                             style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
@@ -742,7 +742,7 @@
                                         <img src="{{ asset('01.png') }}" alt="Top Ad"
                                             style="width: 20px; height: 20px;">
                                     </div>
-                                    <a href="#"><img src="{{ storage_public_url($ad->mainImage) }}" class="d-block w-100" alt="Slide 1"></a>
+                                    <a href="#"><img src="{{ url('storage/' . $ad->mainImage) }}" class="d-block w-100" alt="Slide 1"></a>
                                     <div class="p-2 details">
                                         <button class="sale"
                                             style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
