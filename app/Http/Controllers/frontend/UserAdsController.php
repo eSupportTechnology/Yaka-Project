@@ -29,7 +29,7 @@ class UserAdsController extends Controller
     {
         $categories = \App\Models\Category::where('status', 1)
             ->where('mainId', 0)
-            ->with(['subcategories' => function($query) {
+            ->with(['subcategories' => function ($query) {
                 $query->where('status', 1);
             }])
             ->get();
@@ -87,21 +87,21 @@ class UserAdsController extends Controller
         $brands = collect();
         if ($request->sub_cat_id) {
             $brands = \App\Models\BrandsModels::where('sub_cat_id', $request->sub_cat_id)
-                        ->where('brandsId', 0)
-                        ->get();
+                ->where('brandsId', 0)
+                ->get();
         }
 
         // Get models based on brandId and subCatId
         $models = collect();
         if ($request->brand && $request->sub_cat_id) {
             $models = \App\Models\BrandsModels::where('brandsId', $request->brand)
-                        ->where('sub_cat_id', $request->sub_cat_id)
-                        ->get();
+                ->where('sub_cat_id', $request->sub_cat_id)
+                ->get();
         }
 
         $formFields = \App\Models\FormField::where('main_category_id', $request->cat_id)
-                        ->where('subcategory_id', $request->sub_cat_id)
-                        ->get();
+            ->where('subcategory_id', $request->sub_cat_id)
+            ->get();
 
         $packages = \App\Models\Package::with('packageTypes')
             ->where('name', '!=', 'Jump Up')
@@ -125,78 +125,78 @@ class UserAdsController extends Controller
 
 
     public function store(Request $request)
-{
-    try {
-        // Check if user is authenticated
-        if (!auth()->check()) {
-            Log::error('User is not authenticated.');
-            return redirect()->route('login')->with('error', 'You must be logged in to post an ad.');
-        }
+    {
+        try {
+            // Check if user is authenticated
+            if (!auth()->check()) {
+                Log::error('User is not authenticated.');
+                return redirect()->route('login')->with('error', 'You must be logged in to post an ad.');
+            }
 
-        // Extract query parameters
-        $cat_id = $request->query('cat_id');
-        $sub_cat_id = $request->query('sub_cat_id');
-        $location = $request->query('location');
-        $sublocation = $request->query('sublocation');
-        $selectedPackageName = $request->input('selected_package_name');
-        $selectedPackagePrice = $request->input('selected_package_price');
-        $selectedPackageDuration = $request->input('selected_package_duration');
+            // Extract query parameters
+            $cat_id = $request->query('cat_id');
+            $sub_cat_id = $request->query('sub_cat_id');
+            $location = $request->query('location');
+            $sublocation = $request->query('sublocation');
+            $selectedPackageName = $request->input('selected_package_name');
+            $selectedPackagePrice = $request->input('selected_package_price');
+            $selectedPackageDuration = $request->input('selected_package_duration');
 
-        Log::info('Store method called', ['request_data' => $request->all(), 'query_params' => $request->query()]);
+            Log::info('Store method called', ['request_data' => $request->all(), 'query_params' => $request->query()]);
 
-        $formFields = FormField::all();
-        $dynamicRules = [];
+            $formFields = FormField::all();
+            $dynamicRules = [];
 
-        foreach ($formFields as $field) {
-            $dynamicRules['field_' . $field->id] = 'nullable';
-        }
+            foreach ($formFields as $field) {
+                $dynamicRules['field_' . $field->id] = 'nullable';
+            }
 
-        if ($request->boosting_option == '0') {
-            $request->merge(['package_type' => '0']);
-        }
+            if ($request->boosting_option == '0') {
+                $request->merge(['package_type' => '0']);
+            }
 
-        // Validation rules
-        $validationRules = array_merge([
-            'title'         => 'required|string|max:255',
-            'price'         => 'required|numeric',
-            'description'   => 'required|string',
-            'main_image'    => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
-            'sub_images'    => 'nullable|array',
-            'sub_images.*'  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
-            'brand'         => 'nullable',
-            'model'         => 'nullable',
-            'condition'     => 'nullable|in:New,Used',
-            'pricing_type'  => 'nullable|in:Fixed,Negotiable,Daily,Weekly,Monthly,Yearly',
-            'post_type'     => 'nullable|in:Booking,Sale,Rent',
-            'boosting_option' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if ($value == '0') {
-                        return;
+            // Validation rules
+            $validationRules = array_merge([
+                'title'         => 'required|string|max:255',
+                'price'         => 'required|numeric',
+                'description'   => 'required|string',
+                'main_image'    => 'required|image|mimes:jpeg,png,jpg,gif,bmp,svg,webp,tiff|max:20480',
+                'sub_images'    => 'nullable|array',
+                'sub_images.*'  => 'required|image|mimes:jpeg,png,jpg,gif,bmp,svg,webp,tiff|max:20480',
+                'brand'         => 'nullable',
+                'model'         => 'nullable',
+                'condition'     => 'nullable|in:New,Used',
+                'pricing_type'  => 'nullable|in:Fixed,Negotiable,Daily,Weekly,Monthly,Yearly',
+                'post_type'     => 'nullable|in:Booking,Sale,Rent',
+                'boosting_option' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        if ($value == '0') {
+                            return;
+                        }
+                        if (!\App\Models\Package::find($value)) {
+                            $fail('The selected boosting option is invalid.');
+                        }
                     }
-                    if (!\App\Models\Package::find($value)) {
-                        $fail('The selected boosting option is invalid.');
+                ],
+                'package_type' => [
+                    'required_unless:boosting_option,0',
+                    function ($attribute, $value, $fail) {
+                        if (request('boosting_option') != '0' && !\App\Models\PackageType::where('id', $value)->exists()) {
+                            $fail('The selected package type is invalid.');
+                        }
                     }
-                }
-            ],
-            'package_type' => [
-                'required_unless:boosting_option,0',
-                function ($attribute, $value, $fail) {
-                    if (request('boosting_option') != '0' && !\App\Models\PackageType::where('id', $value)->exists()) {
-                        $fail('The selected package type is invalid.');
-                    }
-                }
-            ],
-        ], $dynamicRules);
+                ],
+            ], $dynamicRules);
 
-        // Validate the request data
-        $validated = $request->validate($validationRules);
+            // Validate the request data
+            $validated = $request->validate($validationRules);
 
 
 
 
-        // If Free Ad, Save Directly
-       // return $this->saveAd($validated, $cat_id, $sub_cat_id, $location, $sublocation);
+            // If Free Ad, Save Directly
+            // return $this->saveAd($validated, $cat_id, $sub_cat_id, $location, $sublocation);
 
             // Get the package type duration
             $packageExpireAt = null; // Default null value
@@ -223,7 +223,9 @@ class UserAdsController extends Controller
             // $mainImagePath = $request->file('main_image')->storeAs('app/public/ads/main_images',
             // $image->toJpeg(), 'public');
 
-            $filename = uniqid() . '.jpg';
+            $file = $request->file('main_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = uniqid() . '.' . $extension;
             Storage::disk('public')->put('ads/main_images/' . $filename, $image->toJpeg());
             $mainImagePath = 'ads/main_images/' . $filename;
 
@@ -251,35 +253,32 @@ class UserAdsController extends Controller
             }
 
             // Check if it's a paid ad
-                    if ($request->boosting_option != '0') {
-                        // Merge the image paths into the ad data
-                        $adData = $request->all();
-                        $adData['main_image'] = $mainImagePath;
-                        $adData['sub_images'] = $subImagesPaths;
+            if ($request->boosting_option != '0') {
+                // Merge the image paths into the ad data
+                $adData = $request->all();
+                $adData['main_image'] = $mainImagePath;
+                $adData['sub_images'] = $subImagesPaths;
 
-                        // Redirect user to payment page
-                        // return redirect()->route('payment.page', [
-                        //     'package_id' => $request->boosting_option,
-                        //     'package_type' => $request->package_type,
-                        //     'selected_package_name' => $request->input('selected_package_name'),
-                        //     'selected_package_price' => $request->input('selected_package_price'),
-                        //     'selected_package_duration' => $request->input('selected_package_duration'),
+                // Redirect user to payment page
+                // return redirect()->route('payment.page', [
+                //     'package_id' => $request->boosting_option,
+                //     'package_type' => $request->package_type,
+                //     'selected_package_name' => $request->input('selected_package_name'),
+                //     'selected_package_price' => $request->input('selected_package_price'),
+                //     'selected_package_duration' => $request->input('selected_package_duration'),
 
-                        //     'ad_data' => json_encode($adData), // Pass ad data for later use
-                        // ]);
-                        return redirect()->route('payment.page')
-                            ->with([
-                                'package_id' => $request->boosting_option,
-                                'package_type' => $request->package_type,
-                                'selected_package_name' => $request->input('selected_package_name'),
-                                'selected_package_price' => $request->input('selected_package_price'),
-                                'selected_package_duration' => $request->input('selected_package_duration'),
-                                'ad_data' => $adData,
-                            ]);
-
-
-
-                    }
+                //     'ad_data' => json_encode($adData), // Pass ad data for later use
+                // ]);
+                return redirect()->route('payment.page')
+                    ->with([
+                        'package_id' => $request->boosting_option,
+                        'package_type' => $request->package_type,
+                        'selected_package_name' => $request->input('selected_package_name'),
+                        'selected_package_price' => $request->input('selected_package_price'),
+                        'selected_package_duration' => $request->input('selected_package_duration'),
+                        'ad_data' => $adData,
+                    ]);
+            }
 
 
             // Create the Ad with package expiration date
@@ -323,61 +322,57 @@ class UserAdsController extends Controller
             Log::info('Ad details saved successfully');
             OtpService::sendSingleSms(auth()->user()->phone_number, "Your ad has been successfully submitted! It will go live after admin approval. Thank you for using our platform.");
             return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
-    } catch (\Exception $e) {
-        Log::error('Error in store method', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
-        return redirect()->back()->with('error', 'Something went wrong! Please try again.');
-    }
-}
-
-public function boostingUpdate(Request $request)
-{
-    try {
-        // Log the incoming request data
-        Log::info('Request data:', $request->all());
-
-        // Validate the request
-        $validated = $request->validate([
-            'adsId' => 'required|exists:ads,adsId',
-            'ads_package' => 'required|exists:table_package,id',
-            'package_type' => 'required|exists:table_package_typess,id',
-        ]);
-
-        // Find the Ad using adsId
-        $ad = Ads::where('adsId', $validated['adsId'])->firstOrFail();
-
-        // Get the package type duration from the PackageType model
-        $packageType = \App\Models\PackageType::find($validated['package_type']);
-
-        // Check if the package type exists and calculate the expiration date
-        if ($packageType) {
-            $packageExpireAt = Carbon::now()->addDays($packageType->duration);
-        } else {
-            // If no packageType found, handle the error or use default value
-            throw new \Exception('Package type not found');
+        } catch (\Exception $e) {
+            Log::error('Error in store method', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return redirect()->back()->with('error', 'Something went wrong! Please try again.');
         }
-
-        // Update the Ad with new package details
-        $ad->update([
-            'ads_package' => $validated['ads_package'],
-            'package_type' => $validated['package_type'],
-            'package_expire_at' => $packageExpireAt,
-        ]);
-
-        // Log successful update
-        Log::info('Ad boosting updated successfully', ['adsId' => $ad->adsId]);
-
-        // Return success response
-        return response()->json(['success' => true, 'message' => 'Ad boosting updated successfully!']);
-    } catch (\Exception $e) {
-        // Log the error message
-        Log::error('Error in boosting update', ['error' => $e->getMessage()]);
-
-        // Return error response
-        return response()->json(['success' => false, 'message' => 'Something went wrong! Please try again.'], 500);
     }
-}
 
+    public function boostingUpdate(Request $request)
+    {
+        try {
+            // Log the incoming request data
+            Log::info('Request data:', $request->all());
 
+            // Validate the request
+            $validated = $request->validate([
+                'adsId' => 'required|exists:ads,adsId',
+                'ads_package' => 'required|exists:table_package,id',
+                'package_type' => 'required|exists:table_package_typess,id',
+            ]);
 
+            // Find the Ad using adsId
+            $ad = Ads::where('adsId', $validated['adsId'])->firstOrFail();
 
+            // Get the package type duration from the PackageType model
+            $packageType = \App\Models\PackageType::find($validated['package_type']);
+
+            // Check if the package type exists and calculate the expiration date
+            if ($packageType) {
+                $packageExpireAt = Carbon::now()->addDays($packageType->duration);
+            } else {
+                // If no packageType found, handle the error or use default value
+                throw new \Exception('Package type not found');
+            }
+
+            // Update the Ad with new package details
+            $ad->update([
+                'ads_package' => $validated['ads_package'],
+                'package_type' => $validated['package_type'],
+                'package_expire_at' => $packageExpireAt,
+            ]);
+
+            // Log successful update
+            Log::info('Ad boosting updated successfully', ['adsId' => $ad->adsId]);
+
+            // Return success response
+            return response()->json(['success' => true, 'message' => 'Ad boosting updated successfully!']);
+        } catch (\Exception $e) {
+            // Log the error message
+            Log::error('Error in boosting update', ['error' => $e->getMessage()]);
+
+            // Return error response
+            return response()->json(['success' => false, 'message' => 'Something went wrong! Please try again.'], 500);
+        }
+    }
 }
