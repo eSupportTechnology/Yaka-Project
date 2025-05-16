@@ -165,7 +165,7 @@
                         <div class="mb-4 col-md-4">
                             <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}">
                                 <div class="card ad-card">
-                                    <img src="{{ storage_public_url($ad->mainImage) }}" class="card-img-top" alt="Ad Image">
+                                    <img src="{{ asset('storage/'.$ad->mainImage) }}" class="card-img-top" alt="Ad Image">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $ad->title }}</h5>
                                         <p class="card-text">@lang('messages.price'): @lang('messages.Rs') {{ number_format($ad->price, 2) }}</p>
@@ -217,7 +217,7 @@
                         <div class="mb-4 col-md-4">
                             <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}">
                                 <div class="card ad-card">
-                                    <img src="{{ storage_public_url($ad->mainImage) }}" class="card-img-top" alt="Ad Image">
+                                    <img src="{{ asset('storage/'.$ad->mainImage) }}" class="card-img-top" alt="Ad Image">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $ad->title }}</h5>
                                         <p class="card-text">@lang('messages.price'): @lang('messages.Rs') {{ number_format($ad->price, 2) }}</p>
