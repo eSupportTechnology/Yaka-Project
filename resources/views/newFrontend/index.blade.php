@@ -553,6 +553,14 @@
       height: auto;
       z-index: 10;
     }
+
+
+
+</style>
+
+
+
+
     </style>
 
     <!-- banner-section -->
@@ -645,8 +653,8 @@
                                         <img src="{{ asset('02.png') }}" alt="Top Ad"
                                             style="width: 20px; height: 20px;">
                                     </div>
-                                    <a href="#"><img src="{{ asset('storage/' . $adss->mainImage) }}" class="d-block w-100" alt="Slide 1"></a>
-                                    <div class="details p-2">
+                                    <a href="#"><img src="{{ storage_public_url($adss->mainImage) }}" class="d-block w-100" alt="Slide 1"></a>
+                                    <div class="p-2 details">
                                         <button class="sale"
                                             style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
                                             Sale
@@ -663,9 +671,9 @@
                             @endforeach
                         </div>
                       </div>
-                      <div class="carousel-thumbnails mt-3">
+                      <div class="mt-3 carousel-thumbnails">
                         @foreach ($superAds as $index => $adss)
-                            <img width="100%" src="{{ url('storage/' . $adss->mainImage) }}" data-bs-target="#superAds" data-bs-slide-to="{{ $index }}" class="@if ($index == 0)
+                            <img width="100%" src="{{ storage_public_url($adss->mainImage) }}" data-bs-target="#superAds" data-bs-slide-to="{{ $index }}" class="@if ($index == 0)
                                 active
                             @endif" alt="Thumb 1">
                         @endforeach
@@ -688,7 +696,7 @@
                                 <div class="carousel-item @if ($index == 0)
                                         active
                                     @endif">
-                                    <img width="20%" src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100 mx-auto" alt="Slide 1">
+                                    <img width="20%" src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block w-100" alt="Slide 1">
                                 </div>
                             @endforeach
                         </div>
@@ -697,7 +705,7 @@
             </div>
         </div>
     </section>
-    <section class="topad-section mt-5">
+    <section class="mt-5 topad-section">
         <div class="row auto-container">
             <div class="col-md-6 d-flex flex-column justify-content-center align-items-center ">
                 <div class="first-row">
@@ -711,7 +719,7 @@
                                     <div class="carousel-item @if ($index == 0)
                                             active
                                         @endif">
-                                        <img width="20%" src="{{ asset('banners/' . $banner->img) }}" class="d-block w-100 mx-auto" alt="Slide 1">
+                                        <img width="20%" src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block w-100" alt="Slide 1">
                                     </div>
                                 @endif
                             @endforeach
@@ -734,8 +742,8 @@
                                         <img src="{{ asset('01.png') }}" alt="Top Ad"
                                             style="width: 20px; height: 20px;">
                                     </div>
-                                    <a href="#"><img src="{{ url('storage/' . $ad->mainImage) }}" class="d-block w-100" alt="Slide 1"></a>
-                                    <div class="details p-2">
+                                    <a href="#"><img src="{{ storage_public_url($ad->mainImage) }}" class="d-block w-100" alt="Slide 1"></a>
+                                    <div class="p-2 details">
                                         <button class="sale"
                                             style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
                                             Sale
@@ -752,9 +760,9 @@
                             @endforeach
                         </div>
                       </div>
-                      <div class="top-carousel-thumbnails mt-3">
+                      <div class="mt-3 top-carousel-thumbnails">
                         @foreach ($topAds as $index => $ad)
-                            <img width="100%" src="{{ url('storage/' . $ad->mainImage) }}" data-bs-target="#topAds" data-bs-slide-to="{{ $index }}" class="@if ($index == 0)
+                            <img width="100%" src="{{ storage_public_url($ad->mainImage) }}" data-bs-target="#topAds" data-bs-slide-to="{{ $index }}" class="@if ($index == 0)
                                 active
                             @endif" alt="Thumb 1">
                         @endforeach
@@ -790,7 +798,7 @@
                                         <div class="inner-box">
                                             <div class="image-box">
                                                 <figure class="image"><img
-                                                        src="{{ url('storage/' . $ads->mainImage) }}" alt=""
+                                                        src="{{ storage_public_url($ads->mainImage) }}" alt=""
                                                         style="width: 370px; height: 220px; object-fit: contain;"></figure>
 
                                                 <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent
@@ -982,6 +990,8 @@
 <script>
     new WOW().init();
 </script>
+
+
 
 
 @endsection
