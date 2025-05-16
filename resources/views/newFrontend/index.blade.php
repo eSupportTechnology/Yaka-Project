@@ -681,7 +681,7 @@
                     <div class="mt-3 carousel-thumbnails">
                         @foreach ($superAds as $index => $adss)
                             <img width="100%" src="{{ storage_public_url($adss->mainImage) }}" data-bs-target="#superAds"
-                                data-bs-slide-to="{{ $index }}" style="height: 100px; object-fit: cover;"
+                                data-bs-slide-to="{{ $index }}" style="height: 100px; width=100%; object-fit: cover;"
                                 class="@if ($index == 0) active @endif" alt="Thumb 1">
                         @endforeach
                     </div>
@@ -998,4 +998,6 @@
     <script>
         new WOW().init();
     </script>
+
+
 @endsection
