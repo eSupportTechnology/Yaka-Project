@@ -658,7 +658,7 @@
                                     </div>
                                     <a href="#">
                                         <img src="{{ storage_public_url($adss->mainImage) }}" class="d-block w-100"
-                                            style="height: 300px; object-fit: cover;" alt="Slide 1">
+                                            style="height: 300px; object-fit: contain;" alt="Slide 1">
                                     </a>
                                     <div class="p-2 details">
                                         <button class="sale"
@@ -681,7 +681,7 @@
                     <div class="mt-3 carousel-thumbnails">
                         @foreach ($superAds as $index => $adss)
                             <img width="100%" src="{{ storage_public_url($adss->mainImage) }}" data-bs-target="#superAds"
-                                data-bs-slide-to="{{ $index }}" style="height: 100px; width=100%; object-fit: cover;"
+                                data-bs-slide-to="{{ $index }}" style="height: 100px; width=100%; object-fit: contain;"
                                 class="@if ($index == 0) active @endif" alt="Thumb 1">
                         @endforeach
                     </div>
@@ -747,8 +747,8 @@
                                         <img src="{{ asset('01.png') }}" alt="Top Ad"
                                             style="width: 20px; height: 20px;">
                                     </div>
-                                    <a href="#"><img src="{{ storage_public_url($ad->mainImage) }}}"
-                                            class="d-block w-100" style="height: 300px; object-fit: cover;"  alt="Slide 1"></a>
+                                    <a href="#"><img src="{{ storage_public_url($ad->mainImage) }}"
+                                            class="d-block w-100" style="height: 300px; object-fit: contain;"  alt="Slide 1"></a>
                                     <div class="p-2 details">
                                         <button class="sale"
                                             style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
