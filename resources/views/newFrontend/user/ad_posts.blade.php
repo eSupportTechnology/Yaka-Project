@@ -30,6 +30,8 @@
         min-height: 220px;
     }
 
+       
+
 
 </style>
 
@@ -225,7 +227,7 @@
                         </div>
                         <div class="mb-3 col-lg-12">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>@lang('messages.Upload Sub Image') <i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark"><strong>@lang('messages.Upload Sub Image')</strong></label>
                                 <small class=" text-muted">Simply select all images at once.</small>
                                 <input type="file" name="sub_images[]" class="form-control" id="sub_images" multiple>
                                 <div id="sub_images_preview" style="margin-top: 10px;"></div>
@@ -583,6 +585,141 @@ document.getElementById('sub_images').addEventListener('change', function(event)
         });
     });
     </script>
+
+
+
+     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+                // Get the form element
+                const form = document.getElementById("adForm");
+                
+                if (!form) {
+                    console.error("Form with ID 'adForm' not found");
+                    return;
+                }
+                
+                // Disable HTML5 validation
+                form.setAttribute("novalidate", "true");
+                
+                // Add custom validation on form submit
+                form.addEventListener("submit", function(event) {
+                    // Always prevent default submission first
+                    event.preventDefault();
+                    
+                    // Clear any previous error messages
+                    clearErrors();
+                    
+                    // Flag to track if there are any validation errors
+                    let hasErrors = false;
+                    
+                    // Get all required inputs
+                    const requiredInputs = form.querySelectorAll("input[required], select[required], textarea[required]");
+                    
+                    // Check each required field
+                    requiredInputs.forEach(function(input) {
+                        if (!input.value.trim()) {
+                            markAsError(input);
+                            hasErrors = true;
+                        }
+                    });
+                    
+                    // Check required file inputs specifically
+                    const fileInputs = form.querySelectorAll("input[type='file'][required]");
+                    fileInputs.forEach(function(input) {
+                        if (input.files.length === 0) {
+                            markAsError(input);
+                            hasErrors = true;
+                        }
+                    });
+                    
+                    // If no errors, submit the form
+                    if (!hasErrors) {
+                        form.removeAttribute("novalidate");
+                        form.submit();
+                    } else {
+                        // Scroll to the first error
+                        const firstError = document.querySelector(".error-message");
+                        if (firstError) {
+                            firstError.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center"
+                            });
+                            
+                            // Focus on the input field associated with the first error
+                            const associatedField = firstError.closest('.form-group').querySelector('input, select, textarea');
+                            if (associatedField) {
+                                associatedField.focus();
+                            }
+                        }
+                    }
+                });
+                
+                // Function to mark field as error with a specific error message
+                function markAsError(field) {
+                    // Find the field's label text to make the error message specific
+                    const formGroup = field.closest(".form-group");
+                    if (formGroup) {
+                        const label = formGroup.querySelector("label");
+                        let fieldName = "This field";
+                        
+                        if (label) {
+                            // Extract field name from the label (without the asterisk)
+                            const labelText = label.textContent.trim();
+                            fieldName = labelText.replace(/\*/g, '').trim();
+                        }
+                        
+                        // Remove any existing error message
+                        const existingError = formGroup.querySelector(".error-message");
+                        if (existingError) {
+                            existingError.remove();
+                        }
+                        
+                        // Create error container
+                        const errorContainer = document.createElement("div");
+                        errorContainer.className = "error-message";
+                        errorContainer.style.color = "#dc3545";
+                        errorContainer.style.fontSize = "14px";
+                        errorContainer.style.marginTop = "5px";
+                        errorContainer.style.marginBottom = "10px";
+                        errorContainer.textContent = fieldName + " is required";
+                        
+                        // Add error message below the input
+                        field.insertAdjacentElement('afterend', errorContainer);
+                        
+                        // Apply red border to input
+                        field.style.border = "2px solid #dc3545";
+                    }
+                }
+                
+                // Function to clear all errors
+                function clearErrors() {
+                    // Remove red borders
+                    const errorFields = form.querySelectorAll("input, select, textarea");
+                    errorFields.forEach(function(field) {
+                        field.style.border = "";
+                    });
+                    
+                    // Remove error messages
+                    const errorMessages = form.querySelectorAll(".error-message");
+                    errorMessages.forEach(function(message) {
+                        message.remove();
+                    });
+                }
+                
+                // Add input event listeners to clear errors as user types
+                form.querySelectorAll("input, select, textarea").forEach(function(input) {
+                    input.addEventListener("input", function() {
+                        this.style.border = "";
+                        
+                        // Remove error message if it exists
+                        const nextElement = this.nextElementSibling;
+                        if (nextElement && nextElement.classList.contains("error-message")) {
+                            nextElement.remove();
+                        }
+                    });
+                });
+            });
+        </script>
 
 
 
