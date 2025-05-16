@@ -740,7 +740,7 @@
                                                             style="display: block; height: 100%; text-decoration: none;">
                                                             <div class="carousel-item-content">
                                                                 <div class="image-container"> <!-- Image wrapper added -->
-                                                                    <img src="{{ asset('storage/'.$ad->mainImage) }}"
+                                                                    <img style="max-height: 385px !important;" src="{{ asset('storage/'.$ad->mainImage) }}"
                                                                         class="d-block w-100" alt="{{ $ad->title }}">
                                                                 </div>
                                                                 <div class="carousel-overlay"></div>

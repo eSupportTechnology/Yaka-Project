@@ -59,8 +59,7 @@ class PaymentProcessingController extends Controller
                 return view('newFrontend.user.payment-confirming');
             } else if($paymentInfo->payment_status == 1) {
                 // Decode ad data
-                $adData = $paymentInfo->ad_data;
-                $this->saveAd($adData, $invoiceId);
+
                 return redirect()->route('user.my_ads')->with('success', 'Payment successful! Your ad has been posted.');
             } else {
                 return view('newFrontend.user.payment-error');
@@ -122,14 +121,16 @@ class PaymentProcessingController extends Controller
     public function getPaymentInfo(Request $request)
     {
         Log::info("Payment Status: ".$request);
-
-
         $invoiceNo = $request['invoiceNo'] ?? null;
         $statusMessage = $request['statusMessage'] ?? null;
 
         if($statusMessage == 'SUCCESS') {
             $paymentInfo = PaymentInfo::where('invoice_id', $invoiceNo)->first();
             if($paymentInfo) {
+
+                $adData = $paymentInfo->ad_data;
+                $this->saveAd($adData, $invoiceId);
+                
                 $paymentInfo->payment_status = 1;
                 $paymentInfo->save();
             }
