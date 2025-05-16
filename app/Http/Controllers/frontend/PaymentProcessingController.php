@@ -129,8 +129,8 @@ class PaymentProcessingController extends Controller
             if($paymentInfo) {
 
                 $adData = $paymentInfo->ad_data;
-                $this->saveAd($adData, $invoiceId);
-                
+                $this->saveAd($adData, $paymentInfo->invoice_id);
+
                 $paymentInfo->payment_status = 1;
                 $paymentInfo->save();
             }
