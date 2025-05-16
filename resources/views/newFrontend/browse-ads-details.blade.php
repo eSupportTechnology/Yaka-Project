@@ -55,15 +55,22 @@
     opacity: 0.7; /* Optional: Add opacity effect on hover for better UX */
 }
 .watermark {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 20px;
-  font-weight: bold;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 5px 10px;
-  border-radius: 5px;
+    position: relative;
+    display: inline-block;
+}
+
+.watermark::after {
+    content: "";
+    background: url('{{ asset('images/watermark.png') }}') no-repeat center;
+    background-size: contain;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 10;
 }
 
 
@@ -127,7 +134,7 @@
                                 <div class="slider-content">
                                     <div class="product-image watermark">
                                         <figure class="image">
-                                            <img id="mainImage" src="{{ asset('storage/'.$mainImage) }}" alt="Main Image" style="height: 300px; width: 100%; object-fit: cover;">
+                                            <img id="mainImage" src="{{ asset('storage/'.$mainImage) }}" alt="Main Image" style="height: 100%; width: 100%; object-fit: cover;">
                                         </figure>
                                     </div>
 

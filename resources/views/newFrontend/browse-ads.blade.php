@@ -365,8 +365,7 @@
 
         .image-container {
             position: relative;
-            height: 250px;
-            /* or any fixed height */
+            max-height: 100%;
             width: 100%;
             overflow: hidden;
             border-radius: 8px;
