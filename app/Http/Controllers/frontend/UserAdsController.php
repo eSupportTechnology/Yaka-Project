@@ -132,6 +132,7 @@ class UserAdsController extends Controller
             Log::error('User is not authenticated.');
             return redirect()->route('login')->with('error', 'You must be logged in to post an ad.');
         }
+        
 
         // Extract query parameters
         $cat_id = $request->query('cat_id');
@@ -213,12 +214,12 @@ class UserAdsController extends Controller
             $image = $manager->read($request->file('main_image')->getPathname());
 
             // Step 3: Add watermark text
-            $image->text('YAKA.LK', 10, 10, function ($font) {
+            $image->text('YAKA.LK', $image->width() / 2, $image->height() / 2, function ($font) {
                 $font->filename(public_path('fonts/arial.ttf')); // Note: filename() instead of file()
-                $font->size(24);
+                $font->size(72);
                 $font->color('#FF0000');
-                $font->align('left');
-                $font->valign('top');
+                $font->align('center');
+                $font->valign('middle');
             });
             // $mainImagePath = $request->file('main_image')->storeAs('app/public/ads/main_images',
             // $image->toJpeg(), 'public');
@@ -234,12 +235,12 @@ class UserAdsController extends Controller
                 foreach ($request->file('sub_images') as $file) {
                     if ($file->isValid()) {
                         $image = $manager->read($file->getPathname());
-                        $image->text('YAKA.LK', 10, 10, function ($font) {
+                        $image->text('YAKA.LK',$image->width() / 2, $image->height() / 2, function ($font) {
                             $font->filename(public_path('fonts/arial.ttf'));
-                            $font->size(24);
+                            $font->size(72);
                             $font->color('#FF0000');
-                            $font->align('left');
-                            $font->valign('top');
+                            $font->align('center');
+                            $font->valign('middle');
                         });
                         $filename = uniqid() . '_' . $file->getClientOriginalName();
 
