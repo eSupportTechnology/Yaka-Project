@@ -740,7 +740,7 @@
                                                             style="display: block; height: 100%; text-decoration: none;">
                                                             <div class="carousel-item-content">
                                                                 <div class="image-container"> <!-- Image wrapper added -->
-                                                                    <img src="{{ url('storage/' . $ad->mainImage) }}"
+                                                                    <img src="{{ storage_public_url($ad->mainImage) }}"
                                                                         class="d-block w-100" alt="{{ $ad->title }}">
                                                                 </div>
                                                                 <div class="carousel-overlay"></div>
@@ -823,7 +823,7 @@
                                                         @endif
                                                         <div class="image-box" style="flex-grow: 0;">
                                                             <figure class="image">
-                                                                <img src="{{ url('storage/' . $ad->mainImage) }}"
+                                                                <img src="{{ storage_public_url($ad->mainImage) }}"
                                                                     style="height: 170px; object-fit: contain;"
                                                                     alt="{{ $ad->title }}">
                                                             </figure>
