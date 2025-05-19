@@ -125,22 +125,22 @@ class UserAdsController extends Controller
 
 
     public function store(Request $request)
-    {
-        try {
-            // Check if user is authenticated
-            if (!auth()->check()) {
-                Log::error('User is not authenticated.');
-                return redirect()->route('login')->with('error', 'You must be logged in to post an ad.');
-            }
+{
+    try {
+        // Check if user is authenticated
+        if (!auth()->check()) {
+            Log::error('User is not authenticated.');
+            return redirect()->route('login')->with('error', 'You must be logged in to post an ad.');
+        }
 
-            // Extract query parameters
-            $cat_id = $request->query('cat_id');
-            $sub_cat_id = $request->query('sub_cat_id');
-            $location = $request->query('location');
-            $sublocation = $request->query('sublocation');
-            $selectedPackageName = $request->input('selected_package_name');
-            $selectedPackagePrice = $request->input('selected_package_price');
-            $selectedPackageDuration = $request->input('selected_package_duration');
+        // Extract query parameters
+        $cat_id = $request->query('cat_id');
+        $sub_cat_id = $request->query('sub_cat_id');
+        $location = $request->query('location');
+        $sublocation = $request->query('sublocation');
+        $selectedPackageName = $request->input('selected_package_name');
+        $selectedPackagePrice = $request->input('selected_package_price');
+        $selectedPackageDuration = $request->input('selected_package_duration');
 
             Log::info('Store method called', ['request_data' => $request->all(), 'query_params' => $request->query()]);
 
@@ -207,50 +207,63 @@ class UserAdsController extends Controller
                     $packageExpireAt = Carbon::now()->addDays((int)($packageType->duration));
                 }
             }
-            $manager = new ImageManager(new Driver());
-
-            // Step 2: Read uploaded image
-            $image = $manager->read($request->file('main_image')->getPathname());
-
-            // Step 3: Add watermark text
-            $image->text('YAKA.LK', $image->width() / 2, $image->height() / 2, function ($font) {
-                $font->filename(public_path('fonts/arial.ttf')); // Note: filename() instead of file()
-                $font->size(72);
-                $font->color('#FF0000');
-                $font->align('center');
-                $font->valign('middle');
-            });
-            // $mainImagePath = $request->file('main_image')->storeAs('app/public/ads/main_images',
-            // $image->toJpeg(), 'public');
-
-            $file = $request->file('main_image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = uniqid() . '.' . $extension;
-            Storage::disk('public')->put('ads/main_images/' . $filename, $image->toJpeg());
-            $mainImagePath = 'ads/main_images/' . $filename;
-
-            $subImagesPaths = [];
-
-            if ($request->hasFile('sub_images')) {
+                        // Create manager
                 $manager = new ImageManager(new Driver());
-                foreach ($request->file('sub_images') as $file) {
-                    if ($file->isValid()) {
-                        $image = $manager->read($file->getPathname());
-                        $image->text('YAKA.LK',$image->width() / 2, $image->height() / 2, function ($font) {
-                            $font->filename(public_path('fonts/arial.ttf'));
-                            $font->size(72);
-                            $font->color('#FF0000');
-                            $font->align('center');
-                            $font->valign('middle');
-                        });
-                        $filename = uniqid() . '_' . $file->getClientOriginalName();
 
-                        Storage::disk('public')->put('ads/sub_images/' . $filename, $image->toJpeg());
+                // Set desired image dimensions
+                $fixedWidth = 800;
+                $fixedHeight = 800;
 
-                        $subImagesPaths[] = 'ads/sub_images/' . $filename;
+                // Step 1: Read main image
+                $image = $manager->read($request->file('main_image')->getPathname());
+
+                // Resize main image
+                $image->resize($fixedWidth, $fixedHeight);
+
+                // Watermark main image
+                $fontSize = min($fixedWidth, $fixedHeight) * 0.1;
+                $image->text('YAKA.LK', $fixedWidth / 2, $fixedHeight / 2, function ($font) use ($fontSize) {
+                    $font->filename(public_path('fonts/arial.ttf'));
+                    $font->size($fontSize);
+                    $font->color('#FF0000');
+                    $font->align('center');
+                    $font->valign('middle');
+                });
+
+                // Save main image
+                $mainFile = $request->file('main_image');
+                $extension = $mainFile->getClientOriginalExtension();
+                $mainFilename = uniqid() . '.' . $extension;
+                Storage::disk('public')->put('ads/main_images/' . $mainFilename, $image->toJpeg());
+                $mainImagePath = 'ads/main_images/' . $mainFilename;
+
+                // Handle sub images
+                $subImagesPaths = [];
+
+                if ($request->hasFile('sub_images')) {
+                    foreach ($request->file('sub_images') as $file) {
+                        if ($file->isValid()) {
+                            $image = $manager->read($file->getPathname());
+
+                            // Resize to fixed size
+                            $image->resize($fixedWidth, $fixedHeight);
+
+                            // Add watermark
+                            $image->text('YAKA.LK', $fixedWidth / 2, $fixedHeight / 2, function ($font) use ($fontSize) {
+                                $font->filename(public_path('fonts/arial.ttf'));
+                                $font->size($fontSize);
+                                $font->color('#FF0000');
+                                $font->align('center');
+                                $font->valign('middle');
+                            });
+
+                            $filename = uniqid() . '_' . $file->getClientOriginalName();
+                            Storage::disk('public')->put('ads/sub_images/' . $filename, $image->toJpeg());
+                            $subImagesPaths[] = 'ads/sub_images/' . $filename;
+                        }
                     }
                 }
-            }
+
 
             // Check if it's a paid ad
             if ($request->boosting_option != '0') {
