@@ -31,9 +31,9 @@
         }
 
         /* @media(max-width: 768px) {
-                width: 100%;
+                                width: 100%;
 
-            } */
+                            } */
 
         /* Dark overlay for carousel items */
         .carousel-overlay {
@@ -779,16 +779,37 @@
                                                         <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
                                                             style="display: block; height: 100%; text-decoration: none;">
                                                             <div class="carousel-item-content">
-                                                                <div class="image-container"> <!-- Image wrapper added -->
-                                                                    <img style="max-height: 385px !important;" src="{{ asset('storage/'.$ad->mainImage) }}"
-                                                                        class="d-block w-100" alt="{{ $ad->title }}">
+                                                                <div class="image-container"
+                                                                    style="position: relative; max-height: 385px; overflow: hidden; text-align: center;">
+                                                                    @if (!empty($ad->mainImage))
+                                                                        <img src="{{ storage_public_url($ad->mainImage) }}"
+                                                                            alt="{{ $ad->title }}"
+                                                                            style="max-height: 385px !important; width: 100%; object-fit: contain;"
+                                                                            onerror="this.style.display='none';
+                                                                            const msg = document.createElement('div');
+                                                                            msg.innerText = 'Ad is not available';
+                                                                            msg.style.color = 'red';
+                                                                            msg.style.textAlign = 'center';
+                                                                            msg.style.padding = '50px 0';
+                                                                            msg.style.fontWeight = 'bold';
+                                                                            msg.style.fontSize = '1.2rem';
+                                                                            this.parentNode.appendChild(msg);" />
+                                                                    @else
+                                                                        <div
+                                                                            style="color: red; font-weight: bold; padding: 50px 0; font-size: 1.2rem;">
+                                                                            Ad is not available
+                                                                        </div>
+                                                                    @endif
                                                                 </div>
+
+
+
                                                                 <div class="carousel-overlay"></div>
                                                                 <div class="badge">
                                                                     <img src="{{ asset('02.png') }}" alt="Top Ad"
                                                                         style="width: 30px; height: 30px;">
                                                                 </div>
-                                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                                <div class="carousel-caption d-sm-block text-start">
                                                                     <p>{{ $ad->title }}</p>
                                                                     <p>@lang('messages.Rs')
                                                                         {{ number_format($ad->price, 2) }}</p>
@@ -806,6 +827,7 @@
                                                 </div>
                                             @endif
                                         @endforeach
+
                                     </div>
 
                                     {{-- <!-- Carousel Controls -->

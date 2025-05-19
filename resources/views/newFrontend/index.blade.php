@@ -104,6 +104,7 @@
 
         .carousel-item {
             height: 100%;
+
             /* Ensures each carousel item matches the container's height */
         }
 
@@ -160,7 +161,7 @@
 
         .ad-carousel-item img {
             /* width: 800px !important;
-                                        height: 120px !important; */
+                                            height: 120px !important; */
             object-fit: cover;
             margin: 0 auto;
         }
@@ -423,8 +424,8 @@
             }
 
             /* .inner-box {
-                                        width: 100px !important;
-                                    } */
+                                            width: 100px !important;
+                                        } */
             .right {
                 margin-left: -112px !important;
             }
@@ -560,6 +561,19 @@
             height: auto;
             z-index: 10;
         }
+
+
+@keyframes blinkGreen {
+  0%, 100% { border-color: #00ff44; }
+  50% { border-color: transparent; }
+}
+
+@keyframes blinkBlue {
+  0%, 100% { border-color: #007bff; }
+  50% { border-color: transparent; }
+}
+
+
     </style>
 
 
@@ -647,7 +661,7 @@
                     <div id="superAds" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($superAds as $index => $adss)
-                                <div class="carousel-item @if ($index == 0) active @endif">
+                                <div class="carousel-item @if ($index == 0) active @endif " style="border: 4px solid #0b128e; border-radius: 4px; overflow: hidden; box-sizing: border-box; padding: 0; margin: 2px; animation: blinkBlue 1.5s infinite;" >
                                     <a href="/browse_ads_details/{{ $adss->adsId }}">
                                         <div
                                             style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;">
@@ -658,7 +672,8 @@
                                     </div>
                                     <a href="#">
                                         <img src="{{ storage_public_url($adss->mainImage) }}" class="d-block w-100"
-                                            style="height: 300px; object-fit: contain;" alt="Slide 1">
+                                            style="height: 300px; object-fit: contain;
+                                            alt="Slide 1">
                                     </a>
                                     <div class="p-2 details">
                                         <button class="sale"
@@ -678,10 +693,11 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="mt-3 carousel-thumbnails">
+                    <div class="mt-3 overflow-auto carousel-thumbnails d-flex" style="gap: 10px; max-width: 100%; white-space: nowrap;">
                         @foreach ($superAds as $index => $adss)
-                            <img width="100%" src="{{ storage_public_url($adss->mainImage) }}" data-bs-target="#superAds"
-                                data-bs-slide-to="{{ $index }}" style="height: 100px; width=100%; object-fit: contain;"
+                            <img  src="{{ storage_public_url($adss->mainImage) }}" data-bs-target="#superAds"
+                                data-bs-slide-to="{{ $index }}"
+                                style="height: 100px; width=100%; object-fit: contain;"
                                 class="@if ($index == 0) active @endif" alt="Thumb 1">
                         @endforeach
                     </div>
@@ -737,7 +753,7 @@
                     <div id="topAds" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($topAds as $index => $ad)
-                                <div class="carousel-item @if ($index == 0) active @endif">
+                                <div class="carousel-item @if ($index == 0) active @endif " style="border: 4px solid #00ff44; border-radius: 4px; overflow: hidden; box-sizing: border-box; padding: 0; margin: 2px; animation: blinkGreen 1.5s infinite;">
                                     <a href="/browse_ads_details/{{ $ad->adsId }}">
                                         <div
                                             style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;">
@@ -748,7 +764,8 @@
                                             style="width: 20px; height: 20px;">
                                     </div>
                                     <a href="#"><img src="{{ storage_public_url($ad->mainImage) }}"
-                                            class="d-block w-100" style="height: 300px; object-fit: contain;"  alt="Slide 1"></a>
+                                            class="d-block w-100" style="width: 100%; height: 300px; object-fit: contain; "
+                                            alt="Slide 1"></a>
                                     <div class="p-2 details">
                                         <button class="sale"
                                             style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
@@ -768,9 +785,10 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="mt-3 top-carousel-thumbnails">
+                    <div class="mt-3 overflow-auto carousel-thumbnails d-flex" style="gap: 10px; max-width: 100%; white-space: nowrap;">
                         @foreach ($topAds as $index => $ad)
-                            <img width="100%" style="height: 80px; object-fit: cover; border-radius: 5px;" src="{{ storage_public_url($ad->mainImage) }}" data-bs-target="#topAds"
+                            <img width="100%" style="height: 80px; object-fit: cover; border-radius: 5px;"
+                                src="{{ storage_public_url($ad->mainImage) }}" data-bs-target="#topAds"
                                 data-bs-slide-to="{{ $index }}"
                                 class="@if ($index == 0) active @endif" alt="Thumb 1">
                         @endforeach
@@ -998,6 +1016,4 @@
     <script>
         new WOW().init();
     </script>
-
-
 @endsection
