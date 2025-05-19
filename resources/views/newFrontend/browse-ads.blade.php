@@ -31,9 +31,9 @@
         }
 
         /* @media(max-width: 768px) {
-                                width: 100%;
+                                                                    width: 100%;
 
-                            } */
+                                                                } */
 
         /* Dark overlay for carousel items */
         .carousel-overlay {
@@ -766,49 +766,48 @@
 
                                     <!-- Carousel Items -->
                                     <div class="carousel-inner">
+                                        @php
+                                            $hasAdWithImage = false;
+                                        @endphp
+
                                         @foreach ($superAds as $key => $ad)
-                                            @if ($ad->ads_package == 6)
+                                            @if ($ad->ads_package == 6 && !empty($ad->mainImage) && file_exists(storage_path('app/public/' . $ad->mainImage)))
+                                                @php $hasAdWithImage = true; @endphp
+
                                                 <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                                    <div class="blink-border-wrapper"> <!-- Border wrapper added -->
+                                                    <div class="blink-border-wrapper">
                                                         @if ($ad->post_type)
                                                             <button class="sale"
                                                                 style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
                                                                 {{ $ad->post_type }}
                                                             </button>
                                                         @endif
+
                                                         <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
                                                             style="display: block; height: 100%; text-decoration: none;">
                                                             <div class="carousel-item-content">
                                                                 <div class="image-container"
                                                                     style="position: relative; max-height: 385px; overflow: hidden; text-align: center;">
-                                                                    @if (!empty($ad->mainImage))
-                                                                        <img src="{{ storage_public_url($ad->mainImage) }}"
-                                                                            alt="{{ $ad->title }}"
-                                                                            style="max-height: 385px !important; width: 100%; object-fit: contain;"
-                                                                            onerror="this.style.display='none';
-                                                                            const msg = document.createElement('div');
-                                                                            msg.innerText = 'Ad is not available';
-                                                                            msg.style.color = 'red';
-                                                                            msg.style.textAlign = 'center';
-                                                                            msg.style.padding = '50px 0';
-                                                                            msg.style.fontWeight = 'bold';
-                                                                            msg.style.fontSize = '1.2rem';
-                                                                            this.parentNode.appendChild(msg);" />
-                                                                    @else
-                                                                        <div
-                                                                            style="color: red; font-weight: bold; padding: 50px 0; font-size: 1.2rem;">
-                                                                            Ad is not available
-                                                                        </div>
-                                                                    @endif
+                                                                    <img src="{{ storage_public_url($ad->mainImage) }}"
+                                                                        alt="{{ $ad->title }}"
+                                                                        style="max-height: 385px !important; width: 100%; object-fit: contain;"
+                                                                        onerror="this.style.display='none';
+                                        const msg = document.createElement('div');
+                                        msg.innerText = 'Ad is not available';
+                                        msg.style.color = 'red';
+                                        msg.style.fontWeight = 'bold';
+                                        msg.style.fontSize = '1.2rem';
+                                        msg.style.padding = '50px 0';
+                                        msg.style.textAlign = 'center';
+                                        this.parentNode.appendChild(msg);" />
                                                                 </div>
-
-
 
                                                                 <div class="carousel-overlay"></div>
                                                                 <div class="badge">
                                                                     <img src="{{ asset('02.png') }}" alt="Top Ad"
                                                                         style="width: 30px; height: 30px;">
                                                                 </div>
+
                                                                 <div class="carousel-caption d-sm-block text-start">
                                                                     <p>{{ $ad->title }}</p>
                                                                     <p>@lang('messages.Rs')
@@ -828,6 +827,12 @@
                                             @endif
                                         @endforeach
 
+                                        @if (!$hasAdWithImage)
+                                            <div class="text-center"
+                                                style="color: red; font-weight: bold; padding: 50px 0; font-size: 1.2rem;">
+                                                Ad is not available
+                                            </div>
+                                        @endif
                                     </div>
 
                                     {{-- <!-- Carousel Controls -->
@@ -906,7 +911,8 @@
                                                                 </div>
                                                             @elseif($ad->ads_package == 4)
                                                                 <div class="feature"
-                                                                    style="background-color: rgb(171, 18, 18);">Urgent
+                                                                    style="background-color: rgb(171, 18, 18);">
+                                                                    Urgent
                                                                 </div>
                                                             @endif
                                                         </div>
