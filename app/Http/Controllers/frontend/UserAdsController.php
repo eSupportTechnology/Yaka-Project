@@ -207,62 +207,49 @@ class UserAdsController extends Controller
                     $packageExpireAt = Carbon::now()->addDays((int)($packageType->duration));
                 }
             }
-                        // Create manager
-                $manager = new ImageManager(new Driver());
+           $manager = new ImageManager(new Driver());
 
-                // Set desired image dimensions
-                $fixedWidth = 800;
-                $fixedHeight = 800;
+            $fixedWidth = 800;
+            $fixedHeight = 800;
 
-                // Step 1: Read main image
-                $image = $manager->read($request->file('main_image')->getPathname());
+            // Load watermark PNG (only once)
+            $watermark = $manager->read(public_path('watermarks/yaka_watermark2.png'));
 
-                // Resize main image
-                $image->resize($fixedWidth, $fixedHeight);
+            // Resize watermark if needed (optional)
+            // $watermark->scaleDown($fixedWidth * 0.5);
 
-                // Watermark main image
-                $fontSize = min($fixedWidth, $fixedHeight) * 0.1;
-                $image->text('YAKA.LK', $fixedWidth / 2, $fixedHeight / 2, function ($font) use ($fontSize) {
-                    $font->filename(public_path('fonts/arial.ttf'));
-                    $font->size($fontSize);
-                    $font->color('#FF0000');
-                    $font->align('center');
-                    $font->valign('middle');
-                });
+            // ========== MAIN IMAGE ========== //
+            $image = $manager->read($request->file('main_image')->getPathname());
+            $image->resize($fixedWidth, $fixedHeight);
 
-                // Save main image
-                $mainFile = $request->file('main_image');
-                $extension = $mainFile->getClientOriginalExtension();
-                $mainFilename = uniqid() . '.' . $extension;
-                Storage::disk('public')->put('ads/main_images/' . $mainFilename, $image->toJpeg());
-                $mainImagePath = 'ads/main_images/' . $mainFilename;
+            // Insert PNG watermark in center
+            $image->place($watermark, 'center');
 
-                // Handle sub images
-                $subImagesPaths = [];
+            // Save main image
+            $mainFile = $request->file('main_image');
+            $extension = $mainFile->getClientOriginalExtension();
+            $mainFilename = uniqid() . '.' . $extension;
+            Storage::disk('public')->put('ads/main_images/' . $mainFilename, (string) $image->toJpeg());
+            $mainImagePath = 'ads/main_images/' . $mainFilename;
 
-                if ($request->hasFile('sub_images')) {
-                    foreach ($request->file('sub_images') as $file) {
-                        if ($file->isValid()) {
-                            $image = $manager->read($file->getPathname());
+            // ========== SUB IMAGES ========== //
+            $subImagesPaths = [];
 
-                            // Resize to fixed size
-                            $image->resize($fixedWidth, $fixedHeight);
+            if ($request->hasFile('sub_images')) {
+                foreach ($request->file('sub_images') as $file) {
+                    if ($file->isValid()) {
+                        $image = $manager->read($file->getPathname());
+                        $image->resize($fixedWidth, $fixedHeight);
 
-                            // Add watermark
-                            $image->text('YAKA.LK', $fixedWidth / 2, $fixedHeight / 2, function ($font) use ($fontSize) {
-                                $font->filename(public_path('fonts/arial.ttf'));
-                                $font->size($fontSize);
-                                $font->color('#FF0000');
-                                $font->align('center');
-                                $font->valign('middle');
-                            });
+                        // Reuse the same watermark
+                        $image->place($watermark, 'center');
 
-                            $filename = uniqid() . '_' . $file->getClientOriginalName();
-                            Storage::disk('public')->put('ads/sub_images/' . $filename, $image->toJpeg());
-                            $subImagesPaths[] = 'ads/sub_images/' . $filename;
-                        }
+                        $filename = uniqid() . '_' . $file->getClientOriginalName();
+                        Storage::disk('public')->put('ads/sub_images/' . $filename, (string) $image->toJpeg());
+                        $subImagesPaths[] = 'ads/sub_images/' . $filename;
                     }
                 }
+            }
 
 
             // Check if it's a paid ad
