@@ -146,7 +146,7 @@
                                 <li><a  class="active" href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
                                 <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
                                 <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>
-                                <li><a href="">@lang('messages.message')</a></li>
+                                {{-- <li><a href="">@lang('messages.message')</a></li> --}}
                                 <li>
                                     <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>

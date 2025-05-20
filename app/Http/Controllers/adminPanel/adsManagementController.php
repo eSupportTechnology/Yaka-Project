@@ -18,6 +18,9 @@ class adsManagementController extends Controller
             $adsQuery->where('adsId', 'like', '%' . $adCode . '%');
         }
 
+        // Order by latest ads (newest first)
+        $adsQuery->orderBy('created_at', 'desc');
+
         $adsData = $adsQuery->paginate(100);
         return view('newAdminDashboard.adsManagement.index', compact('adsData'));
     }
