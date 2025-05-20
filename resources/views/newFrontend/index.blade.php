@@ -694,7 +694,7 @@
                         </div>
                     </div>
                     <div class="mt-3 overflow-auto carousel-thumbnails d-flex" style="gap: 10px; max-width: 100%; white-space: nowrap;">
-                        @foreach ($superAds as $index => $adss)
+                        @foreach ($superAds->take(10) as $index => $adss)
                             <img  src="{{ storage_public_url($adss->mainImage) }}" data-bs-target="#superAds"
                                 data-bs-slide-to="{{ $index }}"
                                 style="height: 100px; width=100%; object-fit: contain;"
@@ -786,7 +786,7 @@
                         </div>
                     </div>
                     <div class="mt-3 overflow-auto carousel-thumbnails d-flex" style="gap: 10px; max-width: 100%; white-space: nowrap;">
-                        @foreach ($topAds as $index => $ad)
+                        @foreach ($topAds->take(10) as $index => $ad)
                             <img width="100%" style="height: 80px; object-fit: cover; border-radius: 5px;"
                                 src="{{ storage_public_url($ad->mainImage) }}" data-bs-target="#topAds"
                                 data-bs-slide-to="{{ $index }}"
