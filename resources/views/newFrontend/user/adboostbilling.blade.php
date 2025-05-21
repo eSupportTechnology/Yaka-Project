@@ -112,7 +112,7 @@
                 
                 <h4>Enter Billing Details</h4>
                 
-                <input type="hidden" name="return_url" id="return_url" value="https://yakalk.esupportsystem.shop/payment/checking?invId={{ $invoiceId }}">
+                <input type="hidden" name="return_url" id="return_url" value="https://yakalk.esupportsystem.shop/boostpayment/checking?invId={{ $invoiceId }}">
                 <label for="billing_street">Billing Address Street<span style="color:red; font-size:18px;">*</span></label>
                 <input class="form-control" type="text" name="billing_street" id="billing_street">
                 <label for="billing_city">Billing Address City<span style="color:red; font-size:18px;">*</span></label>
@@ -151,7 +151,7 @@
             return; // Stop if validation fails
         }
 
-         Show spinner & disable button
+        // Show spinner & disable button
     document.getElementById('btnSpinner').style.display = 'inline-block';
     document.getElementById('payNowBtn').disabled = true;
     document.getElementById('payNowText').textContent = "Processing...";
