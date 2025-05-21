@@ -161,7 +161,7 @@
 
         .ad-carousel-item img {
             /* width: 800px !important;
-                                                            height: 120px !important; */
+                                                                height: 120px !important; */
             object-fit: cover;
             margin: 0 auto;
         }
@@ -424,8 +424,8 @@
             }
 
             /* .inner-box {
-                                                            width: 100px !important;
-                                                        } */
+                                                                width: 100px !important;
+                                                            } */
             .right {
                 margin-left: -112px !important;
             }
@@ -493,8 +493,18 @@
             justify-content: center;
             gap: 10px;
             margin-top: 15px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            /* Prevent wrapping */
+            overflow-x: hidden;
+            /* Prevent scrolling */
+            max-width: 890px;
+            /* Ensure enough space */
+            margin-left: auto;
+            margin-right: auto;
         }
+         .thumbnail.active {
+        border-color: red;
+    }
 
         .top-carousel-thumbnails {
             display: flex;
@@ -586,15 +596,6 @@
                 border-color: transparent;
             }
         }
-
-
-
-         
-    </style>
-
-
-
-
     </style>
 
     <!-- banner-section -->
@@ -711,13 +712,12 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="mt-3 d-flex carousel-thumbnails"
-                        style="gap: 10px; max-width: 890px; white-space: nowrap; overflow-x: hidden;">
+                    <div class="mt-3 d-flex carousel-thumbnails">
                         @foreach ($superAds->take(10) as $index => $adss)
                             <img src="{{ storage_public_url($adss->mainImage) }}" data-bs-target="#superAds"
                                 data-bs-slide-to="{{ $index }}" alt="Thumb {{ $index + 1 }}"
-                                class="thumbnail @if ($index == 0) active @endif"
-                                style="height: 100px; width: 100px; object-fit: contain; border-radius: 5px; border: 2px solid transparent; cursor: pointer; flex-shrink: 0;">
+                                style="width: 80px; height: 80px; object-fit: cover; border-radius: 5px; cursor: pointer;  flex-shrink: 0;"
+                                class="thumbnail @if ($index == 0) active @endif">
                         @endforeach
                     </div>
                 </div>
@@ -805,14 +805,12 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="mt-3 d-flex carousel-thumbnails"
-                        style="gap: 10px; max-width: 890px; white-space: nowrap; overflow-x: hidden;">
+                    <div class="mt-3 d-flex carousel-thumbnails">
                         @foreach ($topAds->take(10) as $index => $ad)
                             <img src="{{ storage_public_url($ad->mainImage) }}" data-bs-target="#topAds"
                                 data-bs-slide-to="{{ $index }}"
-                                class="thumbnail @if ($index == 0) active @endif"
-                                alt="Thumbnail {{ $index + 1 }}"
-                                style="width: 80px; height: 80px; object-fit: cover; border-radius: 5px; cursor: pointer; border: 2px solid transparent; flex-shrink: 0;">
+                                class="thumbnail @if ($index == 0) active @endif" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; cursor: pointer;  flex-shrink: 0;"
+                                alt="Thumbnail {{ $index + 1 }}">
                         @endforeach
                     </div>
 
