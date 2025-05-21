@@ -326,6 +326,9 @@
 
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://sandboxipgsdk.payable.lk/sdk/v4/payable-checkout.js"></script>
+
 <div class="mt-4 mb-4 custom-container">
     <div class="p-4 custom-card">
 
@@ -337,12 +340,12 @@
             <li class="nav-item">
                 <span class="custom-nav-link disabled" id="summaryStep">@lang('messages.Summary')</span>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <span class="custom-nav-link disabled" id="paymentStep">@lang('messages.Payment')</span>
             </li>
             <li class="nav-item">
                 <span class="custom-nav-link disabled">@lang('messages.done')</span>
-            </li>
+            </li> --}}
         </ul>
 
         <!-- Main Plan Section -->
@@ -426,55 +429,19 @@
                 <p style="color: black" id="summarySelectedPlans">No plans selected</p>
                 <h5>@lang('messages.Total'): <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
 
+    
+
+
+
+
                 <div class="summary-buttons">
                     <button id="backToAdBoost" class="custom-button custom-btn-secondary" onclick="backToAdBoost()">@lang('messages.Back')</button>
-                    <button id="proceedToPayment" onclick="showPaymentForm()" class="custom-button custom-btn-primary">@lang('messages.Proceed to Payment')</button>
+                    <button id="proceedToPayment" onclick="saveBoostingInfo()" class="custom-button custom-btn-primary">@lang('messages.Proceed to Payment')</button>
                 </div>
             </div>
         </div>
 
-                <!-- Payment Form Section -->
-        <div id="paymentSection" style="display: none;">
-            <div class="custom-summary-box modern-summary-box">
-                <h4>@lang('messages.payment_details')</h4>
-                <form id="paymentForm" action="YOUR_PAYMENT_PROCESSING_URL" method="POST">
-                    <!-- User Name Field -->
-                    <div class="form-group">
-                        <label for="name" class="form-label">@lang('messages.name_on_card')</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="@lang('messages.placeholder_name_on_card')" required>
-                    </div>
-
-                    <!-- Card Number Field -->
-                    <div class="form-group">
-                        <label for="cardNumber" class="form-label">@lang('messages.card_number')</label>
-                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="@lang('messages.placeholder_card_number')" required>
-                    </div>
-
-                    <!-- Expiry Date -->
-                    <div class="form-group">
-                        <label for="expiryDate" class="form-label">@lang('messages.expiry_date')</label>
-                        <input type="month" class="form-control" id="expiryDate" name="expiryDate"  required>
-                    </div>
-
-                    <!-- CVV Field -->
-                    <div class="form-group">
-                        <label for="cvv" class="form-label">@lang('messages.cvv')</label>
-                        <input type="password" class="form-control" id="cvv" name="cvv" placeholder="@lang('messages.placeholder_cvv')" required>
-                    </div>
-
-                      <!-- Display Total Amount -->
-                    <h5>@lang('messages.total_amount'): <span class="custom-text-success" id="paymentTotalAmount">Rs 0</span></h5>
-
-                    <div class="mt-2 form-group">
-                        <button type="button" class="custom-button custom-btn-primary" onclick="updateBoost()">@lang('messages.pay')</button>
-                    </div>
-
-                    <div class="form-group ">
-                        <button type="button" class="custom-button custom-btn-secondary" onclick="backToSummary()">@lang('messages.back_to_summary')</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        
 
 
 
@@ -482,6 +449,9 @@
 </div>
 
 
+<script>
+    const invoiceId = @json($invoiceId);
+</script>
 
 
 <script>
@@ -492,72 +462,79 @@
     let totalAmount = 0;
     let selectedPackageId = null;
     let selectedPackageTypeId = null; // Global variable for packagetypeId
+    let selectedDuration = null; // To store the selected duration
+    let selectedPackageName = null; // To store the selected package name
+
+    console.log(totalAmount);
 
 
     function selectPlanDropdown(packageId, packageName, selectElement) {
         selectedPackageId = packageId; // Store globally
-    let planName = selectElement.options[selectElement.selectedIndex].text;
-    let price = parseFloat(selectElement.value);
-    selectedPackageTypeId = parseInt(selectElement.options[selectElement.selectedIndex].getAttribute("data-id"), 10);
+        selectedPackageName = packageName; // Store package name
+        
+        let planName = selectElement.options[selectElement.selectedIndex].text;
+        let price = parseFloat(selectElement.value);
+        selectedPackageTypeId = parseInt(selectElement.options[selectElement.selectedIndex].getAttribute("data-id"), 10);
+        selectedDuration = parseInt(selectElement.options[selectElement.selectedIndex].getAttribute("data-duration"), 10);
 
 
-    // Clear previous selection
-    selectedPlans = [];
+        // Clear previous selection
+        selectedPlans = [];
 
-    if (price > 0) {
-        selectedPlans.push({ package: packageName, name: planName, price: price });
-    }
-
-    totalAmount = selectedPlans.length > 0 ? selectedPlans[0].price : 0;
-
-    document.getElementById("totalAmount").innerText = `Rs ${totalAmount}`;
-    document.getElementById("selectedPlans").innerHTML = selectedPlans.length
-        ? `<strong>${selectedPlans[0].package}:</strong> ${selectedPlans[0].name}`
-        : "No plans selected";
-
-    // Show remove icon next to the dropdown if a plan is selected
-    let removeIcon = document.getElementById(`removeIcon${packageId}`);
-    if (price > 0) {
-        removeIcon.style.display = "inline-block";
-    } else {
-        removeIcon.style.display = "none";
-    }
-
-    document.getElementById("continueButton").disabled = selectedPlans.length === 0;
-
-    // Reset all dropdowns except the current one
-    document.querySelectorAll("select").forEach(select => {
-        if (select !== selectElement) {
-            select.selectedIndex = 0;
+        if (price > 0) {
+            selectedPlans.push({ package: packageName, name: planName, price: price, duration: selectedDuration });
         }
-    });
-}
 
-function removePlan(packageId) {
-    // Reset the selected plan for the corresponding dropdown
-    let selectElement = document.getElementById(`packageSelect${packageId}`);
-    selectElement.selectedIndex = 0;
+        totalAmount = selectedPlans.length > 0 ? selectedPlans[0].price : 0;
 
-    // Hide the remove icon
-    document.getElementById(`removeIcon${packageId}`).style.display = "none";
+        document.getElementById("totalAmount").innerText = `Rs ${totalAmount}`;
+        document.getElementById("selectedPlans").innerHTML = selectedPlans.length
+            ? `<strong>${selectedPlans[0].package}:</strong> ${selectedPlans[0].name}`
+            : "No plans selected";
 
-    // Clear selection and reset UI
-    selectedPlans = [];
-    totalAmount = 0;
-    document.getElementById("totalAmount").innerText = `Rs ${totalAmount}`;
-    document.getElementById("selectedPlans").innerHTML = "No plans selected";
-    document.getElementById("continueButton").disabled = true;
+        // Show remove icon next to the dropdown if a plan is selected
+        let removeIcon = document.getElementById(`removeIcon${packageId}`);
+        if (price > 0) {
+            removeIcon.style.display = "inline-block";
+        } else {
+            removeIcon.style.display = "none";
+        }
 
-    // Reload the page after a short delay to allow changes to take effect
-    setTimeout(function() {
-        location.reload();
-    }, 200); // Adjust the timeout as needed
-}
+        document.getElementById("continueButton").disabled = selectedPlans.length === 0;
 
+        // Reset all dropdowns except the current one
+        document.querySelectorAll("select").forEach(select => {
+            if (select !== selectElement) {
+                select.selectedIndex = 0;
+            }
+        });
+    }
 
+    function removePlan(packageId) {
+        // Reset the selected plan for the corresponding dropdown
+        let selectElement = document.getElementById(`packageSelect${packageId}`);
+        selectElement.selectedIndex = 0;
 
+        // Hide the remove icon
+        document.getElementById(`removeIcon${packageId}`).style.display = "none";
 
+        // Clear selection and reset UI
+        selectedPlans = [];
+        totalAmount = 0;
+        selectedPackageId = null;
+        selectedPackageTypeId = null;
+        selectedDuration = null;
+        selectedPackageName = null;
+        
+        document.getElementById("totalAmount").innerText = `Rs ${totalAmount}`;
+        document.getElementById("selectedPlans").innerHTML = "No plans selected";
+        document.getElementById("continueButton").disabled = true;
 
+        // Reload the page after a short delay to allow changes to take effect
+        setTimeout(function() {
+            location.reload();
+        }, 200); // Adjust the timeout as needed
+    }
 
     function backToAdBoost() {
         document.getElementById("summarySection").style.display = "none";
@@ -577,7 +554,6 @@ function removePlan(packageId) {
     }
 
     function showSummary() {
-
         console.log("Ad Image Path:", ad.mainImage);
 
         document.getElementById("summaryTotalAmount").innerText = `Rs ${totalAmount}`;
@@ -588,13 +564,14 @@ function removePlan(packageId) {
         document.getElementById("summaryAdTitle").innerText = ad.title;
         document.getElementById("summaryAdDescription").innerText = ad.description;
         document.getElementById("summaryAdPrice").innerText = "Rs " + ad.price;
+        
         // Find the package that matches ad.ads_package
         const packageName = packages.find(pkg => pkg.id === ad.ads_package)?.name || "Unknown Package";
 
         // Update the element with the package name
         document.getElementById("summaryAdCurrentPackage").innerText = packageName;
 
-            // Find the matching package type using both ad.ads_package and ad.package_type
+        // Find the matching package type using both ad.ads_package and ad.package_type
         const packageType = packagesType.find(pt => pt.package_id === ad.ads_package && pt.id === ad.package_type);
 
         // Get duration or set a default value if not found
@@ -603,7 +580,6 @@ function removePlan(packageId) {
         // Update the element with the duration
         document.getElementById("summaryAdCurrentPackageType").innerText = duration;
         document.getElementById("summaryAdCurrentPackageExpired").innerText = ad.package_expire_at;
-
 
         document.querySelector(".custom-boost-options").style.display = "none";
         document.querySelector(".custom-summary-box").style.display = "none";
@@ -620,22 +596,102 @@ function removePlan(packageId) {
         let summaryStep = document.getElementById("summaryStep");
         summaryStep.classList.add("active");
         summaryStep.classList.remove("disabled");
-
-
     }
 
-    // Show Payment Form (triggered when Proceed to Payment button is clicked)
+    // Function to save boosting info to the boostingaddinfo table
+    function saveBoostingInfo() {
+        if (!selectedPackageId || !selectedPackageTypeId) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please select a package before proceeding!'
+            });
+            return;
+        }
+
+        // Extract price from selectedPlans
+        let price = selectedPlans.length > 0 ? selectedPlans[0].price : 0;
+        
+        // Get the current package info
+        const currentPackageName = document.getElementById("summaryAdCurrentPackage").innerText;
+        const currentPackageDuration = document.getElementById("summaryAdCurrentPackageType").innerText;
+        const currentPackageExpiry = document.getElementById("summaryAdCurrentPackageExpired").innerText;
+
+// Convert durations to integer
+    const currentPackageDuration1 = parseInt(currentPackageDuration) || 0;
+    const newPackageDuration1 = parseInt(selectedDuration) || 0;
+
+    // Data to save
+    const boostingData = {
+        ad_id: ad.adsId,
+        ad_title: ad.title,
+        ad_description: ad.description,
+        ad_price: ad.price,
+        current_package_id: ad.ads_package,
+        current_package_name: currentPackageName,
+        current_package_type_id: ad.package_type,
+        current_package_duration: currentPackageDuration1,
+        current_package_expiry: currentPackageExpiry,
+        new_package_id: selectedPackageId,
+        new_package_name: selectedPackageName,
+        new_package_type_id: selectedPackageTypeId,
+        new_package_duration: newPackageDuration1,
+        amount: price,
+        payment_status: 'pending',
+        invoice_id: invoiceId
+    };
+        console.log("Boosting Data:", boostingData);
+
+
+        // Save to the boostingaddinfo table
+        fetch("{{ route('boosting.saveInfo') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json", // <-- Add this line
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+            },
+            body: JSON.stringify(boostingData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                console.log("Boosting info saved successfully!", data);
+                 // Redirect to billing page
+                 window.location.href = data.redirect;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message || 'Failed to save boosting information.'
+                });
+            }
+        })
+        .catch(error => {
+            console.error("Error saving boosting info:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to save boosting information. Please try again.'
+            });
+        });
+    }
+
+    // Show Payment Form (triggered after saving boosting info)
     function showPaymentForm() {
+        // Get the total amount from the summary section
+        let totalAmount = document.getElementById("summaryTotalAmount").innerText;
+        
+        // Set the total amount in the payment section
+        document.getElementById("paymentTotalAmount").innerText = totalAmount;
 
-         // Get the total amount from the summary section
-         let totalAmount = document.getElementById("summaryTotalAmount").innerText;
-
-         // Set the total amount in the payment section
-          document.getElementById("paymentTotalAmount").innerText = totalAmount;
-
-        // Hide summary and Proceed to Payment button
+        // Hide summary section
         document.getElementById("summarySection").style.display = "none";
-
 
         // Show payment form
         document.getElementById("paymentSection").style.display = "block";
@@ -649,15 +705,9 @@ function removePlan(packageId) {
         let paymentStep = document.getElementById("paymentStep");
         paymentStep.classList.add("active");
         paymentStep.classList.remove("disabled");
-
-        // let paymentStep = document.querySelector(".custom-step-nav .custom-nav-link:nth-child(3)");
-        // paymentStep.classList.add("active");
-        // paymentStep.classList.remove("disabled");
     }
 
     function backToSummary() {
-
-
         // Hide the Payment Section
         document.getElementById("paymentSection").style.display = "none";
 
@@ -673,68 +723,12 @@ function removePlan(packageId) {
             link.classList.add("disabled");
         });
 
-
         let summaryStep = document.getElementById("summaryStep");
         summaryStep.classList.add("active");
         summaryStep.classList.remove("disabled");
     }
 
-
-
-
-
-    // Function to send selected package data to the controller
-    function updateBoost() {
-    console.log("Selected Package ID:", selectedPackageId);
-    console.log("Selected Package Type ID:", selectedPackageTypeId);
-    console.log("adsID:", ad.adsId);
-
-    if (!selectedPackageId || !selectedPackageTypeId) {
-        alert("Please select a package before proceeding!");
-        return;
-    }
-
-    let csrfToken = document.querySelector('meta[name="csrf-token"]');
-
-    if (!csrfToken) {
-        console.error("CSRF token not found! Make sure it's included in your HTML.");
-        return;
-    }
-
-    fetch("{{ route('boosting.update') }}", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
-    },
-    body: JSON.stringify({
-        adsId: ad.adsId,
-        ads_package: selectedPackageId,
-        package_type: selectedPackageTypeId
-    })
-})
-.then(response => response.text()) // Read as text
-.then(data => {
-    console.log("Raw Server Response:", data); // Log full response
-
-    try {
-        let jsonData = JSON.parse(data); // Try parsing JSON
-        if (jsonData.success) {
-            alert("Ad boosting updated successfully!");
-        } else {
-            alert("Error: " + jsonData.message);
-        }
-    } catch (error) {
-        console.error("Invalid JSON response:", data); // Show invalid response
-    }
-})
-.catch(error => {
-    console.error("Error updating ad boosting:", error);
-});
-
-}
-
-
+    
 </script>
 
 @endsection

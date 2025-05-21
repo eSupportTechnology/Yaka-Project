@@ -14,6 +14,8 @@ use App\Models\PackageType;
 use App\Models\BrandsModels;
 use Illuminate\Support\Facades\App;
 use App\Models\City;
+use App\Services\IpgHashService;
+use App\Models\PaymentInfo;
 
 class AdsController extends Controller
 {
@@ -190,10 +192,15 @@ class AdsController extends Controller
         $ad = Ads::findOrFail($adsId);
         $packages = Package::all(); // Fetch all packages
         $packageTypes = PackageType::all(); // Fetch all package types
+        $invoiceId = "YKAD".date('YmsHsi');
+        
+        session(['invoiceId' => $invoiceId]);
 
         $mainImage = $ad->mainImage;
 
-        return view('newFrontend.ads_boost_plans', compact('ad', 'mainImage', 'packages', 'packageTypes'));
+        
+
+        return view('newFrontend.ads_boost_plans', compact('ad', 'mainImage', 'packages', 'packageTypes','invoiceId'));
     }
 
 

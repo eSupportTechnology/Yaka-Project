@@ -9,6 +9,7 @@ use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\LocattionController;
 use App\Http\Controllers\api\BrandsModelsController;
 use App\Http\Controllers\frontend\PaymentProcessingController;
+use App\Http\Controllers\BoostingController;
 
 use App\Http\Controllers\apiMobile\AdsControllerMobile;
 use App\Http\Controllers\apiMobile\AuthControllerMobile;
@@ -80,7 +81,8 @@ Route::post('/ads/search', [AdsControllerMobile::class, 'searchByTitle']);
 // Payament info
 Route::post('/payment/notify',[PaymentProcessingController::class , 'getPaymentInfo']);
 
-
+// Payament ad boost 
+Route::post('/payment/boostnotify',[BoostingController::class , 'updateBoost']);
 
 
 
