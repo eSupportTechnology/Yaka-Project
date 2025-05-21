@@ -65,7 +65,7 @@ Route::get('/ping', function () {
     ]);
 });
 
-Route::post('/login', [AuthControllerMobile::class, 'login']);
+Route::post('/login', [AuthControllerMobile::class, 'mobileLogin']);
 Route::post('/logout', [AuthControllerMobile::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/register', [AuthControllerMobile::class, 'register']);
 

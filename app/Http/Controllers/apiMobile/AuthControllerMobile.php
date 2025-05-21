@@ -126,4 +126,53 @@ class AuthControllerMobile extends Controller
              ], 500);
          }
      }
+
+     public function mobileLogin(Request $request)
+     {
+        $validator = Validator::make($request->all(), [
+            'login' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $loginInput = $request->login;
+        $fieldType = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone_number';
+
+        $user = User::where($fieldType, $loginInput)->first();
+        if ($user && Hash::check($request->password, $user->password) && $user->roles === 'user') {
+            // No need to Auth::login() for API
+            
+            Log::info('User logged in successfully', ['user_id' => $user->id]);
+            // Create Passport personal access token
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->accessToken;
+            $tokenExpiration = $tokenResult->token->expires_at;
+
+            // Remove sensitive fields before returning user
+            $userData = $user->makeHidden(['password', 'remember_token']);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Login successful.',
+                'token' => $token,
+                'token_type' => 'Bearer',
+                'expires_at' => $tokenExpiration,
+                'user' => $userData,
+            ], 200);
+        }
+
+        Log::error('Login failed', ['login_input' => $loginInput]);
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid login credentials.',
+        ], 401);
+     }
 }
