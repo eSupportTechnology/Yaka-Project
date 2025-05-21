@@ -28,6 +28,7 @@ use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ContactController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\BoostingController;
 
 Route::post('/send-contact', [ContactController::class, 'send'])->name('contact.send');
 
@@ -266,10 +267,14 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::post('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'deletebanner'])->name('dashboard.banner.delete-banner');
 
 
+
+    
+
 });
-
-
+Route::get('/ad-boost-billing-details', [BoostingController::class, 'showBillingDetails'])->name('boosting.billingDetails');
+Route::post('/boosting/save-info', [BoostingController::class, 'saveInfo'])->name('boosting.saveInfo');
 Route::post('/boosting-update', [UserAdsController::class, 'boostingUpdate'])->name('boosting.update');
+
 
 
 

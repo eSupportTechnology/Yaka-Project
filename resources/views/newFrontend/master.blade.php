@@ -27,6 +27,7 @@
 <link href="{{ asset('newFrontend/Clasifico/assets/css/responsive.css') }}" rel="stylesheet">
 
 
+    
 </head>
 
 
