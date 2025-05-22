@@ -167,14 +167,14 @@ public function boostcomplete(Request $request)
         $invoiceId = $request->query('invId'); // Get invId from URL
 
         if (!$invoiceId) {
-            return redirect()->route('newFrontend.user.payment-confirming');
+            return view('newFrontend.user.payment-confirming');
         }
 
         // Attempt to fetch the payment record
         $payment = AdBoostPaymentInfo::where('invoice_id', $invoiceId)->first();
 
         if (!$payment) {
-            return redirect()->route('newFrontend.user.payment-error')->with('error', 'Payment record not found.');
+            return view('newFrontend.user.payment-error')->with('error', 'Payment record not found.');
         }
 
         // Payment record exists, return success
@@ -184,7 +184,7 @@ public function boostcomplete(Request $request)
         // Log the error for debugging
         Log::error('Payment check failed: ' . $e->getMessage());
 
-        return redirect()->route('newFrontend.user.payment-error')->with('error', 'An unexpected error occurred while checking payment.');
+         return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
     }
 }
 
