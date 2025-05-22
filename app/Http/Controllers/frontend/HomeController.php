@@ -35,7 +35,7 @@ class HomeController extends Controller
                       ->orWhere('package_expire_at', '>=', now());
             })
             ->latest()
-            ->take(5)
+            ->take(10)
             ->get();
 
         // Get Top Ads that are active and not expired
@@ -47,7 +47,7 @@ class HomeController extends Controller
                       ->orWhere('package_expire_at', '>=', now());
             })
             ->latest()
-            ->take(5)
+            ->take(10)
             ->get();
 
         // Get Latest Ads that are active and not expired

@@ -713,10 +713,10 @@
                         </div>
                     </div>
                     <div class="mt-3 d-flex carousel-thumbnails">
-                        @foreach ($superAds->take(10) as $index => $adss)
+                        @foreach ($superAds as $index => $adss)
                             <img src="{{ storage_public_url($adss->mainImage) }}" data-bs-target="#superAds"
                                 data-bs-slide-to="{{ $index }}" alt="Thumb {{ $index + 1 }}"
-                                style="width: 80px; height: 80px; object-fit: cover; border-radius: 5px; cursor: pointer;  flex-shrink: 0;"
+                                style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; cursor: pointer;  flex-shrink: 0;"
                                 class="thumbnail @if ($index == 0) active @endif">
                         @endforeach
                     </div>
@@ -806,7 +806,7 @@
                         </div>
                     </div>
                     <div class="mt-3 d-flex carousel-thumbnails">
-                        @foreach ($topAds->take(10) as $index => $ad)
+                        @foreach ($topAds as $index => $ad)
                             <img src="{{ storage_public_url($ad->mainImage) }}" data-bs-target="#topAds"
                                 data-bs-slide-to="{{ $index }}"
                                 class="thumbnail @if ($index == 0) active @endif" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; cursor: pointer;  flex-shrink: 0;"
