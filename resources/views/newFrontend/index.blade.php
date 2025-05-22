@@ -491,7 +491,7 @@
         .carousel-thumbnails {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 4px;
             margin-top: 15px;
             flex-wrap: nowrap;
             /* Prevent wrapping */
