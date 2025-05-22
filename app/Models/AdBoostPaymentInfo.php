@@ -13,5 +13,6 @@ class AdBoostPaymentInfo extends Model
         'check_value',
         'ads_id',
         'user_id',
+        'payment_status'
     ];
 }
