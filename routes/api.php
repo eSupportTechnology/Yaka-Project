@@ -14,6 +14,7 @@ use App\Http\Controllers\BoostingController;
 use App\Http\Controllers\apiMobile\AdsControllerMobile;
 use App\Http\Controllers\apiMobile\AuthControllerMobile;
 use App\Http\Controllers\apiMobile\CategoryControllerMobile;
+use App\Http\Controllers\apiMobile\HomepageControllerMobile;
 
 
 
@@ -83,6 +84,23 @@ Route::post('/payment/notify',[PaymentProcessingController::class , 'getPaymentI
 
 // Payament ad boost 
 Route::post('/payment/boostnotify',[BoostingController::class , 'updateBoost']);
+
+
+
+
+Route::middleware('auth:api')->group(function () {
+    // Homepage endpoints
+    Route::get('/home/banners', [HomepageControllerMobile::class, 'getHomeBanners'])
+         ->name('api.home.banners');
+    // Top and Bottom banners endpoint (regular banners)
+    Route::get('/banners/top-bottom', [HomepageControllerMobile::class, 'getTopBottomBanners']);
+    // Super Ads banners endpoint
+    Route::get('/banners/super-ads', [HomepageControllerMobile::class, 'getSuperAdsBanners']);
+    // Top Ads banners endpoint
+    Route::get('/banners/top-ads', [HomepageControllerMobile::class, 'getTopAdsBanners']);
+});
+
+
 
 
 
