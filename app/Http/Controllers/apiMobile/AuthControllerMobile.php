@@ -208,11 +208,11 @@ class AuthControllerMobile extends Controller
             $mobile = $request->mobile;
             $user = User::where('phone_number', $mobile)->first();
             $verificationCode = $request->verification_code;
-            if($user->otp != $verificationCode) {
-                return $apiResponse->error(null,  'Verification code invalid.', 500);
-            }
             if($user->is_mobile_verifed == 1) {
                 return $apiResponse->error(null,  'User Already Verified.', 500);
+            }
+            if($user->otp != $verificationCode) {
+                return $apiResponse->error(null,  'Verification code invalid.', 500);
             }
             $user->is_mobile_verifed = 1;
             $user->save();
