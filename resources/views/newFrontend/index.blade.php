@@ -545,15 +545,9 @@
         }
 
         @media (max-width: 576px) {
-            .carousel-thumbnails img {
-                width: 40px;
-                height: 30px;
-            }
-
-            .top-carousel-thumbnails img {
-                width: 40px;
-                height: 30px;
-            }
+           .carousel-thumbnails{
+             display: none !important;
+           }
 
             .badge-top-left {
                 width: 30px;
