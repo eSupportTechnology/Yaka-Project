@@ -17,6 +17,7 @@ return new class extends Migration
         $table->string('check_value')->nullable(); 
         $table->unsignedBigInteger('ads_id');
         $table->unsignedBigInteger('user_id');
+        $table->integer('payment_status')->default(0); // 0-Pending, 1-Succes
         $table->timestamps();
 
      });

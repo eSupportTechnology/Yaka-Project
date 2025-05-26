@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Session;
 class BoostingController extends Controller
 {
     
-    public function saveInfo(Request $request)
+   public function saveInfo(Request $request)
 {
     $data = $request->validate([
         'ad_id' => 'required|integer',
@@ -36,13 +36,42 @@ class BoostingController extends Controller
         'invoice_id' => 'required|string'
     ]);
 
-    $info = BoostingAddInfo::create($data);
+    // Save or update BoostingAddInfo
+    $info = BoostingAddInfo::updateOrCreate(
+        ['invoice_id' => $data['invoice_id']],  // search by this
+        $data // update or insert with this data
+    );
+
+    // Get the related ad to extract user_id
+    $ad = Ads::where('adsId', $data['ad_id'])->first();
+
+    if (!$ad) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Ad not found for the given ad_id.'
+        ], 404);
+    }
+
+    // Save or update AdBoostPaymentInfo
+    AdBoostPaymentInfo::updateOrCreate(
+        ['invoice_id' => $data['invoice_id']], // search key
+        [
+            'check_value'    => IpgHashService::hash($data['amount'], $data['invoice_id']),
+            'ads_id'         => $data['ad_id'],
+            'user_id'        => auth()->user()->id,
+            'payment_status' => 0
+        ]
+    );
+
+    // Store invoice ID in session
+    session(['invoiceId' => $data['invoice_id']]);
 
     return response()->json([
         'success' => true,
         'redirect' => route('boosting.billingDetails')
     ]);
 }
+
 
 public function showBillingDetails()
 {
@@ -84,7 +113,6 @@ public function updateBoost(Request $request)
 
         Log::debug('checkValue: ' . $checkValue);
 
-
         if (!$invoiceNo) {
             throw new \Exception('Invoice number is missing.');
         }
@@ -107,7 +135,7 @@ public function updateBoost(Request $request)
             }
 
             // Calculate the new package expiry
-            $newExpiryDate = Carbon::now()->addDays($boostingInfo->new_package_duration);
+            $newExpiryDate = Carbon::now()->addDays((int)($boostingInfo->new_package_duration));
 
             // Update the ad with new package details
             $ad->update([
@@ -116,15 +144,8 @@ public function updateBoost(Request $request)
                 'package_expire_at' => $newExpiryDate,
             ]);
 
-            
-
-            // ✅ Save boost payment info
-            AdBoostPaymentInfo::create([
-                'invoice_id'  => $invoiceNo,
-                'check_value' => $checkValue,
-                'ads_id'      => $ad->adsId,
-                'user_id'     => $ad->user_id,
-            ]);
+            //  Update payment status
+            AdBoostPaymentInfo::where('invoice_id', $invoiceNo)->update(['payment_status' => 1]);
 
             // Log success
             Log::info('Ad package successfully updated after payment.', [
@@ -161,32 +182,35 @@ public function updateBoost(Request $request)
     }
 }
 
+
 public function boostcomplete(Request $request)
-    {
-       try {
-        $invoiceId = $request->query('invId'); // Get invId from URL
+{
+    try {
+        $invoiceId = $request->query('invId');
 
-        if (!$invoiceId) {
-            return view('newFrontend.user.payment-confirming');
-        }
+        // Retrieve payment info based on invoice ID
+        $paymentInfo = AdBoostPaymentInfo::where('invoice_id', $invoiceId)->first();
 
-        // Attempt to fetch the payment record
-        $payment = AdBoostPaymentInfo::where('invoice_id', $invoiceId)->first();
-
-        if (!$payment) {
+        // If no record found, show error page
+        if (!$paymentInfo) {
             return view('newFrontend.user.payment-error')->with('error', 'Payment record not found.');
         }
 
-        // Payment record exists, return success
-        return redirect()->route('user.my_ads')->with('success', 'Payment completed successfully.');
+        // Check payment status
+        if ($paymentInfo->payment_status == 0) {
+            return view('newFrontend.user.payment-confirming');
+        } elseif ($paymentInfo->payment_status == 1) {
+            return redirect()->route('user.my_ads')->with('success', 'Payment successful! Your ad has been updated.');
+        } else {
+            return view('newFrontend.user.payment-error')->with('error', 'Invalid payment status.');
+        }
 
     } catch (\Exception $e) {
-        // Log the error for debugging
-        Log::error('Payment check failed: ' . $e->getMessage());
-
-         return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
+        Log::error('Payment processing error', ['error' => $e->getMessage()]);
+        return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
     }
 }
+
 
     
     
