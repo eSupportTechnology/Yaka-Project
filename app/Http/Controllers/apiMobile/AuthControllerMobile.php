@@ -207,6 +207,9 @@ class AuthControllerMobile extends Controller
         try {
             $mobile = $request->mobile;
             $user = User::where('phone_number', $mobile)->first();
+            if(!$user) {
+                return $apiResponse->error(null,  'User not found with entered mobile number.', 500);
+            }
             $verificationCode = $request->verification_code;
             if($user->is_mobile_verifed == 1) {
                 return $apiResponse->error(null,  'User Already Verified.', 500);
