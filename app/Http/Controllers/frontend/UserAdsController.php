@@ -206,6 +206,9 @@ class UserAdsController extends Controller
                 if ($packageType) {
                     $packageExpireAt = Carbon::now()->addDays((int)($packageType->duration));
                 }
+            }else {
+                // Free ad
+                $packageExpireAt = Carbon::now()->addDays(30);
             }
            $manager = new ImageManager(new Driver());
 

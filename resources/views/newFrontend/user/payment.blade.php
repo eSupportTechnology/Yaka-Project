@@ -40,6 +40,20 @@
         font-weight: bold;
     }
 
+    
+    #btnSpinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ffffff;
+    border-top: 2px solid #28a745;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://sandboxipgsdk.payable.lk/sdk/v4/payable-checkout.js"></script>
@@ -91,8 +105,13 @@
         </div>
 
         <!-- Initial Pay Now Button -->
-        <button onclick="returnForm()" type="button" id="show-card-page" class="btn btn-success w-100 pay_now">Pay Now</button>
-    </div>
+        {{-- <button onclick="returnForm()" type="button" id="show-card-page" class="btn btn-success w-100 pay_now">Pay Now</button>
+    </div> --}}
+
+        <button onclick="returnForm()" type="button" id="payNowBtn" class="btn btn-success w-100 d-flex justify-content-center align-items-center">
+          <span id="payNowText">Pay N</span>
+          <div id="btnSpinner" class="ms-2 spinner-border spinner-border-sm text-light" role="status" style="display: none;"></div>
+        </button>
 
     <!-- Payment Form Page (Initially Hidden) -->
     <div class="payment-container mb-4" id="card-details-page">
@@ -145,6 +164,13 @@
             });
             return; // Stop if validation fails
         }
+
+        // Show spinner & disable button
+    document.getElementById('btnSpinner').style.display = 'inline-block';
+    document.getElementById('payNowBtn').disabled = true;
+    document.getElementById('payNowText').textContent = "Processing...";
+
+
        const payment = {
             logoUrl: "{{ config('ipg.logo-url') }}",
             returnUrl: returnUrl,
