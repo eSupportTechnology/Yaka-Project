@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\apiMobile;
 
-use App\Http\Controllers\Controller;
-
 use App\Models\User;
+
+use App\Services\OtpService;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Services\ApiResponseService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
 
 class AuthControllerMobile extends Controller
 {
@@ -62,7 +64,7 @@ class AuthControllerMobile extends Controller
     /**
      * Handle user logout request.
      */
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request, ApiResponseService $apiResponse): JsonResponse
     {
 
         Auth::logout();
@@ -71,14 +73,11 @@ class AuthControllerMobile extends Controller
         Log::info('User logged out successfully');
 
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Logged out successfully.',
-        ], 200);
+        return $apiResponse->success(null, 'Logged out successfully.', 200);
     }
 
 
-     public function register(Request $request)
+     public function register(Request $request, ApiResponseService $apiResponse)
      {
 
          $validator = Validator::make($request->all(), [
@@ -90,11 +89,7 @@ class AuthControllerMobile extends Controller
          ]);
 
          if ($validator->fails()) {
-             return response()->json([
-                 'status' => 'error',
-                 'message' => 'Validation failed.',
-                 'errors' => $validator->errors()
-             ], 422);
+             return $apiResponse->error($validator->errors(),  'Validation failed.', 422);
          }
 
 
@@ -110,24 +105,15 @@ class AuthControllerMobile extends Controller
 
              Log::info('New user registered', ['user_id' => $user->id]);
 
-
-             return response()->json([
-                 'status' => 'success',
-                 'message' => 'User registered successfully.',
-                 'user' => $user
-             ], 201);
+             return $apiResponse->success($user, 'User registered successfully.', 201);
          } catch (\Exception $e) {
 
              Log::error('Error during registration', ['error_message' => $e->getMessage()]);
-
-             return response()->json([
-                 'status' => 'error',
-                 'message' => 'An error occurred during registration.'
-             ], 500);
+             return $apiResponse->error($e->getMessage(), 'An error occurred during registration.', 500);
          }
      }
 
-     public function mobileLogin(Request $request)
+     public function mobileLogin(Request $request, ApiResponseService $apiResponse)
      {
         $validator = Validator::make($request->all(), [
             'login' => 'required|string',
@@ -135,11 +121,7 @@ class AuthControllerMobile extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Validation failed.',
-                'errors' => $validator->errors(),
-            ], 422);
+            return $apiResponse->error($validator->errors(),  'Validation failed.', 422);
         }
 
         $loginInput = $request->login;
@@ -147,6 +129,10 @@ class AuthControllerMobile extends Controller
 
         $user = User::where($fieldType, $loginInput)->first();
         if ($user && Hash::check($request->password, $user->password) && $user->roles === 'user') {
+
+            if($user->phone_number == 0) {
+                return $apiResponse->error(null,  'Mobile Number Not Verified', 500);
+            }
             // No need to Auth::login() for API
 
             Log::info('User logged in successfully', ['user_id' => $user->id]);
@@ -171,9 +157,75 @@ class AuthControllerMobile extends Controller
 
         Log::error('Login failed', ['login_input' => $loginInput]);
 
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Invalid login credentials.',
-        ], 401);
+        return $apiResponse->error(null,  'Invalid login credentials', 401);
      }
+
+    /**
+     * Send mobile verification code
+    */
+    public function SendMobileVerificationCode(Request $request, ApiResponseService $apiResponse)
+    {
+        $validator = Validator::make($request->all(), [
+            'mobile' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
+        ]);
+
+        if ($validator->fails()) {
+            return $apiResponse->error($validator->errors(),  'Validation failed.', 422);
+        }
+
+        $user = User::where('phone_number', $request->phone_number)->first();
+        if(!$user) {
+            return $apiResponse->error(null,  'User not found with entered mobile number.', 500);
+        }
+        $verificationCode = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        $user->otp = $verificationCode;
+        $user->save();
+        if(!OtpService::sendSingleSms($request->phone_number, "Verification Code: ".$verificationCode)) {
+            return $apiResponse->error(null,  'Sending verifcation code failed. Try again.', 500);
+        }
+        $data = [
+            'mobile' => $request->phone_number,
+            'verification_code' => $verificationCode,
+        ];
+        return $apiResponse->success($data, 'Verification Code successfully Sent.', 200);
+    }
+
+    /**
+     * Verify registration OTP
+     */
+    public function verifyRegistrationOtp(Request $request, ApiResponseService $apiResponse)
+    {
+        $validator = Validator::make($request->all(), [
+            'verification_code' => ['required'],
+            'mobile' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
+        ]);
+
+        if ($validator->fails()) {
+            return $apiResponse->error($validator->errors(),  'Validation failed.', 422);
+        }
+
+        try {
+            $mobile = $request->mobile;
+            $user = User::where('phone_number', $mobile)->first();
+            $verificationCode = $request->verification_code;
+            if($user->otp != $verificationCode) {
+                return $apiResponse->error(null,  'Verification code invalid.', 500);
+            }
+            if($user->is_mobile_verifed == 1) {
+                return $apiResponse->error(null,  'User Already Verified.', 500);
+            }
+            $user->is_mobile_verifed = 1;
+            $user->save();
+
+            return $apiResponse->success($user, 'Mobile Verification Completed.', 200);
+        } catch (\Exception $e) {
+            // Log the error details
+            Log::error('Error during sending verification code', [
+                'error_message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return $apiResponse->error($e->getMessage(),  'Error during sending verification code', 500);
+        }
+    }
 }

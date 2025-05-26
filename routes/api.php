@@ -82,7 +82,7 @@ Route::post('/ads/search', [AdsControllerMobile::class, 'searchByTitle']);
 // Payament info
 Route::post('/payment/notify',[PaymentProcessingController::class , 'getPaymentInfo']);
 
-// Payament ad boost 
+// Payament ad boost
 Route::post('/payment/boostnotify',[BoostingController::class , 'updateBoost']);
 
 
@@ -99,6 +99,12 @@ Route::middleware('auth:api')->group(function () {
     // Top Ads banners endpoint
     Route::get('/banners/top-ads', [HomepageControllerMobile::class, 'getTopAdsBanners']);
 });
+
+/**
+ * Public route API
+ */
+Route::get('/send/verification-code', [AuthControllerMobile::class, 'SendMobileVerificationCode']); // Send Verification Code
+Route::get('/verify/registration-otp', [AuthControllerMobile::class, 'verifyRegistrationOtp']); // Verify Registration OTP
 
 
 
