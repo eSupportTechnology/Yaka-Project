@@ -16,140 +16,94 @@ use Illuminate\Support\Facades\App;
 use App\Models\City;
 use App\Services\IpgHashService;
 use App\Models\PaymentInfo;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class AdsController extends Controller
 {
 
 
     public function browseAds(Request $request)
-{
-    $locale = App::getLocale();
-    $searchName = 'name_' . $locale;
+    {
+        $locale = App::getLocale();
+        $searchName = 'name_'.$locale;
+        // Get selected filters from the request
+        $selectedLocation = $request->input('location');
+        $selectedCity = $request->input('city');
+        $selectedCategory = $request->input('category');
+        $selectedSubCategory = $request->input('subcategory');
+        $searchTerm = $request->input('search-field');
 
-    $selectedLocation = $request->input('location');
-    $selectedCity = $request->input('city');
-    $selectedCategory = $request->input('category');
-    $selectedSubCategory = $request->input('subcategory');
-    $searchTerm = $request->input('search-field');
+        $selectedCityName = 'Locations';
+        $selectedCategoryName = 'Categories';
+        if(isset($selectedCity)) {
+            $selectedCityName = City::where('id', $selectedCity)->first()->$searchName;
+        }
+        if(isset($selectedCategory)) {
+            $selectedCategoryName = Category::where('mainId', $selectedCategory)->first()->name;
+        }
 
-    $selectedCityName = 'Locations';
-    $selectedCategoryName = 'Categories';
-    if (isset($selectedCity)) {
-        $cityModel = City::find($selectedCity);
-        $selectedCityName = $cityModel ? $cityModel->$searchName : 'Locations';
+        $categories = Category::where('mainId', 0)->get();
+        $districts = Districts::all();
+        $citys = Cities::all();
+
+        // Fetch urgent ads based on the selected category and package expiry date check
+        $superAdsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
+            ->where('ads_package', 6)
+            ->where('status', 1)
+            ->where(function($query) {
+                $query->whereNull('package_expire_at')
+                      ->orWhere('package_expire_at', '>=', now());
+            })
+            ->latest();
+
+        if (!empty($selectedCategory)) {
+            $superAdsQuery->where('cat_id', $selectedCategory);
+        }
+
+        $superAds = $superAdsQuery->get();
+
+        $adsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
+            ->where('status', 1)
+            ->orderByRaw('CASE
+                WHEN ads_package = 3 THEN 1
+                WHEN ads_package = 6 THEN 2
+                WHEN ads_package = 5 THEN 2
+                ELSE 4
+            END')
+            ->latest();
+
+
+        if (!empty($selectedLocation)) {
+            $adsQuery->where(function ($query) use ($selectedLocation, $selectedCity) {
+                $query->where('location', $selectedLocation)
+                    ->orWhere('sublocation', $selectedCity);
+            });
+        }
+
+        if (!empty($selectedCategory)) {
+            $adsQuery->where('cat_id', $selectedCategory);
+        }
+
+        if (!empty($selectedSubCategory)) {
+            $adsQuery->where('sub_cat_id', $selectedSubCategory);
+        }
+
+        if (!empty($searchTerm)) {
+            $adsQuery->where(function ($query) use ($searchTerm) {
+                $query->where('title', 'like', "%{$searchTerm}%")
+                    ->orWhere('description', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        $ads = $adsQuery->paginate(30);
+
+        $category = Category::find($selectedCategory);
+
+        $banners = Banners::where('type', 1)->get();
+
+        $all_banners = \App\Models\Banners::where('type', 0)->get();
+
+        return view('newFrontend.browse-ads', compact('categories', 'superAds','all_banners', 'ads', 'districts', 'banners', 'category','citys', 'selectedCityName', 'selectedCategoryName'));
     }
-    if (isset($selectedCategory)) {
-        $categoryModel = Category::where('mainId', $selectedCategory)->first();
-        $selectedCategoryName = $categoryModel ? $categoryModel->name : 'Categories';
-    }
-
-    $categories = Category::where('mainId', 0)->get();
-    $districts = Districts::all();
-    $citys = Cities::all();
-
-    // Super Ads
-    $superAds = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
-        ->where('ads_package', 6)
-        ->where('status', 1)
-        ->when($selectedCategory, function ($query) use ($selectedCategory) {
-            return $query->where('cat_id', $selectedCategory);
-        })
-        ->where(function ($query) {
-            $query->whereNull('package_expire_at')
-                  ->orWhere('package_expire_at', '>=', now());
-        })
-        ->latest()
-        ->get();
-
-    // Non-package-4 ads
-    $nonPackage4Ads = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
-        ->where('status', 1)
-        ->where('ads_package', '!=', 4)
-        ->when($selectedLocation, function ($query) use ($selectedLocation, $selectedCity) {
-            $query->where(function ($q) use ($selectedLocation, $selectedCity) {
-                $q->where('location', $selectedLocation)->orWhere('sublocation', $selectedCity);
-            });
-        })
-        ->when($selectedCategory, function ($query) use ($selectedCategory) {
-            $query->where('cat_id', $selectedCategory);
-        })
-        ->when($selectedSubCategory, function ($query) use ($selectedSubCategory) {
-            $query->where('sub_cat_id', $selectedSubCategory);
-        })
-        ->when($searchTerm, function ($query) use ($searchTerm) {
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('title', 'like', "%{$searchTerm}%")
-                  ->orWhere('description', 'like', "%{$searchTerm}%");
-            });
-        })
-        ->orderByRaw("CASE
-            WHEN ads_package = 3 THEN 1
-            WHEN ads_package = 6 THEN 2
-            WHEN ads_package = 5 THEN 2
-            ELSE 4
-        END")
-        ->latest()
-        ->get();
-
-    // Package 4 ads
-    $package4Ads = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
-        ->where('status', 1)
-        ->where('ads_package', 4)
-        ->when($selectedLocation, function ($query) use ($selectedLocation, $selectedCity) {
-            $query->where(function ($q) use ($selectedLocation, $selectedCity) {
-                $q->where('location', $selectedLocation)->orWhere('sublocation', $selectedCity);
-            });
-        })
-        ->when($selectedCategory, function ($query) use ($selectedCategory) {
-            $query->where('cat_id', $selectedCategory);
-        })
-        ->when($selectedSubCategory, function ($query) use ($selectedSubCategory) {
-            $query->where('sub_cat_id', $selectedSubCategory);
-        })
-        ->when($searchTerm, function ($query) use ($searchTerm) {
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('title', 'like', "%{$searchTerm}%")
-                  ->orWhere('description', 'like', "%{$searchTerm}%");
-            });
-        })
-        ->latest()
-        ->get();
-
-    $rotated = collect();
-    $package4Count = $package4Ads->count();
-    if ($package4Count > 0) {
-        $time = now();
-        $slot = floor($time->diffInSeconds(now()->startOfDay()) / 30);
-        $index = $slot % $package4Count;
-        $rotated = $package4Ads->slice($index)->concat($package4Ads->slice(0, $index));
-    }
-
-    $allSortedAds = $nonPackage4Ads->concat($rotated);
-
-    // Manual pagination
-    $page = request()->get('page', 1);
-    $perPage = 30;
-    $paginatedItems = $allSortedAds->forPage($page, $perPage);
-
-    $ads = new LengthAwarePaginator(
-        $paginatedItems,
-        $allSortedAds->count(),
-        $perPage,
-        $page,
-        ['path' => request()->url(), 'query' => request()->query()]
-    );
-
-    $category = Category::find($selectedCategory);
-    $banners = Banners::where('type', 1)->get();
-    $all_banners = Banners::where('type', 0)->get();
-
-    return view('newFrontend.browse-ads', compact(
-        'categories', 'superAds', 'all_banners', 'ads', 'districts', 'banners',
-        'category', 'citys', 'selectedCityName', 'selectedCategoryName'
-    ));
-}
-
 
 
 
