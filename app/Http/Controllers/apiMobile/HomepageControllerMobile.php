@@ -8,79 +8,15 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Services\ApiResponseService;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Ads;
 
 class HomepageControllerMobile extends Controller
 {
-    /**
-     * Get home page banners for the mobile app
+    protected $apiResponse;
 
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getHomeBanners()
+    public function __construct(ApiResponseService $apiResponse)
     {
-        try {
-            // Use cache to improve performance (cache for 30 minutes)
-            return Cache::remember('mobile_home_banners', 1800, function () {
-                // Get regular banners (type 0)
-                $regularBanners = Banners::where('type', 0)
-                    ->select('id', 'img', 'type', 'created_at')
-                    ->orderBy('created_at', 'desc')
-                    ->get()
-                    ->map(function ($banner) {
-                        return [
-                            'id' => $banner->id,
-                            'type' => $banner->type,
-                            'image_url' => asset('banners/' . $banner->img),
-                            //'created_at' => $banner->created_at->toIso8601String(),
-                        ];
-                    });
-
-                // Get top/featured banners (type 1)
-                $topBanners = Banners::where('type', 1)
-                    ->select('id', 'img', 'type', 'created_at')
-                    ->orderBy('created_at', 'desc')
-                    ->get()
-                    ->map(function ($banner) {
-                        return [
-                            'id' => $banner->id,
-                            'type' => $banner->type,
-                            'image_url' => asset('banners/' . $banner->img),
-                            'created_at' => $banner->created_at->toIso8601String(),
-                        ];
-                    });
-
-                // Return structured response
-                return response()->json([
-                    'status' => 'success',
-                    'code' => 200,
-                    'message' => 'Banners fetched successfully',
-                    'data' => [
-                        'regular_banners' => $regularBanners,
-                        'top_banners' => $topBanners,
-                        'count' => [
-                            'regular' => $regularBanners->count(),
-                            'top' => $topBanners->count(),
-                            'total' => $regularBanners->count() + $topBanners->count()
-                        ]
-                    ]
-                ], 200);
-            });
-        } catch (\Exception $e) {
-            // Log the error for debugging
-            Log::error('Banner fetch error: ' . $e->getMessage(), [
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            // Return a friendly error to the client
-            return response()->json([
-                'status' => 'error',
-                'code' => 500,
-                'message' => 'Failed to fetch banners',
-                'error' => config('app.debug') ? $e->getMessage() : 'Server error'
-            ], 500);
-        }
+        $this->apiResponse = $apiResponse;
     }
 
     /**
@@ -91,10 +27,8 @@ class HomepageControllerMobile extends Controller
     public function getTopBottomBanners(ApiResponseService $apiResponse)
     {
         try {
-            // Use short cache time (5 minutes) to ensure freshness while reducing DB load
+            return Cache::remember('mobile_top_bottom_banners', 300, function () {
 
-            return Cache::remember('mobile_top_bottom_banners', 300, function () use($apiResponse) {
-                // Get only what we need - no unused fields
                 $banners = Banners::where('type', 0)
                     ->select('id', 'img')
                     ->latest()
@@ -106,13 +40,14 @@ class HomepageControllerMobile extends Controller
                         ];
                     });
 
-                    return $apiResponse->success($banners, 'Banner details fetched successfully');
+                return $this->apiResponse->success($banners, 'Banner details fetched successfully');
             });
         } catch (\Exception $e) {
             Log::error('Top/Bottom banner fetch error: ' . $e->getMessage());
-            return $apiResponse->error($e->getMessage(),  'Failed to fetch banners', 400);
+            return $this->apiResponse->error($e->getMessage(), 'Failed to fetch banners', 400);
         }
     }
+
 
     /**
      * Get Super Ads banners
@@ -134,17 +69,11 @@ class HomepageControllerMobile extends Controller
                         ];
                     });
 
-                return response()->json([
-                    'status' => 'success',
-                    'data' => $banners
-                ], 200);
+                return $this->apiResponse->success($banners, 'Super Ads banners fetch successfully');
             });
         } catch (\Exception $e) {
             Log::error('Super Ads banner fetch error: ' . $e->getMessage());
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to fetch super ads banners'
-            ], 500);
+            return $this->apiResponse->error($e->getMessage(), 'Failed to fetch super ads banners', 400);
         }
     }
 
@@ -162,15 +91,12 @@ class HomepageControllerMobile extends Controller
             return Cache::remember('mobile_top_ads_banners', 300, function () {
 
                 $banners = Banners::where(function($query) {
-
-                        $query->where('type', 2)
-                              ->orWhere('type', 3);
+                       $query->where('type', 2)
+                             ->orWhere('type', 3);
                     })
                     ->select('id', 'img')
                     ->latest()
                     ->get();
-
-
                 if ($banners->isEmpty()) {
                     Log::info('No banners found with type 2 or 3, falling back to type 1 banners');
                     $banners = Banners::where('type', 1)
@@ -190,17 +116,89 @@ class HomepageControllerMobile extends Controller
                 // Log counts for debugging
                 Log::info('Top Ads banners fetched', ['count' => $mappedBanners->count()]);
 
-                return response()->json([
-                    'status' => 'success',
-                    'data' => $mappedBanners
-                ], 200);
+                return $this->apiResponse->success($mappedBanners, 'Top Ads banners fetched successfully');
             });
         } catch (\Exception $e) {
             Log::error('Top Ads banner fetch error: ' . $e->getMessage());
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to fetch top ads banners'
-            ], 500);
+            return $this->apiResponse->error($e->getMessage(), 'Failed to fetch top ads banners', 400);
         }
     }
+
+    /**
+     * Get Super Ads
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSuperAds()
+    {
+        try {
+            $superAds = Ads::with(['category', 'subcategory'])
+                ->where('ads_package', 6)
+                ->where('status', 1)
+                ->where(function($query) {
+                    $query->whereNull('package_expire_at')
+                          ->orWhere('package_expire_at', '>=', now());
+                })
+                ->latest()
+                ->take(5)
+                ->get();
+
+            return $this->apiResponse->success($superAds, 'Super Ads fetched successfully');
+        } catch (\Exception $e) {
+            Log::error('Error fetching super ads: ' . $e->getMessage());
+            return $this->apiResponse->error($e->getMessage(), 'Failed to fetch super ads', 400);
+        }
+    }
+
+    /**
+     * Get Top Ads
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTopAds()
+    {
+        try {
+            $topAds = Ads::with(['category', 'subcategory'])
+                ->where('ads_package', 3)
+                ->where('status', 1)
+                ->where(function($query) {
+                    $query->whereNull('package_expire_at')
+                          ->orWhere('package_expire_at', '>=', now());
+                })
+                ->latest()
+                ->take(5)
+                ->get();
+
+            return $this->apiResponse->success($topAds, 'Top Ads fetched successfully');
+        } catch (\Exception $e) {
+            Log::error('Error fetching top ads: ' . $e->getMessage());
+            return $this->apiResponse->error($e->getMessage(), 'Failed to fetch top ads', 400);
+        }
+    }
+     /**
+     * Get Latest Ads
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getLatestAds()
+    {
+        try {
+            $latestAds = Ads::with(['category', 'subcategory'])
+                ->where('ads_package', 4)
+                ->where('status', 1)
+                ->where(function($query) {
+                    $query->whereNull('package_expire_at')
+                          ->orWhere('package_expire_at', '>=', now());
+                })
+                ->latest()
+                ->take(4)
+                ->get();
+
+            return $this->apiResponse->success($latestAds, 'Latest Ads fetched successfully');
+        } catch (\Exception $e) {
+            Log::error('Error fetching latest ads: ' . $e->getMessage());
+            return $this->apiResponse->error($e->getMessage(), 'Failed to fetch latest ads', 400);
+        }
+    }
+
 }
