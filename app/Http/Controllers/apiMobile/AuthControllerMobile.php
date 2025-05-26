@@ -148,7 +148,7 @@ class AuthControllerMobile extends Controller
         $user = User::where($fieldType, $loginInput)->first();
         if ($user && Hash::check($request->password, $user->password) && $user->roles === 'user') {
             // No need to Auth::login() for API
-            
+
             Log::info('User logged in successfully', ['user_id' => $user->id]);
             // Create Passport personal access token
             $tokenResult = $user->createToken('Personal Access Token');
@@ -156,7 +156,8 @@ class AuthControllerMobile extends Controller
             $tokenExpiration = $tokenResult->token->expires_at;
 
             // Remove sensitive fields before returning user
-            $userData = $user->makeHidden(['password', 'remember_token']);
+            $userData = $user->makeHidden(['password', 'remember_token'])
+                        ->only(['id', 'first_name', 'last_name', 'name', 'profileImage', 'email', 'phone_number', 'roles', 'is_mobile_verifed']);
 
             return response()->json([
                 'status' => 'success',

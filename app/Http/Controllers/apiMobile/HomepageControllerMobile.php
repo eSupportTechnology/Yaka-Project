@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\apiMobile;
 
-use App\Http\Controllers\Controller;
 use App\Models\Banners;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Services\ApiResponseService;
+use Illuminate\Support\Facades\Cache;
 
 class HomepageControllerMobile extends Controller
 {
@@ -71,7 +72,7 @@ class HomepageControllerMobile extends Controller
                 'line' => $e->getLine(),
                 'trace' => $e->getTraceAsString()
             ]);
-            
+
             // Return a friendly error to the client
             return response()->json([
                 'status' => 'error',
@@ -87,12 +88,12 @@ class HomepageControllerMobile extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getTopBottomBanners()
+    public function getTopBottomBanners(ApiResponseService $apiResponse)
     {
         try {
             // Use short cache time (5 minutes) to ensure freshness while reducing DB load
 
-            return Cache::remember('mobile_top_bottom_banners', 300, function () {
+            return Cache::remember('mobile_top_bottom_banners', 300, function () use($apiResponse) {
                 // Get only what we need - no unused fields
                 $banners = Banners::where('type', 0)
                     ->select('id', 'img')
@@ -105,17 +106,11 @@ class HomepageControllerMobile extends Controller
                         ];
                     });
 
-                return response()->json([
-                    'status' => 'success',
-                    'data' => $banners
-                ], 200);
+                    return $apiResponse->success($banners, 'Banner details fetched successfully');
             });
         } catch (\Exception $e) {
             Log::error('Top/Bottom banner fetch error: ' . $e->getMessage());
-            return response()->json([
-                'status' => 'error', 
-                'message' => 'Failed to fetch banners'
-            ], 500);
+            return $apiResponse->error($e->getMessage(),  'Failed to fetch banners', 400);
         }
     }
 
@@ -147,7 +142,7 @@ class HomepageControllerMobile extends Controller
         } catch (\Exception $e) {
             Log::error('Super Ads banner fetch error: ' . $e->getMessage());
             return response()->json([
-                'status' => 'error', 
+                'status' => 'error',
                 'message' => 'Failed to fetch super ads banners'
             ], 500);
         }
@@ -155,7 +150,7 @@ class HomepageControllerMobile extends Controller
 
     /**
      * Get Top Ads banners
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getTopAdsBanners()
@@ -163,28 +158,28 @@ class HomepageControllerMobile extends Controller
         try {
             // Clear existing cache to ensure fresh data
             Cache::forget('mobile_top_ads_banners');
-            
+
             return Cache::remember('mobile_top_ads_banners', 300, function () {
-             
+
                 $banners = Banners::where(function($query) {
-                       
-                        $query->where('type', 2) 
-                              ->orWhere('type', 3); 
+
+                        $query->where('type', 2)
+                              ->orWhere('type', 3);
                     })
                     ->select('id', 'img')
                     ->latest()
                     ->get();
-                
-                
+
+
                 if ($banners->isEmpty()) {
                     Log::info('No banners found with type 2 or 3, falling back to type 1 banners');
                     $banners = Banners::where('type', 1)
                         ->select('id', 'img')
                         ->latest()
-                        ->limit(5) 
+                        ->limit(5)
                         ->get();
                 }
-                
+
                 $mappedBanners = $banners->map(function ($banner) {
                     return [
                         'id' => $banner->id,
@@ -203,7 +198,7 @@ class HomepageControllerMobile extends Controller
         } catch (\Exception $e) {
             Log::error('Top Ads banner fetch error: ' . $e->getMessage());
             return response()->json([
-                'status' => 'error', 
+                'status' => 'error',
                 'message' => 'Failed to fetch top ads banners'
             ], 500);
         }
