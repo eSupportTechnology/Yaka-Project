@@ -64,10 +64,11 @@ class AdsController extends Controller
         $adsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
             ->where('status', 1)
             ->orderByRaw('CASE
-                WHEN ads_package = 3 THEN 1
-                WHEN ads_package = 6 THEN 2
-                WHEN ads_package = 5 THEN 2
-                ELSE 4
+                WHEN ads_package = 6 THEN 1
+                WHEN ads_package = 3 THEN 2
+                WHEN ads_package = 4 THEN 3
+                WHEN ads_package = 5 THEN 4
+                ELSE 5
             END')
             ->latest();
 
