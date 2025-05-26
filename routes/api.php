@@ -33,32 +33,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/*
-//AuthController
-Route::post('/user/register',[AuthController::class ,'createUser']);
-Route::post('/user/login',[AuthController::class ,'loginUser']);
-
-//CategoryController
-Route::get('/main-categories/',[CategoryController::class , 'index']);
-
-//SubCategoryController
-Route::get('/sub-categories/{category}',[SubCategoryController::class ,'index']);
-
-//AdsController
-Route::get('/ads/{category}/{district?}',[AdsController::class , 'index']);
-Route::get('/all-ads/{paginate}',[AdsController::class , 'AllAds']);
-Route::post('/ads',[AdsController::class , 'filter']);
-Route::post('/ads/post',[AdPostController::class , 'mainAdsPost']);
-
-//BrandsModelsController
-Route::get('/brands/{category}',[BrandsModelsController::class , 'GetBrands']);
-Route::get('/models/{brands}',[BrandsModelsController::class , 'GetModels']);
-
-//LocationController
-Route::get('/province',[LocattionController::class , 'GetProvince']);
-Route::get('/districts',[LocattionController::class , 'GetDistrict']);
-Route::get('/city/{district}',[LocattionController::class , 'GetCity']);
-*/
+//
 
 Route::get('/ping', function () {
     return response()->json([
@@ -85,25 +60,20 @@ Route::post('/payment/notify',[PaymentProcessingController::class , 'getPaymentI
 // Payament ad boost 
 Route::post('/payment/boostnotify',[BoostingController::class , 'updateBoost']);
 
+// Top and Bottom banners endpoint (regular banners)
+Route::get('/banners/top-bottom', [HomepageControllerMobile::class, 'getTopBottomBanners']);
+// Super Ads banners endpoint
+Route::get('/banners/super-ads', [HomepageControllerMobile::class, 'getSuperAdsBanners']);
+// Top Ads banners endpoint
+Route::get('/banners/top-ads', [HomepageControllerMobile::class, 'getTopAdsBanners']);
 
-
+// Super Ads endpoint
+Route::get('/super-ads', [HomepageControllerMobile::class, 'getSuperAds']);
+// Top Ads endpoint
+Route::get('/top-ads', [HomepageControllerMobile::class, 'getTopAds']);
+// Latest Ads endpoint
+//Route::get('/latest-ads', [HomepageControllerMobile::class, 'getLatestAds']);
 
 Route::middleware('auth:api')->group(function () {
-    // Homepage endpoints
-    Route::get('/home/banners', [HomepageControllerMobile::class, 'getHomeBanners'])
-         ->name('api.home.banners');
-    // Top and Bottom banners endpoint (regular banners)
-    Route::get('/banners/top-bottom', [HomepageControllerMobile::class, 'getTopBottomBanners']);
-    // Super Ads banners endpoint
-    Route::get('/banners/super-ads', [HomepageControllerMobile::class, 'getSuperAdsBanners']);
-    // Top Ads banners endpoint
-    Route::get('/banners/top-ads', [HomepageControllerMobile::class, 'getTopAdsBanners']);
+
 });
-
-
-
-
-
-
-
-
