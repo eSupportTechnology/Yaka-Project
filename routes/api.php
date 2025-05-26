@@ -72,7 +72,7 @@ Route::get('/super-ads', [HomepageControllerMobile::class, 'getSuperAds']);
 // Top Ads endpoint
 Route::get('/top-ads', [HomepageControllerMobile::class, 'getTopAds']);
 // Latest Ads endpoint
-//Route::get('/latest-ads', [HomepageControllerMobile::class, 'getLatestAds']);
+Route::get('/latest-ads', [HomepageControllerMobile::class, 'getLatestAds']);
 
 Route::middleware('auth:api')->group(function () {
 

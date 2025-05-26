@@ -176,6 +176,30 @@ class HomepageControllerMobile extends Controller
             return $this->apiResponse->error($e->getMessage(), 'Failed to fetch top ads', 400);
         }
     }
-
+     /**
+     * Get Latest Ads
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getLatestAds()
+    {
+        try {
+            $latestAds = Ads::with(['category', 'subcategory'])
+                ->where('ads_package', 4)
+                ->where('status', 1)
+                ->where(function($query) {
+                    $query->whereNull('package_expire_at')
+                          ->orWhere('package_expire_at', '>=', now());
+                })
+                ->latest()
+                ->take(4)
+                ->get();
+        
+            return $this->apiResponse->success($latestAds, 'Latest Ads fetched successfully');
+        } catch (\Exception $e) {
+            Log::error('Error fetching latest ads: ' . $e->getMessage());
+            return $this->apiResponse->error($e->getMessage(), 'Failed to fetch latest ads', 400);
+        }
+    }
    
 }
