@@ -173,18 +173,18 @@ class AuthControllerMobile extends Controller
             return $apiResponse->error($validator->errors(),  'Validation failed.', 422);
         }
 
-        $user = User::where('phone_number', $request->phone_number)->first();
+        $user = User::where('phone_number', $request->mobile)->first();
         if(!$user) {
             return $apiResponse->error(null,  'User not found with entered mobile number.', 500);
         }
         $verificationCode = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
         $user->otp = $verificationCode;
         $user->save();
-        if(!OtpService::sendSingleSms($request->phone_number, "Verification Code: ".$verificationCode)) {
+        if(!OtpService::sendSingleSms($request->mobile, "Verification Code: ".$verificationCode)) {
             return $apiResponse->error(null,  'Sending verifcation code failed. Try again.', 500);
         }
         $data = [
-            'mobile' => $request->phone_number,
+            'mobile' => $request->mobile,
             'verification_code' => $verificationCode,
         ];
         return $apiResponse->success($data, 'Verification Code successfully Sent.', 200);
