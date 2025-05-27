@@ -130,7 +130,7 @@ class AuthControllerMobile extends Controller
         $user = User::where($fieldType, $loginInput)->first();
         if ($user && Hash::check($request->password, $user->password) && $user->roles === 'user') {
 
-            if($user->phone_number == 0) {
+            if($user->is_mobile_verifed == 0) {
                 return $apiResponse->error(null,  'Mobile Number Not Verified', 500);
             }
             // No need to Auth::login() for API
