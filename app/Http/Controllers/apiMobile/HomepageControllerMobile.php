@@ -215,7 +215,6 @@ class HomepageControllerMobile extends Controller
                     ->withCount(['ads' => function ($query) {
                         $query->where('status', 1);
                     }])
-                    ->select('id', 'name', 'url', 'image', 'free_add_count')
                     ->get()
                     ->map(function ($category) {
                         return [
@@ -223,8 +222,8 @@ class HomepageControllerMobile extends Controller
                             'name' => $category->name,
                             'url' => $category->url,
                             'image_url' => $category->image ? asset('images/Category/' . $category->image) : null,
-                            'free_ad_count' => $category->free_add_count,
-                            'ads_count' => $category->ads_count,
+                            //'free_ad_count' => $category->free_add_count,
+                            'ads_count' => $category->ads_count, 
                         ];
                     });
 
