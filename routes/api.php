@@ -4,17 +4,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AdsController;
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\BoostingController;
 use App\Http\Controllers\api\AdPostController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\LocattionController;
 use App\Http\Controllers\api\BrandsModelsController;
-use App\Http\Controllers\frontend\PaymentProcessingController;
-use App\Http\Controllers\BoostingController;
-
 use App\Http\Controllers\apiMobile\AdsControllerMobile;
+
 use App\Http\Controllers\apiMobile\AuthControllerMobile;
+use App\Http\Controllers\apiMobile\CommonControllerMobile;
 use App\Http\Controllers\apiMobile\CategoryControllerMobile;
 use App\Http\Controllers\apiMobile\HomepageControllerMobile;
+use App\Http\Controllers\frontend\PaymentProcessingController;
 
 
 
@@ -69,7 +70,7 @@ Route::get('/top-ads', [HomepageControllerMobile::class, 'getTopAds']);
 // Latest Ads endpoint
 Route::get('/latest-ads', [HomepageControllerMobile::class, 'getLatestAds']);
 //Get all categories endpoint
-Route::get('/home-categories', [HomepageControllerMobile::class, 'getHomeCategories']);
+Route::get('/home-categories', [HomepageControllerMobile::class, 'getCategories']);
 
 Route::middleware('auth:api')->group(function () {
 
@@ -78,8 +79,15 @@ Route::middleware('auth:api')->group(function () {
 /**
  * Public route API
  */
-Route::get('/send/verification-code', [AuthControllerMobile::class, 'SendMobileVerificationCode']); // Send Verification Code
-Route::get('/verify/registration-otp', [AuthControllerMobile::class, 'verifyRegistrationOtp']); // Verify Registration OTP
+Route::post('/send/verification-code', [AuthControllerMobile::class, 'SendMobileVerificationCode']); // Send Verification Code
+Route::post('/verify/registration-otp', [AuthControllerMobile::class, 'verifyRegistrationOtp']); // Verify Registration OTP
+
+Route::get('/get/districts', [CommonControllerMobile::class, 'getDistricts']); // Get all districts
+
+/**
+ * Ad Post routes
+ */
+
 
 
 
