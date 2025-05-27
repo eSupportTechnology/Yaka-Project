@@ -46,15 +46,10 @@ Route::post('/login', [AuthControllerMobile::class, 'mobileLogin']);
 Route::post('/logout', [AuthControllerMobile::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/register', [AuthControllerMobile::class, 'register']);
 
-
-Route::get('/categories', [CategoryControllerMobile::class, 'getAllCategories']);
-
-
+//
 Route::post('/ads/search', [AdsControllerMobile::class, 'searchByTitle']);
 
-
-
-// Payament info
+//
 Route::post('/payment/notify',[PaymentProcessingController::class , 'getPaymentInfo']);
 
 // Payament ad boost
@@ -73,6 +68,8 @@ Route::get('/super-ads', [HomepageControllerMobile::class, 'getSuperAds']);
 Route::get('/top-ads', [HomepageControllerMobile::class, 'getTopAds']);
 // Latest Ads endpoint
 Route::get('/latest-ads', [HomepageControllerMobile::class, 'getLatestAds']);
+//Get all categories endpoint
+Route::get('/home-categories', [HomepageControllerMobile::class, 'getHomeCategories']);
 
 Route::middleware('auth:api')->group(function () {
 
