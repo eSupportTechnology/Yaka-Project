@@ -417,19 +417,19 @@
                          style="width: 150px; height: auto; border-radius: 8px; object-fit: cover;">
 
                     <div>
-                        <p style="color: black"><strong>@lang('messages.Title'):</strong> <span id="summaryAdTitle" class="summary-text"></span></p>
-                        <p style="color: black"><strong>@lang('messages.Price'):</strong> <span id="summaryAdPrice" class="summary-text"></span></p>
-                        <p style="color: black"><strong>@lang('messages.Description'):</strong> <span id="summaryAdDescription" class="summary-text"></span></p>
-                        <p style="color: black"><strong>@lang('messages.current_package'):</strong> <span id="summaryAdCurrentPackage" class="summary-text"></span></p>
-                        <p style="color: black"><strong>@lang('messages.current_package_duration'):</strong> <span id="summaryAdCurrentPackageType" class="summary-text"></span>days</p>
-                        <p style="color: black"><strong>@lang('messages.current_package_expired'):</strong> <span id="summaryAdCurrentPackageExpired" class="summary-text"></span></p>
+                        <p style="color: black"><strong>@lang('messages.Title'):</strong> <span id="summaryAdTitle" class="summary-text">{{ $ad->title ?? 'N/A' }}</span></p>
+                        <p style="color: black"><strong>@lang('messages.Price'):</strong> <span id="summaryAdPrice" class="summary-text">{{ $ad->price ?? 'N/A' }}</span></p>
+                        <p style="color: black"><strong>@lang('messages.Description'):</strong> <span id="summaryAdDescription" class="summary-text">{{ $ad->description ?? 'N/A' }}</span></p>
+                        <p style="color: black"><strong>@lang('messages.current_package'):</strong> <span id="summaryAdCurrentPackage" class="summary-text">{{ $ad->adsPackage->name ?? 'N/A' }}</span></p>
+                        <p style="color: black"><strong>@lang('messages.current_package_duration'):</strong> <span id="summaryAdCurrentPackageType" class="summary-text">{{ $ad->packageType->name ?? 'N/A' }}</span>days</p>
+                        <p style="color: black"><strong>@lang('messages.current_package_expired'):</strong> <span id="summaryAdCurrentPackageExpired" class="summary-text">{{ $ad->package_expired_at ?? 'N/A' }}</span></p>
                     </div>
                 </div>
 
                 <p style="color: black" id="summarySelectedPlans">No plans selected</p>
                 <h5>@lang('messages.Total'): <span class="custom-text-success" id="summaryTotalAmount">Rs 0</span></h5>
 
-    
+
 
 
 
@@ -441,7 +441,7 @@
             </div>
         </div>
 
-        
+
 
 
 
@@ -471,7 +471,7 @@
     function selectPlanDropdown(packageId, packageName, selectElement) {
         selectedPackageId = packageId; // Store globally
         selectedPackageName = packageName; // Store package name
-        
+
         let planName = selectElement.options[selectElement.selectedIndex].text;
         let price = parseFloat(selectElement.value);
         selectedPackageTypeId = parseInt(selectElement.options[selectElement.selectedIndex].getAttribute("data-id"), 10);
@@ -525,7 +525,7 @@
         selectedPackageTypeId = null;
         selectedDuration = null;
         selectedPackageName = null;
-        
+
         document.getElementById("totalAmount").innerText = `Rs ${totalAmount}`;
         document.getElementById("selectedPlans").innerHTML = "No plans selected";
         document.getElementById("continueButton").disabled = true;
@@ -556,30 +556,30 @@
     function showSummary() {
         console.log("Ad Image Path:", ad.mainImage);
 
-        document.getElementById("summaryTotalAmount").innerText = `Rs ${totalAmount}`;
-        document.getElementById("summarySelectedPlans").innerHTML = selectedPlans.length
-            ? selectedPlans.map(plan => `<strong>${plan.package}:</strong> ${plan.name} `).join("<br>")
-            : "No plans selected";
+        // document.getElementById("summaryTotalAmount").innerText = `Rs ${totalAmount}`;
+        // document.getElementById("summarySelectedPlans").innerHTML = selectedPlans.length
+        //     ? selectedPlans.map(plan => `<strong>${plan.package}:</strong> ${plan.name} `).join("<br>")
+        //     : "No plans selected";
 
-        document.getElementById("summaryAdTitle").innerText = ad.title;
-        document.getElementById("summaryAdDescription").innerText = ad.description;
-        document.getElementById("summaryAdPrice").innerText = "Rs " + ad.price;
-        
+        // document.getElementById("summaryAdTitle").innerText = ad.title;
+        // document.getElementById("summaryAdDescription").innerText = ad.description;
+        // document.getElementById("summaryAdPrice").innerText = "Rs " + ad.price;
+
         // Find the package that matches ad.ads_package
-        const packageName = packages.find(pkg => pkg.id === ad.ads_package)?.name || "Unknown Package";
+        //const packageName = packages.find(pkg => pkg.id === ad.ads_package)?.name || "Unknown Package";
 
         // Update the element with the package name
-        document.getElementById("summaryAdCurrentPackage").innerText = packageName;
+        //document.getElementById("summaryAdCurrentPackage").innerText = packageName;
 
         // Find the matching package type using both ad.ads_package and ad.package_type
-        const packageType = packagesType.find(pt => pt.package_id === ad.ads_package && pt.id === ad.package_type);
+        //const packageType = packagesType.find(pt => pt.package_id === ad.ads_package && pt.id === ad.package_type);
 
         // Get duration or set a default value if not found
-        const duration = packageType ? packageType.duration : "Unknown Duration";
+        //const duration = packageType ? packageType.duration : "Unknown Duration";
 
         // Update the element with the duration
-        document.getElementById("summaryAdCurrentPackageType").innerText = duration;
-        document.getElementById("summaryAdCurrentPackageExpired").innerText = ad.package_expire_at;
+        //document.getElementById("summaryAdCurrentPackageType").innerText = duration;
+        //document.getElementById("summaryAdCurrentPackageExpired").innerText = ad.package_expire_at;
 
         document.querySelector(".custom-boost-options").style.display = "none";
         document.querySelector(".custom-summary-box").style.display = "none";
@@ -611,7 +611,7 @@
 
         // Extract price from selectedPlans
         let price = selectedPlans.length > 0 ? selectedPlans[0].price : 0;
-        
+
         // Get the current package info
         const currentPackageName = document.getElementById("summaryAdCurrentPackage").innerText;
         const currentPackageDuration = document.getElementById("summaryAdCurrentPackageType").innerText;
@@ -686,7 +686,7 @@
     function showPaymentForm() {
         // Get the total amount from the summary section
         let totalAmount = document.getElementById("summaryTotalAmount").innerText;
-        
+
         // Set the total amount in the payment section
         document.getElementById("paymentTotalAmount").innerText = totalAmount;
 
@@ -728,7 +728,7 @@
         summaryStep.classList.remove("disabled");
     }
 
-    
+
 </script>
 
 @endsection

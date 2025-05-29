@@ -268,13 +268,13 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
 
 
 
-    
+
 
 });
 Route::get('/ad-boost-billing-details', [BoostingController::class, 'showBillingDetails'])->name('boosting.billingDetails');
 Route::post('/boosting/save-info', [BoostingController::class, 'saveInfo'])->name('boosting.saveInfo');
 Route::post('/boosting-update', [UserAdsController::class, 'boostingUpdate'])->name('boosting.update');
- Route::get('/boostpayment/checking', [BoostingController::class, 'boostcomplete'])->name('boostpayment.checking');
+Route::get('/boostpayment/checking', [BoostingController::class, 'boostcomplete'])->name('boostpayment.checking');
 
 
 

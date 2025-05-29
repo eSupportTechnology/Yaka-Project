@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('ad_boost_payment_infos', function (Blueprint $table) {
-        $table->integer('payment_status')->default(0)->after('user_id');
-       });
+    //     Schema::table('ad_boost_payment_infos', function (Blueprint $table) {
+    //     $table->integer('payment_status')->default(0)->after('user_id');
+    //    });
     }
 
     /**
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('ad_boost_payment_infos', function (Blueprint $table) {
-         $table->dropColumn('payment_status');
-       });
+    //     Schema::table('ad_boost_payment_infos', function (Blueprint $table) {
+    //      $table->dropColumn('payment_status');
+    //    });
     }
 };
