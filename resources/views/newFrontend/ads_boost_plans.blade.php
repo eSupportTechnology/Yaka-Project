@@ -421,7 +421,7 @@
                         <p style="color: black"><strong>@lang('messages.Price'):</strong> <span id="summaryAdPrice" class="summary-text">{{ $ad->price ?? 'N/A' }}</span></p>
                         <p style="color: black"><strong>@lang('messages.Description'):</strong> <span id="summaryAdDescription" class="summary-text">{{ $ad->description ?? 'N/A' }}</span></p>
                         <p style="color: black"><strong>@lang('messages.current_package'):</strong> <span id="summaryAdCurrentPackage" class="summary-text">{{ $ad->adsPackage->name ?? 'N/A' }}</span></p>
-                        <p style="color: black"><strong>@lang('messages.current_package_duration'):</strong> <span id="summaryAdCurrentPackageType" class="summary-text">{{ $ad->packageType->name ?? 'N/A' }}</span>days</p>
+                        <p style="color: black"><strong>@lang('messages.current_package_duration'):</strong> <span id="summaryAdCurrentPackageType" class="summary-text">{{ $ad->packageType->name ?? 'N/A' }}</span></p>
                         <p style="color: black"><strong>@lang('messages.current_package_expired'):</strong> <span id="summaryAdCurrentPackageExpired" class="summary-text">{{ $ad->package_expire_at ?? 'N/A' }}</span></p>
                     </div>
                 </div>
@@ -556,10 +556,10 @@
     function showSummary() {
         console.log("Ad Image Path:", ad.mainImage);
 
-        // document.getElementById("summaryTotalAmount").innerText = `Rs ${totalAmount}`;
-        // document.getElementById("summarySelectedPlans").innerHTML = selectedPlans.length
-        //     ? selectedPlans.map(plan => `<strong>${plan.package}:</strong> ${plan.name} `).join("<br>")
-        //     : "No plans selected";
+        document.getElementById("summaryTotalAmount").innerText = `Rs ${totalAmount}`;
+        document.getElementById("summarySelectedPlans").innerHTML = selectedPlans.length
+            ? selectedPlans.map(plan => `<strong>${plan.package}:</strong> ${plan.name} `).join("<br>")
+            : "No plans selected";
 
         // document.getElementById("summaryAdTitle").innerText = ad.title;
         // document.getElementById("summaryAdDescription").innerText = ad.description;
