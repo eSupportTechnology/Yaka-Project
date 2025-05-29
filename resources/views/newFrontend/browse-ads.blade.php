@@ -914,6 +914,14 @@
                                                                     style="background-color: rgb(171, 18, 18);">
                                                                     Urgent
                                                                 </div>
+                                                            @elseif($ad->ads_package == 6)
+                                                            <div class="icon-shape"></div>
+                                                                    <i class=""> <img src="{{ asset('02.png') }}"
+                                                                            alt="Super Ad"></i>
+                                                            @elseif($ad->ads_package == 5)
+                                                            <div class="icon-shape"></div>
+                                                                    <i class=""> <img src="{{ asset('04.png') }}"
+                                                                            alt="Jump Ad"></i>
                                                             @endif
                                                         </div>
 
