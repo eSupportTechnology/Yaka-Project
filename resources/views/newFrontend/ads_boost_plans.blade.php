@@ -422,7 +422,7 @@
                         <p style="color: black"><strong>@lang('messages.Description'):</strong> <span id="summaryAdDescription" class="summary-text">{{ $ad->description ?? 'N/A' }}</span></p>
                         <p style="color: black"><strong>@lang('messages.current_package'):</strong> <span id="summaryAdCurrentPackage" class="summary-text">{{ $ad->adsPackage->name ?? 'N/A' }}</span></p>
                         <p style="color: black"><strong>@lang('messages.current_package_duration'):</strong> <span id="summaryAdCurrentPackageType" class="summary-text">{{ $ad->packageType->name ?? 'N/A' }}</span>days</p>
-                        <p style="color: black"><strong>@lang('messages.current_package_expired'):</strong> <span id="summaryAdCurrentPackageExpired" class="summary-text">{{ $ad->package_expired_at ?? 'N/A' }}</span></p>
+                        <p style="color: black"><strong>@lang('messages.current_package_expired'):</strong> <span id="summaryAdCurrentPackageExpired" class="summary-text">{{ $ad->package_expire_at ?? 'N/A' }}</span></p>
                     </div>
                 </div>
 
