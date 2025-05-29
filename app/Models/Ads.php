@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Package;
+use App\Models\PackageType;
 use Illuminate\Database\Eloquent\Model;
 
 class Ads extends Model
@@ -166,7 +168,7 @@ class Ads extends Model
     // Relationship with AdsPackage
     public function adsPackage()
     {
-        return $this->belongsTo(AdsPackage::class, 'ads_package');
+        return $this->belongsTo(Package::class, 'ads_package');
     }
 
     // Relationship with PackageType
