@@ -625,6 +625,22 @@ return [
     'Apartments For  Sale / Rent / booking' => 'මහල් නිවාස විකිණීමට / බද්දට /වෙන්කරවා ගැනීමට',
     'Commercial Properties For  Sale / Rent / booking' => 'වාණිජ දේපළ විකිණීමට / බද්දට / වෙන්කරවා ගැනීමට',
 
+    'Salary'=>'වැටුප',
+
+    'Logo' => 'ලාංඡනය',
+    'Description Image' => 'විස්තර පින්තූරය',
+    'Job Description' => 'රැකියා විස්තරය',
+
+    'Required Work Experience (years)' => 'අවශ්‍ය සේවා පළපුරුද්ද (වසර)',
+'Required Education' => 'අවශ්‍ය අධ්‍යාපනය',
+'Application Deadline' => 'අයදුම්කිරීමේ අවසන් දිනය',
+'Optional' => 'විකල්පය',
+'Select Education' => 'අධ්‍යාපනය තෝරන්න',
+'Mobile Number' => 'ජංගම දුරකථන අංකය',
+
+
+
+
 
 
 ];

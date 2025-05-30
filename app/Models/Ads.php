@@ -39,10 +39,15 @@ class Ads extends Model
         'status',
         'rotation_position',
         'last_rotated_at',
+        'experience_years',         // <-- Add this
+        'education',                // <-- Add this
+        'application_deadline',     // <-- Add this
+        'mobile_number',
     ];
 
     protected $casts = [
         'subImage' => 'array',
+        'application_deadline' => 'date'
     ];
 
     // Relationship with Category

@@ -633,4 +633,19 @@ return [
     'Houses For  Sale / Rent / booking' => 'வீடுகள் விற்பனைக்கு / வாடகைக்கு / முன்பதிவு',
     'Apartments For  Sale / Rent / booking' => 'விற்பனை/வாடகை/முன்பதிவுக்கான அடுக்குமாடி குடியிருப்புகள்',
     'Commercial Properties For  Sale / Rent / booking' => 'வணிக சொத்து விற்பனை/குத்தகை/இருப்பு',
+
+    'Salary'=>'சம்பளம்',
+     'Logo' => 'லோகோ',
+    'Description Image' => 'விளக்கம் படம்',
+    'Job Description' => 'வேலை விவரம்',
+
+    'Required Work Experience (years)' => 'தேவையான பணிப்பழக்கம் (ஆண்டுகள்)',
+'Required Education' => 'தேவையான கல்வி',
+'Application Deadline' => 'விண்ணப்ப கடைசி தேதி',
+'Optional' => 'விருப்பத்தேர்வு',
+'Select Education' => 'கல்வியைத் தேர்ந்தெடுக்கவும்',
+'Mobile Number' => 'மொபைல் எண்',
+
+
+
   ];

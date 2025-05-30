@@ -626,7 +626,23 @@ return [
     'Land For  Sale / Rent / booking'=>'Land For Sale / Rent / booking',
     'Houses For  Sale / Rent / booking'=>'Houses For  Sale / Rent / booking',
     'Apartments For  Sale / Rent / booking'=>'Apartments For  Sale / Rent / booking',
-    'Commercial Properties For  Sale / Rent / booking'=>'Commercial Properties For  Sale / Rent / booking'
+    'Commercial Properties For  Sale / Rent / booking'=>'Commercial Properties For  Sale / Rent / booking',
+
+    'Salary'=>'Salary',
+     'Logo' => 'Logo',
+    'Description Image' => 'Description Image',
+    'Job Description' => 'Job Description',
+
+    'Required Work Experience (years)' => 'Required Work Experience (years)',
+'Required Education' => 'Required Education',
+'Application Deadline' => 'Application Deadline',
+'Optional' => 'Optional',
+'Select Education' => 'Select Education',
+'Mobile Number' => 'Mobile Number',
+
+
+
+    
 
 ];
 
