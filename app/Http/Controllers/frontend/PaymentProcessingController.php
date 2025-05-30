@@ -106,6 +106,8 @@ class PaymentProcessingController extends Controller
                 'sub_cat_id' => $adData['sub_cat_id'],
                 'location' => $adData['location'],
                 'sublocation' => $adData['sublocation'],
+                'rotation_position' => -1,
+                'last_rotated_at' => now(),
                 'status' => '0',
             ]);
             OtpService::sendSingleSms($user->phone_number, "Payment received for '{$invoiceId}'. Your ad will be published after admin approval. Thank you!");

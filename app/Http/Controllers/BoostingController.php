@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Ads;
+use App\Models\User;
+use App\Services\OtpService;
 use Illuminate\Http\Request;
 use App\Models\BoostingAddInfo;
 use App\Services\IpgHashService;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
-use App\Models\Ads;
 use App\Models\AdBoostPaymentInfo;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 
 class BoostingController extends Controller
 {
-    
+
    public function saveInfo(Request $request)
 {
     $data = $request->validate([
@@ -146,7 +148,8 @@ public function updateBoost(Request $request)
 
             //  Update payment status
             AdBoostPaymentInfo::where('invoice_id', $invoiceNo)->update(['payment_status' => 1]);
-
+            $user = User::where('id', $ad->user_id)->first();
+            OtpService::sendSingleSms($user->phone_number, "Payment received for '{$invoiceNo}'. Your ad boosted successfully. Thank you!");
             // Log success
             Log::info('Ad package successfully updated after payment.', [
                 'ad_id' => $boostingInfo->ad_id,
@@ -212,6 +215,6 @@ public function boostcomplete(Request $request)
 }
 
 
-    
-    
+
+
 }

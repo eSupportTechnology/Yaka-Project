@@ -37,6 +37,8 @@ class Ads extends Model
         'bump_up_at',
         'condition',
         'status',
+        'rotation_position',
+        'last_rotated_at',
     ];
 
     protected $casts = [

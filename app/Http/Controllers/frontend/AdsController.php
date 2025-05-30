@@ -70,7 +70,7 @@ class AdsController extends Controller
                 WHEN ads_package = 5 THEN 4
                 ELSE 5
             END')
-            ->latest();
+            ->orderBy('rotation_position');
 
 
         if (!empty($selectedLocation)) {
@@ -194,12 +194,12 @@ class AdsController extends Controller
         $packages = Package::all(); // Fetch all packages
         $packageTypes = PackageType::all(); // Fetch all package types
         $invoiceId = "YKAD".date('YmsHsi');
-        
+
         session(['invoiceId' => $invoiceId]);
 
         $mainImage = $ad->mainImage;
 
-        
+
 
         return view('newFrontend.ads_boost_plans', compact('ad', 'mainImage', 'packages', 'packageTypes','invoiceId'));
     }
