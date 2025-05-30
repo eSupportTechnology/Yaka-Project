@@ -30,7 +30,7 @@
         min-height: 220px;
     }
 
-       
+
 
 
 </style>
@@ -252,8 +252,8 @@
                                     <label class="form-label text-dark">
                                         <strong>@lang('messages.Required Education')</strong>
                                     </label>
-                                    <select name="education" class="form-control custom-select">
-                                        <option value="">-- @lang('messages.Select Education') --</option>
+                                    <select name="education" class="form-control">
+                                        <option value="">@lang('messages.Select Education')</option>
                                         <option value="Ordinary Level">Ordinary Level</option>
                                         <option value="Advanced Level">Advanced Level</option>
                                         <option value="Certificate">Certificate</option>
@@ -327,7 +327,7 @@
 
                         </div>
                         </div>
-                    
+
                 @if(request()->cat_id != 103)
                      <!-- category Information -->
                      <div class="mb-3 col-lg-12">
@@ -344,9 +344,9 @@
 
                         </div>
                     </div>
-                
 
-                
+
+
                     <div class="mb-3 col-lg-12">
                         <div class="section-box">
                             <label class="form-label text-dark"><strong>Additional Information</strong></label>
@@ -405,9 +405,9 @@
                         </div>
                     </div>
 
-               
 
-               
+
+
               <!-- Pricing Type -->
                 <div class="mb-3 col-lg-12">
                     <div class="section-box">
@@ -424,7 +424,7 @@
                 </div>
 
 
-                
+
                     <!-- Post Type -->
                         <div class="mb-3 col-lg-12">
                         <div class="section-box">
@@ -688,29 +688,29 @@ document.getElementById('sub_images').addEventListener('change', function(event)
         document.addEventListener("DOMContentLoaded", function() {
                 // Get the form element
                 const form = document.getElementById("adForm");
-                
+
                 if (!form) {
                     console.error("Form with ID 'adForm' not found");
                     return;
                 }
-                
+
                 // Disable HTML5 validation
                 form.setAttribute("novalidate", "true");
-                
+
                 // Add custom validation on form submit
                 form.addEventListener("submit", function(event) {
                     // Always prevent default submission first
                     event.preventDefault();
-                    
+
                     // Clear any previous error messages
                     clearErrors();
-                    
+
                     // Flag to track if there are any validation errors
                     let hasErrors = false;
-                    
+
                     // Get all required inputs
                     const requiredInputs = form.querySelectorAll("input[required], select[required], textarea[required]");
-                    
+
                     // Check each required field
                     requiredInputs.forEach(function(input) {
                         if (!input.value.trim()) {
@@ -718,7 +718,7 @@ document.getElementById('sub_images').addEventListener('change', function(event)
                             hasErrors = true;
                         }
                     });
-                    
+
                     // Check required file inputs specifically
                     const fileInputs = form.querySelectorAll("input[type='file'][required]");
                     fileInputs.forEach(function(input) {
@@ -727,7 +727,7 @@ document.getElementById('sub_images').addEventListener('change', function(event)
                             hasErrors = true;
                         }
                     });
-                    
+
                     // If no errors, submit the form
                     if (!hasErrors) {
                         form.removeAttribute("novalidate");
@@ -740,7 +740,7 @@ document.getElementById('sub_images').addEventListener('change', function(event)
                                 behavior: "smooth",
                                 block: "center"
                             });
-                            
+
                             // Focus on the input field associated with the first error
                             const associatedField = firstError.closest('.form-group').querySelector('input, select, textarea');
                             if (associatedField) {
@@ -749,7 +749,7 @@ document.getElementById('sub_images').addEventListener('change', function(event)
                         }
                     }
                 });
-                
+
                 // Function to mark field as error with a specific error message
                 function markAsError(field) {
                     // Find the field's label text to make the error message specific
@@ -757,19 +757,19 @@ document.getElementById('sub_images').addEventListener('change', function(event)
                     if (formGroup) {
                         const label = formGroup.querySelector("label");
                         let fieldName = "This field";
-                        
+
                         if (label) {
                             // Extract field name from the label (without the asterisk)
                             const labelText = label.textContent.trim();
                             fieldName = labelText.replace(/\*/g, '').trim();
                         }
-                        
+
                         // Remove any existing error message
                         const existingError = formGroup.querySelector(".error-message");
                         if (existingError) {
                             existingError.remove();
                         }
-                        
+
                         // Create error container
                         const errorContainer = document.createElement("div");
                         errorContainer.className = "error-message";
@@ -778,15 +778,15 @@ document.getElementById('sub_images').addEventListener('change', function(event)
                         errorContainer.style.marginTop = "5px";
                         errorContainer.style.marginBottom = "10px";
                         errorContainer.textContent = fieldName + " is required";
-                        
+
                         // Add error message below the input
                         field.insertAdjacentElement('afterend', errorContainer);
-                        
+
                         // Apply red border to input
                         field.style.border = "2px solid #dc3545";
                     }
                 }
-                
+
                 // Function to clear all errors
                 function clearErrors() {
                     // Remove red borders
@@ -794,19 +794,19 @@ document.getElementById('sub_images').addEventListener('change', function(event)
                     errorFields.forEach(function(field) {
                         field.style.border = "";
                     });
-                    
+
                     // Remove error messages
                     const errorMessages = form.querySelectorAll(".error-message");
                     errorMessages.forEach(function(message) {
                         message.remove();
                     });
                 }
-                
+
                 // Add input event listeners to clear errors as user types
                 form.querySelectorAll("input, select, textarea").forEach(function(input) {
                     input.addEventListener("input", function() {
                         this.style.border = "";
-                        
+
                         // Remove error message if it exists
                         const nextElement = this.nextElementSibling;
                         if (nextElement && nextElement.classList.contains("error-message")) {

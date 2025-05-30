@@ -21,13 +21,13 @@
 <link href="{{ asset('newFrontend/Clasifico/assets/css/bootstrap.css') }}" rel="stylesheet">
 <link href="{{ asset('newFrontend/Clasifico/assets/css/jquery.fancybox.min.css') }}" rel="stylesheet">
 <link href="{{ asset('newFrontend/Clasifico/assets/css/animate.css') }}" rel="stylesheet">
-<link href="{{ asset('newFrontend/Clasifico/assets/css/nice-select.css') }}" rel="stylesheet">
+{{-- <link href="{{ asset('newFrontend/Clasifico/assets/css/nice-select.css') }}" rel="stylesheet"> --}}
 <link href="{{ asset('newFrontend/Clasifico/assets/css/color.css') }}" rel="stylesheet">
 <link href="{{ asset('newFrontend/Clasifico/assets/css/style.css') }}" rel="stylesheet">
 <link href="{{ asset('newFrontend/Clasifico/assets/css/responsive.css') }}" rel="stylesheet">
 
 
-    
+
 </head>
 
 
@@ -41,7 +41,7 @@
         <!-- preloader -->
 
         @include('newFrontend.header')
-        
+
         @yield('content')
 
         @include('newFrontend.footer')
@@ -61,7 +61,7 @@
 <script src="{{ asset('newFrontend/Clasifico/assets/js/jquery.fancybox.js') }}"></script>
 <script src="{{ asset('newFrontend/Clasifico/assets/js/appear.js') }}"></script>
 <script src="{{ asset('newFrontend/Clasifico/assets/js/scrollbar.js') }}"></script>
-<script src="{{ asset('newFrontend/Clasifico/assets/js/jquery.nice-select.min.js') }}"></script>
+{{-- <script src="{{ asset('newFrontend/Clasifico/assets/js/jquery.nice-select.min.js') }}"></script> --}}
 
 <!-- main-js -->
 <script src="{{ asset('newFrontend/Clasifico/assets/js/script.js') }}"></script>
@@ -72,7 +72,7 @@
     <script src="{{ asset('newFrontend/Clasifico/assets/js/jquery.fancybox.js') }}"></script>
     <script src="{{ asset('newFrontend/Clasifico/assets/js/appear.js') }}"></script>
     <script src="{{ asset('newFrontend/Clasifico/assets/js/scrollbar.js') }}"></script>
-    <script src="{{ asset('newFrontend/Clasifico/assets/js/jquery.nice-select.min.js') }}"></script>
+    {{-- <script src="{{ asset('newFrontend/Clasifico/assets/js/jquery.nice-select.min.js') }}"></script> --}}
     <script src="{{ asset('newFrontend/Clasifico/assets/js/bxslider.js') }}"></script>
     <!-- main-js -->
 
