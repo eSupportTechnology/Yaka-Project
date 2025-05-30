@@ -40,7 +40,7 @@
         font-weight: bold;
     }
 
-    
+
     #btnSpinner {
     width: 18px;
     height: 18px;
@@ -109,7 +109,7 @@
     </div> --}}
 
         <button onclick="returnForm()" type="button" id="payNowBtn" class="btn btn-success w-100 d-flex justify-content-center align-items-center">
-          <span id="payNowText">Pay N</span>
+          <span id="payNowText">Pay Now</span>
           <div id="btnSpinner" class="ms-2 spinner-border spinner-border-sm text-light" role="status" style="display: none;"></div>
         </button>
 
