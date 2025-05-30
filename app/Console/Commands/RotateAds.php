@@ -21,12 +21,15 @@ class RotateAds extends Command
                 ELSE 5
             END')
             ->orderByDesc('updated_at')
-            ->get();
+            ->get()
+            ->values();
         // Rotate positions only if ads exist
         if ($ads->isNotEmpty()) {
-            // Move current first ad to last position
-            // $firstAd = $ads->shift();
-            // $ads->push($firstAd);
+            $ads = collect($ads);
+            $count = $ads->count();
+
+            // Rotate forward by 1 index each time
+            $rotatedAds = $ads->slice(1)->push($ads->first());
 
             // Update positions and rotation timestamp
             $position = 0;
