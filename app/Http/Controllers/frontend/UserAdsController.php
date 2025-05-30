@@ -187,11 +187,18 @@ class UserAdsController extends Controller
                         }
                     }
                 ],
+
+                'experience_years' => 'nullable|integer|min:0',
+                'education' => 'nullable|string|max:255',
+                'application_deadline' => 'nullable|date',
+                'mobile_number' => 'nullable|string|max:20',
             ], $dynamicRules);
+
+            
+
 
             // Validate the request data
             $validated = $request->validate($validationRules);
-
 
 
 
@@ -285,6 +292,9 @@ class UserAdsController extends Controller
 
 
             // Create the Ad with package expiration date
+            // Safely assign default values if brand/model are not submitted (e.g., when hidden)
+                $brand = $validated['brand'] ?? 'no brand';
+                $model = $validated['model'] ?? 'no model';
 
             $ad = Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
@@ -294,8 +304,8 @@ class UserAdsController extends Controller
                 'description'   => $validated['description'],
                 'mainImage'     => $mainImagePath,
                 'subImage'      => json_encode($subImagesPaths),
-                'brand'         => $validated['brand'],
-                'model'         => $validated['model'],
+                'brand'         => $brand,
+                'model'         => $model,
                 'price_type'    => $validated['pricing_type'] ?? null,
                 'post_type'     => $validated['post_type'] ?? null,
                 'condition'     => $validated['condition'] ?? null,
@@ -307,6 +317,10 @@ class UserAdsController extends Controller
                 'location'      => $location,
                 'sublocation'   => $sublocation,
                 'status'        => '0',
+                'experience_years' => $request->input('experience_years'),
+                'education' => $request->input('education'),
+                'application_deadline' => $request->input('application_deadline'),
+                'mobile_number' => $request->input('mobile_number'),
             ]);
 
             foreach ($formFields as $field) {

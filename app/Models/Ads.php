@@ -37,10 +37,15 @@ class Ads extends Model
         'bump_up_at',
         'condition',
         'status',
+        'experience_years',         // <-- Add this
+        'education',                // <-- Add this
+        'application_deadline',     // <-- Add this
+        'mobile_number',
     ];
 
     protected $casts = [
         'subImage' => 'array',
+        'application_deadline' => 'date'
     ];
 
     // Relationship with Category

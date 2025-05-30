@@ -150,6 +150,7 @@
                     <input type="hidden" id="selected_package_price" name="selected_package_price">
                     <input type="hidden" id="selected_package_duration" name="selected_package_duration"> <!-- Added for duration -->
 
+                    @if(request()->cat_id != 103)
                     <div class="row">
                      <!-- category Information -->
                      <div class="mb-3 col-lg-12">
@@ -192,11 +193,20 @@
 
                         </div>
                     </div>
+                    @endif
 
                     <!-- Product Details -->
                     <div class="mb-3 col-lg-12">
                     <div class="section-box">
-                            <h4><strong>@lang('messages.Product Description')</h4>
+                             <h4>
+                                <strong>
+                                    @if(request()->cat_id == 103)
+                                        @lang('messages.Job Description')
+                                    @else
+                                        @lang('messages.Product Description')
+                                    @endif
+                                </strong>
+                            </h4>
                         <div class="mb-3 col-lg-12">
                             <div class="form-group">
                                 <label class="form-label text-dark"><strong>@lang('messages.Title')<i class="text-danger">*</i></strong></label>
@@ -205,7 +215,16 @@
                         </div>
                         <div class="mb-3 col-lg-12">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>@lang('messages.Price')<i class="text-danger">*</i></strong></label>
+                                <label class="form-label text-dark">
+                                    <strong>
+                                         @if(request()->cat_id == 103)
+                                            @lang('messages.Salary')
+                                        @else
+                                            @lang('messages.Price')
+                                        @endif
+                                        <i class="text-danger">*</i>
+                                    </strong>
+                                </label>
                                 <input type="number" name="price" class="form-control" required>
                             </div>
                         </div>
@@ -216,10 +235,74 @@
                                 <textarea name="description" class="form-control" rows="4" required></textarea>
                             </div>
                         </div>
+                        @if(request()->cat_id == 103)
+                            <!-- Required Work Experience -->
+                            <div class="mb-3 col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-label text-dark">
+                                        <strong>@lang('messages.Required Work Experience (years)')</strong>
+                                    </label>
+                                    <input type="number" name="experience_years" class="form-control" min="0" placeholder="0">
+                                </div>
+                            </div>
+
+                            <!-- Required Education -->
+                            <div class="mb-3 col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-label text-dark">
+                                        <strong>@lang('messages.Required Education')</strong>
+                                    </label>
+                                    <select name="education" class="form-control custom-select">
+                                        <option value="">-- @lang('messages.Select Education') --</option>
+                                        <option value="Ordinary Level">Ordinary Level</option>
+                                        <option value="Advanced Level">Advanced Level</option>
+                                        <option value="Certificate">Certificate</option>
+                                        <option value="Diploma">Diploma</option>
+                                        <option value="Higher Diploma">Higher Diploma</option>
+                                        <option value="Degree">Degree</option>
+                                        <option value="Masters">Masters</option>
+                                        <option value="Doctorate">Doctorate</option>
+                                        <option value="Skilled Apprentice">Skilled Apprentice</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <!-- Application Deadline -->
+                            <div class="mb-3 col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-label text-dark">
+                                        <strong>@lang('messages.Application Deadline') (@lang('messages.Optional'))</strong>
+                                    </label>
+                                    <input type="date" name="application_deadline" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Mobile Number -->
+                        <div class="mb-3 col-lg-12">
+                            <div class="form-group">
+                                <label class="form-label text-dark">
+                                    <strong>@lang('messages.Mobile Number') <i class="text-danger">*</i></strong>
+                                </label>
+                                <input type="tel" name="mobile_number" class="form-control" required pattern="[0-9]{10}" placeholder="Enter 10-digit mobile number">
+                            </div>
+                        </div>
+
+                        @endif
+
 
                         <div class="mb-3 col-lg-12">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>@lang('messages.Upload Main Image') <i class="text-danger">*</i></strong></label>
+                                 <label class="form-label text-dark">
+                                    <strong>
+                                        @if(request()->cat_id == 103)
+                                            @lang('messages.Logo')
+                                        @else
+                                            @lang('messages.Upload Main Image')
+                                        @endif
+                                        <i class="text-danger">*</i>
+                                    </strong>
+                                </label>
                                 <small class=" text-muted">jpeg,png,jpg,gif,bmp,svg,webp,tiff ,up to 20MB.</small>
                                 <input type="file" name="main_image" class="form-control" id="main_image" required>
                                 <div id="main_image_preview" style="margin-top: 10px;"></div> <!-- Preview section for main image -->
@@ -227,7 +310,15 @@
                         </div>
                         <div class="mb-3 col-lg-12">
                             <div class="form-group">
-                                <label class="form-label text-dark"><strong>@lang('messages.Upload Sub Image')</strong></label>
+                                <label class="form-label text-dark">
+                                    <strong>
+                                        @if(request()->cat_id == 103)
+                                            @lang('messages.Description Image')
+                                        @else
+                                            @lang('messages.Upload Sub Image')
+                                        @endif
+                                    </strong>
+                                </label>
                                 <small class=" text-muted">Simply select all images at once.</small>
                                 <input type="file" name="sub_images[]" class="form-control" id="sub_images" multiple>
                                 <div id="sub_images_preview" style="margin-top: 10px;"></div>
@@ -236,7 +327,8 @@
 
                         </div>
                         </div>
-
+                    
+                @if(request()->cat_id != 103)
                      <!-- category Information -->
                      <div class="mb-3 col-lg-12">
                             <div class="section-box">
@@ -252,7 +344,9 @@
 
                         </div>
                     </div>
+                
 
+                
                     <div class="mb-3 col-lg-12">
                         <div class="section-box">
                             <label class="form-label text-dark"><strong>Additional Information</strong></label>
@@ -311,7 +405,9 @@
                         </div>
                     </div>
 
+               
 
+               
               <!-- Pricing Type -->
                 <div class="mb-3 col-lg-12">
                     <div class="section-box">
@@ -328,7 +424,7 @@
                 </div>
 
 
-
+                
                     <!-- Post Type -->
                         <div class="mb-3 col-lg-12">
                         <div class="section-box">
@@ -343,7 +439,7 @@
                             </div>
                             </div>
                         </div>
-
+                @endif
                         <div class="mb-3 col-lg-12">
                             <div class="section-box">
                                 <h4>@lang('messages.Boosting Option')<i class="text-danger">*</i></h4>
