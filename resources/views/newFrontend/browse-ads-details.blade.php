@@ -263,15 +263,16 @@
                             </div>
                         </div>
                         <div class="mt-3 mb-4 col-md-12 d-flex justify-content-center">
-                            @php
-                            $otherbanners = $otherbanners->isNotEmpty() ? $otherbanners->random() : null;
-                            @endphp
-
-                            @if($otherbanners)
-                                <div class="banner">
-                                    <img src="{{ asset('banners/' . $otherbanners->img) }}" style="width:510px" alt="Banner Image" class="img-fluid banner-img">
+                            <div id="other-banner" class="carousel slide " data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    @foreach ($otherbanners as $index => $banner)
+                                        <div class="carousel-item @if ($index == 0) active @endif">
+                                            <img width="20%" src="{{ asset('banners/' . $banner->img) }}"
+                                                class="mx-auto d-block w-100" alt="Slide 1">
+                                        </div>
+                                    @endforeach
                                 </div>
-                            @endif
+                            </div>
                         </div>
                     </div>
                 </div>
