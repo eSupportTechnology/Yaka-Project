@@ -672,37 +672,53 @@
                     <div id="superAds" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($superAds as $index => $adss)
-                                <div class="carousel-item @if ($index == 0) active @endif "
-                                    style="border: 4px solid #0b128e; border-radius: 4px; overflow: hidden; box-sizing: border-box; padding: 0; margin: 2px; animation: blinkBlue 1.5s infinite;">
-                                    <a href="/browse_ads_details/{{ $adss->adsId }}">
-                                        <div
-                                            style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;">
-                                        </div>
-                                    </a>
-                                    <div class="badge">
-                                        <img src="{{ asset('02.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
-                                    </div>
-                                    <a href="#">
-                                        <img src="{{ storage_public_url($adss->mainImage) }}" class="d-block w-100"
-                                            style="height: 300px; object-fit: contain;
-                                            alt="Slide
-                                            1">
-                                    </a>
-                                    <div class="p-2 details">
-                                        <button class="sale"
-                                            style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                                            Sale
-                                        </button>
-                                        <p style="color:white;">{{ $adss->category->name ?? 'Uncategorized' }} &raquo;
-                                            {{ $adss->subcategory->name ?? '' }}</p>
-                                        <h3 style="color:white;font-weight:bold;font-size:1.1rem;">{{ $adss->title }}</h3>
-                                        <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;">
-                                            @lang('messages.Rs')
-                                            {{ number_format($adss->price, 2) }}</p>
-                                        <p style="color:white;"><i class="fas fa-clock"></i>
-                                            {{ $adss->created_at->diffForHumans() }}</p>
-                                    </div>
+                                <div class="carousel-item @if ($index == 0) active @endif"
+                                style="position: relative; border: 4px solid #0b128e; border-radius: 4px; overflow: hidden; padding: 0; margin: 2px; animation: blinkBlue 1.5s infinite; height: 500px; background-color: white;">
+                                
+                                <!-- The Image (full, uncropped) -->
+                                <img src="{{ storage_public_url($adss->mainImage) }}"
+                                    class="d-block w-100"
+                                    style="height: 100%; width: 100%; object-fit: contain; background-color: white;"
+                                    alt="Slide 1">
+
+                                <!-- Sale Badge -->
+                                <button class="sale"
+                                    style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                    Sale
+                                </button>
+
+                                <!-- Top Ad Badge -->
+                                <div class="badge" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+                                    <img src="{{ asset('02.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
                                 </div>
+
+                                <!-- Overlay Gradient (optional) -->
+                                <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+                                            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+                                            border-radius: 5px;">
+                                </div>
+
+                                <!-- Ad Details Overlay -->
+                                <div class="p-2 details"
+                                    style="position: absolute; bottom: 0; left: 0; width: 100%;
+                                        background: rgba(0, 0, 0, 0.6); color: white; z-index: 2;
+                                        text-align: center;">
+                                        
+                                    <p>{{ $adss->category->name ?? 'Uncategorized' }} &raquo; {{ $adss->subcategory->name ?? '' }}</p>
+                                    
+                                    <h3 style="font-weight: bold; font-size: 1.1rem; color: white;">
+                                        {{ $adss->title }}
+                                    </h3>
+
+                                    <p class="price" style="color: white; font-size: 1.2rem;">
+                                        @lang('messages.Rs') {{ number_format($adss->price, 2) }}
+                                    </p>
+                                    
+                                    <p><i class="fas fa-clock"></i> {{ $adss->created_at->diffForHumans() }}</p>
+                                </div>
+
+                            </div>
+
                             @endforeach
                         </div>
                     </div>
@@ -766,37 +782,50 @@
                     <div id="topAds" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($topAds as $index => $ad)
-                                <div class="carousel-item @if ($index == 0) active @endif "
-                                    style="border: 4px solid #00ff44; border-radius: 4px; overflow: hidden; box-sizing: border-box; padding: 0; margin: 2px; animation: blinkGreen 1.5s infinite;">
-                                    <a href="/browse_ads_details/{{ $ad->adsId }}">
-                                        <div
-                                            style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); border-radius: 5px;">
-                                        </div>
-                                    </a>
-                                    <div class="badge">
-                                        <img src="{{ asset('01.png') }}" alt="Top Ad"
-                                            style="width: 20px; height: 20px;">
+                                <div class="carousel-item @if ($index == 0) active @endif"
+                                    style="position: relative; border: 4px solid #00ff44; border-radius: 4px; overflow: hidden;
+                                        padding: 0; margin: 2px; animation: blinkGreen 1.5s infinite; height: 500px; background-color: white;">
+
+                                    <!-- Full-size Image -->
+                                    <img src="{{ storage_public_url($ad->mainImage) }}"
+                                        class="d-block w-100"
+                                        style="height: 100%; width: 100%; object-fit: contain; background-color: white;"
+                                        alt="Top Ad Image">
+
+                                    <!-- Sale Badge -->
+                                    <button class="sale"
+                                        style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px;
+                                            background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                        Sale
+                                    </button>
+
+                                    <!-- Top Ad Badge -->
+                                    <div class="badge" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+                                        <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
                                     </div>
-                                    <a href="#"><img src="{{ storage_public_url($ad->mainImage) }}"
-                                            class="d-block w-100"
-                                            style="width: 100%; height: 300px; object-fit: contain; " alt="Slide 1"></a>
-                                    <div class="p-2 details">
-                                        <button class="sale"
-                                            style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                                            Sale
-                                        </button>
-                                        <p style="color:white;">{{ $ad->category->name ?? 'Uncategorized' }} &raquo;
-                                            {{ $ad->subcategory->name ?? '' }}</p>
-                                        <h3 style="color:white;font-weight:bold;font-size:1.1rem;">{{ $ad->title }}
+
+                                    <!-- Overlay Gradient -->
+                                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+                                                background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent); border-radius: 5px;">
+                                    </div>
+
+                                    <!-- Ad Details Overlay -->
+                                    <div class="p-2 details"
+                                        style="position: absolute; bottom: 0; left: 0; width: 100%;
+                                            background: rgba(0, 0, 0, 0.6); color: white; z-index: 2; text-align: center;">
+                                        <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                        <h3 style="font-weight: bold; font-size: 1.1rem; color: white;">
+                                            {{ $ad->title }}
                                         </h3>
-                                        <p class="price" style="color:rgb(130, 128, 226);font-size:1.2rem;">
-                                            @lang('messages.Rs')
-                                            {{ number_format($ad->price, 2) }}</p>
-                                        <p style="color:white;"><i class="fas fa-clock"></i>
-                                            {{ $ad->created_at->diffForHumans() }}</p>
+                                        <p class="price" style="color: white; font-size: 1.2rem;">
+                                            @lang('messages.Rs') {{ number_format($ad->price, 2) }}
+                                        </p>
+                                        <p><i class="fas fa-clock"></i> {{ $ad->created_at->diffForHumans() }}</p>
                                     </div>
+
                                 </div>
                             @endforeach
+
                         </div>
                     </div>
                     <div class="mt-3 d-flex carousel-thumbnails">
