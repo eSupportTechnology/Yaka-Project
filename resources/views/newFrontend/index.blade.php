@@ -782,7 +782,7 @@
                     <div id="topAds" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($topAds as $index => $ad)
-                            <a href="/browse_ads_details/{{ $adss->adsId }}">
+                            <a href="/browse_ads_details/{{ $ad->adsId }}">
                                 <div class="carousel-item @if ($index == 0) active @endif"
                                     style="position: relative; border: 4px solid #00ff44; border-radius: 4px; overflow: hidden;
                                         padding: 0; margin: 2px; animation: blinkGreen 1.5s infinite; height: 500px; background-color: white;">
