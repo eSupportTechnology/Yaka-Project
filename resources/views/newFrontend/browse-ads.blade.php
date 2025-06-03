@@ -981,27 +981,24 @@
                             @if ($ads->onFirstPage())
                                 <li class="disabled"><a href="#"><i class="far fa-angle-left"></i>Prev</a></li>
                             @else
-                                <li><a
-                                        href="{{ $ads->previousPageUrl() . '&location=' . request('location') . '&category=' . request('category') . '&subcategory=' . request('subcategory') }}"><i
-                                            class="far fa-angle-left"></i>Prev</a></li>
+                                <li><a href="{{ $ads->appends(request()->query())->previousPageUrl() }}"><i class="far fa-angle-left"></i>Prev</a></li>
                             @endif
 
                             @foreach ($ads->getUrlRange(1, $ads->lastPage()) as $page => $url)
                                 <li class="{{ $page == $ads->currentPage() ? 'current' : '' }}">
-                                    <a
-                                        href="{{ $url . '&location=' . request('location') . '&category=' . request('category') . '&subcategory=' . request('subcategory') }}">{{ $page }}</a>
+                                    <a href="{{ $url . (strpos($url, '?') === false ? '?' : '&') . http_build_query(request()->query()) }}">{{ $page }}</a>
                                 </li>
                             @endforeach
 
                             @if ($ads->hasMorePages())
-                                <li><a
-                                        href="{{ $ads->nextPageUrl() . '&location=' . request('location') . '&category=' . request('category') . '&subcategory=' . request('subcategory') }}">Next<i
-                                            class="far fa-angle-right"></i></a></li>
+                                <li><a href="{{ $ads->appends(request()->query())->nextPageUrl() }}">Next<i class="far fa-angle-right"></i></a></li>
                             @else
                                 <li class="disabled"><a href="#">Next<i class="far fa-angle-right"></i></a></li>
                             @endif
                         </ul>
                     </div>
+
+
 
                 </div>
             </div>

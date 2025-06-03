@@ -76,7 +76,6 @@ class AdsController extends Controller
                 ELSE 5
             END')
             ->orderBy('rotation_position');
-        dd($adsQuery->get()->count());
         if (!empty($selectedLocation)) {
             $adsQuery->where(function ($query) use ($selectedLocation, $selectedCity) {
                 $query->where('location', $selectedLocation)
