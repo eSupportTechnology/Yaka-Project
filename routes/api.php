@@ -55,6 +55,16 @@ Route::post('/payment/notify',[PaymentProcessingController::class , 'getPaymentI
 // Payament ad boost
 Route::post('/payment/boostnotify',[BoostingController::class , 'updateBoost']);
 
+// get Category API endpoints for homepage
+Route::get('/categories', [CategoryControllerMobile::class, 'getAllCategories']);
+//Route::get('/categories/{categoryId}/subcategories', [CategoryControllerMobile::class, 'getSubcategories']);
+
+//Category browse parameterized endpoint
+Route::get('/category-browse', [CategoryControllerMobile::class, 'getCategoryBrowseData']);
+
+// Ad details endpoint related in category
+Route::get('/ads/{adsId}/details', [CategoryControllerMobile::class, 'getAdDetails']);
+
 // Top and Bottom banners endpoint (regular banners)
 Route::get('/banners/top-bottom', [HomepageControllerMobile::class, 'getTopBottomBanners']);
 // Super Ads banners endpoint
