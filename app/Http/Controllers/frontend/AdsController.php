@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\frontend;
 
+use Carbon\Carbon;
 use App\Models\Ads;
-use App\Models\Category;
-use App\Models\Banners;
-use App\Models\Cities;
-use App\Models\Districts;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Package;
-use App\Models\PackageType;
-use App\Models\BrandsModels;
-use Illuminate\Support\Facades\App;
 use App\Models\City;
-use App\Services\IpgHashService;
+use App\Models\Cities;
+use App\Models\Banners;
+use App\Models\Package;
+use App\Models\Category;
+use App\Models\Districts;
+use App\Models\PackageType;
 use App\Models\PaymentInfo;
+use App\Models\BrandsModels;
+use Illuminate\Http\Request;
+use App\Services\IpgHashService;
+use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Controller;
 
 class AdsController extends Controller
 {
@@ -63,6 +64,10 @@ class AdsController extends Controller
 
         $adsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
             ->where('status', 1)
+            ->where(function ($query) {
+                $query->whereNull('package_expire_at')
+                      ->orWhere('package_expire_at', '>=', Carbon::now());
+            })
             ->orderByRaw('CASE
                 WHEN ads_package = 6 THEN 1
                 WHEN ads_package = 3 THEN 2
@@ -71,8 +76,7 @@ class AdsController extends Controller
                 ELSE 5
             END')
             ->orderBy('rotation_position');
-
-
+        dd($adsQuery->get()->count());
         if (!empty($selectedLocation)) {
             $adsQuery->where(function ($query) use ($selectedLocation, $selectedCity) {
                 $query->where('location', $selectedLocation)

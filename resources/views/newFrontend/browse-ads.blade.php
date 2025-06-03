@@ -878,7 +878,6 @@
                         <div class="grid-item feature-style-two four-column pd-0" style="display: flex; flex-wrap: wrap;">
                             <div class="clearfix row" style="width: 100%; display: flex; flex-wrap: wrap;">
                                 @foreach ($ads as $ad)
-                                    @if (is_null($ad->package_expire_at) || \Carbon\Carbon::now()->lessThanOrEqualTo($ad->package_expire_at))
                                         <div class="col-lg-3 col-md-6 col-sm-12 feature-block"
                                             style="display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 30px;">
                                             <div class="feature-block-one"
@@ -968,7 +967,6 @@
                                                 </a>
                                             </div>
                                         </div>
-                                    @endif
                                 @endforeach
 
                             </div>
