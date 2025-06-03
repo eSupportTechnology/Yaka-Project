@@ -590,6 +590,16 @@
                 border-color: transparent;
             }
         }
+        @keyframes blinkRed {
+            0%,
+            100% {
+                border-color: red;
+            }
+
+            50% {
+                border-color: transparent;
+            }
+        }
     </style>
 
     <!-- banner-section -->
@@ -867,7 +877,7 @@
                                 <div class="col-lg-3 col-md-5 col-sm-12 feature-block justify-content-center">
                                     <div class="feature-block-one wow fadeInDown animated" data-wow-delay="00ms"
                                         data-wow-duration="1500ms">
-                                        <div class="inner-box">
+                                        <div class="inner-box" style="border: 4px solid red; border-radius: 4px; overflow: hidden; animation: blinkRed 1.5s infinite;">
                                             <div class="image-box">
                                                 <figure class="image"><img
                                                         src="{{ storage_public_url($ads->mainImage) }}" alt=""
