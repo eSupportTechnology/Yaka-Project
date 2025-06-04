@@ -87,7 +87,7 @@ class AdsController extends Controller
                         CASE
                             WHEN ads_package != 0 THEN rotation_position
                             ELSE NULL
-                        END DESC
+                        END ASC
                     ");
         if (!empty($selectedLocation)) {
             $adsQuery->where(function ($query) use ($selectedLocation, $selectedCity) {
