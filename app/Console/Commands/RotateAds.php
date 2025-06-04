@@ -38,7 +38,7 @@ class RotateAds extends Command
 
             // Update positions and rotation timestamp
             $position = 0;
-            foreach ($ads as $ad) {
+            foreach ($rotatedAds as $ad) {
                 $ad->update([
                     'rotation_position' => $position++,
                     'last_rotated_at' => now()
