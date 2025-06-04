@@ -25,7 +25,7 @@ class RotateAds extends Command
                 $query->whereNull('package_expire_at')
                       ->orWhere('package_expire_at', '>=', Carbon::now());
             })
-            ->orderByDesc('updated_at')
+            ->orderBy('rotation_position')
             ->get()
             ->values();
         // Rotate positions only if ads exist
