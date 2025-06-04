@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 use App\Models\Ads;
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 
 class RotateAds extends Command
 {
