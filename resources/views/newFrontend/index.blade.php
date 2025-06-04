@@ -600,6 +600,34 @@
                 border-color: transparent;
             }
         }
+        .custom-carousel {
+            position: relative;
+            width: 100%;
+            /* max-height: 400px; */
+            overflow: hidden;
+        }
+
+        .carousel-slide-top {
+            display: none;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .carousel-slide-sup {
+            display: none;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel-slide-top.active {
+            display: block;
+        }
+        .carousel-slide-sup.active {
+            display: block;
+        }
     </style>
 
     <!-- banner-section -->
@@ -746,21 +774,20 @@
                     </p>
                 </div>
             </div>
-            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center ">
+            <div class="col-md-6 d-flex flex-column justify-content-start align-items-center ">
                 <div class="first-row">
                     <h2 class="heading"><b>@lang('messages.indextitle') <br>
                             @lang('messages.Best') <span> @lang('messages.Super')</span></b></h2>
                 </div>
                 <div class="second-row">
-                    <div id="super-banner" class="carousel slide no-animation" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            @foreach ($superbanners as $index => $banner)
-                                <div class="carousel-item @if ($index == 0) active @endif">
-                                    <img width="20%" src="{{ asset('banners/' . $banner->img) }}"
-                                        class="mx-auto d-block w-100" alt="Slide 1">
-                                </div>
-                            @endforeach
-                        </div>
+                    <div id="super-banner" class="custom-carousel">
+                        @foreach ($topbanners as $index => $banner)
+                            <img
+                                src="{{ asset('banners/' . $banner->img) }}"
+                                class="carousel-slide-sup @if ($index === 0) active @endif"
+                                alt="Banner {{ $index + 1 }}"
+                            >
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -768,22 +795,19 @@
     </section>
     <section class="mt-5 topad-section">
         <div class="row auto-container">
-            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center ">
+            <div class="col-md-6 d-flex flex-column justify-content-start align-items-center ">
                 <div class="first-row">
                     <h2 class="heading"><b>Top Ads</b></h2>
                 </div>
                 <div class="second-row">
-                    <div id="top-banner" class="carousel slide no-animation" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            @foreach ($topbanners as $index => $banner)
-                                @if ($banner->type == 1)
-                                    <div class="carousel-item @if ($index == 0) active @endif">
-                                        <img width="20%" src="{{ asset('banners/' . $banner->img) }}"
-                                            class="mx-auto d-block w-100" alt="Slide 1">
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
+                    <div id="top-banner">
+                        @foreach ($superbanners as $index => $banner)
+                            <img
+                                src="{{ asset('banners/' . $banner->img) }}"
+                                class="carousel-slide-top @if ($index === 0) active @endif"
+                                alt="Banner {{ $index + 1 }}"
+                            >
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -950,6 +974,76 @@
             </div>
         </div>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const slides = document.querySelectorAll('.carousel-slide-sup');
+            const totalSlides = slides.length;
+            let currentIndex = 0;
+            let interval = null;
+
+            const showSlide = (index) => {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        // Reset GIF to play again
+                        const currentSrc = slide.src;
+                        slide.src = '';
+                        slide.src = currentSrc;
+                        slide.classList.add('active');
+                    }
+                });
+            };
+
+            const startCarousel = () => {
+                interval = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % totalSlides;
+                    showSlide(currentIndex);
+                }, 5000); // change every 5 seconds
+            };
+
+            const stopCarousel = () => {
+                clearInterval(interval);
+            };
+
+            showSlide(currentIndex);
+            startCarousel();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const slides = document.querySelectorAll('.carousel-slide-top');
+            const totalSlides = slides.length;
+            let currentIndex = 0;
+            let interval = null;
+
+            const showSlide = (index) => {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        // Reset GIF to play again
+                        const currentSrc = slide.src;
+                        slide.src = '';
+                        slide.src = currentSrc;
+                        slide.classList.add('active');
+                    }
+                });
+            };
+
+            const startCarousel = () => {
+                interval = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % totalSlides;
+                    showSlide(currentIndex);
+                }, 5000); // change every 5 seconds
+            };
+
+            const stopCarousel = () => {
+                clearInterval(interval);
+            };
+
+            showSlide(currentIndex);
+            startCarousel();
+        });
+    </script>
+
     <script>
         const carousel = document.querySelector('#superAds');
         const thumbnails = document.querySelectorAll('.carousel-thumbnails img');
