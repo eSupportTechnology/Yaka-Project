@@ -20,6 +20,10 @@ class RotateAds extends Command
                 WHEN ads_package = 5 THEN 4
                 ELSE 5
             END')
+            ->where(function ($query) {
+                $query->whereNull('package_expire_at')
+                      ->orWhere('package_expire_at', '>=', Carbon::now());
+            })
             ->orderByDesc('updated_at')
             ->get()
             ->values();

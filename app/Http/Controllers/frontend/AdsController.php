@@ -63,19 +63,32 @@ class AdsController extends Controller
         $superAds = $superAdsQuery->get();
 
         $adsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
-            ->where('status', 1)
-            ->where(function ($query) {
-                $query->whereNull('package_expire_at')
-                      ->orWhere('package_expire_at', '>=', Carbon::now());
-            })
-            ->orderByRaw('CASE
-                WHEN ads_package = 6 THEN 1
-                WHEN ads_package = 3 THEN 2
-                WHEN ads_package = 4 THEN 3
-                WHEN ads_package = 5 THEN 4
-                ELSE 5
-            END')
-            ->orderBy('rotation_position');
+                    ->where('status', 1)
+                    ->where(function ($query) {
+                        $query->whereNull('package_expire_at')
+                            ->orWhere('package_expire_at', '>=', Carbon::now());
+                    })
+                    ->orderByRaw("
+                        CASE
+                            WHEN ads_package = 6 THEN 1
+                            WHEN ads_package = 3 THEN 2
+                            WHEN ads_package = 4 THEN 3
+                            WHEN ads_package = 5 THEN 4
+                            ELSE 5
+                        END
+                    ")
+                    ->orderByRaw("
+                        CASE
+                            WHEN ads_package = 0 THEN updated_at
+                            ELSE NULL
+                        END DESC
+                    ")
+                    ->orderByRaw("
+                        CASE
+                            WHEN ads_package != 0 THEN rotation_position
+                            ELSE NULL
+                        END ASC
+                    ");
         if (!empty($selectedLocation)) {
             $adsQuery->where(function ($query) use ($selectedLocation, $selectedCity) {
                 $query->where('location', $selectedLocation)
@@ -133,14 +146,18 @@ class AdsController extends Controller
         $otherbanners = Banners::where('type', 1)->get();
 
         $relatedAds = Ads::where('adsId', '!=', $ad->adsId)
-    ->where(function ($query) use ($ad) {
-        $query->where('cat_id', $ad->cat_id)
-              ->where('sub_cat_id', $ad->sub_cat_id)
-              ->where('location', $ad->location);
-    })
-    ->latest()
-    ->take(12)
-    ->get();
+                ->where(function ($query) use ($ad) {
+                    $query->where('cat_id', $ad->cat_id)
+                        ->where('sub_cat_id', $ad->sub_cat_id)
+                        ->where('location', $ad->location);
+                })
+                ->where(function ($query) {
+                    $query->whereNull('package_expire_at')
+                          ->orWhere('package_expire_at', '>=', Carbon::now());
+                })
+                ->latest()
+                ->take(12)
+                ->get();
 
     if ($relatedAds->count() < 12) {
         $additionalAds = Ads::where('adsId', '!=', $ad->adsId)

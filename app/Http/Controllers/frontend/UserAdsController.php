@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Artisan;
 
 class UserAdsController extends Controller
 {
@@ -194,7 +195,7 @@ class UserAdsController extends Controller
                 'mobile_number' => 'nullable|string|max:20',
             ], $dynamicRules);
 
-            
+
 
 
             // Validate the request data
@@ -213,7 +214,7 @@ class UserAdsController extends Controller
                 if ($packageType) {
                     $packageExpireAt = Carbon::now()->addDays((int)($packageType->duration));
                 }
-            }else {
+            } else {
                 // Free ad
                 $packageExpireAt = Carbon::now()->addDays(30);
             }
@@ -295,7 +296,7 @@ class UserAdsController extends Controller
             // Safely assign default values if brand/model are not submitted (e.g., when hidden)
                 $brand = $validated['brand'] ?? 'no brand';
                 $model = $validated['model'] ?? 'no model';
-
+            
             $ad = Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
                 'user_id' => auth()->user()->id,
@@ -321,6 +322,8 @@ class UserAdsController extends Controller
                 'education' => $request->input('education'),
                 'application_deadline' => $request->input('application_deadline'),
                 'mobile_number' => $request->input('mobile_number'),
+                'rotation_position' => -1,
+                'last_rotated_at' => now(),
             ]);
 
             foreach ($formFields as $field) {

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Artisan;
 
 
 class PaymentProcessingController extends Controller
@@ -84,6 +85,7 @@ class PaymentProcessingController extends Controller
                 }
             }
             $user = User::where('id', $userId)->first();
+            Artisan::call('ads:rotate');
             // Save Ad in Database
             Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
