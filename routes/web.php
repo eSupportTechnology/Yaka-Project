@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ContactController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BoostingController;
+use Laravel\Telescope\Telescope;
+
 
 Route::post('/send-contact', [ContactController::class, 'send'])->name('contact.send');
 
