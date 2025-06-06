@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\adminPanel;
 
+use App\Action\Category\GetSubCategories;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class subCategoriesManagementController extends Controller
@@ -88,5 +90,11 @@ class subCategoriesManagementController extends Controller
         $maincategory = Category::where('id', $category->mainId)->select('id', 'url')->first();
 
         return view('newAdminDashboard.categoryManagement.delete', ['category' => $category, 'maincategory' => $maincategory]);
+    }
+
+    public function getSubCategoriesByCategoryId($categoryId, GetSubCategories $getSubCategories): JsonResponse
+    {
+        $response = $getSubCategories($categoryId);
+        return response()->json($response);
     }
 }

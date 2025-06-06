@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\apiMobile;
 
+use App\Action\HomePage\GetHomePageAds;
 use App\Models\Banners;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -238,6 +240,11 @@ class HomepageControllerMobile extends Controller
             Log::error('categories fetch error: ' . $e->getMessage());
             return $this->apiResponse->error($e->getMessage(), 'Failed to fetch categories', 400);
         }
+    }
+
+    public function getHomePageAds(GetHomePageAds $getHomePageAds): JsonResponse
+    {
+        return response()->json($getHomePageAds());
     }
 
 }
