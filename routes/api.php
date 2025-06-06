@@ -72,6 +72,10 @@ Route::get('/latest-ads', [HomepageControllerMobile::class, 'getLatestAds']);
 //Get all categories endpoint
 Route::get('/home-categories', [HomepageControllerMobile::class, 'getCategories']);
 
+
+// Home Page Ads endpoint
+Route::get('/home-page-ads', [HomepageControllerMobile::class, 'getHomePageAds']);
+
 Route::middleware('auth:api')->group(function () {
 
 });
