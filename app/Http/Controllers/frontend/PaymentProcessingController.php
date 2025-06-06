@@ -85,7 +85,15 @@ class PaymentProcessingController extends Controller
                 }
             }
             $user = User::where('id', $userId)->first();
-            Artisan::call('ads:rotate');
+            if($adData['boosting_option'] == 6) {
+                Artisan::call('ads:rotate-super');
+            } elseif($adData['boosting_option'] == 3) {
+                Artisan::call('ads:rotate-top');
+            } elseif($adData['boosting_option'] == 4) {
+                Artisan::call('ads:rotate-urgent');
+            } elseif($adData['boosting_option'] == 5) {
+                Artisan::call('ads:rotate-jump');
+            }
             // Save Ad in Database
             Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),

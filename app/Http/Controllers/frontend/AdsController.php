@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Services\IpgHashService;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AdsController extends Controller
 {
@@ -62,56 +63,89 @@ class AdsController extends Controller
 
         $superAds = $superAdsQuery->get();
 
-        $adsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
-                    ->where('status', 1)
-                    ->where(function ($query) {
-                        $query->whereNull('package_expire_at')
-                            ->orWhere('package_expire_at', '>=', Carbon::now());
-                    })
-                    ->orderByRaw("
-                        CASE
-                            WHEN ads_package = 6 THEN 1
-                            WHEN ads_package = 3 THEN 2
-                            WHEN ads_package = 4 THEN 3
-                            WHEN ads_package = 5 THEN 4
-                            ELSE 5
-                        END
-                    ")
-                    ->orderByRaw("
-                        CASE
-                            WHEN ads_package = 0 THEN updated_at
-                            ELSE NULL
-                        END DESC
-                    ")
-                    ->orderByRaw("
-                        CASE
-                            WHEN ads_package != 0 THEN rotation_position
-                            ELSE NULL
-                        END ASC
-                    ");
-        if (!empty($selectedLocation)) {
-            $adsQuery->where(function ($query) use ($selectedLocation, $selectedCity) {
-                $query->where('location', $selectedLocation)
+        $baseQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
+            ->where('status', 1)
+            ->where(function ($query) {
+                $query->whereNull('package_expire_at')
+                    ->orWhere('package_expire_at', '>=', Carbon::now());
+            });
+
+        // Apply filters dynamically
+        $applyFilters = function ($query) use ($selectedLocation, $selectedCity, $selectedCategory, $selectedSubCategory, $searchTerm) {
+            if (!empty($selectedLocation)) {
+                $query->where(function ($q) use ($selectedLocation, $selectedCity) {
+                    $q->where('location', $selectedLocation)
                     ->orWhere('sublocation', $selectedCity);
-            });
-        }
+                });
+            }
 
-        if (!empty($selectedCategory)) {
-            $adsQuery->where('cat_id', $selectedCategory);
-        }
+            if (!empty($selectedCategory)) {
+                $query->where('cat_id', $selectedCategory);
+            }
 
-        if (!empty($selectedSubCategory)) {
-            $adsQuery->where('sub_cat_id', $selectedSubCategory);
-        }
+            if (!empty($selectedSubCategory)) {
+                $query->where('sub_cat_id', $selectedSubCategory);
+            }
 
-        if (!empty($searchTerm)) {
-            $adsQuery->where(function ($query) use ($searchTerm) {
-                $query->where('title', 'like', "%{$searchTerm}%")
+            if (!empty($searchTerm)) {
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('title', 'like', "%{$searchTerm}%")
                     ->orWhere('description', 'like', "%{$searchTerm}%");
-            });
-        }
+                });
+            }
 
-        $ads = $adsQuery->paginate(30);
+            return $query;
+        };
+
+        // Prepare and merge all packages in custom order
+        $ads = collect();
+
+        // ads_package = 6
+        $ads = $ads->merge(
+            $applyFilters((clone $baseQuery)->where('ads_package', 6))
+                ->orderBy('rotation_position', 'asc')
+                ->get()
+        );
+
+        // ads_package = 3
+        $ads = $ads->merge(
+            $applyFilters((clone $baseQuery)->where('ads_package', 3))
+                ->orderBy('rotation_position', 'asc')
+                ->get()
+        );
+
+        // ads_package = 4
+        $ads = $ads->merge(
+            $applyFilters((clone $baseQuery)->where('ads_package', 4))
+                ->orderBy('rotation_position', 'asc')
+                ->get()
+        );
+
+        // ads_package = 5
+        $ads = $ads->merge(
+            $applyFilters((clone $baseQuery)->where('ads_package', 5))
+                ->orderBy('rotation_position', 'asc')
+                ->get()
+        );
+
+        // ads_package = 0 (normal ads)
+        $ads = $ads->merge(
+            $applyFilters((clone $baseQuery)->where('ads_package', 0))
+                ->orderBy('updated_at', 'desc')
+                ->get()
+        );
+
+        $page = request()->get('page', 1);
+        $perPage = 30;
+
+        $pagedAds = new LengthAwarePaginator(
+            $ads->forPage($page, $perPage),
+            $ads->count(),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+        $ads = $pagedAds;
 
         $category = Category::find($selectedCategory);
 

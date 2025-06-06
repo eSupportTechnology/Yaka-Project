@@ -5,22 +5,16 @@ use App\Models\Ads;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 
-class RotateAds extends Command
+class RotateUrgentAds extends Command
 {
-    protected $signature = 'ads:rotate';
+    protected $signature = 'ads:rotate-urgent';
     protected $description = 'Hourly ad rotation';
 
     public function handle()
     {
         // Get active ads ordered by package priority and recency
         $ads = Ads::where('status', 1)
-            ->orderByRaw('CASE
-                WHEN ads_package = 6 THEN 1
-                WHEN ads_package = 3 THEN 2
-                WHEN ads_package = 4 THEN 3
-                WHEN ads_package = 5 THEN 4
-                ELSE 5
-            END')
+            ->where('ads_package', 4)
             ->where(function ($query) {
                 $query->whereNull('package_expire_at')
                       ->orWhere('package_expire_at', '>=', Carbon::now());

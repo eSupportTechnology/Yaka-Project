@@ -141,7 +141,15 @@ public function updateBoost(Request $request)
             $newExpiryDate = Carbon::now()->addDays((int)($boostingInfo->new_package_duration));
 
             // Update the ad with new package details
-            Artisan::call('ads:rotate');
+            if($boostingInfo->new_package_id == 6) {
+                Artisan::call('ads:rotate-super');
+            } elseif($boostingInfo->new_package_id == 3) {
+                Artisan::call('ads:rotate-top');
+            } elseif($boostingInfo->new_package_id == 4) {
+                Artisan::call('ads:rotate-urgent');
+            } elseif($boostingInfo->new_package_id == 5) {
+                Artisan::call('ads:rotate-jump');
+            }
             $ad->update([
                 'ads_package' => $boostingInfo->new_package_id,
                 'package_type' => $boostingInfo->new_package_type_id,
