@@ -278,10 +278,6 @@ Route::post('/boosting/save-info', [BoostingController::class, 'saveInfo'])->nam
 Route::post('/boosting-update', [UserAdsController::class, 'boostingUpdate'])->name('boosting.update');
 Route::get('/boostpayment/checking', [BoostingController::class, 'boostcomplete'])->name('boostpayment.checking');
 
-Telescope::auth(function ($request) {
-    return auth()->check() && Gate::allows('viewTelescope', auth()->user());
-});
-
 
 
 require __DIR__.'/auth.php';

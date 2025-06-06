@@ -5,6 +5,8 @@ namespace App\Providers;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Laravel\Telescope\Telescope;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,5 +34,15 @@ class AppServiceProvider extends ServiceProvider
         Passport::tokensExpireIn(now()->addDays(15));
         Passport::refreshTokensExpireIn(now()->addDays(30));
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+
+        Gate::define('viewTelescope', function ($user) {
+            return in_array($user->email, [
+                'tpnovatitan@gmail.com',
+            ]);
+        });
+
+        Telescope::auth(function ($request) {
+            return auth()->check() && Gate::allows('viewTelescope', auth()->user());
+        });
     }
 }
