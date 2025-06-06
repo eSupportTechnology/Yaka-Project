@@ -771,7 +771,7 @@
                                         @endphp
 
                                         @foreach ($superAds as $key => $ad)
-                                            @if ($ad->ads_package == 6 && !empty($ad->mainImage) && file_exists(storage_path('app/public/' . $ad->mainImage)))
+                                            @if ($ad->ads_package == 6 && !empty($ad->mainImage) && file_exists(asset('storage/' . $ad->mainImage)))
                                                 @php $hasAdWithImage = true; @endphp
 
                                                 <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
