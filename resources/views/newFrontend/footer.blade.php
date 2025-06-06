@@ -111,8 +111,8 @@
                             </div>
                         </div>
                         <div style="gap: 25px; position:relative;" class="app-logo d-flex justify-content-center g-5 mt-4">
-                            <img style="width: 15%;" src="{{ asset('public/images/play_logo.png') }}" alt="Playstore Logo">
-                            <img style="width: 15%;" src="{{ asset('public/images/ilogo.png') }}" alt="Playstore Logo">
+                            <img style="width: 15%;" src="{{ asset('images/play_logo.png') }}" alt="Playstore Logo">
+                            <img style="width: 15%;" src="{{ asset('images/ilogo.png') }}" alt="Playstore Logo">
                         </div>
                     </div>
                 </div>
