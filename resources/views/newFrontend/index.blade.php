@@ -97,22 +97,6 @@
             font-size: 18px;
         }
 
-        .carousel-inner {
-            height: 100%;
-            /* Makes sure the carousel inner has a consistent height */
-        }
-
-        .carousel-item {
-            height: 100%;
-
-            /* Ensures each carousel item matches the container's height */
-        }
-
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
 
         @media (max-width: 768px) {
             .banner {
@@ -159,158 +143,7 @@
             padding: 5px;
         }
 
-        .ad-carousel-item img {
-            /* width: 800px !important;
-                                                                height: 120px !important; */
-            object-fit: cover;
-            margin: 0 auto;
-        }
 
-        @media (min-width: 766px) {
-            .ad-carousel-item img {
-                width: 800px !important;
-                height: 120px !important;
-                object-fit: cover;
-                margin: 0 auto;
-            }
-        }
-
-        .top-banner .left .carousel-item img {
-            max-width: 80%;
-            /* Adjust the width percentage as needed */
-            max-height: 50%;
-            /* Ensure the aspect ratio is maintained */
-            margin: 20px;
-            /* Center the image horizontally */
-            margin-left: -40px;
-            margin-top: -25px;
-        }
-
-        .super-banner .right .carousel-item img {
-            max-width: 57%;
-            /* Adjust the width percentage as needed */
-            max-height: 140%;
-            /* Ensure the aspect ratio is maintained */
-            margin-left: 20px;
-            /* Center the image horizontally */
-
-        }
-
-        .cont {
-            max-width: 1200px;
-            margin: 20px auto;
-
-        }
-
-        .heading {
-            font-size: 30px;
-            color: #333;
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .heading span {
-            color: red;
-            font-weight: bold;
-            font-size: 32px;
-            /* Font size increased */
-            display: inline-block;
-            padding: 5px 10px;
-            font-style: italic;
-        }
-
-        .top-banner {
-            display: flex;
-            align-items: flex-start;
-            /* Align content to the top */
-            justify-content: flex-start;
-            /* Align everything to the left */
-            padding: 20px;
-            position: relative;
-            /* Ensure proper placement */
-        }
-
-        .top-banner .left {
-            flex: 1;
-            /* Adjust size */
-            margin-left: 150px;
-            /* Adjust spacing without negative margins */
-        }
-
-        .top-banner .left img {
-            max-width: 400px;
-            max-height: 600px;
-            border-radius: 10px;
-        }
-
-        .super-banner .right img {
-            max-width: 50px;
-            max-height: 300px;
-            border-radius: 10px;
-        }
-
-        .top-banner .right {
-            flex: 2;
-            margin-left: -50px;
-            /* Replacing the negative margin */
-            text-align: left;
-            position: relative;
-            top: 0;
-            margin-top: 210px;
-            /* Adjust height properly */
-        }
-
-        .top-banner p {
-            color: #555;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        .top-banner .ad-box {
-            background-color: #fff;
-            padding: 50px;
-            border-radius: 10px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            /* Instead of negative margins */
-        }
-
-        .top-banner .ad-box h3 {
-            color: #222;
-            font-size: 18px;
-        }
-
-        .top-banner .ad-box p {
-            font-size: 14px;
-            color: #444;
-        }
-
-        .top-banner .ad-box .price {
-            color: blue;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .carousel-item .ad-box {
-            background: white;
-            padding-top: 10px;
-            /* Reduced padding */
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            text-align: left;
-            max-width: 99%;
-            margin: auto;
-        }
-
-        .carousel-control-prev,
-        .carousel-control-next {
-            filter: invert(100%);
-        }
-
-        #topAdsCarousel {
-            margin-bottom: 30px;
-            /* Space between the carousel and the cards */
-        }
 
         /* Style for each ad card */
         .ad-card {
@@ -422,150 +255,7 @@
                 width: 70px !important;
                 height: 70px !important;
             }
-
-            /* .inner-box {
-                                                                width: 100px !important;
-                                                            } */
-            .right {
-                margin-left: -112px !important;
-            }
         }
-
-        @media (max-width: 632px) {
-            .ad-box {
-                max-width: 100% !important;
-                background-size: cover;
-                padding-bottom: 75%;
-                /* Adjust aspect ratio for mobile */
-            }
-
-            .ad-box>div {
-                padding: 10px !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .ad-box {
-                padding-bottom: 100%;
-                /* Square aspect ratio for small phones */
-            }
-        }
-
-        @media (max-width: 965px) {
-            .ad-head {
-                display: none !important;
-            }
-
-            .mobile-hide {
-                display: none !important;
-            }
-        }
-
-        @media (max-width: 965px) {
-            .ad-head-mob {
-                display: block !important;
-            }
-        }
-
-        @media (max-width: 393px) {
-            .ad-head-mob h2 {
-                font-size: 18px;
-            }
-
-            .ad-head-mob span {
-                font-size: 18px;
-            }
-        }
-
-        @media (min-width: 965px) {
-            .inner-box {
-                /* margin-top: -350px; */
-            }
-        }
-
-        .carousel.no-animation .carousel-item {
-            transition: none !important;
-            -webkit-transition: none !important;
-        }
-
-        .carousel-thumbnails {
-            display: flex;
-            justify-content: center;
-            gap: 4px;
-            margin-top: 15px;
-            flex-wrap: nowrap;
-            /* Prevent wrapping */
-            overflow-x: hidden;
-            /* Prevent scrolling */
-            max-width: 890px;
-            /* Ensure enough space */
-            margin-left: auto;
-            margin-right: auto;
-        }
-         .thumbnail.active {
-        border-color: red;
-    }
-
-        .top-carousel-thumbnails {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .carousel-thumbnails img {
-            width: 60px;
-            height: 40px;
-            object-fit: cover;
-            cursor: pointer;
-            opacity: 0.6;
-            border: 2px solid transparent;
-            transition: 0.3s;
-        }
-
-        .top-carousel-thumbnails img {
-            width: 60px;
-            height: 40px;
-            object-fit: cover;
-            cursor: pointer;
-            opacity: 0.6;
-            border: 2px solid transparent;
-            transition: 0.3s;
-        }
-
-        .carousel-thumbnails img.active {
-            opacity: 1;
-            border-color: #e2200e;
-        }
-
-        .top-carousel-thumbnails img.active {
-            opacity: 1;
-            border-color: #e2200e;
-        }
-
-        @media (max-width: 576px) {
-           .carousel-thumbnails{
-             display: none !important;
-           }
-
-            .badge-top-left {
-                width: 30px;
-                top: 5px;
-                left: 5px;
-            }
-        }
-
-        .badge-top-left {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 50px;
-            /* Adjust based on your badge size */
-            height: auto;
-            z-index: 10;
-        }
-
 
         @keyframes blinkGreen {
 
@@ -590,7 +280,9 @@
                 border-color: transparent;
             }
         }
+
         @keyframes blinkRed {
+
             0%,
             100% {
                 border-color: red;
@@ -600,6 +292,7 @@
                 border-color: transparent;
             }
         }
+
         .custom-carousel {
             position: relative;
             width: 100%;
@@ -614,6 +307,7 @@
             object-fit: cover;
             transition: opacity 0.5s ease-in-out;
         }
+
         .carousel-slide-sup {
             display: none;
             width: 100%;
@@ -625,9 +319,54 @@
         .carousel-slide-top.active {
             display: block;
         }
+
         .carousel-slide-sup.active {
             display: block;
         }
+        .carousel-thumbnails {
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        .carousel-thumbnails {
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .super-thumb {
+            transition: border 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .super-thumb.active-thumb {
+            border-color: red;
+        }
+        .top-thumb {
+            transition: border 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .top-thumb.active-thumb {
+            border-color: green;
+        }
+        .top-thumb {
+            transition: border 0.3s ease;
+        }
+
+        .active-thumb {
+            border: 2px solid red !important;
+        }
+        @media (max-width: 399px) {
+            #topAdsThumbnails {
+                display: none !important;
+            }
+            #superAdsThumbnails {
+                display: none !important;
+            }
+        }
+
+</style>
+
     </style>
 
     <!-- banner-section -->
@@ -707,39 +446,36 @@
         <div class="row auto-container">
             <div class="col-md-6 d-flex flex-column-reverse justify-content-center">
                 <div class="first-row">
-                    <div id="superAds" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            @foreach ($superAds as $index => $adss)
-                            <a href="/browse_ads_details/{{ $adss->adsId }}">
-                                <div class="carousel-item @if ($index == 0) active @endif"
-                                style="position: relative; border: 4px solid #0b128e; border-radius: 4px; overflow: hidden; padding: 0; margin: 2px; animation: blinkBlue 1.5s infinite; height: 500px; background-color: white;">
+                    <div id="superAdsCarousel" class="custom-carousel-container">
+                        @foreach ($superAds as $index => $adss)
+                            <div class="custom-slide @if ($index == 0) active @endif"
+                                style="position: relative; border: 4px solid #0b128e; border-radius: 4px; overflow: hidden; padding: 0; margin: 2px; animation: blinkBlue 1.5s infinite; height: 500px; background-color: white; display: none;">
 
-                                <!-- The Image (full, uncropped) -->
-                                <img src="{{ storage_public_url($adss->mainImage) }}"
-                                    class="d-block w-100"
-                                    style="height: 100%; width: 100%; object-fit: contain; background-color: white;"
-                                    alt="Slide 1">
+                                <a href="/browse_ads_details/{{ $adss->adsId }}" style="display: block; height: 100%;">
+                                    <img src="{{ asset('storage/'.$adss->mainImage) }}"
+                                        class="d-block w-100"
+                                        style="height: 100%; width: 100%; object-fit: contain; background-color: white;"
+                                        alt="Slide {{ $index + 1 }}">
 
-                                <!-- Sale Badge -->
-                                <button class="sale"
-                                    style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                                    Sale
-                                </button>
-                                <!-- Top Ad Badge -->
-                                <div class="badge" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
-                                    <img src="{{ asset('02.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
-                                </div>
+                                    <button class="sale"
+                                        style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                        Sale
+                                    </button>
 
-                                <!-- Overlay Gradient (optional) -->
-                                <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
-                                            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
-                                            border-radius: 5px;">
-                                </div>
-                            </a>
-                                <!-- Ad Details Overlay -->
+                                    <div class="badge" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+                                        <img src="{{ asset('02.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
+                                    </div>
+
+                                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+                                                background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+                                                border-radius: 5px;">
+                                    </div>
+                                </a>
+
+                                <!-- Ad Details (must be inside the slide) -->
                                 <div class="p-2 details"
                                     style="position: absolute; bottom: 0; left: 0; width: 100%;
-                                        background: rgba(0, 0, 0, 0.6); color: white; z-index: 2;
+                                        background: rgba(0, 0, 0, 0.6); color: white; z-index: 3;
                                         text-align: center;">
 
                                     <p>{{ $adss->category->name ?? 'Uncategorized' }} &raquo; {{ $adss->subcategory->name ?? '' }}</p>
@@ -756,19 +492,21 @@
                                 </div>
 
                             </div>
-
-                            @endforeach
-                        </div>
+                        @endforeach
                     </div>
-                    <div class="mt-3 d-flex carousel-thumbnails">
+
+                    <div class="mt-3 d-flex justify-content-center gap-2 flex-wrap carousel-thumbnails" id="superAdsThumbnails" style="gap: 10px;">
                         @foreach ($superAds as $index => $adss)
-                            <img src="{{ storage_public_url($adss->mainImage) }}" data-bs-target="#superAds"
-                                data-bs-slide-to="{{ $index }}" alt="Thumb {{ $index + 1 }}"
-                                style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; cursor: pointer;  flex-shrink: 0;"
-                                class="thumbnail @if ($index == 0) active @endif">
+                        <img src="{{ asset('storage/'.$adss->mainImage) }}"
+                            data-index="{{ $index }}"
+                            alt="Thumb {{ $index + 1 }}"
+                            class="super-thumb @if ($index == 0) active-thumb @endif"
+                            style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; cursor: pointer; flex-shrink: 0; border: 2px solid red;">
                         @endforeach
                     </div>
                 </div>
+
+
                 <div class="second-row">
                     <p style="font-size:16px; text-align:justify;">@lang('messages.para2')
                     </p>
@@ -782,11 +520,9 @@
                 <div class="second-row">
                     <div id="super-banner" class="custom-carousel">
                         @foreach ($topbanners as $index => $banner)
-                            <img
-                                src="{{ asset('banners/' . $banner->img) }}"
+                            <img src="{{ asset('banners/' . $banner->img) }}"
                                 class="carousel-slide-sup @if ($index === 0) active @endif"
-                                alt="Banner {{ $index + 1 }}"
-                            >
+                                alt="Banner {{ $index + 1 }}">
                         @endforeach
                     </div>
                 </div>
@@ -802,77 +538,84 @@
                 <div class="second-row">
                     <div id="top-banner">
                         @foreach ($superbanners as $index => $banner)
-                            <img
-                                src="{{ asset('banners/' . $banner->img) }}"
+                            <img src="{{ asset('banners/' . $banner->img) }}"
                                 class="carousel-slide-top @if ($index === 0) active @endif"
-                                alt="Banner {{ $index + 1 }}"
-                            >
+                                alt="Banner {{ $index + 1 }}">
                         @endforeach
                     </div>
                 </div>
             </div>
             <div class="col-md-6 d-flex flex-column-reverse justify-content-center">
                 <div class="second-row">
-                    <div id="topAds" class="carousel slide" data-bs-ride="carousel">
+
+                    <!-- Ad Section -->
+                    <div id="topAds" class="carousel slide">
                         <div class="carousel-inner">
+
                             @foreach ($topAds as $index => $ad)
-                            <a href="/browse_ads_details/{{ $ad->adsId }}">
                                 <div class="carousel-item @if ($index == 0) active @endif"
                                     style="position: relative; border: 4px solid #00ff44; border-radius: 4px; overflow: hidden;
                                         padding: 0; margin: 2px; animation: blinkGreen 1.5s infinite; height: 500px; background-color: white;">
 
-                                    <!-- Full-size Image -->
-                                    <img src="{{ storage_public_url($ad->mainImage) }}"
-                                        class="d-block w-100"
-                                        style="height: 100%; width: 100%; object-fit: contain; background-color: white;"
-                                        alt="Top Ad Image">
+                                    <!-- Link to Ad Details -->
+                                    <a href="/browse_ads_details/{{ $ad->adsId }}" style="display: block; height: 100%; width: 100%;">
+                                        <!-- Full-size Image -->
+                                        <img src="{{ asset('storage/'.$ad->mainImage) }}"
+                                            class="d-block w-100"
+                                            style="height: 100%; width: 100%; object-fit: contain; background-color: white;"
+                                            alt="Top Ad Image">
 
-                                    <!-- Sale Badge -->
-                                    <button class="sale"
-                                        style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px;
-                                            background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                                        Sale
-                                    </button>
+                                        <!-- Sale Badge -->
+                                        <button class="sale"
+                                            style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px;
+                                                background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                            Sale
+                                        </button>
 
-                                    <!-- Top Ad Badge -->
-                                    <div class="badge" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
-                                        <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
-                                    </div>
+                                        <!-- Top Ad Badge -->
+                                        <div class="badge" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+                                            <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
+                                        </div>
 
-                                    <!-- Overlay Gradient -->
-                                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
-                                                background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent); border-radius: 5px;">
-                                    </div>
-                                </a>
-                                    <!-- Ad Details Overlay -->
-                                    <div class="p-2 details"
-                                        style="position: absolute; bottom: 0; left: 0; width: 100%;
-                                            background: rgba(0, 0, 0, 0.6); color: white; z-index: 2; text-align: center;">
-                                        <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                        <h3 style="font-weight: bold; font-size: 1.1rem; color: white;">
-                                            {{ $ad->title }}
-                                        </h3>
-                                        <p class="price" style="color: white; font-size: 1.2rem;">
-                                            @lang('messages.Rs') {{ number_format($ad->price, 2) }}
-                                        </p>
-                                        <p><i class="fas fa-clock"></i> {{ $ad->created_at->diffForHumans() }}</p>
-                                    </div>
+                                        <!-- Overlay Gradient -->
+                                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+                                                    background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent); border-radius: 5px;">
+                                        </div>
 
+                                        <!-- Ad Details Overlay -->
+                                        <div class="p-2 details"
+                                            style="position: absolute; bottom: 0; left: 0; width: 100%;
+                                                background: rgba(0, 0, 0, 0.6); color: white; z-index: 3; text-align: center;">
+                                            <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
+                                            <h3 style="font-weight: bold; font-size: 1.1rem; color: white;">
+                                                {{ $ad->title }}
+                                            </h3>
+                                            <p class="price" style="color: white; font-size: 1.2rem;">
+                                                @lang('messages.Rs') {{ number_format($ad->price, 2) }}
+                                            </p>
+                                            <p><i class="fas fa-clock"></i> {{ $ad->created_at->diffForHumans() }}</p>
+                                        </div>
+                                    </a>
                                 </div>
                             @endforeach
 
                         </div>
                     </div>
-                    <div class="mt-3 d-flex carousel-thumbnails">
+
+                    <!-- Thumbnails -->
+                    <div class="mt-3 d-flex justify-content-center flex-wrap" id="topAdsThumbnails"
+                        style="gap: 10px; margin-top: 20px; z-index: 10;">
+
                         @foreach ($topAds as $index => $ad)
-                            <img src="{{ storage_public_url($ad->mainImage) }}" data-bs-target="#topAds"
-                                data-bs-slide-to="{{ $index }}"
-                                class="thumbnail @if ($index == 0) active @endif" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; cursor: pointer;  flex-shrink: 0;"
-                                alt="Thumbnail {{ $index + 1 }}">
+                                <img src="{{ asset('storage/'.$ad->mainImage) }}"
+                                    class="top-thumb @if ($index == 0) active-thumb @endif"
+                                    style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px; cursor: pointer; border: 2px solid #ccc;">
                         @endforeach
+
                     </div>
 
                 </div>
+
                 <div class="second-row">
                     <p style="font-size:16px; text-align:justify;">@lang('messages.para1')
                     </p>
@@ -880,7 +623,6 @@
             </div>
         </div>
     </section>
-    <section></section>
 
     <!-- feature-style-two -->
     <section class="feature-style-two">
@@ -897,26 +639,27 @@
 
                         <div class="clearfix row justify-content-center">
                             @foreach ($latestAds as $ads)
-                            <a href="/browse_ads_details/{{ $ads->adsId }}">
-                                <div class="col-lg-3 col-md-5 col-sm-12 feature-block justify-content-center">
-                                    <div class="feature-block-one wow fadeInDown animated" data-wow-delay="00ms"
-                                        data-wow-duration="1500ms">
-                                        <div class="inner-box" style="border: 4px solid red; border-radius: 4px; overflow: hidden; animation: blinkRed 1.5s infinite;">
-                                            <div class="image-box">
-                                                <figure class="image"><img
-                                                        src="{{ storage_public_url($ads->mainImage) }}" alt=""
-                                                        style="width: 370px; height: 220px; object-fit: contain;"></figure>
+                                <a href="/browse_ads_details/{{ $ads->adsId }}">
+                                    <div class="col-lg-3 col-md-5 col-sm-12 feature-block justify-content-center">
+                                        <div class="feature-block-one wow">
+                                            <div class="inner-box"
+                                                style="border: 4px solid red; border-radius: 4px; overflow: hidden; animation: blinkRed 1.5s infinite;">
+                                                <div class="image-box">
+                                                    <figure class="image"><img
+                                                            src="{{ asset('storage/' . $ads->mainImage) }}" alt=""
+                                                            style="width: 370px; height: 220px; object-fit: contain;">
+                                                    </figure>
 
-                                                <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent
+                                                    <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent
+                                                    </div>
+
                                                 </div>
-
-                                            </div>
-                                            <div class="lower-content"
-                                                style="display: flex; flex-direction: column; justify-content: space-between;height: 200px;">
+                                                <div class="lower-content"
+                                                    style="display: flex; flex-direction: column; justify-content: space-between;height: 200px;">
 
 
-                                                <h3
-                                                    style="
+                                                    <h3
+                                                        style="
                                                     display: -webkit-box;
                                                     -webkit-line-clamp: 2;
                                                     -webkit-box-orient: vertical;
@@ -925,30 +668,30 @@
                                                     max-height: 55px;
                                                     margin-top: 20px;
                                                     margin-bottom: 10px;">
-                                                    <a
-                                                        href="{{ route('ads.details', ['adsId' => $ads->adsId]) }}">{{ $ads->title }}</a>
-                                                </h3>
+                                                        <a
+                                                            href="{{ route('ads.details', ['adsId' => $ads->adsId]) }}">{{ $ads->title }}</a>
+                                                    </h3>
 
-                                                <ul class="clearfix info">
+                                                    <ul class="clearfix info">
 
-                                                    <li><i class="fas fa-map-marker-alt"></i>
-                                                        @php
-                                                            $locale = App::getLocale();
-                                                            $locationName = 'name_' . $locale;
-                                                        @endphp
-                                                        {{ $ads->sub_location ? $ads->sub_location->$locationName : 'N/A' }},
-                                                        {{ $ads->main_location ? $ads->main_location->$locationName : 'N/A' }}
-                                                    </li>
-                                                </ul>
-                                                <div class="lower-box">
-                                                    <h5><span>Price:</span>@lang('messages.Rs') {{ $ads->price }}</h5>
+                                                        <li><i class="fas fa-map-marker-alt"></i>
+                                                            @php
+                                                                $locale = App::getLocale();
+                                                                $locationName = 'name_' . $locale;
+                                                            @endphp
+                                                            {{ $ads->sub_location ? $ads->sub_location->$locationName : 'N/A' }},
+                                                            {{ $ads->main_location ? $ads->main_location->$locationName : 'N/A' }}
+                                                        </li>
+                                                    </ul>
+                                                    <div class="lower-box">
+                                                        <h5><span>Price:</span>@lang('messages.Rs') {{ $ads->price }}</h5>
 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
                             @endforeach
                         </div>
                     </div>
@@ -966,8 +709,7 @@
                 @foreach ($banners as $key => $banner)
                     @if ($banner->type == 0)
                         <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                            <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block"
-                                alt="Banner Image">
+                            <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
                         </div>
                     @endif
                 @endforeach
@@ -975,7 +717,7 @@
         </div>
     </section>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.carousel-slide-sup');
             const totalSlides = slides.length;
             let currentIndex = 0;
@@ -1009,7 +751,7 @@
             startCarousel();
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.carousel-slide-top');
             const totalSlides = slides.length;
             let currentIndex = 0;
@@ -1043,125 +785,104 @@
             startCarousel();
         });
     </script>
-
     <script>
-        const carousel = document.querySelector('#superAds');
-        const thumbnails = document.querySelectorAll('.carousel-thumbnails img');
+        document.addEventListener('DOMContentLoaded', function () {
+            const slides = document.querySelectorAll('#superAdsCarousel .custom-slide');
+            const thumbnails = document.querySelectorAll('#superAdsThumbnails .super-thumb');
+            let currentIndex = 0;
+            let interval = null;
 
-        carousel.addEventListener('slid.bs.carousel', function(e) {
-            thumbnails.forEach(img => img.classList.remove('active'));
-            thumbnails[e.to].classList.add('active');
-        });
-    </script>
-    <script>
-        const topCarousel = document.querySelector('#topAds');
-        const topThumbnails = document.querySelectorAll('.top-carousel-thumbnails img');
-
-        topCarousel.addEventListener('slid.bs.carousel', function(e) {
-            topThumbnails.forEach(img => img.classList.remove('active'));
-            topThumbnails[e.to].classList.add('active');
-        });
-    </script>
-    <!-- advertisement - banner-section end -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            function initializeCarousel(wrapperSelector, containerSelector, cardSelector, carouselSelector,
-                smallCarouselSelector) {
-                var adCards = document.querySelectorAll(wrapperSelector + " " + cardSelector);
-                var cardContainer = document.querySelector(wrapperSelector + " " + containerSelector);
-                var carouselItems = document.querySelectorAll(wrapperSelector + " " + carouselSelector +
-                    " .carousel-item");
-                var smallCarousel = document.querySelector(wrapperSelector + " " + smallCarouselSelector);
-                var wrapperWidth = cardContainer?.offsetWidth || 0;
-                var cardWidth = 110; // Adjust based on actual card width + margin
-                var currentIndex = 0;
-
-                function updateActiveAd(index) {
-                    // Remove previous red borders from small ads
-                    adCards.forEach(card => card.style.border = "3px solid transparent");
-
-                    let activeCard = document.querySelector(wrapperSelector +
-                        ` ${cardSelector}[data-index="${index}"]`);
-                    if (activeCard) {
-                        activeCard.style.border = "3px solid red"; // Highlight active ad
-
-                        // Scroll the small ads container to bring active ad into view
-                        let offset = Math.max(0, (index * cardWidth) - (wrapperWidth / 2) + (cardWidth / 2));
-                        if (cardContainer) cardContainer.style.transform = `translateX(-${offset}px)`;
-                    }
-
-                    // Update the large ad to match
-                    carouselItems.forEach((item, i) => {
-                        item.classList.remove("active");
-                        if (i === index) item.classList.add("active");
-                    });
-
-                    currentIndex = index; // Store current index for autoplay
-                }
-
-                // Clicking on a large ad should highlight the small ad
-                carouselItems.forEach((item, index) => {
-                    item.addEventListener("click", function() {
-                        updateActiveAd(index);
-                    });
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.style.display = (i === index) ? 'block' : 'none';
+                    slide.classList.toggle('active', i === index);
                 });
 
-                // Clicking on a small ad should update the large ad
-                adCards.forEach((card, index) => {
-                    card.addEventListener("click", function() {
-                        updateActiveAd(index);
-                    });
+                thumbnails.forEach((thumb, i) => {
+                    if (i === index) {
+                        thumb.classList.add('active-thumb');
+                        thumb.style.border = '2px solid red';
+                    } else {
+                        thumb.classList.remove('active-thumb');
+                        thumb.style.border = 'none';
+                    }
                 });
 
-                // Automatic sliding for the small ad box
-                function slideSmallAds() {
-                    currentIndex = (currentIndex + 1) % adCards.length;
-                    updateActiveAd(currentIndex);
-                    setTimeout(slideSmallAds, 3000); // Adjust delay as needed
-                }
-
-                setTimeout(slideSmallAds, 3000); // Start the auto-slide
-
-                // Set initial active ad
-                updateActiveAd(0);
+                currentIndex = index;
             }
 
-            // Initialize for both Top Ads and Super Ads
-            initializeCarousel(".top-banner", ".card-container", ".ad-card", "#topAdsCarousel",
-                ".small-carousel-wrapper");
-            initializeCarousel(".super-banner", ".card-container", ".ad-card", "#superAdsCarousel",
-                ".small-carousel-wrapper");
-
-
-
-
-
-
-
-            // Function to start a slideshow for a given banner section
-            function startSlideshow(bannerItems) {
-                if (bannerItems.length > 0) {
-                    let currentIndex = 0;
-
-                    function showNextBanner() {
-                        bannerItems[currentIndex].classList.remove('active'); // Hide current banner
-                        currentIndex = (currentIndex + 1) % bannerItems
-                            .length; // Move to next (wrap around to first)
-                        bannerItems[currentIndex].classList.add('active'); // Show next banner
-                    }
-
-                    setInterval(showNextBanner, 5000); // Change slide every 5 seconds
-                }
+            function nextSlide() {
+                let nextIndex = (currentIndex + 1) % slides.length;
+                showSlide(nextIndex);
             }
 
-            // Start slideshows for both .top-banner and .super-banner
-            let topBannerItems = document.querySelectorAll('.top-banner .carousel-item');
-            let superBannerItems = document.querySelectorAll('.super-banner .carousel-item');
+            function startCarousel() {
+                interval = setInterval(nextSlide, 5000);
+            }
 
-            startSlideshow(topBannerItems);
-            startSlideshow(superBannerItems);
+            function stopCarousel() {
+                clearInterval(interval);
+            }
+
+            // Thumbnail click event
+            thumbnails.forEach((thumb, index) => {
+                thumb.addEventListener('click', () => {
+                    stopCarousel();
+                    showSlide(index);
+                    startCarousel(); // Optional: restart auto-play
+                });
+            });
+
+            showSlide(currentIndex);
+            startCarousel();
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const slides = document.querySelectorAll('#topAds .carousel-item');
+            const thumbnails = document.querySelectorAll('#topAdsThumbnails .top-thumb');
+            let currentIndex = 0;
+            let interval;
+
+            const showSlide = (index) => {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    }
+                });
+
+                thumbnails.forEach((thumb, i) => {
+                    thumb.classList.remove('active-thumb');
+                    if (i === index) {
+                        thumb.classList.add('active-thumb');
+                    }
+                });
+
+                currentIndex = index;
+            };
+
+            const startCarousel = () => {
+                interval = setInterval(() => {
+                    const nextIndex = (currentIndex + 1) % slides.length;
+                    showSlide(nextIndex);
+                }, 5000);
+            };
+
+            thumbnails.forEach((thumb, index) => {
+                thumb.addEventListener('click', () => {
+                    showSlide(index);
+                    clearInterval(interval);
+                    startCarousel(); // Restart carousel on manual click
+                });
+            });
+
+            showSlide(currentIndex);
+            startCarousel();
+        });
+    </script>
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
     <script>
