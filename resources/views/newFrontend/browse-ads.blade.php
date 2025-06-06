@@ -788,7 +788,7 @@
                                                             <div class="carousel-item-content">
                                                                 <div class="image-container"
                                                                     style="position: relative; max-height: 385px; overflow: hidden; text-align: center;">
-                                                                    <img src="{{ storage_public_url($ad->mainImage) }}"
+                                                                    <img src="{{ asset('storage/'.$ad->mainImage) }}"
                                                                         alt="{{ $ad->title }}"
                                                                         style="max-height: 385px !important; width: 100%; object-fit: contain;"
                                                                         onerror="this.style.display='none';
