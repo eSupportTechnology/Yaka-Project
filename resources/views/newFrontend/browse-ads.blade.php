@@ -771,7 +771,6 @@
                                         @endphp
 
                                         @foreach ($superAds as $key => $ad)
-                                            @if ($ad->ads_package == 6 && !empty($ad->mainImage) && file_exists(asset('storage/' . $ad->mainImage)))
                                                 @php $hasAdWithImage = true; @endphp
 
                                                 <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
@@ -792,14 +791,14 @@
                                                                         alt="{{ $ad->title }}"
                                                                         style="max-height: 385px !important; width: 100%; object-fit: contain;"
                                                                         onerror="this.style.display='none';
-                                        const msg = document.createElement('div');
-                                        msg.innerText = 'Ad is not available';
-                                        msg.style.color = 'red';
-                                        msg.style.fontWeight = 'bold';
-                                        msg.style.fontSize = '1.2rem';
-                                        msg.style.padding = '50px 0';
-                                        msg.style.textAlign = 'center';
-                                        this.parentNode.appendChild(msg);" />
+                                                                        const msg = document.createElement('div');
+                                                                        msg.innerText = 'Ad is not available';
+                                                                        msg.style.color = 'red';
+                                                                        msg.style.fontWeight = 'bold';
+                                                                        msg.style.fontSize = '1.2rem';
+                                                                        msg.style.padding = '50px 0';
+                                                                        msg.style.textAlign = 'center';
+                                                                        this.parentNode.appendChild(msg);" />
                                                                 </div>
 
                                                                 <div class="carousel-overlay"></div>
@@ -824,7 +823,6 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                            @endif
                                         @endforeach
 
                                         @if (!$hasAdWithImage)
