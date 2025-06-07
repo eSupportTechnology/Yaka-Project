@@ -50,7 +50,7 @@ Route::post('/register', [RegisteredUserController::class, 'register']);
 
 Route::get('/',[HomeController::class,'home'])->name('/');
 
-Route::get('/ads/{id}', [AdsController::class, 'show'])->name('ads.details');
+// Route::get('/ads/{id}', [AdsController::class, 'show'])->name('ads.details');
 Route::get('/search', [AdsController::class, 'search'])->name('search');
 
 Route::get('/top-ads', [adsManagementController::class, 'getTopAds']);
