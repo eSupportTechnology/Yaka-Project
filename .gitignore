@@ -26,3 +26,5 @@ yarn-error.log
 .env.example
 .env.example
 .env.example
+/public/banners
+/public/images
