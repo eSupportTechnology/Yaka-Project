@@ -16,6 +16,7 @@ class Ads extends Model
         'adsId',
         'invoice_id',
         'user_id',
+        'created_by_staff_id',
         'title',
         'url',
         'location',
