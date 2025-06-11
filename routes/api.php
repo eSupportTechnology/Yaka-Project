@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\adminPanel\subCategoriesManagementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AdsController;
@@ -71,6 +72,12 @@ Route::get('/top-ads', [HomepageControllerMobile::class, 'getTopAds']);
 Route::get('/latest-ads', [HomepageControllerMobile::class, 'getLatestAds']);
 //Get all categories endpoint
 Route::get('/home-categories', [HomepageControllerMobile::class, 'getCategories']);
+
+
+// Home Page Ads endpoint
+Route::get('/home-page-ads', [HomepageControllerMobile::class, 'getHomePageAds']);
+
+Route::get('/category/{categoryId}/subcategories', [subCategoriesManagementController::class, 'getSubCategoriesByCategoryId']);
 
 Route::middleware('auth:api')->group(function () {
 
