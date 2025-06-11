@@ -30,7 +30,7 @@ class CustomAuthController extends Controller
             return redirect()->route('user.login')->with('active_error', "Mobile Number Not Verifed. Please Verify Mobile First");
         }
 
-        if ($user && Hash::check($request->password, $user->password) && $user->roles === 'user') {
+        if ($user && Hash::check($request->password, $user->password) && in_array($user->roles, ['user', 'staff'])) {
             Auth::login($user);
             Log::info('User logged in successfully', ['user_id' => $user->id]);
 
