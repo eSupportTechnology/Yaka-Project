@@ -25,7 +25,6 @@ class CustomAuthController extends Controller
 
         $user = \App\Models\User::where('phone_number', $request->phone_number)->first();
 
-        // Check mobile is verifed
         if($user->is_mobile_verifed == 0) {
             return redirect()->route('user.login')->with('active_error', "Mobile Number Not Verifed. Please Verify Mobile First");
         }

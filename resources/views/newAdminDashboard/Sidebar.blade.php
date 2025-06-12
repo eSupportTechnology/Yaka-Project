@@ -18,7 +18,7 @@
     padding-left: 10px;
 }
 
-</style> 
+</style>
 
 <aside class="navbar-aside shadow-sm" id="offcanvas_aside">
     <div class="aside-top" style="padding:0">
@@ -42,6 +42,13 @@
                 <a class="menu-link" href="{{ route('dashboard.admins') }}">
                     <i class="icon material-icons md-person"></i>
                     <span class="text">Admin</span>
+                </a>
+            </li>
+
+            <li class="menu-item {{ request()->routeIs('dashboard.staffs') ? 'active' : '' }}">
+                <a class="menu-link" href="{{ route('dashboard.staffs') }}">
+                    <i class="icon material-icons md-person_add"></i>
+                    <span class="text">Staff</span>
                 </a>
             </li>
 
