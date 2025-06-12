@@ -37,11 +37,12 @@
 </style>
 <!-- main-footer -->
  <footer class="main-footer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
             <div class="footer-top" style="  background:rgb(88, 12, 12) ;">
                 <div class="auto-container">
                     <div class="widget-section">
                         <div class="clearfix row">
-                            <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                            <div class="col-lg-4 col-md-7 col-sm-12 footer-column">
                                 <div class="footer-widget logo-widget">
                                     <figure class="footer-logo"><a href="index.html"><img src="{{asset('Logo-re.png')}}" alt=""></a></figure>
                                     <div class="text">
@@ -52,6 +53,8 @@
                                         <li><a target="_blank" href="index.html" class="sidebar-icon twitter-icon"><i class="fab fa-twitter"></i></a></li>
                                         <li><a target="_blank" href="https://www.instagram.com/yaka.lk6?igsh=MzRlODBiNWFlZA==" class="sidebar-icon insta-icon"><i class="fab fa-instagram"></i></a></li>
                                         <li><a target="_blank" href="https://youtube.com/@yakalk-g5d?si=QRoMU9JO3-OrJnLv" class="sidebar-icon utube-icon"><i class="fab fa-youtube"></i></a></li>
+                                        <li><a target="_blank" href="https://www.linkedin.com/in/yaka-lk-2a045b36a/" class="sidebar-icon utube-icon"><i class="fab fa-linkedin"></i></a></li>
+                                        <li><a target="_blank" href="https://www.tiktok.com/@yakalk_" class="sidebar-icon utube-icon"><i class="fab fa-tiktok fa-xs"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -70,7 +73,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                            <div class="col-lg-2 col-md-6 col-sm-12 footer-column">
                                 <div class="footer-widget links-widget ml-70">
                                     <div class="widget-title">
                                         <h3>@lang('messages.General')</h3>

@@ -519,7 +519,7 @@
     <div class="filter-modal" id="filterModalCat">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Catogory Filters</h3>
+                <h3>Category Filters</h3>
                 <span class="close-modal">&times;</span>
             </div>
             <div class="modal-body">
