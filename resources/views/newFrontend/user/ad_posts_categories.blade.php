@@ -111,6 +111,7 @@
 
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
+            @if(Auth::check() && Auth::user()->roles != 'staff')
             <div class="mr-0 content-box centred">
                 <div class="title">
                     <h1>@lang('messages.Dashboard')</h1>
@@ -120,6 +121,7 @@
                     <li>@lang('messages.Dashboard')</li>
                 </ul>
             </div>
+            @endif
         </div>
     </section>
     <!-- End Page Title -->
@@ -156,23 +158,24 @@
                                     </div>
                                 </div>
                             </div>
-
-                <div class="col-lg-7">
-                    <div class="dash-header-right">
-                        <div class="dash-focus dash-list">
-                            <h2>Post</h2>
-                            <p>Your Ads</p>
-                        </div>
-                        <div class="dash-focus dash-book">
-                            <h2>Need</h2>
-                            <p> To Buy</p>
-                        </div>
-                        <div class="dash-focus dash-rev">
-                            <h2>Boost</h2>
-                            <p>Your Ads'</p>
-                        </div>
-                    </div>
-                </div>
+                                @if(Auth::check() && Auth::user()->roles != 'staff')
+                                <div class="col-lg-7">
+                                    <div class="dash-header-right">
+                                        <div class="dash-focus dash-list">
+                                            <h2>Post</h2>
+                                            <p>Your Ads</p>
+                                        </div>
+                                        <div class="dash-focus dash-book">
+                                            <h2>Need</h2>
+                                            <p> To Buy</p>
+                                        </div>
+                                        <div class="dash-focus dash-rev">
+                                            <h2>Boost</h2>
+                                            <p>Your Ads'</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
             </div>
 
 
@@ -181,10 +184,12 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
+                                @if(Auth::check() && Auth::user()->roles != 'staff')
                                 <li><a href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
-                                <li><a  class="active" href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
+                                @endif
+                                <li><a  class="active" href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>@if(Auth::check() && Auth::user()->roles != 'staff')
                                 <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
-                                <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>
+                                <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>@endif
                                 {{-- <li><a href="">@lang('messages.message')</a></li> --}}
                                 <li>
                                     <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>

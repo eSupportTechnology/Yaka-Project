@@ -37,8 +37,10 @@
         $sub_cat_id = request()->get('sub_cat_id');
     @endphp
 
+
     <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
+            @if(Auth::check() && Auth::user()->roles != 'staff')
             <div class="mr-0 content-box centred">
                 <div class="title">
                     <h1>@lang('messages.Dashboard')</h1>
@@ -48,6 +50,7 @@
                     <li>@lang('messages.Dashboard')</li>
                 </ul>
             </div>
+            @endif
         </div>
     </section>
     <!-- End Page Title -->
@@ -84,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-
+                    @if(Auth::check() && Auth::user()->roles != 'staff')
                     <div class="col-lg-7">
                         <div class="dash-header-right">
                             <div class="dash-focus dash-list">
@@ -101,16 +104,21 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
 
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
+                                @if(Auth::check() && Auth::user()->roles != 'staff')
                                 <li><a href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
+                                @endif
                                 <li><a  class="active" href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
+                                    @if(Auth::check() && Auth::user()->roles != 'staff')
                                 <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
                                 <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>
+                                    @endif
                                 <li>
                                     <a href="{{route('user.logout')}}">@lang('messages.Logout')</a>
                                 </li>
@@ -445,84 +453,95 @@
                                     @endif
 
 
-                                        <div class="mb-3 col-lg-12">
-                                            <div class="section-box">
-                                                <h4>@lang('messages.Boosting Option')<i class="text-danger">*</i></h4>
+                                    @if(Auth::check() && Auth::user()->roles != 'staff') <!-- Only show the whole section for non-staff users -->
+                                    <div class="mb-3 col-lg-12">
+                                        <div class="section-box">
+                                            <h4>@lang('messages.Boosting Option')<i class="text-danger">*</i></h4>
 
-                                                <!-- Top Ads, Super Ads, Urgent Ads Section -->
-                                                <div class="mt-4 row">
-                                                    <!-- Top Ads Box -->
-                                                    <div class="mb-3 col-md-4">
-                                                        <div class="p-3 border rounded box border-success equal-height">
-                                                            <h5 class="text-success">@lang('messages.Top Ads')</h5>
-                                                            <p class="text-muted">@lang('messages.TopAds description')</p>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Super Ads Box -->
-                                                    <div class="mb-3 col-md-4">
-                                                        <div class="p-3 border rounded box border-primary equal-height">
-                                                            <h5 class="text-primary">@lang('messages.Super Ads')</h5>
-                                                            <p class="text-muted">@lang('messages.SuperAds description')</p>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Urgent Ads Box -->
-                                                    <div class="mb-3 col-md-4">
-                                                        <div class="p-3 border rounded box border-danger equal-height">
-                                                            <h5 class="text-danger">@lang('messages.Urgent Ads')</h5>
-                                                            <p class="text-muted">@lang('messages.UrgentAds description')</p>
-                                                        </div>
+                                            <!-- Top Ads, Super Ads, Urgent Ads Section -->
+                                            <div class="mt-4 row">
+                                                <!-- Top Ads Box -->
+                                                <div class="mb-3 col-md-4">
+                                                    <div class="p-3 border rounded box border-success equal-height">
+                                                        <h5 class="text-success">@lang('messages.Top Ads')</h5>
+                                                        <p class="text-muted">@lang('messages.TopAds description')</p>
                                                     </div>
                                                 </div>
 
-                                                <!-- Package and Package Type Selection Section -->
-                                                <div class="mt-4 row">
-                                                    <!-- Package Selection Column -->
-                                                    <div class="col-md-3">
-                                                        <div class="mb-3">
-                                                            <h5 class="mb-2">@lang('messages.Select a Package'):</h5>
+                                                <!-- Super Ads Box -->
+                                                <div class="mb-3 col-md-4">
+                                                    <div class="p-3 border rounded box border-primary equal-height">
+                                                        <h5 class="text-primary">@lang('messages.Super Ads')</h5>
+                                                        <p class="text-muted">@lang('messages.SuperAds description')</p>
+                                                    </div>
+                                                </div>
 
-                                                            <!-- Free Ad Option (Always visible) -->
+                                                <!-- Urgent Ads Box -->
+                                                <div class="mb-3 col-md-4">
+                                                    <div class="p-3 border rounded box border-danger equal-height">
+                                                        <h5 class="text-danger">@lang('messages.Urgent Ads')</h5>
+                                                        <p class="text-muted">@lang('messages.UrgentAds description')</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Package and Package Type Selection Section -->
+                                            <div class="mt-4 row">
+                                                <!-- Package Selection Column -->
+                                                <div class="col-md-3">
+                                                    <div class="mb-3">
+                                                        <h5 class="mb-2">@lang('messages.Select a Package'):</h5>
+
+                                                        <!-- Free Ad Option (Always visible) -->
+                                                        <div class="mt-2 form-check">
+                                                            <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
+                                                            <label class="form-check-label text-dark" for="package_free">
+                                                                <h5>@lang('messages.Free Ad')</h5>
+                                                            </label>
+                                                        </div>
+
+                                                        @foreach($packages as $package)
                                                             <div class="mt-2 form-check">
-                                                                <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
-                                                                <label class="form-check-label text-dark" for="package_free">
-                                                                    <h5>@lang('messages.Free Ad')</h5>
+                                                                <input class="form-check-input package-radio" type="radio" name="boosting_option" id="package_{{ $package->id }}" value="{{ $package->id }}" data-name="{{ $package->name }}">
+                                                                <label class="form-check-label text-dark" for="package_{{ $package->id }}">
+                                                                    <h5>@lang('messages.' . $package->name)</h5>
                                                                 </label>
                                                             </div>
-
-                                                            @foreach($packages as $package)
-                                                                <div class="mt-2 form-check">
-                                                                    <input class="form-check-input package-radio" type="radio" name="boosting_option" id="package_{{ $package->id }}" value="{{ $package->id }}" data-name="{{ $package->name }}">
-                                                                    <label class="form-check-label text-dark" for="package_{{ $package->id }}">
-                                                                        <h5>@lang('messages.' . $package->name)</h5>
-                                                                    </label>
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
+                                                        @endforeach
                                                     </div>
+                                                </div>
 
-                                                    <!-- Package Type Selection Column -->
-                                                    <div class="col-md-4">
-                                                        <div id="package-types" class="d-none">
-                                                            <h4>@lang('messages.Select Package Type')</h4>
-                                                            @foreach($packages as $package)
-                                                                <div class="package-types-for-{{ $package->id }} d-none">
-                                                                    @foreach($package->packageTypes as $packageType)
-                                                                        <div class="mt-2 form-check">
-                                                                            <input class="form-check-input package-type-radio" type="radio" name="package_type" id="packageType_{{ $packageType->id }}" value="{{ $packageType->id }}" data-price="{{ $packageType->price }}"  data-duration="{{ $packageType->duration }}">
-                                                                            <label class="form-check-label text-dark" for="packageType_{{ $packageType->id }}">
-                                                                                {{ $packageType->duration }} (@lang('messages.Rs') {{ number_format($packageType->price, 2) }})
-                                                                            </label>
-                                                                        </div>
-                                                                    @endforeach
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
+                                                <!-- Package Type Selection Column -->
+                                                <div class="col-md-4">
+                                                    <div id="package-types" class="d-none">
+                                                        <h4>@lang('messages.Select Package Type')</h4>
+                                                        @foreach($packages as $package)
+                                                            <div class="package-types-for-{{ $package->id }} d-none">
+                                                                @foreach($package->packageTypes as $packageType)
+                                                                    <div class="mt-2 form-check">
+                                                                        <input class="form-check-input package-type-radio" type="radio" name="package_type" id="packageType_{{ $packageType->id }}" value="{{ $packageType->id }}" data-price="{{ $packageType->price }}"  data-duration="{{ $packageType->duration }}">
+                                                                        <label class="form-check-label text-dark" for="packageType_{{ $packageType->id }}">
+                                                                            {{ $packageType->duration }} (@lang('messages.Rs') {{ number_format($packageType->price, 2) }})
+                                                                        </label>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    @endif
+
+                                    @if(Auth::check() && Auth::user()->roles == 'staff')
+                                    <div class="mt-2 form-check d-none" id="free-ad-option">
+                                        <input class="form-check-input" type="radio" name="boosting_option" id="package_free" value="0" checked>
+                                        <label class="form-check-label text-dark" for="package_free">
+                                            <h5>@lang('messages.Free Ad')</h5>
+                                        </label>
+                                    </div>
+                                    @endif
 
                                     <div class="mt-4 col-lg-12">
                                         <button type="submit" id="publishBtn" class="theme-btn-one">
