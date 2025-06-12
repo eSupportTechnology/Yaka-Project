@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -44,5 +45,6 @@ class AppServiceProvider extends ServiceProvider
         Telescope::auth(function ($request) {
             return auth()->check() && Gate::allows('viewTelescope', auth()->user());
         });
+        Schema::defaultStringLength('191');
     }
 }

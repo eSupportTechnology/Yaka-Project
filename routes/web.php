@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\frontend\HomeController;
+use App\Http\Controllers\staffPanel\staffManagementController;
+use App\Models\BrandsModels;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\frontend\PaymentProcessingController;
@@ -120,7 +122,7 @@ Route::middleware(['auth'])->group(function () {
         }
 
         // Fetch models based on the brand and subcategory IDs
-        $models = \App\Models\BrandsModels::where('brandsId', $brandId)
+        $models = BrandsModels::where('brandsId', $brandId)
             ->where('sub_cat_id', $subCatId)
             ->get();
 
@@ -169,6 +171,16 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::post('/dashboard/admins/update/{id}',[adminManagementController::class ,'updateUser'])->name('dashboard.admins.update-user');
     Route::get('/dashboard/admins/delete/{id}',[adminManagementController::class ,'delete'])->name('dashboard.admins.delete');
     Route::post('/dashboard/admins/delete/{id}',[adminManagementController::class ,'deleteUser'])->name('dashboard.admins.delete-user');
+
+    //staffManagementController
+    Route::get('/dashboard/staffs',[staffManagementController::class ,'index'])->name('dashboard.staffs');
+    Route::get('/dashboard/staffs/create',[staffManagementController::class ,'create'])->name('dashboard.staffs.create');
+    Route::post('/dashboard/staffs/create',[staffManagementController::class ,'store'])->name('dashboard.staffs.store');
+    Route::get('/dashboard/staffs/view/{id}',[staffManagementController::class ,'view'])->name('dashboard.staffs.view');
+    Route::get('/dashboard/staffs/update/{id}',[staffManagementController::class ,'update'])->name('dashboard.staffs.update');
+    Route::post('/dashboard/staffs/update/{id}',[staffManagementController::class ,'updateUser'])->name('dashboard.staffs.update-user');
+    Route::get('/dashboard/staffs/delete/{id}',[staffManagementController::class ,'delete'])->name('dashboard.staffs.delete');
+    Route::post('/dashboard/staffs/delete/{id}',[staffManagementController::class ,'deleteUser'])->name('dashboard.staffs.delete-user');
 
     //usersManagementController
     Route::get('/dashboard/users/{search?}',[usersManagementController::class ,'index'])->name('dashboard.users');

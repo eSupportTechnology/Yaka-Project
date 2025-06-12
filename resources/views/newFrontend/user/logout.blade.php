@@ -12,6 +12,7 @@
 
 <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
+            @if(Auth::check() && Auth::user()->roles != 'staff')
             <div class="content-box centred mr-0">
                 <div class="title">
                     <h1>@lang('messages.Dashboard')</h1>
@@ -21,6 +22,7 @@
                     <li>@lang('messages.Dashboard')</li>
                 </ul>
             </div>
+            @endif
         </div>
     </section>
     <!-- End Page Title -->
@@ -57,7 +59,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                                @if(Auth::check() && Auth::user()->roles != 'staff')
                 <div class="col-lg-7">
                     <div class="dash-header-right">
                         <div class="dash-focus dash-list">
@@ -74,6 +76,7 @@
                         </div>
                     </div>
                 </div>
+                                @endif
             </div>
 
 
@@ -82,10 +85,14 @@
                     <div class="col-lg-12">
                         <div class="dash-menu-list">
                             <ul>
+                                @if(Auth::check() && Auth::user()->roles != 'staff')
                                 <li><a href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
+                                @endif
                                 <li><a href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
+                                    @if(Auth::check() && Auth::user()->roles != 'staff')
                                 <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
                                 <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>
+                                @endif
                                 {{-- <li><a href="">@lang('messages.message')</a></li> --}}
                                 <li>
                                     <a  class="active" href="{{route('user.logout')}}">@lang('messages.Logout')</a>
