@@ -1,6 +1,6 @@
 <header class="main-header navbar shadow-sm">
     <div class="col-search">
-        
+
     </div>
     <div class="col-nav">
         <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i class="material-icons md-apps"></i></button>
@@ -9,7 +9,8 @@
                 $pendingads = \App\Models\Ads::where('status',0)->with('user')->orderBy('created_at', 'DESC')->get();
                 $pendingads_count = count($pendingads);
             @endphp
-            <li class="nav-item dropdown"> 
+            @if(Auth::check() && Auth::user()->roles == 'staff')
+            <li class="nav-item dropdown">
                  <a class="nav-link btn-icon dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="material-icons md-notifications animation-shake"></i>
                       @if($pendingads_count > 0)<span class="badge rounded-pill">
@@ -34,14 +35,15 @@
                     @endforeach
                 </div>
             </li>
+            @endif
 
            <li class="nav-item">
                 <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
             </li>
             <li class="dropdown nav-item" style="position: relative;">
                 <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false">
-                    <img class="img-xs rounded-circle" 
-                        src="{{ asset('storage/user_images/' . session('image', 'default-user.png')) }}" 
+                    <img class="img-xs rounded-circle"
+                        src="{{ asset('storage/user_images/' . session('image', 'default-user.png')) }}"
                         alt="User" />
                 </a>
                 <ul class="dropdown-menu">
