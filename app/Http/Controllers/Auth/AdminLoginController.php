@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
 {
@@ -26,6 +27,7 @@ class AdminLoginController extends Controller
             ->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
+            Auth::login($user);
             session([
                 'is_admin' => in_array($user->roles, ['admin', 'staff']),
                 'name' => $user->name,
