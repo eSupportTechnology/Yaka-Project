@@ -194,7 +194,7 @@ class UserAdsController extends Controller
                 $validationRules = array_merge($validationRules, [
                     'user_first_name' => 'required|string|max:255',
                     'user_last_name' => 'required|string|max:255',
-                    'user_email' => 'required|email|unique:users,email',
+                    'user_email' => 'required|email',
                     'user_phone_number' => 'required|string|max:20',
                 ]);
             }
@@ -206,21 +206,27 @@ class UserAdsController extends Controller
             $userPhoneNumber = auth()->user()->phone_number;
 
             if (auth()->user()->roles === 'staff') {
-                // Create new user
-                $user = new User();
-                $user->first_name = $validated['user_first_name'];
-                $user->last_name = $validated['user_last_name'];
-                $user->email = $validated['user_email'];
-                $user->phone_number = $validated['user_phone_number'];
-                $user->roles = 'user';
-                $user->created_by = 2;
-                $user->active_status = 1;
-                $user->password = Hash::make('12345678');
-                $user->save();
+                $checkUser = User::where('phone_number', $validated['user_phone_number'])->first();
+                if($checkUser) {
+                    $userId = $checkUser->id;
+                } else {
+                    // Create new user
+                    $user = new User();
+                    $user->first_name = $validated['user_first_name'];
+                    $user->last_name = $validated['user_last_name'];
+                    $user->email = $validated['user_email'];
+                    $user->phone_number = $validated['user_phone_number'];
+                    $user->roles = 'user';
+                    $user->created_by = 2;
+                    $user->active_status = 1;
+                    $user->password = Hash::make('12345678');
+                    $user->save();
 
-                $userId = $user->id;
+                    $userId = $user->id;
+                }
                 $createdByStaffId = auth()->user()->id;
                 $userPhoneNumber = $validated['user_phone_number'];
+
 
                 Log::info('New user created by staff', ['new_user_id' => $userId, 'staff_id' => $createdByStaffId]);
             }
@@ -337,13 +343,16 @@ class UserAdsController extends Controller
                 'user_id' => $userId,
                 'created_by_staff_id' => $createdByStaffId
             ]);
-
-            OtpService::sendSingleSms($userPhoneNumber, "Your ad has been successfully submitted! It will go live after admin approval. Thank you for using our platform.");
+            if (auth()->user()->roles != 'staff') {
+                OtpService::sendSingleSms($userPhoneNumber, "Your ad has been successfully submitted! It will go live after admin approval. Thank you for using our platform.");
+            }
 
             $successMessage = auth()->user()->roles === 'staff' ?
                 'User created and ad posted successfully!' :
                 'Ad posted successfully!';
-
+            if(auth()->user()->roles === 'staff') {
+                return redirect()->route('user.ad_posts.categories')->with('success', $successMessage);
+            }
             return redirect()->route('user.my_ads')->with('success', $successMessage);
 
         } catch (Exception $e) {

@@ -207,6 +207,13 @@
     <div class="container">
         <div class="row">
             <div class="mb-3 col-lg-6">
+                @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
                 <div class="p-4 account-card alert fade show" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
                     <h4> @lang('messages.Main Categories')</h4>
 
