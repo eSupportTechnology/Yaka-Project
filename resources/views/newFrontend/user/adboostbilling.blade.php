@@ -2,7 +2,7 @@
 
 @section('content')
 <style>
- 
+
     .payment-container {
         max-width: 800px;
         margin: auto;
@@ -10,7 +10,7 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 60px; 
+        margin-bottom: 60px;
     }
     .card {
         border: none;
@@ -99,7 +99,7 @@
                 <p><strong>Package Name:</strong> {{ $billingData['new_package_name'] }}</p>
                 <p><strong>Package Type ID:</strong>  {{ $billingData['new_package_type_id'] }}</p>
                 <p><strong>Duration:</strong>  {{ $billingData['new_package_duration'] }} days</p>
-                <p><strong>Amount:</strong>Rs {{ $billingData['amount'] }}</p>          
+                <p><strong>Amount:</strong>Rs {{ $billingData['amount'] }}</p>
             </div>
         </div>
 
@@ -109,10 +109,10 @@
         <!-- Get Billing Details Details -->
         <div class="card mb-4">
             <div class="card-body">
-                
+
                 <h4>Enter Billing Details</h4>
-                
-                <input type="hidden" name="return_url" id="return_url" value="https://yakalk.esupportsystem.shop/boostpayment/checking?invId={{ $invoiceId }}">
+
+                <input type="hidden" name="return_url" id="return_url" value="/boostpayment/checking?invId={{ $invoiceId }}">
                 <label for="billing_street">Billing Address Street<span style="color:red; font-size:18px;">*</span></label>
                 <input class="form-control" type="text" name="billing_street" id="billing_street">
                 <label for="billing_city">Billing Address City<span style="color:red; font-size:18px;">*</span></label>
@@ -124,7 +124,7 @@
 
         {{-- <!-- Initial Pay Now Button -->
         <button onclick="returnForm()" type="button" id="show-card-page" class="btn btn-success w-100 pay_now">Pay Now</button> --}}
-    
+
          <button onclick="returnForm()" type="button" id="payNowBtn" class="btn btn-success w-100 d-flex justify-content-center align-items-center">
     <span id="payNowText">Pay Now</span>
     <div id="btnSpinner" class="ms-2 spinner-border spinner-border-sm text-light" role="status" style="display: none;"></div>
@@ -155,7 +155,7 @@
     document.getElementById('btnSpinner').style.display = 'inline-block';
     document.getElementById('payNowBtn').disabled = true;
     document.getElementById('payNowText').textContent = "Processing...";
-    
+
        const payment = {
             logoUrl: "{{ config('ipg.logo-url') }}",
             returnUrl: returnUrl,
