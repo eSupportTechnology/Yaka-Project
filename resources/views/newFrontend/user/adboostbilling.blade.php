@@ -112,7 +112,7 @@
 
                 <h4>Enter Billing Details</h4>
 
-                <input type="hidden" name="return_url" id="return_url" value="/boostpayment/checking?invId={{ $invoiceId }}">
+                <input type="hidden" name="return_url" id="return_url" value="{{ env('APP_URL') }}/boostpayment/checking?invId={{ $invoiceId }}">
                 <label for="billing_street">Billing Address Street<span style="color:red; font-size:18px;">*</span></label>
                 <input class="form-control" type="text" name="billing_street" id="billing_street">
                 <label for="billing_city">Billing Address City<span style="color:red; font-size:18px;">*</span></label>
