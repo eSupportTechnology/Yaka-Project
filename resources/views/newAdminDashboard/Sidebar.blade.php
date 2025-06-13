@@ -19,7 +19,6 @@
 }
 
 </style>
-
 <aside class="navbar-aside shadow-sm" id="offcanvas_aside">
     <div class="aside-top" style="padding:0">
         <a href="" class="brand-wrap">
@@ -31,6 +30,7 @@
     </div>
     <nav>
         <ul class="menu-aside">
+            @if(Auth::check() && Auth::user()->roles == 'admin')
             <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <a class="menu-link" href="{{ route('dashboard') }}">
                     <i class="icon material-icons md-home"></i>
@@ -72,14 +72,20 @@
                     <span class="text">Form Fields for catgories</span>
                 </a>
             </li>
-
             <li class="menu-item {{ request()->routeIs('dashboard.ads') ? 'active' : '' }}">
                 <a class="menu-link" href="{{route('dashboard.ads')}}">
-                    <i class="icon material-icons md-folder"></i>
+                    <i class="icon material-icons md-folder_open"></i>
                     <span class="text">Ads</span>
                 </a>
             </li>
-
+            @endif
+            <li class="menu-item {{ request()->routeIs('user.ad_posts.categories') ? 'active' : '' }}">
+                <a class="menu-link" href="{{route('user.ad_posts.categories')}}">
+                    <i class="icon material-icons md-create"></i>
+                    <span class="text">Create Ads</span>
+                </a>
+            </li>
+                @if(Auth::check() && Auth::user()->roles == 'admin')
             <!-- Separator for Configuration -->
             <div class="nav-category-container">
                 <hr class="nav-divider" />
@@ -119,9 +125,11 @@
                     <span class="text">Banner</span>
                 </a>
             </li>
+                @endif
         </ul>
         <hr />
         <br />
         <br />
     </nav>
 </aside>
+

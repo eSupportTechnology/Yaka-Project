@@ -453,7 +453,7 @@
                                     @endif
 
 
-                                    @if(Auth::check() && Auth::user()->roles != 'staff') <!-- Only show the whole section for non-staff users -->
+                                    @if(Auth::check() && Auth::user()->roles != 'staff')
                                     <div class="mb-3 col-lg-12">
                                         <div class="section-box">
                                             <h4>@lang('messages.Boosting Option')<i class="text-danger">*</i></h4>
