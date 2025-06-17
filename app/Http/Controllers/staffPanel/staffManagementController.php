@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\staffPanel;
 
-use App\Http\Controllers\Controller;
+use App\Models\Ads;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class staffManagementController extends Controller
@@ -55,7 +57,10 @@ class staffManagementController extends Controller
     public function view($id)
     {
         $user = User::find($id);
-        return view('newAdminDashboard.staffManagement.view',['user' => $user]);
+        $userAds = Ads::where('created_by_staff_id', $id)->get();
+        $totalAds = $userAds->count();
+        $adsDetails = DB::select("select a.cat_id, count(1) as total, c.name from ads a join categories c on c.id=a.cat_id where a.created_by_staff_id =$id group by a.cat_id order by a.cat_id ASC");
+        return view('newAdminDashboard.staffManagement.view',['user' => $user, 'totalAds' => $totalAds, 'adsDetails' => $adsDetails]);
     }
 
     public function update($id)
