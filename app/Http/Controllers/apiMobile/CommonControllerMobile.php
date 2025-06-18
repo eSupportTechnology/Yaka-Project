@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Services\ApiResponseService;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 
 class CommonControllerMobile extends Controller
 {
@@ -19,13 +20,45 @@ class CommonControllerMobile extends Controller
     }
 
     /**
-     * Get all disricts
+     * Get all districts or a specific district with its cities
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function getDistricts()
+    public function getDistricts(Request $request)
     {
         try {
             $locale = App::getLocale();
             $searchName = 'name_'.$locale;
+            $districtId = $request->query('district_id');
+            
+            // If district_id is provided, return that district with its cities
+            if ($districtId) {
+                $district = District::find($districtId);
+                
+                if (!$district) {
+                    return $this->apiResponse->error('District not found', 'District not found', 404);
+                }
+                
+                $cities = $district->cities()->get()->map(function ($city) use ($searchName) {
+                    return [
+                        'id' => $city->id,
+                        'name' => $city->$searchName,
+                    ];
+                });
+                
+                $result = [
+                    'district' => [
+                        'id' => $district->id,
+                        'name' => $district->$searchName,
+                    ],
+                    'cities' => $cities
+                ];
+                
+                return $this->apiResponse->success($result, 'District with cities fetched successfully');
+            }
+            
+            // Otherwise return all districts (existing functionality)
             return Cache::remember('districts', 300, function () use ($searchName) {
 
                 $districts = District::all()

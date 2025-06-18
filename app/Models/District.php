@@ -12,4 +12,12 @@ class District extends Model
         'name_si',
         'name_ta',
     ];
+    
+    /**
+     * Get the cities for the district.
+     */
+    public function cities()
+    {
+        return $this->hasMany(Cities::class, 'district_id');
+    }
 }

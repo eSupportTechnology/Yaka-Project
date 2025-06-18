@@ -89,7 +89,7 @@ Route::middleware('auth:api')->group(function () {
 Route::post('/send/verification-code', [AuthControllerMobile::class, 'SendMobileVerificationCode']); // Send Verification Code
 Route::post('/verify/registration-otp', [AuthControllerMobile::class, 'verifyRegistrationOtp']); // Verify Registration OTP
 
-Route::get('/get/districts', [CommonControllerMobile::class, 'getDistricts']); // Get all districts
+Route::get('/get/districts', [CommonControllerMobile::class, 'getDistricts']); // Get all districts or a district with cities using district_id query param
 
 /**
  * Ad Post routes
