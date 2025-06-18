@@ -4,6 +4,7 @@ namespace App\Http\Controllers\adminPanel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Package;
+use App\Models\BannerPackage;
 use Illuminate\Http\Request;
 
 class packageManagementController extends Controller
@@ -147,6 +148,79 @@ class packageManagementController extends Controller
         }else{
             return redirect()->route('dashboard.packages')->with('success', 'Category deleted successfully.');
         }
+
+    }
+
+    /**
+     * Create banner package
+     */
+    public function bannerPackageCreate()
+    {
+        return view('newAdminDashboard.packageManagement.createNewBannerPackage');
+    }
+
+    public function storeBannerPackage(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255|unique:banner_packages,name',
+            'status' => 'required',
+            'no_of_days' => 'required',
+        ]);
+        $package = BannerPackage::create([
+            'name' => $request->name,
+            'status' => $request->status,
+            'no_of_days' => $request->no_of_days,
+        ]);
+        return view('newAdminDashboard.packageManagement.createNewBannerPackage')->with('success', $validatedData['name'].' created successfully.');
+    }
+
+    /**
+     *Banner Packge update view
+     */
+    public function updateBannerPackageView($id)
+    {
+        $pack = BannerPackage::where('id',$id )->first();
+        return view('newAdminDashboard.packageManagement.updateBannerPackage',['pack' => $pack]);
+    }
+
+    /**
+     * Banner package update
+     */
+    public function updateBannerPackage(Request $request,$id)
+    {
+
+        $rules = [
+            'name'=>'required',
+            'status' => 'required',
+            'no_of_days' => 'required'
+        ];
+        $validatedData = $request->validate($rules);
+
+        $pack = BannerPackage::where('id',$id)->first();
+        $pack->name = $validatedData['name'] ?? $pack->name;
+        $pack->no_of_days =$validatedData['no_of_days'] ?? $pack->no_of_days;
+        $pack->status = $validatedData['status'];
+
+        $pack->save();
+
+        return view('newAdminDashboard.packageManagement.updateBannerPackage', ['pack'=>$pack])->with('success', 'Banner PackagedeleteCategory updated successfully.');
+    }
+
+    public function deleteBannerPackage($id)
+    {
+        $category = BannerPackage::where('id',$id )->first();
+        return view('newAdminDashboard.packageManagement.deleteBannerpackage',['category' => $category]);
+    }
+
+    public function deleteBannerPack($id)
+    {
+        $pack = BannerPackage::where('id',$id )->first();
+
+        if (!$pack) {
+            return redirect()->back()->with('error', 'Category not found.');
+        }
+        $pack->delete();
+        return redirect()->route('dashboard.banner-packages')->with('success', 'Banner Package deleted successfully.');
 
     }
 

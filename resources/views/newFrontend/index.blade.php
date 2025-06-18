@@ -390,9 +390,15 @@
             <div class="carousel-inner">
                 @foreach ($banners as $key => $banner)
                     @if ($banner->type == 0)
+                        @if (isset($banner->url))
+                            <a href="{{ $banner->url }}" target="_blank">
+                        @endif
                         <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
                             <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
                         </div>
+                        @if (isset($banner->url))
+                            </a>
+                        @endif
                     @endif
                 @endforeach
             </div>

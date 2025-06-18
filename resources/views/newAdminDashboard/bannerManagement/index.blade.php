@@ -28,6 +28,9 @@
                                 <th>Id</th>
                                 <th>Image</th>
                                 <th>Type</th>
+                                <th>URL</th>
+                                <th>Package Name</th>
+                                <th>Package Duration</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,6 +46,9 @@
                                             Skyscraper (285x500)
                                         @endif
                                     </td>
+                                    <td>{{ $banner->url }}</td>
+                                    <td>{{ $banner->bannerPackage->name ?? 'N/A' }}</td>
+                                    <td>{{ $banner->bannerPackage->no_of_days ?? 'N/A' }}</td>
                                     <td>
                                         <div class="template-demo d-flex flex-nowrap">
                                             <a href="{{ route('dashboard.banner.update', [$banner->id]) }}" class="btn btn-warning btn-sm me-2">

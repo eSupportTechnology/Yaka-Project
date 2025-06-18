@@ -39,7 +39,22 @@
                                 <option value="1">Skyscrapers  (Banner size: 285x500)</option>
                             </select>
                         </div>
-                        
+
+                        <div class="form-group">
+                            <label for="banner_url">URL </label>
+                            <input class="form-control" type="text" name="banner_url" id="banner_url">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="package">Package </label>
+                            <select class="form-control" name="package" id="">
+                                <option  value="">Select Package</option>
+                                @foreach ($packages as $package)
+                                    <option  value="{{ $package->id }}">{{ $package->name }} - {{ $package->no_of_days }} Days</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <button type="submit" id="submit-form" class="btn btn-primary me-2">Submit</button>
                     </form>
                 </div>

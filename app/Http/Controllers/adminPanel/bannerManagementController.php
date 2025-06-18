@@ -7,13 +7,16 @@ use App\Models\Banner;
 use App\Models\Banners;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Package;
+use App\Models\BannerPackage;
+use Carbon\Carbon;
 
 class bannerManagementController extends Controller
 {
     // Method to display a paginated list of users
     public function index(){
 
-        $banners = Banners::paginate(10); // Adjust the number per page as needed
+        $banners = Banners::with('bannerPackage')->paginate(10); // Adjust the number per page as needed
         return view('newAdminDashboard.bannerManagement.index', compact('banners'));
     }
 
@@ -28,7 +31,8 @@ class bannerManagementController extends Controller
     {
         // dd('sadasd');
         // $user = User::find($id);
-        return view('newAdminDashboard.bannerManagement.create');
+        $packages = BannerPackage::where('status', 1)->get();
+        return view('newAdminDashboard.bannerManagement.create', compact('packages'));
     }
 
     // public function createBanner(Request $request)
@@ -38,33 +42,33 @@ class bannerManagementController extends Controller
     //         'gif' => 'required|file|mimes:gif|max:2048',  // Ensures only GIFs up to 2MB are allowed
     //         'type' => 'required|integer'
     //     ]);
-    
+
     //     // Check if the file was uploaded without any errors
     //     if ($request->hasFile('gif')) {
     //         $file = $request->file('gif');
 
-    
-    
+
+
     //         // Check for upload errors
     //         if ($file->isValid()) {
 
 
     //             // Store the file in the 'public/banners' directory and return the path
     //             $path = $file->store('banners', 'public');
-    
+
     //             // Here, you could save the path and any additional details (like 'type') to the database if needed
     //            Banners::create(['path' => $path, 'type' => $request->type]);
-    
+
     //             return redirect()->back()->with('success', 'Banner uploaded successfully!');
     //         } else {
     //             return redirect()->back()->with('error', 'File upload error: ' . $file->getErrorMessage());
     //         }
     //     }
-    
+
     //     return redirect()->back()->with('error', 'No file was uploaded.');
     // }
-    
-    
+
+
     public function createBanner(Request $request)
     {
         // Validate the basic form input
@@ -77,7 +81,7 @@ class bannerManagementController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            
+
             // Get image dimensions
             list($width, $height) = getimagesize($image);
 
@@ -96,9 +100,15 @@ class bannerManagementController extends Controller
             $image->move(public_path('banners'), $imageName);
 
             // Create a new banner record in the database
+            $bannerPackage = BannerPackage::where('id', $request->input('package'))->first();
+            $duration = (int)$bannerPackage->no_of_days;
+            $expiredAt = Carbon::now()->addDays($duration);
             Banners::create([
                 'img' => $imageName,
                 'type' => $request->input('type'),
+                'url' => !empty($request->input('banner_url')) ? $request->input('banner_url') : null,
+                'package' => !empty($request->input('package')) ? $request->input('package') : null,
+                'expired_at' => $expiredAt
             ]);
         }
 
@@ -143,7 +153,7 @@ class bannerManagementController extends Controller
 
         return redirect()->route('dashboard.banner')->with('success', 'Banner updated successfully!');
     }
-    
+
 
     public function delete($id)
     {
@@ -160,4 +170,13 @@ class bannerManagementController extends Controller
         return redirect()->route('dashboard.banner')->with('success', 'Banner deleted successfully!');
     }
 
+    /**
+     * Create Banner View
+     * @return view
+     */
+    public function createBannerView()
+    {
+        $packTypes = BannerPackage::paginate(6);
+        return view('newAdminDashboard.packageManagement.banner-package', ['packTypes' => $packTypes]);
+    }
 }

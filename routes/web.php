@@ -239,12 +239,19 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     //packageManagementController
     Route::get('/dashboard/package',[packageManagementController::class,'index'])->name('dashboard.packages');
     Route::get('/dashboard/package/create',[packageManagementController::class,'create'])->name('dashboard.package.create');
+    Route::get('/dashboard/banner-package/create',[packageManagementController::class,'bannerPackageCreate'])->name('dashboard.banner-package.create');
     Route::post('/dashboard/package/create',[packageManagementController::class,'store'])->name('dashboard.package.store');
+    Route::post('/dashboard/banner-package/create',[packageManagementController::class,'storeBannerPackage'])->name('dashboard.banner-package.store');
     Route::get('/dashboard/package/view/{url}',[packageManagementController::class,'view'])->name('dashboard.package.view');
     Route::get('/dashboard/package/update/{url}',[packageManagementController::class,'update'])->name('dashboard.package.update');
     Route::post('/dashboard/package/update/{url}',[packageManagementController::class,'updatePackage'])->name('dashboard.package.update-package');
     Route::get('/dashboard/package/delete/{url}',[packageManagementController::class,'delete'])->name('dashboard.package.delete');
     Route::post('/dashboard/package/delete/{url}',[packageManagementController::class ,'deleteCategory'])->name('dashboard.package.delete-package');
+    // Banner Package
+    Route::get('/dashboard/banner-package/update/{id}',[packageManagementController::class,'updateBannerPackageView'])->name('dashboard.banner-package.update');
+    Route::post('/dashboard/banner-package/update/{id}',[packageManagementController::class,'updateBannerPackage'])->name('dashboard.banner-package.update-package');
+    Route::get('/dashboard/banner-package/delete/{id}',[packageManagementController::class,'deleteBannerPackage'])->name('dashboard.banner-package.delete');
+    Route::post('/dashboard/banner-package/delete/{id}',[packageManagementController::class ,'deleteBannerPack'])->name('dashboard.banner-package.delete-package');
 
     //subpackageController
     Route::get('/dashboard/subpack/update/{url}',[subPackageManagementController::class,'update'])->name('dashboard.sub-packages.update');
@@ -272,6 +279,7 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
 
     //bannerManagementController
     Route::get('/dashboard/banner',[bannerManagementController::class ,'index'])->name('dashboard.banner');
+    Route::get('/dashboard/banner-packages',[bannerManagementController::class ,'createBannerView'])->name('dashboard.banner-packages');
     Route::get('/dashboard/banner/view/{id}',[bannerManagementController::class ,'view'])->name('dashboard.banner.view');
     Route::get('/dashboard/banner/update/{id}',[bannerManagementController::class ,'update'])->name('dashboard.banner.update');
     Route::post('/dashboard/banner/update/{id}',[bannerManagementController::class ,'updatebanner'])->name('dashboard.banner.update-banner');

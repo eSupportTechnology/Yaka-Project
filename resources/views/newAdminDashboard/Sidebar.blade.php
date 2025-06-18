@@ -125,6 +125,12 @@
                     <span class="text">Banner</span>
                 </a>
             </li>
+            <li class="menu-item {{ request()->routeIs('dashboard.banner-packages') ? 'active' : '' }}">
+                <a class="menu-link" href="{{route('dashboard.banner-packages')}}">
+                    <i class="icon material-icons md-image"></i>
+                    <span class="text">Banner-Packages</span>
+                </a>
+            </li>
                 @endif
         </ul>
         <hr />

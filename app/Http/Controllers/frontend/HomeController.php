@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Banners;
 use App\Models\Ads;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -25,7 +26,13 @@ class HomeController extends Controller
                 ->get();
 
 
-        $banners = \App\Models\Banners::where('type', 0)->get();
+        $banners = Banners::with('bannerPackage') // eager load the relationship
+            ->where('type', 0)
+            ->where(function ($query) {
+                $query->whereNull('expired_at')
+                        ->orWhere('expired_at', '>', Carbon::now());
+            })
+            ->get();
 
         $topbanners = \App\Models\Banners::where('type', 1)->get();
         $superbanners = \App\Models\Banners::where('type', 1)->get();
