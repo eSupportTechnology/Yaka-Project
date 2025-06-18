@@ -13,13 +13,17 @@ class HomeController extends Controller
 
     public function home()
     {
-        $categories = Category::where('mainId',0 )
-            ->where('status', 1)
-            ->withCount(['ads' => function ($query) {
-                $query->where('status', 1);
-            }])
+        $categories = Category::where('mainId', 0)
+                ->where('status', 1)
+                ->withCount(['ads' => function ($query) {
+                    $query->where('status', 1)
+                        ->where(function ($q) {
+                            $q->whereNull('package_expire_at')
+                                ->orWhere('package_expire_at', '>=', now());
+                        });
+                }])
+                ->get();
 
-            ->get();
 
         $banners = \App\Models\Banners::where('type', 0)->get();
 
