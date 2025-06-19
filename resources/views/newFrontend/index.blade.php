@@ -526,9 +526,15 @@
                 <div class="second-row">
                     <div id="super-banner" class="custom-carousel">
                         @foreach ($topbanners as $index => $banner)
+                            @if (isset($banner->url))
+                                <a href="{{ $banner->url }}" target="_blank">
+                            @endif
                             <img src="{{ asset('banners/' . $banner->img) }}"
                                 class="carousel-slide-sup @if ($index === 0) active @endif"
                                 alt="Banner {{ $index + 1 }}">
+                            @if (isset($banner->url))
+                                </a>
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -544,9 +550,15 @@
                 <div class="second-row">
                     <div id="top-banner">
                         @foreach ($superbanners as $index => $banner)
+                            @if (isset($banner->url))
+                                <a href="{{ $banner->url }}" target="_blank">
+                            @endif
                             <img src="{{ asset('banners/' . $banner->img) }}"
                                 class="carousel-slide-top @if ($index === 0) active @endif"
                                 alt="Banner {{ $index + 1 }}">
+                            @if (isset($banner->url))
+                                </a>
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -714,9 +726,15 @@
             <div class="carousel-inner">
                 @foreach ($banners as $key => $banner)
                     @if ($banner->type == 0)
+                        @if (isset($banner->url))
+                            <a href="{{ $banner->url }}" target="_blank">
+                        @endif
                         <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
                             <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
                         </div>
+                        @if (isset($banner->url))
+                            </a>
+                        @endif
                     @endif
                 @endforeach
             </div>
