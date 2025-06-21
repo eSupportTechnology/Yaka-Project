@@ -16,6 +16,33 @@
 <div class="row">
     <h1>Welcome to admin panel.</h1>
 </div>
+@if(Auth::check() && Auth::user()->roles == 'staff')
+<div class="row">
+    <div class="col-md-12">
+        <h4>Entered Ad Details</h4>
+        <table class="table">
+            <thead>
+                <th>Category</th>
+                <th>Count</th>
+            </thead>
+            <tbody>
+                @foreach ($adsDetails as $adsDetail)
+                    <tr>
+                        <td>{{ $adsDetail->name }}</td>
+                        <td>{{ $adsDetail->total }}</td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td>Total</td>
+                    <td>{{ $totalAds }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@endif
+@if(Auth::check() && Auth::user()->roles != 'staff')
 <div class="row">
     <div class="col-md-6">
         {{-- <div class="col-sm-12">
@@ -64,6 +91,6 @@
         <div id="freeChartError" class="alert alert-danger mt-4" style="display: none;"></div>
     </div>
 </div>
-
+@endif
 
 @endsection

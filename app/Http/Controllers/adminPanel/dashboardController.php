@@ -6,12 +6,17 @@ use App\Models\Ads;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class dashboardController extends Controller
 {
    public function index()
    {
-       return view('newAdminDashboard.Home');
+        $user = auth()->user();
+        $userAds = Ads::where('created_by_staff_id', $user->id)->get();
+        $totalAds = $userAds->count();
+        $adsDetails = DB::select("select a.cat_id, count(1) as total, c.name from ads a join categories c on c.id=a.cat_id where a.created_by_staff_id =$user->id group by a.cat_id order by a.cat_id ASC");
+       return view('newAdminDashboard.Home', compact('totalAds', 'adsDetails'));
    }
 
    public function fetchChartData()
