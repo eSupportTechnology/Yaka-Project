@@ -207,7 +207,7 @@
                                                     </div>
                                                     <div class="mb-3 col-lg-6">
                                                         <div class="form-group">
-                                                            <label class="form-label text-dark"><strong>@lang('messages.Email') <i class="text-danger">*</i></strong></label>
+                                                            <label class="form-label text-dark"><strong>@lang('messages.Email')</strong></label>
                                                             <input type="email" name="user_email" class="form-control" value="{{ old('user_email') }}" placeholder="Enter customer's email address" required>
                                                         </div>
                                                     </div>

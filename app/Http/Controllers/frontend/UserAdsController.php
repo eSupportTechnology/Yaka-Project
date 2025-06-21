@@ -194,7 +194,7 @@ class UserAdsController extends Controller
                 $validationRules = array_merge($validationRules, [
                     'user_first_name' => 'required|string|max:255',
                     'user_last_name' => 'required|string|max:255',
-                    'user_email' => 'required|email',
+                    'user_email' => 'email',
                     'user_phone_number' => 'required|string|max:20',
                 ]);
             }
@@ -214,7 +214,7 @@ class UserAdsController extends Controller
                     $user = new User();
                     $user->first_name = $validated['user_first_name'];
                     $user->last_name = $validated['user_last_name'];
-                    $user->email = $validated['user_email'];
+                    $user->email = $validated['user_email'] ?? 'N/A';
                     $user->phone_number = $validated['user_phone_number'];
                     $user->roles = 'user';
                     $user->created_by = 2;
