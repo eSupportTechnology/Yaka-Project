@@ -172,7 +172,7 @@
 
         .card-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 2fr));
             align-items: center;
             gap: 20px;
             margin-top: 30px;
@@ -237,7 +237,7 @@
 
         @media (max-width: 472px) {
             .responsive-category {
-                grid-template-columns: repeat(2, 1fr) !important;
+                grid-template-columns: repeat(2, 2fr) !important;
             }
 
             .category-block-one {
@@ -415,7 +415,7 @@
             </div>
 
             <div class="clearfix inner-content responsive-category"
-                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 30px; padding: 8px; justify-items: center;">
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 2fr)); gap: 30px; padding: 8px; justify-items: center;">
                 @foreach ($categories->take(14) as $category)
                     <div class="category-block-one" style="width: 100%; break-inside: avoid;">
                         <a href="{{ route('browse-ads', ['category' => $category->id]) }}" style="text-decoration: none;">
