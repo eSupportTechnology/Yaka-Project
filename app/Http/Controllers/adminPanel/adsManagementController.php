@@ -38,7 +38,7 @@ class adsManagementController extends Controller
             $adsUser = User::where('id', $ads->user_id)->first();
             if($status !== 'disapprove') {
                 $adUrl = "https://yaka.lk/browse_ads_details/".$ads->adsId;
-                $message = "🎉 We've posted your ad for FREE on YAKA.LK!\n\nYour ad is now live: ".$adUrl."\n\n📞 Contact for more: 0705321321";
+                $message = "🎉 We've posted your ad for FREE on YAKA.LK!\nYour ad is now live: ".$adUrl."\n📞 Contact for more: 0705321321\nYAKA.LK - Sri Lanka's trusted ad platform!";
                 OtpService::sendSingleSms($adsUser->phone_number, $message);
             }
 
