@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\adminPanel;
 
-use App\Http\Controllers\Controller;
 use App\Models\Ads;
+use App\Models\User;
+use App\Services\OtpService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class adsManagementController extends Controller
 {
@@ -28,13 +31,24 @@ class adsManagementController extends Controller
 
     public function status($status, $id)
     {
-        $ads = Ads::where('adsId', $id)->firstOrFail(); 
+        $ads = Ads::where('adsId', $id)->firstOrFail();
         $ads->status = $status === 'disapprove' ? 0 : 1;
         $ads->save();
-    
+        try {
+            $adsUser = User::where('id', $ads->user_id)->first();
+            if($status !== 'disapprove') {
+                $adUrl = "https://yaka.lk/browse_ads_details/".$ads->adsId;
+                $message = "🎉 We've posted your ad for FREE on YAKA.LK!\nYour ad is now live: ".$adUrl."\n📞 Contact for more: 0705321321\nYAKA.LK - Sri Lanka's trusted ad platform!";
+                OtpService::sendSingleSms($adsUser->phone_number, $message);
+            }
+
+        } catch (\Exception $e) {
+            Log::info($e);
+        }
+
         return redirect()->route('dashboard.ads')->with('message', 'Ad status updated successfully');
     }
-    
+
 
     public function getTopAds()
    {
