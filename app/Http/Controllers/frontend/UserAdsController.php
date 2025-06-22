@@ -194,7 +194,7 @@ class UserAdsController extends Controller
                 $validationRules = array_merge($validationRules, [
                     'user_first_name' => 'required|string|max:255',
                     'user_last_name' => 'required|string|max:255',
-                    'user_phone_number' => 'required|string|max:20',
+                    'user_phone_number' => 'required|string|max:10',
                 ]);
             }
 
@@ -214,7 +214,7 @@ class UserAdsController extends Controller
                     $user->first_name = $validated['user_first_name'];
                     $user->last_name = $validated['user_last_name'];
                     $user->email = $validated['user_email'] ?? 'N/A';
-                    $user->phone_number = $validated['user_phone_number'];
+                    $user->phone_number = $this->makeMobileNumberFormat($validated['user_phone_number']);
                     $user->roles = 'user';
                     $user->created_by = 2;
                     $user->active_status = 1;
@@ -406,5 +406,19 @@ class UserAdsController extends Controller
             // Return error response
             return response()->json(['success' => false, 'message' => 'Something went wrong! Please try again.'], 500);
         }
+    }
+
+    private function makeMobileNumberFormat($mobile)
+    {
+        $number = str_replace(' ', '', $mobile); // remove spaces
+
+        if (strpos($number, '+94') === 0) {
+            $number = substr($number, 3); // remove +94
+        }
+
+        if (strpos($number, '0') !== 0) {
+            $number = '0' . $number; // add leading 0 if not present
+        }
+        return $number;
     }
 }
