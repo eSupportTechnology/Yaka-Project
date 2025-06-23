@@ -59,7 +59,14 @@ class staffManagementController extends Controller
         $user = User::find($id);
         $userAds = Ads::where('created_by_staff_id', $id)->get();
         $totalAds = $userAds->count();
-        $adsDetails = DB::select("select a.cat_id, count(1) as total, c.name from ads a join categories c on c.id=a.cat_id where a.created_by_staff_id =$id group by a.cat_id order by a.cat_id ASC");
+        $adsDetails = DB::select("
+            SELECT a.cat_id, COUNT(1) AS total, c.name
+            FROM ads a
+            JOIN categories c ON c.id = a.cat_id
+            WHERE a.created_by_staff_id = ?
+            GROUP BY a.cat_id, c.name
+            ORDER BY a.cat_id ASC
+        ", [$id]);
         return view('newAdminDashboard.staffManagement.view',['user' => $user, 'totalAds' => $totalAds, 'adsDetails' => $adsDetails]);
     }
 
