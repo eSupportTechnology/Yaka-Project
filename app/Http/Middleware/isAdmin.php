@@ -16,12 +16,23 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-  
+        // Handle web requests
         if (Auth::user() && Auth::user()->isAdmin()) {
             return $next($request);
+        }
+        
+        // Handle API requests
+        if ($request->expectsJson()) {
+            if (Auth::guard('sanctum')->check() && Auth::guard('sanctum')->user()->roles === 'admin') {
+                return $next($request);
+            }
+            
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized access',
+            ], 403);
         }
     
         return redirect()->route('user.dashboard')->with('error', 'Unauthorized access');
     }
-    
 }

@@ -11,7 +11,7 @@ use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\LocattionController;
 use App\Http\Controllers\api\BrandsModelsController;
 use App\Http\Controllers\apiMobile\AdsControllerMobile;
-
+use App\Http\Controllers\apiMobile\AdminAuthController;
 use App\Http\Controllers\apiMobile\AuthControllerMobile;
 use App\Http\Controllers\apiMobile\CommonControllerMobile;
 use App\Http\Controllers\apiMobile\CategoryControllerMobile;
@@ -81,6 +81,12 @@ Route::get('/category/{categoryId}/subcategories', [subCategoriesManagementContr
 
 Route::middleware('auth:api')->group(function () {
 
+});
+
+// Admin API Authentication Routes
+Route::prefix('admin')->group(function () {
+    Route::post('/login', [AdminAuthController::class, 'login']);
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
 });
 
 /**
