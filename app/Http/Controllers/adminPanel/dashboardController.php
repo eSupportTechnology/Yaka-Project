@@ -15,7 +15,14 @@ class dashboardController extends Controller
         $user = auth()->user();
         $userAds = Ads::where('created_by_staff_id', $user->id)->get();
         $totalAds = $userAds->count();
-        $adsDetails = DB::select("select a.cat_id, count(1) as total, c.name from ads a join categories c on c.id=a.cat_id where a.created_by_staff_id =$user->id group by a.cat_id order by a.cat_id ASC");
+        $adsDetails = DB::select("
+            SELECT a.cat_id, COUNT(1) AS total, c.name
+            FROM ads a
+            JOIN categories c ON c.id = a.cat_id
+            WHERE a.created_by_staff_id = ?
+            GROUP BY a.cat_id, c.name
+            ORDER BY a.cat_id ASC
+        ", [$user->id]);
        return view('newAdminDashboard.Home', compact('totalAds', 'adsDetails'));
    }
 
