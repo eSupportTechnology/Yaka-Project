@@ -478,9 +478,15 @@
             <div class="carousel-inner">
                 @foreach ($all_banners as $key => $banner)
                     @if ($banner->type == 0)
+                        @if (isset($banner->url))
+                            <a href="{{ $banner->url }}" target="_blank">
+                        @endif
                         <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
                             <img src="{{ url('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
                         </div>
+                        @if (isset($banner->url))
+                            </a>
+                        @endif
                     @endif
                 @endforeach
             </div>
@@ -701,12 +707,18 @@
                             <div id="bannerCarousel" class="carousel slide no-animation" data-ride="carousel">
                                 <div class="carousel-inner">
                                     @foreach ($banners as $key => $banner)
+                                        @if (isset($banner->url))
+                                            <a href="{{ $banner->url }}" target="_blank">
+                                        @endif
                                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                                             <div class="banner d-flex justify-content-center">
                                                 <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
                                                     class="img-fluid banner-img">
                                             </div>
                                         </div>
+                                        @if (isset($banner->url))
+                                            </a>
+                                        @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -853,12 +865,18 @@
                                     <div id="bannerCarousel" class="carousel slide no-animation" data-ride="carousel">
                                         <div class="carousel-inner">
                                             @foreach ($banners as $key => $banner)
+                                                @if (isset($banner->url))
+                                                    <a href="{{ $banner->url }}" target="_blank">
+                                                @endif
                                                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                                                     <div class="banner d-flex justify-content-center">
                                                         <img src="{{ asset('banners/' . $banner->img) }}"
                                                             alt="Banner Image" class="img-fluid banner-img">
                                                     </div>
                                                 </div>
+                                                @if (isset($banner->url))
+                                                    </a>
+                                                @endif
                                             @endforeach
                                         </div>
                                     </div>
