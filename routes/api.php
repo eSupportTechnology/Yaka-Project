@@ -17,6 +17,7 @@ use App\Http\Controllers\apiMobile\CommonControllerMobile;
 use App\Http\Controllers\apiMobile\CategoryControllerMobile;
 use App\Http\Controllers\apiMobile\HomepageControllerMobile;
 use App\Http\Controllers\frontend\PaymentProcessingController;
+use App\Http\Controllers\adminPanel\dashboardController;
 
 
 
@@ -87,6 +88,15 @@ Route::middleware('auth:api')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::post('/login', [AdminAuthController::class, 'login']);
     Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
+    
+    
+    // Dashboard chart routes without auth middleware for testing
+    Route::get('/dashboard/users-chart', [dashboardController::class, 'fetchChartData']);
+    Route::get('/dashboard/paid-ads-chart', [dashboardController::class, 'fetchChartDataPaidAd']);
+    Route::get('/dashboard/free-ads-chart', [dashboardController::class, 'fetchChartDataFreeAd']);
+    
+    // Combined charts endpoint
+    Route::get('/dashboard/all-charts', [dashboardController::class, 'apiCharts']);
 });
 
 /**
