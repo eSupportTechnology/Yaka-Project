@@ -26,6 +26,7 @@
                                 <th>Sub Category</th>
                                 <th>District</th>
                                 <th>City</th>
+                                <th>Disapprove  Reason</th>
                                 <th>Ads Status</th>
                                 <th>Action</th>
 
@@ -41,26 +42,45 @@
                                     <td>{{ $ads->subcategory->name }}</td>
                                     <td>{{ $ads->main_location ? $ads->main_location->name_en : 'N/A' }}</td>
                                     <td>{{ $ads->sub_location ? $ads->sub_location->name_en : 'N/A' }}</td>
-
+                                    <td>{{ $ads->reason ?? 'N/A' }}</td>
                                     <td>
                                         @if($ads->status == 1)
-                                            <span  class="btn btn-inverse-success btn-fw">Approved</span>
-                                        @else
-                                            <span  class="btn btn-inverse-danger btn-fw">Disapproved</span>
+                                            <span style="background:#28A745" class="btn btn-inverse-success btn-fw">Approved</span>
+                                        @elseif($ads->status == 2)
+                                            <span style="background:#DC3545" class="btn btn-inverse-danger btn-fw">Disapproved</span>
+                                        @elseif($ads->status == 0)
+                                            <span style="background:#FFC107" class="btn btn-inverse-danger btn-fw">Pending</span>
                                         @endif
                                     </td>
                                     <td>
                                         <div class="template-demo d-flex  flex-nowrap">
-                                            
+
                                         <a href="{{ route('ads.details', [$ads->adsId]) }}" class="btn btn-view btn-sm me-2">
                                             <i class="fas fa-eye"></i>
                                         </a>
 
-                                            @if($ads->status == 1)
-                                            <a href="{{ route('dashboard.ads.status', ['status' => 'disapprove', 'id' => $ads->adsId]) }}" class="btn btn-danger btn-sm">
+                                            @if($ads->status == 0)
+                                            <a href="javascript:void(0);"
+                                                class="btn btn-danger btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#disapproveModal"
+                                                data-ad-id="{{ $ads->adsId }}">
                                                 Disapprove
                                             </a>
-                                            @else
+                                            &emsp;
+                                                <a href="{{ route('dashboard.ads.status', ['status' => 'approve', 'id' => $ads->adsId]) }}" class="btn btn-success btn-sm">
+                                                    Approve
+                                                </a>
+                                            @elseif($ads->status == 1)
+                                                <a href="javascript:void(0);"
+                                                    class="btn btn-danger btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#disapproveModal"
+                                                    data-ad-id="{{ $ads->adsId }}">
+                                                    Disapprove
+                                                </a>
+
+                                            @elseif ($ads->status == 2)
                                                 <a href="{{ route('dashboard.ads.status', ['status' => 'approve', 'id' => $ads->adsId]) }}" class="btn btn-success btn-sm">
                                                     Approve
                                                 </a>
@@ -78,4 +98,46 @@
             </div>
         </div>
     </div>
+    <!-- Disapprove Modal -->
+    <div class="modal fade" id="disapproveModal" tabindex="-1" aria-labelledby="disapproveModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <form id="disapproveForm" method="GET">
+            @csrf
+            <input type="hidden" name="ads_id" id="modal_ads_id">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="disapproveModalLabel">Disapprove Ad</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="reason" class="form-label">Reason for Disapproval</label>
+                        <textarea class="form-control" name="reason" id="reason" rows="3" required></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Submit Disapproval</button>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+    <script>
+        const disapproveModal = document.getElementById('disapproveModal');
+
+        disapproveModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const adId = button.getAttribute('data-ad-id');
+            const form = document.getElementById('disapproveForm');
+            form.querySelector('textarea[name="reason"]').value = '';
+            // Set dynamic form action
+            const action = `{{ url('/dashboard/ads/disapprove') }}/${adId}`;
+            form.setAttribute('action', action);
+        });
+    </script>
+
 @endsection

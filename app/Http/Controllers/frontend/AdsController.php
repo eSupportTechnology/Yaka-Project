@@ -281,6 +281,7 @@ class AdsController extends Controller
             ->orWhereHas('subcategory', function ($q) use ($query) {
                 $q->where('name', 'like', "%$query%");
             })
+            ->where('status', 1)
             ->get();
 
         return view('newFrontend.search-results', compact('ads')); // Adjust the view path if necessary
