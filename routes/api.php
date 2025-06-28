@@ -14,6 +14,7 @@ use App\Http\Controllers\apiMobile\AdsControllerMobile;
 use App\Http\Controllers\apiMobile\AdminAdsApiController;
 use App\Http\Controllers\apiMobile\AdminAuthController;
 use App\Http\Controllers\apiMobile\AdminCategoryApiController;
+use App\Http\Controllers\apiMobile\AdminDashboardApiController;
 use App\Http\Controllers\apiMobile\AdminUsersApiController;
 use App\Http\Controllers\apiMobile\AuthControllerMobile;
 use App\Http\Controllers\apiMobile\CommonControllerMobile;
@@ -99,6 +100,9 @@ Route::prefix('admin')->group(function () {
     
     // Combined charts endpoint
     Route::get('/dashboard/all-charts', [dashboardController::class, 'apiCharts']);
+    
+    // New admin dashboard stats endpoint for ads counts
+    Route::get('/dashboard/ads-counts', [AdminDashboardApiController::class, 'getAdsCounts']);
     
     // New admin ads management API endpoints
     Route::get('/ads-list', [AdminAdsApiController::class, 'getAdsList']);
