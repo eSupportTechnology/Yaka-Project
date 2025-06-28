@@ -11,6 +11,7 @@ use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\LocattionController;
 use App\Http\Controllers\api\BrandsModelsController;
 use App\Http\Controllers\apiMobile\AdsControllerMobile;
+use App\Http\Controllers\apiMobile\AdminAdsApiController;
 use App\Http\Controllers\apiMobile\AdminAuthController;
 use App\Http\Controllers\apiMobile\AuthControllerMobile;
 use App\Http\Controllers\apiMobile\CommonControllerMobile;
@@ -89,7 +90,6 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [AdminAuthController::class, 'login']);
     Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
     
-    
     // Dashboard chart routes without auth middleware for testing
     Route::get('/dashboard/users-chart', [dashboardController::class, 'fetchChartData']);
     Route::get('/dashboard/paid-ads-chart', [dashboardController::class, 'fetchChartDataPaidAd']);
@@ -97,6 +97,10 @@ Route::prefix('admin')->group(function () {
     
     // Combined charts endpoint
     Route::get('/dashboard/all-charts', [dashboardController::class, 'apiCharts']);
+    
+    // New admin ads management API endpoints
+    Route::get('/ads-list', [AdminAdsApiController::class, 'getAdsList']);
+    Route::post('/update-ad-status', [AdminAdsApiController::class, 'updateAdStatus']);
 });
 
 /**
