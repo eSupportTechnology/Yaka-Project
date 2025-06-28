@@ -13,6 +13,7 @@ use App\Http\Controllers\api\BrandsModelsController;
 use App\Http\Controllers\apiMobile\AdsControllerMobile;
 use App\Http\Controllers\apiMobile\AdminAdsApiController;
 use App\Http\Controllers\apiMobile\AdminAuthController;
+use App\Http\Controllers\apiMobile\AdminUsersApiController;
 use App\Http\Controllers\apiMobile\AuthControllerMobile;
 use App\Http\Controllers\apiMobile\CommonControllerMobile;
 use App\Http\Controllers\apiMobile\CategoryControllerMobile;
@@ -101,6 +102,9 @@ Route::prefix('admin')->group(function () {
     // New admin ads management API endpoints
     Route::get('/ads-list', [AdminAdsApiController::class, 'getAdsList']);
     Route::post('/update-ad-status', [AdminAdsApiController::class, 'updateAdStatus']);
+    
+    // New admin users management API endpoint
+    Route::get('/users-list', [AdminUsersApiController::class, 'getUsersList']);
 });
 
 /**
