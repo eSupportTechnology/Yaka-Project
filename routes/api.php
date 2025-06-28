@@ -108,22 +108,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/ads-list', [AdminAdsApiController::class, 'getAdsList']);
     Route::post('/update-ad-status', [AdminAdsApiController::class, 'updateAdStatus']);
     
-    // New admin users management API endpoint
-    Route::get('/users-list', [AdminUsersApiController::class, 'getUsersList']);
-    
-    // New admin users management API endpoint - specifically for admins
-    Route::get('/admins-list', [AdminUsersApiController::class, 'getAdminsList']);
-    
-    // New endpoint to create admin users
-    Route::post('/create-admin', [AdminUsersApiController::class, 'createAdmin']);
-    
-    // Admin categories management API endpoints
-    Route::get('/categories-list', [AdminCategoryApiController::class, 'getCategories']);
-    Route::post('/categories', [AdminCategoryApiController::class, 'storeCategory']);
-    
-    // New admin staff management API endpoint
-    Route::get('/staff-list', [AdminUsersApiController::class, 'getStaffList']);
-    Route::post('/create-staff', [AdminUsersApiController::class, 'createStaff']);
+    // Ad approval and disapproval endpoints
+    Route::post('/approve-ad', [AdminAdsApiController::class, 'approveAd']);
+    Route::post('/disapprove-ad', [AdminAdsApiController::class, 'disapproveAd']);
+    Route::post('/moderate-ad', [AdminAdsApiController::class, 'moderateAd']);
 });
 
 /**
