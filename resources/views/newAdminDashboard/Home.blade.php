@@ -44,6 +44,45 @@
 @endif
 @if(Auth::check() && Auth::user()->roles != 'staff')
 <div class="row">
+
+    <div class="col-md-4">
+        <div class="card text-white bg-warning mb-3 shadow rounded-4">
+          <div class="card-body d-flex align-items-center">
+            <i class="bi bi-hourglass-split me-3 fs-2"></i>
+            <div>
+              <h5 class="card-title">Pending Ads</h5>
+              <p class="card-text fs-4 fw-bold">{{ $pendingAdsCount }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Approved Ads -->
+      <div class="col-md-4">
+        <div class="card text-white bg-success mb-3 shadow rounded-4">
+          <div class="card-body d-flex align-items-center">
+            <i class="bi bi-check-circle-fill me-3 fs-2"></i>
+            <div>
+              <h5 class="card-title">Approved Ads</h5>
+              <p class="card-text fs-4 fw-bold">{{ $approvedAdsCount }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disapproved Ads -->
+      <div class="col-md-4">
+        <div class="card text-white bg-danger mb-3 shadow rounded-4">
+          <div class="card-body d-flex align-items-center">
+            <i class="bi bi-x-circle-fill me-3 fs-2"></i>
+            <div>
+              <h5 class="card-title">Disapproved Ads</h5>
+              <p class="card-text fs-4 fw-bold">{{ $disapprovedAdsCount }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     <div class="col-md-6">
         {{-- <div class="col-sm-12">
             <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>

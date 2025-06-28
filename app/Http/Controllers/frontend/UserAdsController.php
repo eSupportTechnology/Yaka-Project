@@ -315,7 +315,7 @@ class UserAdsController extends Controller
                 'sub_cat_id' => $sub_cat_id,
                 'location' => $location,
                 'sublocation' => $sublocation,
-                'status' => '0',
+                'status' => '2',
                 'experience_years' => $request->input('experience_years'),
                 'education' => $request->input('education'),
                 'application_deadline' => $request->input('application_deadline'),

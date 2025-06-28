@@ -29,19 +29,27 @@ class adsManagementController extends Controller
     }
 
 
-    public function status($status, $id)
+    public function status($status, $id, Request $request)
     {
         $ads = Ads::where('adsId', $id)->firstOrFail();
-        $ads->status = $status === 'disapprove' ? 0 : 1;
+        $ads->status = $status === 'disapprove' ? 2 : 1;
         $ads->save();
         try {
             $adsUser = User::where('id', $ads->user_id)->first();
             if($status !== 'disapprove') {
-                $adUrl = "https://yaka.lk/browse_ads_details/".$ads->adsId;
-                $message = "We've posted your ad for FREE on YAKA.LK!\nYour ad is now live: ".$adUrl."\nContact: 0705321321";
-                OtpService::sendSingleSms($adsUser->phone_number, $message);
-            }
+                $adUrl = env('APP_URL')."/browse_ads_details/".$ads->adsId;
+                if($adsUser->created_by == 2) {
+                    $message = "We've posted your ad for FREE on YAKA.LK!\nYour ad is now live: ".$adUrl."\nContact: 0705321321";
+                } else {
+                    $message = "We've approved your ad on YAKA.LK!\nYour ad is now live: ".$adUrl."\nContact: 0705321321";
+                }
 
+            } else {
+                $ads->reason = $request->query('reason');
+                $ads->save();
+                $message = "Your ad has been disapproved due to: ". $request->query('reason') .".Please review and submit again.\nContact: 0705321321";
+            }
+            OtpService::sendSingleSms($adsUser->phone_number, $message);
         } catch (\Exception $e) {
             Log::info($e);
         }
