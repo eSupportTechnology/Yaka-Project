@@ -116,6 +116,9 @@ Route::prefix('admin')->group(function () {
     // Admin categories management API endpoints
     Route::get('/categories-list', [AdminCategoryApiController::class, 'getCategories']);
     Route::post('/categories', [AdminCategoryApiController::class, 'storeCategory']);
+    
+    // New admin staff management API endpoint
+    Route::get('/staff-list', [AdminUsersApiController::class, 'getStaffList']);
 });
 
 /**

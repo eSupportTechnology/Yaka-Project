@@ -210,4 +210,65 @@ class AdminUsersApiController extends Controller
             );
         }
     }
+
+    /**
+     * Get staff list with optional filtering and pagination
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getStaffList(Request $request)
+    {
+        try {
+            // Get filter parameters
+            $search = $request->get('search');
+            $status = $request->get('status');
+            
+            // Start building the query - specifically for staff users
+            $staffQuery = User::query()->where('roles', 'staff');
+            
+            // Apply search filter if provided
+            if (!empty($search)) {
+                $staffQuery->where(function ($query) use ($search) {
+                    $query->where('first_name', 'like', '%' . $search . '%')
+                          ->orWhere('last_name', 'like', '%' . $search . '%')
+                          ->orWhere('phone_number', 'like', '%' . $search . '%')
+                          ->orWhere('email', 'like', '%' . $search . '%');
+                });
+            }
+            
+            // Filter by status if provided
+            if (isset($status) && $status !== '') {
+                $staffQuery->where('status', $status);
+            }
+            
+            // Order by latest (newest first)
+            $staffQuery->orderBy('created_at', 'desc');
+            
+            // Paginate results
+            $perPage = $request->get('per_page', 10);
+            $page = $request->get('page', 1);
+            
+            $staffData = $staffQuery->paginate($perPage, ['*'], 'page', $page);
+            
+            // Remove sensitive information from staff data
+            $staff = $staffData->map(function ($staffMember) {
+                return $staffMember->makeHidden(['password', 'remember_token']);
+            });
+            
+            return $this->apiResponse->success([
+                'staff' => $staff->values(),
+                'pagination' => [
+                    'total' => $staffData->total(),
+                    'per_page' => $staffData->perPage(),
+                    'current_page' => $staffData->currentPage(),
+                    'last_page' => $staffData->lastPage()
+                ]
+            ], 'Staff list fetched successfully');
+            
+        } catch (\Exception $e) {
+            Log::error('Error fetching staff list: ' . $e->getMessage());
+            return $this->apiResponse->error($e->getMessage(), 'Failed to fetch staff list', 500);
+        }
+    }
 }
