@@ -110,6 +110,9 @@ Route::prefix('admin')->group(function () {
     // New admin users management API endpoint - specifically for admins
     Route::get('/admins-list', [AdminUsersApiController::class, 'getAdminsList']);
     
+    // New endpoint to create admin users
+    Route::post('/create-admin', [AdminUsersApiController::class, 'createAdmin']);
+    
     // Admin categories management API endpoints
     Route::get('/categories-list', [AdminCategoryApiController::class, 'getCategories']);
     Route::post('/categories', [AdminCategoryApiController::class, 'storeCategory']);

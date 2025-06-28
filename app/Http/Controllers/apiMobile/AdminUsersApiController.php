@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Services\ApiResponseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminUsersApiController extends Controller
 {
@@ -140,6 +142,72 @@ class AdminUsersApiController extends Controller
         } catch (\Exception $e) {
             Log::error('Error fetching admin list: ' . $e->getMessage());
             return $this->apiResponse->error($e->getMessage(), 'Failed to fetch admin list', 500);
+        }
+    }
+
+    /**
+     * Create a new admin user
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createAdmin(Request $request)
+    {
+        try {
+            // Validate incoming request
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'phone_number' => 'required|string|unique:users,phone_number',
+                'email' => 'nullable|email|unique:users,email',
+                'password' => 'required|string|min:8',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiResponse->error(
+                    $validator->errors(),
+                    'Validation failed',
+                    422
+                );
+            }
+
+            // Generate a URL based on first and last name
+            $url = strtolower($request->first_name . '-' . $request->last_name);
+            $url = preg_replace('/[^a-z0-9\-]/', '', $url);
+            $url = preg_replace('/-+/', '-', $url);
+
+            // Create new admin user
+            $user = new User();
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->phone_number = $request->phone_number;
+            $user->email = $request->email ?? null;
+            $user->roles = 'admin';
+            $user->url = $url;
+            $user->status = 1;
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            // Remove sensitive information before returning
+            $userData = $user->makeHidden(['password', 'remember_token']);
+            
+            Log::info('Admin user created via API', ['admin_id' => $user->id]);
+            
+            return $this->apiResponse->success(
+                $userData,
+                'Admin user created successfully'
+            );
+            
+        } catch (\Exception $e) {
+            Log::error('Error creating admin user via API: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return $this->apiResponse->error(
+                $e->getMessage(),
+                'Failed to create admin user',
+                500
+            );
         }
     }
 }
