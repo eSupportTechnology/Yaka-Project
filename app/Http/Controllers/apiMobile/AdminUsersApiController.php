@@ -81,4 +81,65 @@ class AdminUsersApiController extends Controller
             return $this->apiResponse->error($e->getMessage(), 'Failed to fetch users list', 500);
         }
     }
+
+    /**
+     * Get admins list with optional filtering and pagination
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAdminsList(Request $request)
+    {
+        try {
+            // Get filter parameters
+            $search = $request->get('search');
+            $status = $request->get('status');
+            
+            // Start building the query - specifically for admin users
+            $adminsQuery = User::query()->where('roles', 'admin');
+            
+            // Apply search filter if provided
+            if (!empty($search)) {
+                $adminsQuery->where(function ($query) use ($search) {
+                    $query->where('first_name', 'like', '%' . $search . '%')
+                          ->orWhere('last_name', 'like', '%' . $search . '%')
+                          ->orWhere('phone_number', 'like', '%' . $search . '%')
+                          ->orWhere('email', 'like', '%' . $search . '%');
+                });
+            }
+            
+            // Filter by status if provided
+            if (isset($status) && $status !== '') {
+                $adminsQuery->where('status', $status);
+            }
+            
+            // Order by latest (newest first)
+            $adminsQuery->orderBy('created_at', 'desc');
+            
+            // Paginate results
+            $perPage = $request->get('per_page', 10);
+            $page = $request->get('page', 1);
+            
+            $adminData = $adminsQuery->paginate($perPage, ['*'], 'page', $page);
+            
+            // Remove sensitive information from admin data
+            $admins = $adminData->map(function ($admin) {
+                return $admin->makeHidden(['password', 'remember_token']);
+            });
+            
+            return $this->apiResponse->success([
+                'admins' => $admins->values(),
+                'pagination' => [
+                    'total' => $adminData->total(),
+                    'per_page' => $adminData->perPage(),
+                    'current_page' => $adminData->currentPage(),
+                    'last_page' => $adminData->lastPage()
+                ]
+            ], 'Admin list fetched successfully');
+            
+        } catch (\Exception $e) {
+            Log::error('Error fetching admin list: ' . $e->getMessage());
+            return $this->apiResponse->error($e->getMessage(), 'Failed to fetch admin list', 500);
+        }
+    }
 }
