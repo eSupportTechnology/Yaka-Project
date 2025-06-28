@@ -38,6 +38,7 @@ class Ads extends Model
         'bump_up_at',
         'condition',
         'status',
+        'disapproval_reason',         // <-- Add this
         'rotation_position',
         'last_rotated_at',
         'experience_years',         // <-- Add this

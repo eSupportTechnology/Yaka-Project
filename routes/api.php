@@ -101,6 +101,14 @@ Route::prefix('admin')->group(function () {
     // New admin ads management API endpoints
     Route::get('/ads-list', [AdminAdsApiController::class, 'getAdsList']);
     Route::post('/update-ad-status', [AdminAdsApiController::class, 'updateAdStatus']);
+    
+    // New endpoint for approving ads
+    Route::post('/approve-ad', [AdminAdsApiController::class, 'approveAd']);
+    
+    // New endpoint for disapproving ads with reason
+    Route::post('/disapprove-ad', [AdminAdsApiController::class, 'disapproveAd']);
+    
+
 });
 
 /**
