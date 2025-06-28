@@ -271,17 +271,19 @@ class AdsController extends Controller
         }
 
         $ads = Ads::with(['category', 'subcategory', 'main_location'])
-            ->where(function ($q) use ($query) {
-                $q->where('title', 'like', "%$query%")
-                    ->orWhere('description', 'like', "%$query%");
-            })
-            ->orWhereHas('category', function ($q) use ($query) {
-                $q->where('name', 'like', "%$query%");
-            })
-            ->orWhereHas('subcategory', function ($q) use ($query) {
-                $q->where('name', 'like', "%$query%");
-            })
-            ->get();
+                ->where(function ($q) use ($query) {
+                    $q->where('title', 'like', "%$query%")
+                    ->orWhere('description', 'like', "%$query%")
+                    ->orWhereHas('category', function ($q) use ($query) {
+                        $q->where('name', 'like', "%$query%");
+                    })
+                    ->orWhereHas('subcategory', function ($q) use ($query) {
+                        $q->where('name', 'like', "%$query%");
+                    });
+                })
+                ->where('status', '1') // this now applies to the whole group
+                ->get();
+
 
         return view('newFrontend.search-results', compact('ads')); // Adjust the view path if necessary
     }
