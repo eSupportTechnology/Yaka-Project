@@ -23,7 +23,12 @@ class dashboardController extends Controller
             GROUP BY a.cat_id, c.name
             ORDER BY a.cat_id ASC
         ", [$user->id]);
-       return view('newAdminDashboard.Home', compact('totalAds', 'adsDetails'));
+
+        $pendingAdsCount = Ads::where('status', 0)->get()->count();
+        $approvedAdsCount = Ads::where('status', 1)->get()->count();
+        $disapprovedAdsCount = Ads::where('status', 2)->get()->count();
+
+       return view('newAdminDashboard.Home', compact('totalAds', 'adsDetails', 'pendingAdsCount', 'approvedAdsCount', 'disapprovedAdsCount'));
    }
 
    public function fetchChartData()
