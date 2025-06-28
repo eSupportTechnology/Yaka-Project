@@ -122,7 +122,11 @@ Route::prefix('admin')->group(function () {
     Route::post('/categories', [AdminCategoryApiController::class, 'storeCategory']);
     
     // New admin staff management API endpoint
+   
+   
     Route::get('/staff-list', [AdminUsersApiController::class, 'getStaffList']);
+    
+    
     Route::post('/create-staff', [AdminUsersApiController::class, 'createStaff']);
 });
 
