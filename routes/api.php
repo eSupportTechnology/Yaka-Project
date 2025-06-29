@@ -14,6 +14,7 @@ use App\Http\Controllers\apiMobile\AdsControllerMobile;
 use App\Http\Controllers\apiMobile\AdminAdsApiController;
 use App\Http\Controllers\apiMobile\AdminApprovalApiController;
 use App\Http\Controllers\apiMobile\AdminAuthController;
+use App\Http\Controllers\apiMobile\AdminBannerApiController;
 use App\Http\Controllers\apiMobile\AdminCategoryApiController;
 use App\Http\Controllers\apiMobile\AdminDashboardApiController;
 use App\Http\Controllers\apiMobile\AdminUsersApiController;
@@ -135,6 +136,9 @@ Route::prefix('admin')->group(function () {
     
     // New ad disapproval endpoint
     Route::post('/disapprove-ad', [App\Http\Controllers\apiMobile\AdminDisapprovalApiController::class, 'disapproveAd']);
+    
+    // New admin banner management API endpoint
+    Route::get('/banners-list', [AdminBannerApiController::class, 'getBannersList']);
 });
 
 /**
