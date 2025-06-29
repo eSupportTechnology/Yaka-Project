@@ -132,6 +132,9 @@ Route::prefix('admin')->group(function () {
     
     // New ad approval endpoint
     Route::post('/approve-ad', [AdminApprovalApiController::class, 'approveAd']);
+    
+    // New ad disapproval endpoint
+    Route::post('/disapprove-ad', [App\Http\Controllers\apiMobile\AdminDisapprovalApiController::class, 'disapproveAd']);
 });
 
 /**
