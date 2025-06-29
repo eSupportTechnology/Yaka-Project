@@ -16,6 +16,7 @@ use App\Http\Controllers\apiMobile\AdminApprovalApiController;
 use App\Http\Controllers\apiMobile\AdminAuthController;
 use App\Http\Controllers\apiMobile\AdminBannerApiController;
 use App\Http\Controllers\apiMobile\AdminBannerCreationController;
+use App\Http\Controllers\apiMobile\AdminBannerPackageApiController;
 use App\Http\Controllers\apiMobile\AdminCategoryApiController;
 use App\Http\Controllers\apiMobile\AdminDashboardApiController;
 use App\Http\Controllers\apiMobile\AdminUsersApiController;
@@ -143,6 +144,9 @@ Route::prefix('admin')->group(function () {
     
     // New admin banner creation endpoint
     Route::post('/create-banner', [AdminBannerCreationController::class, 'createBanner']);
+    
+    // New admin banner packages management API endpoint
+    Route::get('/banner-packages-list', [AdminBannerPackageApiController::class, 'getBannerPackagesList']);
 });
 
 /**
