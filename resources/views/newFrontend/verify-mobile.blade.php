@@ -54,7 +54,15 @@
 
 
             <div class="tab-pane active" id="register-tab">
-                @if ($errors->any())
+
+
+
+    <!-- Verify Section -->
+    <section class="login-section bg-color-2">
+        <div class="auto-container">
+            <div class="inner-container">
+                <div class="inner-box">
+                    @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul class="mb-0">
                             @foreach ($errors->all() as $error)
@@ -64,24 +72,17 @@
                     </div>
                 @endif
 
-                @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-
-    <!-- Verify Section -->
-    <section class="login-section bg-color-2">
-        <div class="auto-container">
-            <div class="inner-container">
-                <div class="inner-box">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <h2>Verify Mobile</h2>
                     <form action="{{ route('verify-mobile.send-code') }}" method="POST" class="login-form">
                         @csrf

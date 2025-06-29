@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Ads;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -33,6 +34,18 @@ class RegisteredUserController extends Controller
      public function store(Request $request): RedirectResponse
      {
          try {
+            // Checking for staff created accounts
+            $previousUsers = User::where('phone_number', $request->phone_number)
+                     ->where('created_by', 2)
+                     ->get();
+
+            if ($previousUsers->count() > 0) {
+                foreach ($previousUsers as $user) {
+                    Ads::where('user_id', $user->id)->delete();
+                    $user->delete();
+                }
+            }
+
              // Add custom validation rules
              $request->validate([
                  'first_name' => ['required', 'string', 'max:255'],
@@ -64,7 +77,6 @@ class RegisteredUserController extends Controller
 
             //  event(new Registered($user));
 
-             Auth::login($user);
 
              // Redirect to the correct login route
              return redirect()->route('verify-mobile')->with('success', 'Registration completed. Enter your Mobile number again for verify mobile');

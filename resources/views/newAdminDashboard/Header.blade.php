@@ -9,7 +9,7 @@
                 $pendingads = \App\Models\Ads::where('status',0)->with('user')->orderBy('created_at', 'DESC')->get();
                 $pendingads_count = count($pendingads);
             @endphp
-            @if(Auth::check() && Auth::user()->roles == 'staff')
+            {{-- @if(Auth::check() && Auth::user()->roles == 'staff')
             <li class="nav-item dropdown">
                  <a class="nav-link btn-icon dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="material-icons md-notifications animation-shake"></i>
@@ -35,7 +35,7 @@
                     @endforeach
                 </div>
             </li>
-            @endif
+            @endif --}}
 
            <li class="nav-item">
                 <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>

@@ -55,35 +55,36 @@
 
             <div class="tab-pane active" id="register-tab">
 
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
 
-                @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
-                @if ($errors->has('phone_number') || $errors->has('password'))
-                    <div class="alert alert-danger">
-                        Invalid phone number or password. Please try again.
-                    </div>
-                @endif
-
-                @if (session('active_error'))
-                    <div class="alert alert-danger">
-                        {{ session('active_error') }} <a href="{{ route('verify-mobile') }}">Verify</a>
-                    </div>
-                @endif
 
     <!-- Login Section -->
     <section class="login-section bg-color-2">
         <div class="auto-container">
             <div class="inner-container">
                 <div class="inner-box">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if ($errors->has('phone_number') || $errors->has('password'))
+                        <div class="alert alert-danger">
+                            Invalid phone number or password. Please try again.
+                        </div>
+                    @endif
+
+                    @if (session('active_error'))
+                        <div class="alert alert-danger">
+                            {{ session('active_error') }} <a href="{{ route('verify-mobile') }}">Verify</a>
+                        </div>
+                    @endif
                     <h2>Log in</h2>
                     <form action="{{ route('custom.login') }}" method="POST" class="login-form">
                         @csrf

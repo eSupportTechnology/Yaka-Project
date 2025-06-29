@@ -110,7 +110,7 @@ class CustomAuthController extends Controller
             $user->is_mobile_verifed = 1;
             $user->save();
 
-            return redirect()->route('user.login')->with('success', 'Mobile Verification Completed.');
+            return redirect()->route('user.login')->with('success', 'Mobile Verification Completed.Please Login Now');
         } catch (\Exception $e) {
             // Log the error details
             Log::error('Error during sending verification code', [
