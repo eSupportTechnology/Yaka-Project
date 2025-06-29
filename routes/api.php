@@ -150,6 +150,10 @@ Route::prefix('admin')->group(function () {
     
     // New admin banner package creation endpoint
     Route::post('/create-banner-package', [App\Http\Controllers\apiMobile\AdminBannerPackageCreateController::class, 'createBannerPackage']);
+    
+    // New admin brands management API endpoints
+    Route::get('/brands-list', [App\Http\Controllers\apiMobile\AdminBrandApiController::class, 'getBrandsList']);
+    Route::get('/brands/{brandId}/models', [App\Http\Controllers\apiMobile\AdminBrandApiController::class, 'getBrandModels']);
 });
 
 /**
