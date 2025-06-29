@@ -19,6 +19,7 @@ use App\Http\Controllers\apiMobile\AdminBannerCreationController;
 use App\Http\Controllers\apiMobile\AdminBannerPackageApiController;
 use App\Http\Controllers\apiMobile\AdminCategoryApiController;
 use App\Http\Controllers\apiMobile\AdminDashboardApiController;
+use App\Http\Controllers\apiMobile\AdminTypeApiController;
 use App\Http\Controllers\apiMobile\AdminUsersApiController;
 use App\Http\Controllers\apiMobile\AuthControllerMobile;
 use App\Http\Controllers\apiMobile\CommonControllerMobile;
@@ -157,6 +158,9 @@ Route::prefix('admin')->group(function () {
     
     // New admin packages management API endpoint
     Route::get('/packages-list', [App\Http\Controllers\apiMobile\AdminPackageApiController::class, 'getPackagesList']);
+    
+    // New admin types management API endpoint
+    Route::get('/types-list', [AdminTypeApiController::class, 'getTypesList']);
 });
 
 /**
