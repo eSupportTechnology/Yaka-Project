@@ -12,6 +12,7 @@ use App\Http\Controllers\api\LocattionController;
 use App\Http\Controllers\api\BrandsModelsController;
 use App\Http\Controllers\apiMobile\AdsControllerMobile;
 use App\Http\Controllers\apiMobile\AdminAdsApiController;
+use App\Http\Controllers\apiMobile\AdminApprovalApiController;
 use App\Http\Controllers\apiMobile\AdminAuthController;
 use App\Http\Controllers\apiMobile\AdminCategoryApiController;
 use App\Http\Controllers\apiMobile\AdminDashboardApiController;
@@ -128,6 +129,9 @@ Route::prefix('admin')->group(function () {
     
     
     Route::post('/create-staff', [AdminUsersApiController::class, 'createStaff']);
+    
+    // New ad approval endpoint
+    Route::post('/approve-ad', [AdminApprovalApiController::class, 'approveAd']);
 });
 
 /**
