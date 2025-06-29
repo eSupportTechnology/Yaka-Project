@@ -147,6 +147,9 @@ Route::prefix('admin')->group(function () {
     
     // New admin banner packages management API endpoint
     Route::get('/banner-packages-list', [AdminBannerPackageApiController::class, 'getBannerPackagesList']);
+    
+    // New admin banner package creation endpoint
+    Route::post('/create-banner-package', [App\Http\Controllers\apiMobile\AdminBannerPackageCreateController::class, 'createBannerPackage']);
 });
 
 /**
