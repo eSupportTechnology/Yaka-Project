@@ -154,6 +154,9 @@ Route::prefix('admin')->group(function () {
     // New admin brands management API endpoints
     Route::get('/brands-list', [App\Http\Controllers\apiMobile\AdminBrandApiController::class, 'getBrandsList']);
     Route::get('/brands/{brandId}/models', [App\Http\Controllers\apiMobile\AdminBrandApiController::class, 'getBrandModels']);
+    
+    // New admin packages management API endpoint
+    Route::get('/packages-list', [App\Http\Controllers\apiMobile\AdminPackageApiController::class, 'getPackagesList']);
 });
 
 /**
