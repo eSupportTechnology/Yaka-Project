@@ -58,13 +58,25 @@ class AdminCategoryApiController extends Controller
             
             $categoryData = $categoryQuery->paginate($perPage, ['*'], 'page', $page);
             
-            // If we're fetching main categories, also include their subcategories count
-            if ($mainCategoryOnly) {
-                $categoryData->getCollection()->transform(function ($category) {
+            // Transform categories to include image_url
+            $categoryData->getCollection()->transform(function ($category) {
+                // Determine image path based on whether it's a main category or subcategory
+                $imagePath = $category->mainId == 0 ? 'images/Category/' : 'images/SubCategory/';
+                
+                // Add image_url if image exists
+                if ($category->image) {
+                    $category->image_url = "https://yakalk.esupportsystem.shop/" . $imagePath . $category->image;
+                } else {
+                    $category->image_url = null;
+                }
+                
+                // If it's a main category, add subcategories count
+                if ($category->mainId == 0) {
                     $category->subcategories_count = Category::where('mainId', $category->id)->count();
-                    return $category;
-                });
-            }
+                }
+                
+                return $category;
+            });
             
             return $this->apiResponse->success([
                 'categories' => $categoryData->items(),
