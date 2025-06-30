@@ -107,4 +107,72 @@ class dashboardController extends Controller
             'data' => $data
         ]);
    }
+   
+   /**
+    * API endpoint to fetch all dashboard chart data
+    * 
+    * @return \Illuminate\Http\JsonResponse
+    */
+   public function apiCharts()
+   {
+        // Get users registration data
+        $usersData = User::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+                    ->whereYear('created_at', date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month')
+                    ->get();
+        
+        // Get paid ads data
+        $paidAdsData = Ads::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+                    ->whereYear('created_at', date('Y'))
+                    ->where('ads_package', '!=', 0)
+                    ->groupBy('month')
+                    ->orderBy('month')
+                    ->get();
+        
+        // Get free ads data
+        $freeAdsData = Ads::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+                    ->whereYear('created_at', date('Y'))
+                    ->where('ads_package', '=', 0)
+                    ->groupBy('month')
+                    ->orderBy('month')
+                    ->get();
+        
+        $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        $usersChartData = $this->formatChartData($usersData, $months);
+        $paidAdsChartData = $this->formatChartData($paidAdsData, $months);
+        $freeAdsChartData = $this->formatChartData($freeAdsData, $months);
+        
+        return response()->json([
+            'users' => $usersChartData,
+            'paid_ads' => $paidAdsChartData,
+            'free_ads' => $freeAdsChartData
+        ]);
+   }
+   
+   /**
+    * Helper function to format chart data
+    * 
+    * @param \Illuminate\Support\Collection $data
+    * @param array $months
+    * @return array
+    */
+   private function formatChartData($data, $months)
+   {
+        $labels = [];
+        $chartData = [];
+        
+        for ($i = 1; $i <= 12; $i++) {
+            $labels[] = $months[$i - 1];
+            $count = $data->firstWhere('month', $i)?->count ?? 0;
+            $chartData[] = $count;
+        }
+        
+        return [
+            'labels' => $labels,
+            'data' => $chartData
+        ];
+   }
 }
