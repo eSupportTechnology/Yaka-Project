@@ -18,7 +18,7 @@ class AdminCategoryApiController extends Controller
     }
 
     /**
-     * Get categories list with optional filtering and pagination
+     * Get main categories list with optional filtering and pagination
      * 
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -27,17 +27,15 @@ class AdminCategoryApiController extends Controller
     {
         try {
             // Get filter parameters
-            $mainCategoryOnly = $request->boolean('main_only', false);
+            // $mainCategoryOnly parameter is no longer needed as we always fetch main categories
             $search = $request->get('search');
             $status = $request->get('status');
             
             // Start building the query
             $categoryQuery = Category::query();
             
-            // Filter by main categories or include subcategories
-            if ($mainCategoryOnly) {
-                $categoryQuery->where('mainId', 0);
-            }
+            // Always filter for main categories only (where mainId = 0)
+            $categoryQuery->where('mainId', 0);
             
             // Apply search filter if provided
             if (!empty($search)) {
@@ -60,8 +58,8 @@ class AdminCategoryApiController extends Controller
             
             // Transform categories to include image_url
             $categoryData->getCollection()->transform(function ($category) {
-                // Determine image path based on whether it's a main category or subcategory
-                $imagePath = $category->mainId == 0 ? 'images/Category/' : 'images/SubCategory/';
+                // For main categories, the image path is always Category
+                $imagePath = 'images/Category/';
                 
                 // Add image_url if image exists
                 if ($category->image) {
@@ -70,10 +68,8 @@ class AdminCategoryApiController extends Controller
                     $category->image_url = null;
                 }
                 
-                // If it's a main category, add subcategories count
-                if ($category->mainId == 0) {
-                    $category->subcategories_count = Category::where('mainId', $category->id)->count();
-                }
+                // Add subcategories count for each main category
+                $category->subcategories_count = Category::where('mainId', $category->id)->count();
                 
                 return $category;
             });
@@ -146,7 +142,7 @@ class AdminCategoryApiController extends Controller
             
         } catch (\Exception $e) {
             Log::error('Error creating category: ' . $e->getMessage());
-            return $this->apiResponse->error($e->getMessage(), 'Failed to create category', 500);
-        }
+        return $this->apiResponse->error($e->getMessage(), 'Failed to create category', 500);
     }
 }
+        }
