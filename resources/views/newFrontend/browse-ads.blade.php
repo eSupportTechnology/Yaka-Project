@@ -455,6 +455,33 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+        .pagination li {
+            display: inline-block;
+            margin: 2px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            width: 40px;
+            height: 40px;
+            line-height: 30px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .pagination li.current {
+            background-color: #B00505;
+            color: white;
+            font-weight: bold;
+        }
+        .pagination li a {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+        }
+        .pagination li.disabled span,
+        .pagination li.disabled a {
+            color: #aaa;
+            pointer-events: none;
+        }
+
     </style>
 
 
@@ -992,28 +1019,55 @@
                     </div>
 
                     <!-- Pagination -->
+                    @php
+                        $current = $ads->currentPage();
+                        $last = $ads->lastPage();
+                        $start = max(1, $current - 2);
+                        $end = min($last, $current + 2);
+                        $query = request()->query();
+                        unset($query['page']);
+                    @endphp
+
                     <div class="pagination-wrapper centred">
                         <ul class="clearfix pagination">
+
+                            {{-- Prev --}}
                             @if ($ads->onFirstPage())
                                 <li class="disabled"><a href="#"><i class="fas fa-angle-left"></i>Prev</a></li>
                             @else
-                                <li><a href="{{ $ads->appends(request()->query())->previousPageUrl() }}"><i
-                                            class="fas fa-angle-left"></i>Prev</a></li>
+                                <li><a href="{{ $ads->appends($query)->previousPageUrl() }}"><i class="fas fa-angle-left"></i>Prev</a></li>
                             @endif
 
-                            @foreach ($ads->getUrlRange(1, $ads->lastPage()) as $page => $url)
-                                <li class="{{ $page == $ads->currentPage() ? 'current' : '' }}">
-                                    <a
-                                        href="{{ $url . (strpos($url, '?') === false ? '?' : '&') . http_build_query(request()->query()) }}">{{ $page }}</a>
-                                </li>
-                            @endforeach
+                            {{-- First page + Ellipsis --}}
+                            @if ($start > 1)
+                                <li><a href="{{ $ads->url(1) }}">1</a></li>
+                                @if ($start > 2)
+                                    <li class="disabled"><span>...</span></li>
+                                @endif
+                            @endif
 
+                            {{-- Page numbers (current window) --}}
+                            @for ($i = $start; $i <= $end; $i++)
+                                <li class="{{ $i == $current ? 'current' : '' }}">
+                                    <a href="{{ $ads->appends($query)->url($i) }}">{{ $i }}</a>
+                                </li>
+                            @endfor
+
+                            {{-- Last page + Ellipsis --}}
+                            @if ($end < $last)
+                                @if ($end < $last - 1)
+                                    <li class="disabled"><span>...</span></li>
+                                @endif
+                                <li><a href="{{ $ads->url($last) }}">{{ $last }}</a></li>
+                            @endif
+
+                            {{-- Next --}}
                             @if ($ads->hasMorePages())
-                                <li><a href="{{ $ads->appends(request()->query())->nextPageUrl() }}">Next<i
-                                            class="fas fa-angle-right"></i></a></li>
+                                <li><a href="{{ $ads->appends($query)->nextPageUrl() }}">Next<i class="fas fa-angle-right"></i></a></li>
                             @else
                                 <li class="disabled"><a href="#">Next<i class="fas fa-angle-right"></i></a></li>
                             @endif
+
                         </ul>
                     </div>
 
