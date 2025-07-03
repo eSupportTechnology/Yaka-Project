@@ -1004,7 +1004,7 @@
                             @foreach ($ads->getUrlRange(1, $ads->lastPage()) as $page => $url)
                                 <li class="{{ $page == $ads->currentPage() ? 'current' : '' }}">
                                     <a
-                                        href="{{ $url }}">{{ $page }}</a>
+                                        href="{{ $url . (strpos($url, '?') === false ? '?' : '&') . http_build_query(request()->query()) }}">{{ $page }}</a>
                                 </li>
                             @endforeach
 
