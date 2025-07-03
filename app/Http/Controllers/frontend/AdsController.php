@@ -131,7 +131,7 @@ class AdsController extends Controller
         // ads_package = 0 (normal ads)
         $ads = $ads->merge(
             $applyFilters((clone $baseQuery)->where('ads_package', 0))
-                ->orderBy('updated_at', 'desc')
+                ->orderBy('created_at', 'desc')
                 ->get()
         );
 
