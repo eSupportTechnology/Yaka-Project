@@ -455,32 +455,52 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        .pagination li {
-            display: inline-block;
-            margin: 2px;
-            border-radius: 50%;
-            border: 1px solid #ddd;
-            width: 40px;
-            height: 40px;
-            line-height: 30px;
-            text-align: center;
-            transition: 0.3s;
+        .pagination {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px 0;
         }
-        .pagination li.current {
-            background-color: #B00505;
+
+        .pagination li {
+            list-style: none;
+        }
+
+        .pagination li a,
+        .pagination li span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background-color: white;
+        }
+
+        .pagination li a:hover {
+            border-color: #aaa;
+            color: #000;
+        }
+
+        .pagination li.current a,
+        .pagination li.current span {
+            background-color: #b30000;
             color: white;
             font-weight: bold;
+            border-color: transparent;
         }
-        .pagination li a {
-            display: block;
-            color: inherit;
-            text-decoration: none;
-        }
-        .pagination li.disabled span,
-        .pagination li.disabled a {
-            color: #aaa;
+
+        .pagination li.disabled a,
+        .pagination li.disabled span {
             pointer-events: none;
         }
+
+
 
     </style>
 
@@ -1033,43 +1053,44 @@
 
                             {{-- Prev --}}
                             @if ($ads->onFirstPage())
-                                <li class="disabled"><a href="#"><i class="fas fa-angle-left"></i>Prev</a></li>
+                                <li class="disabled"><span><i class="fas fa-angle-left"></i> Prev</span></li>
                             @else
-                                <li><a href="{{ $ads->appends($query)->previousPageUrl() }}"><i class="fas fa-angle-left"></i>Prev</a></li>
+                                <li><a href="{{ $ads->appends($query)->previousPageUrl() }}"><i class="fas fa-angle-left"></i> Prev</a></li>
                             @endif
 
-                            {{-- First page + Ellipsis --}}
+                            {{-- First Page --}}
                             @if ($start > 1)
                                 <li><a href="{{ $ads->url(1) }}">1</a></li>
                                 @if ($start > 2)
-                                    <li class="disabled"><span>...</span></li>
+                                    <li class="disabled"><span>…</span></li>
                                 @endif
                             @endif
 
-                            {{-- Page numbers (current window) --}}
+                            {{-- Windowed Page Numbers --}}
                             @for ($i = $start; $i <= $end; $i++)
                                 <li class="{{ $i == $current ? 'current' : '' }}">
                                     <a href="{{ $ads->appends($query)->url($i) }}">{{ $i }}</a>
                                 </li>
                             @endfor
 
-                            {{-- Last page + Ellipsis --}}
+                            {{-- Last Page --}}
                             @if ($end < $last)
                                 @if ($end < $last - 1)
-                                    <li class="disabled"><span>...</span></li>
+                                    <li class="disabled"><span>…</span></li>
                                 @endif
                                 <li><a href="{{ $ads->url($last) }}">{{ $last }}</a></li>
                             @endif
 
                             {{-- Next --}}
                             @if ($ads->hasMorePages())
-                                <li><a href="{{ $ads->appends($query)->nextPageUrl() }}">Next<i class="fas fa-angle-right"></i></a></li>
+                                <li><a href="{{ $ads->appends($query)->nextPageUrl() }}">Next <i class="fas fa-angle-right"></i></a></li>
                             @else
-                                <li class="disabled"><a href="#">Next<i class="fas fa-angle-right"></i></a></li>
+                                <li class="disabled"><span>Next <i class="fas fa-angle-right"></i></span></li>
                             @endif
 
                         </ul>
                     </div>
+
 
 
 
