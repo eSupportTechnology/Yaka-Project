@@ -11,6 +11,7 @@
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
+    <meta name="google-adsense-account" content="ca-pub-1349383843692439">
     <!-- Favicon -->
 
     <link rel="icon" href="{{ asset('Logo-icon.png') }}" type="image/x-icon">
