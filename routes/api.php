@@ -159,6 +159,9 @@ Route::prefix('admin')->group(function () {
         
         // Admin types management API endpoint
         Route::get('/types-list', [AdminTypeApiController::class, 'getTypesList']);
+        
+        // New endpoint for creating types
+        Route::post('/create-type', [AdminTypeApiController::class, 'createType']);
     });
 });
 
