@@ -162,6 +162,7 @@ Route::prefix('admin')->group(function () {
         
         // New endpoint for creating types
         Route::post('/create-type', [AdminTypeApiController::class, 'createType']);
+         Route::put('/update-staff', [AdminUsersApiController::class, 'updateStaff']);
     });
 });
 
