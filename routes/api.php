@@ -120,6 +120,7 @@ Route::prefix('admin')->group(function () {
     // New admin staff management API endpoint
     Route::get('/staff-list', [AdminUsersApiController::class, 'getStaffList']);
     Route::post('/create-staff', [AdminUsersApiController::class, 'createStaff']);
+    Route::put('/update-staff', [AdminUsersApiController::class, 'updateStaff']); // New route for updating staff
 });
 
 /**
