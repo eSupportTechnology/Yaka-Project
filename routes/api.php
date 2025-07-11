@@ -131,6 +131,9 @@ Route::prefix('admin')->group(function () {
         // Admin staff management API endpoint
         Route::get('/staff-list', [AdminUsersApiController::class, 'getStaffList']);
         Route::post('/create-staff', [AdminUsersApiController::class, 'createStaff']);
+        Route::put('/update-staff', [AdminUsersApiController::class, 'updateStaff']);
+        // New endpoint for deleting staff members
+        Route::delete('/delete-staff', [AdminUsersApiController::class, 'deleteStaff']);
         
         // Ad approval endpoint
         Route::post('/approve-ad', [AdminApprovalApiController::class, 'approveAd']);
@@ -176,6 +179,8 @@ Route::get('/get/districts', [CommonControllerMobile::class, 'getDistricts']); /
 /**
  * Ad Post routes
  */
+
+
 
 
 
