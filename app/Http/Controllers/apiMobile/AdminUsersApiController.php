@@ -425,4 +425,62 @@ class AdminUsersApiController extends Controller
             );
         }
     }
+
+    /**
+     * Delete a staff user
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteStaff(Request $request)
+    {
+        try {
+            // Validate incoming request
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:users,id'
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiResponse->error(
+                    $validator->errors(),
+                    'Validation failed',
+                    422
+                );
+            }
+
+            // Find staff user by ID
+            $user = User::where('id', $request->id)
+                         ->where('roles', 'staff')
+                         ->first();
+            
+            if (!$user) {
+                return $this->apiResponse->error(
+                    'Staff member not found',
+                    'The requested staff member does not exist or is not a staff member',
+                    404
+                );
+            }
+
+            // Delete the staff user
+            $user->delete();
+            
+            Log::info('Staff user deleted via API', ['staff_id' => $request->id]);
+            
+            return $this->apiResponse->success(
+                null,
+                'Staff user deleted successfully'
+            );
+            
+        } catch (\Exception $e) {
+            Log::error('Error deleting staff user via API: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return $this->apiResponse->error(
+                $e->getMessage(),
+                'Failed to delete staff user',
+                500
+            );
+        }
+    }
 }

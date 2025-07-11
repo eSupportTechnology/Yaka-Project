@@ -12,8 +12,14 @@ use App\Http\Controllers\api\LocattionController;
 use App\Http\Controllers\api\BrandsModelsController;
 use App\Http\Controllers\apiMobile\AdsControllerMobile;
 use App\Http\Controllers\apiMobile\AdminAdsApiController;
+use App\Http\Controllers\apiMobile\AdminApprovalApiController;
 use App\Http\Controllers\apiMobile\AdminAuthController;
+use App\Http\Controllers\apiMobile\AdminBannerApiController;
+use App\Http\Controllers\apiMobile\AdminBannerCreationController;
+use App\Http\Controllers\apiMobile\AdminBannerPackageApiController;
 use App\Http\Controllers\apiMobile\AdminCategoryApiController;
+use App\Http\Controllers\apiMobile\AdminDashboardApiController;
+use App\Http\Controllers\apiMobile\AdminTypeApiController;
 use App\Http\Controllers\apiMobile\AdminUsersApiController;
 use App\Http\Controllers\apiMobile\AuthControllerMobile;
 use App\Http\Controllers\apiMobile\CommonControllerMobile;
@@ -92,35 +98,74 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [AdminAuthController::class, 'login']);
     Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
     
-    // Dashboard chart routes without auth middleware for testing
-    Route::get('/dashboard/users-chart', [dashboardController::class, 'fetchChartData']);
-    Route::get('/dashboard/paid-ads-chart', [dashboardController::class, 'fetchChartDataPaidAd']);
-    Route::get('/dashboard/free-ads-chart', [dashboardController::class, 'fetchChartDataFreeAd']);
-    
-    // Combined charts endpoint
-    Route::get('/dashboard/all-charts', [dashboardController::class, 'apiCharts']);
-    
-    // New admin ads management API endpoints
-    Route::get('/ads-list', [AdminAdsApiController::class, 'getAdsList']);
-    Route::post('/update-ad-status', [AdminAdsApiController::class, 'updateAdStatus']);
-    
-    // New admin users management API endpoint
-    Route::get('/users-list', [AdminUsersApiController::class, 'getUsersList']);
-    
-    // New admin users management API endpoint - specifically for admins
-    Route::get('/admins-list', [AdminUsersApiController::class, 'getAdminsList']);
-    
-    // New endpoint to create admin users
-    Route::post('/create-admin', [AdminUsersApiController::class, 'createAdmin']);
-    
-    // Admin categories management API endpoints
-    Route::get('/categories-list', [AdminCategoryApiController::class, 'getCategories']);
-    Route::post('/categories', [AdminCategoryApiController::class, 'storeCategory']);
-    
-    // New admin staff management API endpoint
-    Route::get('/staff-list', [AdminUsersApiController::class, 'getStaffList']);
-    Route::post('/create-staff', [AdminUsersApiController::class, 'createStaff']);
-    Route::put('/update-staff', [AdminUsersApiController::class, 'updateStaff']); // New route for updating staff
+    // Group all protected admin routes with auth:api middleware
+    Route::middleware('auth:api')->group(function () {
+        // Dashboard chart routes
+        Route::get('/dashboard/users-chart', [dashboardController::class, 'fetchChartData']);
+        Route::get('/dashboard/paid-ads-chart', [dashboardController::class, 'fetchChartDataPaidAd']);
+        Route::get('/dashboard/free-ads-chart', [dashboardController::class, 'fetchChartDataFreeAd']);
+        
+        // Combined charts endpoint
+        Route::get('/dashboard/all-charts', [dashboardController::class, 'apiCharts']);
+
+        // Admin dashboard stats endpoint for ads counts
+        Route::get('/dashboard/ads-counts', [AdminDashboardApiController::class, 'getAdsCounts']);
+        
+        // Admin ads management API endpoints
+        Route::get('/ads-list', [AdminAdsApiController::class, 'getAdsList']);
+        Route::post('/update-ad-status', [AdminAdsApiController::class, 'updateAdStatus']);
+        
+        // Admin users management API endpoint
+        Route::get('/users-list', [AdminUsersApiController::class, 'getUsersList']);
+        
+        // Admin users management API endpoint - specifically for admins
+        Route::get('/admins-list', [AdminUsersApiController::class, 'getAdminsList']);
+        
+        // Endpoint to create admin users
+        Route::post('/create-admin', [AdminUsersApiController::class, 'createAdmin']);
+        
+        // Admin categories management API endpoints
+        Route::get('/categories-list', [AdminCategoryApiController::class, 'getCategories']);
+        Route::post('/categories', [AdminCategoryApiController::class, 'storeCategory']);
+        
+        // Admin staff management API endpoint
+        Route::get('/staff-list', [AdminUsersApiController::class, 'getStaffList']);
+        Route::post('/create-staff', [AdminUsersApiController::class, 'createStaff']);
+        Route::put('/update-staff', [AdminUsersApiController::class, 'updateStaff']);
+        // New endpoint for deleting staff members
+        Route::delete('/delete-staff', [AdminUsersApiController::class, 'deleteStaff']);
+        
+        // Ad approval endpoint
+        Route::post('/approve-ad', [AdminApprovalApiController::class, 'approveAd']);
+        
+        // Ad disapproval endpoint
+        Route::post('/disapprove-ad', [App\Http\Controllers\apiMobile\AdminDisapprovalApiController::class, 'disapproveAd']);
+        
+        // Admin banner management API endpoint
+        Route::get('/banners-list', [AdminBannerApiController::class, 'getBannersList']);
+        
+        // Admin banner creation endpoint
+        Route::post('/create-banner', [AdminBannerCreationController::class, 'createBanner']);
+        
+        // Admin banner packages management API endpoint
+        Route::get('/banner-packages-list', [AdminBannerPackageApiController::class, 'getBannerPackagesList']);
+        
+        // Admin banner package creation endpoint
+        Route::post('/create-banner-package', [App\Http\Controllers\apiMobile\AdminBannerPackageCreateController::class, 'createBannerPackage']);
+        
+        // Admin brands management API endpoints
+        Route::get('/brands-list', [App\Http\Controllers\apiMobile\AdminBrandApiController::class, 'getBrandsList']);
+        Route::get('/brands/{brandId}/models', [App\Http\Controllers\apiMobile\AdminBrandApiController::class, 'getBrandModels']);
+        
+        // Admin packages management API endpoint
+        Route::get('/packages-list', [App\Http\Controllers\apiMobile\AdminPackageApiController::class, 'getPackagesList']);
+        
+        // Admin types management API endpoint
+        Route::get('/types-list', [AdminTypeApiController::class, 'getTypesList']);
+        
+        // New endpoint for creating types
+        Route::post('/create-type', [AdminTypeApiController::class, 'createType']);
+    });
 });
 
 /**
