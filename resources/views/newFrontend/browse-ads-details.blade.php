@@ -178,7 +178,10 @@
                             </h3>
 
                             <h6>@lang('messages.Product Description')</h6>
-                            <p class="mb-1">{{ $ad->description }}</p>
+                            <div class="mb-1">
+                                {!! $ad->description !!}
+                            </div>
+                            {{-- <p class="mb-1">{{ $ad->description }}</p> --}}
 
                             @if ($brand)
                                 <p class="mb-0"><strong> @lang('messages.Brand'):</strong> {{ $brand->name }}</p>

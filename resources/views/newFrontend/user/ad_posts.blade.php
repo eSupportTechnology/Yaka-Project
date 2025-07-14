@@ -30,6 +30,10 @@
             min-height: 220px;
         }
 
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+
     </style>
 
     @php
@@ -258,7 +262,7 @@
                                             <div class="mb-3 col-lg-12">
                                                 <div class="form-group">
                                                     <label class="form-label text-dark"><strong>@lang('messages.Description') <i class="text-danger">*</i></strong></label>
-                                                    <textarea name="description" class="form-control" rows="4" required></textarea>
+                                                    <textarea id="ad_description" name="description" class="form-control" rows="4" required></textarea>
                                                 </div>
                                             </div>
 
@@ -831,5 +835,29 @@
             });
         });
     </script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+          .create(document.querySelector('#ad_description'), {
+              toolbar: {
+                  items: [
+                      'heading', '|',
+                      'bold', 'italic', 'underline', 'strikethrough', '|',
+                      'link', 'bulletedList', 'numberedList', '|',
+                      'insertTable', 'mediaEmbed', 'blockQuote', '|',
+                      'undo', 'redo', 'codeBlock', 'alignment'
+                  ]
+              },
+              table: {
+                  contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+              },
+              mediaEmbed: {
+                  previewsInData: true
+              },
+          })
+          .catch(error => {
+              console.error('Editor initialization error:', error);
+          });
+      </script>
 
 @endsection
