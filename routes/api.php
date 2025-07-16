@@ -174,37 +174,38 @@ Route::prefix('admin')->group(function () {
 
         // New endpoint for creating types
         Route::post('/create-type', [AdminTypeApiController::class, 'createType']);
+
+        Route::put('/admin-update/{id}', [AdminUserController::class, 'updateAdmin']);
+        Route::delete('/admin-delete/{id}', [AdminUserController::class, 'deleteAdmin']);
+
+        Route::put('/user-update/{id}', [UserApiController::class, 'updateUser']);
+        Route::delete('/user-delete/{id}', [UserApiController::class, 'deleteUser']);
+        Route::get('/user-phone/{number}', [UserApiController::class, 'findByPhoneUser']);
+
+        Route::put('/categories-update/{url}', [CategoryApiController::class, 'updateCategories']);
+        Route::delete('/categories-delete/{url}', [CategoryApiController::class, 'deleteCategories']);
+
+        Route::get('/ads-search', [AdsApiController::class, 'adsSearch']);
+
+        Route::get('/brands-search', [BrandApiController::class, 'searchBrands']);
+        Route::put('/brand-update/{id}', [BrandApiController::class, 'updateBrand']);
+        Route::delete('/brand-delete/{url}', [BrandApiController::class, 'deleteBrandByUrl']);
+        Route::get('/brand-model/{url}/models', [BrandApiController::class, 'getModelsByBrand']);
+
+        Route::put('/package-update/{url}', [PackageApiController::class, 'packageUpdate']);
+        Route::delete('/package-delete/{url}', [PackageApiController::class, 'packageDelete']);
+
+        Route::put('/addType-update/{url}', [AdsTypeApiController::class, 'updateAddType']);
+        Route::delete('/addType-delete/{url}', [AdsTypeApiController::class, 'deleteAddType']);
+
+        Route::put('/banner-update/{id}', [BannerApiController::class, 'updateBanner']);
+        Route::delete('/banner-delete/{id}', [BannerApiController::class, 'deleteBanner']);
+
+        Route::put('/banner-packages/{id}', [BannerPackageApiController::class, 'updateBannerPackage']);
+        Route::delete('/banner-packages/{id}', [BannerPackageApiController::class, 'deleteBannerPackage']);
     });
 });
 
-Route::put('/admin-update/{id}', [AdminUserController::class, 'updateAdmin']);
-Route::delete('/admin-delete/{id}', [AdminUserController::class, 'deleteAdmin']);
-
-Route::put('/user-update/{id}', [UserApiController::class, 'updateUser']);
-Route::delete('/user-delete/{id}', [UserApiController::class, 'deleteUser']);
-Route::get('/user-phone/{number}', [UserApiController::class, 'findByPhoneUser']);
-
-Route::put('/categories-update/{url}', [CategoryApiController::class, 'updateCategories']);
-Route::delete('/categories-delete/{url}', [CategoryApiController::class, 'deleteCategories']);
-
-Route::get('/ads-search', [AdsApiController::class, 'adsSearch']);
-
-Route::get('/brands-search', [BrandApiController::class, 'searchBrands']);
-Route::put('/brand-update/{id}', [BrandApiController::class, 'updateBrand']);
-Route::delete('/brand-delete/{url}', [BrandApiController::class, 'deleteBrandByUrl']);
-Route::get('/brand-model/{url}/models', [BrandApiController::class, 'getModelsByBrand']);
-
-Route::put('/package-update/{url}', [PackageApiController::class, 'packageUpdate']);
-Route::delete('/package-delete/{url}', [PackageApiController::class, 'packageDelete']);
-
-Route::put('/addType-update/{url}', [AdsTypeApiController::class, 'updateAddType']);
-Route::delete('/addType-delete/{url}', [AdsTypeApiController::class, 'deleteAddType']);
-
-Route::put('/banner-update/{id}', [BannerApiController::class, 'updateBanner']);
-Route::delete('/banner-delete/{id}', [BannerApiController::class, 'deleteBanner']);
-
-Route::put('/banner-packages/{id}', [BannerPackageApiController::class, 'updateBannerPackage']);
-Route::delete('/banner-packages/{id}', [BannerPackageApiController::class, 'deleteBannerPackage']);
 /**
  * Public route API
  */
