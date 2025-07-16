@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\adminPanel\subCategoriesManagementController;
 use App\Http\Controllers\apiMobile\AdminUserController;
+use App\Http\Controllers\apiMobile\AdsApiController;
 use App\Http\Controllers\apiMobile\CategoryApiController;
 use App\Http\Controllers\apiMobile\UserApiController;
 use Illuminate\Http\Request;
@@ -180,6 +181,8 @@ Route::get('/user-phone/{number}', [UserApiController::class, 'findByPhoneUser']
 
 Route::put('/categories-update/{url}', [CategoryApiController::class, 'updateCategories']);
 Route::delete('/categories-delete/{url}', [CategoryApiController::class, 'deleteCategories']);
+
+Route::get('/ads-search', [AdsApiController::class, 'adsSearch']);
 /**
  * Public route API
  */
