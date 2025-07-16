@@ -5,6 +5,7 @@ use App\Http\Controllers\apiMobile\AdminUserController;
 use App\Http\Controllers\apiMobile\AdsApiController;
 use App\Http\Controllers\apiMobile\BrandApiController;
 use App\Http\Controllers\apiMobile\CategoryApiController;
+use App\Http\Controllers\apiMobile\PackageApiController;
 use App\Http\Controllers\apiMobile\UserApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -189,6 +190,9 @@ Route::get('/brands-search', [BrandApiController::class, 'searchBrands']);
 Route::put('/brand-update/{id}', [BrandApiController::class, 'updateBrand']);
 Route::delete('/brand-delete/{url}', [BrandApiController::class, 'deleteBrandByUrl']);
 Route::get('/brand-model/{url}/models', [BrandApiController::class, 'getModelsByBrand']);
+
+Route::put('/package-update/{url}', [PackageApiController::class, 'packageUpdate']);
+Route::delete('/package-delete/{url}', [PackageApiController::class, 'packageDelete']);
 /**
  * Public route API
  */
