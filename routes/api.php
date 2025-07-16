@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\adminPanel\subCategoriesManagementController;
 use App\Http\Controllers\apiMobile\AdminUserController;
+use App\Http\Controllers\apiMobile\CategoryApiController;
 use App\Http\Controllers\apiMobile\UserApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -176,6 +177,9 @@ Route::delete('/admin-delete/{id}', [AdminUserController::class, 'deleteAdmin'])
 Route::put('/user-update/{id}', [UserApiController::class, 'updateUser']);
 Route::delete('/user-delete/{id}', [UserApiController::class, 'deleteUser']);
 Route::get('/user-phone/{number}', [UserApiController::class, 'findByPhoneUser']);
+
+Route::put('/categories-update/{url}', [CategoryApiController::class, 'updateCategories']);
+Route::delete('/categories-delete/{url}', [CategoryApiController::class, 'deleteCategories']);
 /**
  * Public route API
  */
