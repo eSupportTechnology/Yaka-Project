@@ -3,6 +3,7 @@
 use App\Http\Controllers\adminPanel\subCategoriesManagementController;
 use App\Http\Controllers\apiMobile\AdminUserController;
 use App\Http\Controllers\apiMobile\AdsApiController;
+use App\Http\Controllers\apiMobile\AdsTypeApiController;
 use App\Http\Controllers\apiMobile\BrandApiController;
 use App\Http\Controllers\apiMobile\CategoryApiController;
 use App\Http\Controllers\apiMobile\PackageApiController;
@@ -193,6 +194,9 @@ Route::get('/brand-model/{url}/models', [BrandApiController::class, 'getModelsBy
 
 Route::put('/package-update/{url}', [PackageApiController::class, 'packageUpdate']);
 Route::delete('/package-delete/{url}', [PackageApiController::class, 'packageDelete']);
+
+Route::put('/addType-update/{url}', [AdsTypeApiController::class, 'updateAddType']);
+Route::delete('/addType-delete/{url}', [AdsTypeApiController::class, 'deleteAddType']);
 /**
  * Public route API
  */
