@@ -5,6 +5,7 @@ use App\Http\Controllers\apiMobile\AdminUserController;
 use App\Http\Controllers\apiMobile\AdsApiController;
 use App\Http\Controllers\apiMobile\AdsTypeApiController;
 use App\Http\Controllers\apiMobile\BannerApiController;
+use App\Http\Controllers\apiMobile\BannerPackageApiController;
 use App\Http\Controllers\apiMobile\BrandApiController;
 use App\Http\Controllers\apiMobile\CategoryApiController;
 use App\Http\Controllers\apiMobile\PackageApiController;
@@ -201,6 +202,9 @@ Route::delete('/addType-delete/{url}', [AdsTypeApiController::class, 'deleteAddT
 
 Route::put('/banner-update/{id}', [BannerApiController::class, 'updateBanner']);
 Route::delete('/banner-delete/{id}', [BannerApiController::class, 'deleteBanner']);
+
+Route::put('/banner-packages/{id}', [BannerPackageApiController::class, 'updateBannerPackage']);
+Route::delete('/banner-packages/{id}', [BannerPackageApiController::class, 'deleteBannerPackage']);
 /**
  * Public route API
  */
