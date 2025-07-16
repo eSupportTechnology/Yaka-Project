@@ -3,6 +3,7 @@
 use App\Http\Controllers\adminPanel\subCategoriesManagementController;
 use App\Http\Controllers\apiMobile\AdminUserController;
 use App\Http\Controllers\apiMobile\AdsApiController;
+use App\Http\Controllers\apiMobile\BrandApiController;
 use App\Http\Controllers\apiMobile\CategoryApiController;
 use App\Http\Controllers\apiMobile\UserApiController;
 use Illuminate\Http\Request;
@@ -183,6 +184,11 @@ Route::put('/categories-update/{url}', [CategoryApiController::class, 'updateCat
 Route::delete('/categories-delete/{url}', [CategoryApiController::class, 'deleteCategories']);
 
 Route::get('/ads-search', [AdsApiController::class, 'adsSearch']);
+
+Route::get('/brands-search', [BrandApiController::class, 'searchBrands']);
+Route::put('/brand-update/{id}', [BrandApiController::class, 'updateBrand']);
+Route::delete('/brand-delete/{url}', [BrandApiController::class, 'deleteBrandByUrl']);
+Route::get('/brand-model/{url}/models', [BrandApiController::class, 'getModelsByBrand']);
 /**
  * Public route API
  */
