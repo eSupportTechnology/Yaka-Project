@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\adminPanel\subCategoriesManagementController;
 use App\Http\Controllers\apiMobile\AdminUserController;
+use App\Http\Controllers\apiMobile\UserApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AdsController;
@@ -171,6 +172,10 @@ Route::prefix('admin')->group(function () {
 
 Route::put('/admin-update/{id}', [AdminUserController::class, 'updateAdmin']);
 Route::delete('/admin-delete/{id}', [AdminUserController::class, 'deleteAdmin']);
+
+Route::put('/user-update/{id}', [UserApiController::class, 'updateUser']);
+Route::delete('/user-delete/{id}', [UserApiController::class, 'deleteUser']);
+Route::get('/user-phone/{number}', [UserApiController::class, 'findByPhoneUser']);
 /**
  * Public route API
  */
