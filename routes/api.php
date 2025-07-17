@@ -9,6 +9,7 @@ use App\Http\Controllers\apiMobile\BannerPackageApiController;
 use App\Http\Controllers\apiMobile\BrandApiController;
 use App\Http\Controllers\apiMobile\CategoryApiController;
 use App\Http\Controllers\apiMobile\PackageApiController;
+use App\Http\Controllers\apiMobile\StaffApiController;
 use App\Http\Controllers\apiMobile\UserApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -203,6 +204,9 @@ Route::prefix('admin')->group(function () {
 
         Route::put('/banner-packages/{id}', [BannerPackageApiController::class, 'updateBannerPackage']);
         Route::delete('/banner-packages/{id}', [BannerPackageApiController::class, 'deleteBannerPackage']);
+
+        Route::get('/user/{id}', [UserApiController::class, 'userGetUserId']);
+        Route::get('/staff/{id}', [StaffApiController::class, 'staffGetStaffId']);
     });
 });
 
