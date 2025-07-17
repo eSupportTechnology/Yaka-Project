@@ -86,4 +86,20 @@ class UserApiController extends Controller
         }
     }
 
+    public function userGetUserId($id): JsonResponse
+    {
+        try {
+            $user = User::find($id);
+
+            if (!$user) {
+                return $this->apiResponse->error('User not found', 'No user found with the given ID', 404);
+            }
+
+            return $this->apiResponse->success($user, 'User details fetched successfully');
+        } catch (\Exception $e) {
+            return $this->apiResponse->error($e->getMessage(), 'Failed to fetch user details', 500);
+        }
+    }
+
+
 }
