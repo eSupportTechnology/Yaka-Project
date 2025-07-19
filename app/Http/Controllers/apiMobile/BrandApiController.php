@@ -113,4 +113,50 @@ class BrandApiController extends Controller
             return $this->apiResponse->error($e->getMessage(), 'Failed to fetch models', 500);
         }
     }
+
+    public function createBrand(Request $request): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'name' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    "regex:/^[^\?\/\[\]{}\-,.<>:;'|!`~()&%$#@*\^]*$/",
+                    Rule::unique('brands_models')->where(function ($query) use ($request) {
+                        return $query->where('sub_cat_id', $request->sub_cat_id);
+                    }),
+                ],
+                'status' => 'required|in:0,1',
+                'brandid' => 'required|integer',
+                'sub_cat_id' => 'required_without:brandid|integer|exists:categories,id',
+            ]);
+
+            $subCatId = $validated['brandid'] != 0
+                ? BrandsModels::where('id', $validated['brandid'])->pluck('sub_cat_id')->first()
+                : $validated['sub_cat_id'];
+
+            $subCategory = Category::find($subCatId);
+
+            if (!$subCategory) {
+                return $this->apiResponse->error('Invalid subcategory ID', 'Subcategory not found', 404);
+            }
+
+            $url = strtolower($subCategory->name . ' ' . $validated['name']);
+            $url = preg_replace('/[^a-z0-9\-]/', ' ', $url);
+            $url = preg_replace('/\s+/', '-', $url);
+
+            $brandModel = new BrandsModels();
+            $brandModel->name = $validated['name'];
+            $brandModel->brandsId = $validated['brandid'];
+            $brandModel->sub_cat_id = $subCatId;
+            $brandModel->url = $url;
+            $brandModel->status = $validated['status'];
+            $brandModel->save();
+
+            return $this->apiResponse->success($brandModel, 'Brand created successfully');
+        } catch (\Exception $e) {
+            return $this->apiResponse->error($e->getMessage(), 'Failed to create brand', 500);
+        }
+    }
 }
