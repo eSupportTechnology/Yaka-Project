@@ -1025,7 +1025,21 @@
                                                             </h5>
                                                         </div>
                                                     </div>
+                                                    <div style="font-size: 12px; padding-right:5px; color:red" class="d-flex justify-content-end">
+                                                        @php
+                                                            $start =\Carbon\Carbon::now();
+                                                            $end = \Carbon\Carbon::parse($ad->package_expire_at);
 
+                                                            $totalHours = $start->diffInHours($end);
+                                                            $days = intdiv($totalHours, 24);
+                                                            $hours = $totalHours % 24;
+                                                        @endphp
+                                                        @if ($days == 0 && $hours == 0)
+                                                            <p style="color: red;">Expired</p>
+                                                        @else
+                                                            <p style="color: red;">Expired in {{ $days }}D {{ $hours }}H</p>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </a>
                                         </div>
