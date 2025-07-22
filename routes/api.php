@@ -192,7 +192,10 @@ Route::prefix('admin')->group(function () {
         Route::put('/brand-update/{id}', [BrandApiController::class, 'updateBrand']);
         Route::delete('/brand-delete/{url}', [BrandApiController::class, 'deleteBrandByUrl']);
         Route::get('/brand-model/{url}/models', [BrandApiController::class, 'getModelsByBrand']);
+        Route::post('/brands-create', [BrandApiController::class, 'createBrand']);
 
+
+        Route::post('/package-create', [PackageApiController::class, 'packageCreate']);
         Route::put('/package-update/{url}', [PackageApiController::class, 'packageUpdate']);
         Route::delete('/package-delete/{url}', [PackageApiController::class, 'packageDelete']);
 

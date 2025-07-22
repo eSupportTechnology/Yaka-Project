@@ -63,4 +63,33 @@ class PackageApiController extends Controller
             return $this->apiResponse->error($e->getMessage(), 'Failed to delete package', 500);
         }
     }
+    public function packageCreate(Request $request): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255|unique:table_package,name',
+                'status' => 'required|in:0,1',
+                'mainid' => 'nullable|integer|exists:table_package,id',
+            ]);
+
+            $url = strtolower($validated['name']);
+            $url = preg_replace('/[^a-z0-9\-]/', ' ', $url);
+            $url = preg_replace('/\s+/', '-', $url);
+
+            $package = new Package();
+            $package->name = $validated['name'];
+            $package->url = $url;
+            $package->status = $validated['status'];
+
+            if (isset($validated['mainid'])) {
+                $package->mainId = $validated['mainid'];
+            }
+
+            $package->save();
+
+            return $this->apiResponse->success($package, 'Package created successfully');
+        } catch (\Exception $e) {
+            return $this->apiResponse->error($e->getMessage(), 'Failed to create package', 500);
+        }
+    }
 }
