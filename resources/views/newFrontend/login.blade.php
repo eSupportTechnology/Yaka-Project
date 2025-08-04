@@ -118,8 +118,16 @@
                             <p>Don’t have an account? <a href="{{ route('register') }}">Register Now</a></p>
                         </div>
                     </div>
-                    <a href="{{ url('auth/google') }}" class="btn btn-danger btn-block">Login with Google</a>
-                    <a href="{{ url('auth/facebook') }}" class="btn btn-primary btn-block">Login with Facebook</a>
+                    <div style="gap: 15px;" class="d-flex justify-content-center gap-3">
+                        <a href="{{ url('auth/google') }}" title="Login with Google">
+                            <img src="{{ asset('images/google.png') }}" alt="Google Login" width="40">
+                        </a>
+
+                        <a href="{{ url('auth/facebook') }}" title="Login with Facebook">
+                            <img src="{{ asset('images/facebook.png') }}" alt="Facebook Login" width="40">
+                        </a>
+
+                    </div>
                 </div>
             </div>
         </div>
