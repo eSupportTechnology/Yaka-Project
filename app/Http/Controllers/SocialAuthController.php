@@ -36,7 +36,7 @@ class SocialAuthController extends Controller
             ]
         );
 
-        Auth::login($user);
+        Auth::guard('web')->login($user, true);
 
         return redirect()->intended('/user/dashboard');
     }
