@@ -25,8 +25,8 @@ class SocialAuthController extends Controller
             ['email' => $socialUser->getEmail()],
             [
                 'name' => $socialUser->getName(),
-                'first_name' => explode(' ', $socialUser->getName())[0],
-                'last_name' => explode(' ', $socialUser->getName())[1],
+                'first_name' => explode(' ', $socialUser->getName())[0] ?? 'N/A',
+                'last_name' => explode(' ', $socialUser->getName())[1] ?? 'N/A',
                 'password' => bcrypt(Str::random(24)),
                 'email_verified_at' => now(),
                 'status' => 1,
