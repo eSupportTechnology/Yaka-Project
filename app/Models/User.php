@@ -40,7 +40,9 @@ class User extends Authenticatable
         'web_roles',
         'key',
         'status',
-        'profileImage'
+        'profileImage',
+        'social_login_name',
+        'is_mobile_verifed',
     ];
 
     public function ads()

@@ -22,7 +22,6 @@ class CustomAuthController extends Controller
             'phone_number' => 'required',
             'password' => 'required',
         ]);
-
         $user = \App\Models\User::where('phone_number', $request->phone_number)->first();
 
         if($user->is_mobile_verifed == 0) {

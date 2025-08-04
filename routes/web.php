@@ -1,37 +1,37 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\frontend\HomeController;
-use App\Http\Controllers\staffPanel\staffManagementController;
 use App\Models\BrandsModels;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\frontend\PaymentProcessingController;
-use App\Http\Controllers\adminPanel\FormFieldsController;
-use App\Http\Controllers\adminPanel\usersManagementController;
-use App\Http\Controllers\adminPanel\adminManagementController;
-use App\Http\Controllers\adminPanel\adsTypesManagementController;
-use App\Http\Controllers\adminPanel\dashboardController;
-use App\Http\Controllers\adminPanel\categoriesManagementController;
-use App\Http\Controllers\adminPanel\subCategoriesManagementController;
-use App\Http\Controllers\adminPanel\brandsManagementController;
-use App\Http\Controllers\adminPanel\packageManagementController;
-use App\Http\Controllers\adminPanel\modlesManagementController;
-use App\Http\Controllers\adminPanel\subPackageManagementController;
-use App\Http\Controllers\adminPanel\adsManagementController;
-use App\Http\Controllers\adminPanel\bannerManagementController;
-use App\Http\Controllers\Auth\CustomAuthController;
-
-use App\Http\Controllers\frontend\UserAdsController;
-use App\Http\Controllers\frontend\userDashboardController;
-use App\Http\Controllers\frontend\AdsController;
-use App\Http\Controllers\LocaleController;
-use App\Http\Controllers\LocationController;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\ContactController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\BoostingController;
 use Laravel\Telescope\Telescope;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BoostingController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\frontend\AdsController;
+use App\Http\Controllers\frontend\HomeController;
+use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\Auth\CustomAuthController;
+use App\Http\Controllers\frontend\UserAdsController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\adminPanel\dashboardController;
+use App\Http\Controllers\adminPanel\FormFieldsController;
+use App\Http\Controllers\frontend\userDashboardController;
+use App\Http\Controllers\adminPanel\adsManagementController;
+
+use App\Http\Controllers\adminPanel\adminManagementController;
+use App\Http\Controllers\adminPanel\usersManagementController;
+use App\Http\Controllers\frontend\PaymentProcessingController;
+use App\Http\Controllers\staffPanel\staffManagementController;
+use App\Http\Controllers\adminPanel\bannerManagementController;
+use App\Http\Controllers\adminPanel\brandsManagementController;
+use App\Http\Controllers\adminPanel\modlesManagementController;
+use App\Http\Controllers\adminPanel\packageManagementController;
+use App\Http\Controllers\adminPanel\adsTypesManagementController;
+use App\Http\Controllers\adminPanel\categoriesManagementController;
 
 
 Route::post('/send-contact', [ContactController::class, 'send'])->name('contact.send');
@@ -147,7 +147,8 @@ Route::get('/api/get-districts', [LocationController::class, 'getDistricts']);
 Route::get('/api/cities', [LocationController::class, 'getCitiesByDistrict']);
 
 
-use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\adminPanel\subPackageManagementController;
+use App\Http\Controllers\adminPanel\subCategoriesManagementController;
 
 Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
@@ -298,6 +299,8 @@ Route::post('/boosting/save-info', [BoostingController::class, 'saveInfo'])->nam
 Route::post('/boosting-update', [UserAdsController::class, 'boostingUpdate'])->name('boosting.update');
 Route::get('/boostpayment/checking', [BoostingController::class, 'boostcomplete'])->name('boostpayment.checking');
 
+Route::get('auth/{provider}', [SocialAuthController::class, 'redirectToProvider']);
+Route::get('auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback']);
 
 
 require __DIR__.'/auth.php';
