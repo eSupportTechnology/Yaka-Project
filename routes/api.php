@@ -3,6 +3,7 @@
 use App\Http\Controllers\adminPanel\subCategoriesManagementController;
 use App\Http\Controllers\apiMobile\AdminUserController;
 use App\Http\Controllers\apiMobile\AdsApiController;
+use App\Http\Controllers\apiMobile\AdsCategoryApiController;
 use App\Http\Controllers\apiMobile\AdsTypeApiController;
 use App\Http\Controllers\apiMobile\BannerApiController;
 use App\Http\Controllers\apiMobile\BannerPackageApiController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\apiMobile\BrandApiController;
 use App\Http\Controllers\apiMobile\CategoryApiController;
 use App\Http\Controllers\apiMobile\PackageApiController;
 use App\Http\Controllers\apiMobile\StaffApiController;
+use App\Http\Controllers\apiMobile\UserAdsApiController;
 use App\Http\Controllers\apiMobile\UserApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -98,6 +100,14 @@ Route::get('/home-categories', [HomepageControllerMobile::class, 'getCategories'
 Route::get('/home-page-ads', [HomepageControllerMobile::class, 'getHomePageAds']);
 
 Route::get('/category/{categoryId}/subcategories', [subCategoriesManagementController::class, 'getSubCategoriesByCategoryId']);
+
+Route::get('/browse-ads', [AdsCategoryApiController::class, 'browseAdsApi']);
+
+Route::get('/search', [AdsCategoryApiController::class, 'searchApi']);
+
+Route::post('/user-ad-posts', [UserAdsApiController::class, 'store']);
+// or your API auth middleware
+
 
 Route::middleware('auth:api')->group(function () {
 
