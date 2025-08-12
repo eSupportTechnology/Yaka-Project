@@ -4,6 +4,7 @@ namespace App\Action\HomePage;
 
 use App\Models\Ads;
 use App\Services\ApiResponseService;
+use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -34,20 +35,26 @@ class GetHomePageAds
                     $locationName = 'name_' . $locale;
 
                     $expiredIn = null;
-                    if ($ad->package_expire_at) {
-                        $diff = now()->diffForHumans($ad->package_expire_at, [
-                            'parts' => 3,
-                            'short' => true,
-                            'syntax' => CarbonInterface::DIFF_RELATIVE_TO_NOW
-                        ]);
-                        $expiredIn = $ad->package_expire_at->isPast() ? 'Expired' : $diff;
+                    if (!empty($ad->package_expire_at)) {
+                        try {
+                            $expireDate = Carbon::parse($ad->package_expire_at);
+
+                            $diff = now()->diffForHumans($expireDate, [
+                                'parts' => 3,
+                                'short' => true,
+                                'syntax' => CarbonInterface::DIFF_RELATIVE_TO_NOW
+                            ]);
+                            $expiredIn = $expireDate->isPast() ? 'Expired' : $diff;
+                        } catch (\Exception $e) {
+                            $expiredIn = 'Invalid date';
+                        }
                     }
 
                     return [
                         'id' => $ad->id,
                         'title' => $ad->title,
                         'package_type' => $ad->ads_package,
-                        'created_at' => $ad->created_at->translatedFormat('d M Y g:i a'),
+                        'created_at' => Carbon::parse($ad->created_at)->translatedFormat('d M Y g:i a'),
                         'expired_in' => $expiredIn,
                         'location' => [
                             'city' => $ad->sub_location->$locationName ?? 'N/A',
