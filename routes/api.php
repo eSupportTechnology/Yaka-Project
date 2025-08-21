@@ -220,6 +220,8 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/user/{id}', [UserApiController::class, 'userGetUserId']);
         Route::get('/staff/{id}', [StaffApiController::class, 'staffGetStaffId']);
+
+        Route::put('/update-user/{id}', [UserApiController::class, 'userUpdate']);
     });
 });
 
