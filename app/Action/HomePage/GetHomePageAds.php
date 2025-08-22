@@ -51,7 +51,7 @@ class GetHomePageAds
                     }
 
                     return [
-                        'adsId' => $ad->id,
+                        'adsId' => $ad->adsId,
                         'user_id' => $ad->user_id,
                         'created_by_staff_id' => $ad->created_by_staff_id,
                         'title' => $ad->title,
