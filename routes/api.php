@@ -13,6 +13,7 @@ use App\Http\Controllers\apiMobile\PackageApiController;
 use App\Http\Controllers\apiMobile\StaffApiController;
 use App\Http\Controllers\apiMobile\UserAdsApiController;
 use App\Http\Controllers\apiMobile\UserApiController;
+use App\Http\Controllers\GeminiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AdsController;
@@ -232,6 +233,8 @@ Route::post('/send/verification-code', [AuthControllerMobile::class, 'SendMobile
 Route::post('/verify/registration-otp', [AuthControllerMobile::class, 'verifyRegistrationOtp']); // Verify Registration OTP
 
 Route::get('/get/districts', [CommonControllerMobile::class, 'getDistricts']); // Get all districts or a district with cities using district_id query param
+
+Route::post('/generate-description', [GeminiController::class, 'generateDescription']);
 
 /**
  * Ad Post routes
