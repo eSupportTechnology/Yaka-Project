@@ -231,4 +231,88 @@ class AuthControllerMobile extends Controller
             return $apiResponse->error($e->getMessage(),  'Error during sending verification code', 500);
         }
     }
+
+    public function sendPasswordResetCode(Request $request, ApiResponseService $apiResponse)
+    {
+        $validator = Validator::make($request->all(), [
+            'mobile' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
+        ]);
+
+        if ($validator->fails()) {
+            return $apiResponse->error($validator->errors(), 'Validation failed.', 422);
+        }
+
+        $user = User::where('phone_number', $request->mobile)->first();
+        if (!$user) {
+            return $apiResponse->error(null, 'User not found with entered mobile number.', 404);
+        }
+
+        $resetCode = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        $user->password_reset_otp = $resetCode;
+        $user->password_reset_otp_created_at = now();
+        $user->save();
+
+        if (!OtpService::sendSingleSms($request->mobile, "Password Reset Code: " . $resetCode)) {
+            return $apiResponse->error(null, 'Sending reset code failed. Try again.', 500);
+        }
+
+        return $apiResponse->success(['mobile' => $request->mobile], 'Password reset code sent successfully.', 200);
+    }
+
+    public function verifyPasswordResetOtp(Request $request, ApiResponseService $apiResponse)
+    {
+        $validator = Validator::make($request->all(), [
+            'mobile' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
+            'verification_code' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return $apiResponse->error($validator->errors(), 'Validation failed.', 422);
+        }
+
+        $user = User::where('phone_number', $request->mobile)->first();
+        if (!$user) {
+            return $apiResponse->error(null, 'User not found with entered mobile number.', 404);
+        }
+
+        if ($user->password_reset_otp !== $request->verification_code) {
+            return $apiResponse->error(null, 'Invalid verification code.', 422);
+        }
+
+        // Optionally check OTP expiration here
+
+        return $apiResponse->success(null, 'Verification code is valid.', 200);
+    }
+
+
+    public function resetPassword(Request $request, ApiResponseService $apiResponse)
+    {
+        $validator = Validator::make($request->all(), [
+            'mobile' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
+            'verification_code' => ['required', 'string'],
+            'password' => ['required', 'string', 'confirmed', 'min:8'],
+        ]);
+
+        if ($validator->fails()) {
+            return $apiResponse->error($validator->errors(), 'Validation failed.', 422);
+        }
+
+        $user = User::where('phone_number', $request->mobile)->first();
+        if (!$user) {
+            return $apiResponse->error(null, 'User not found with entered mobile number.', 404);
+        }
+
+        if ($user->password_reset_otp !== $request->verification_code) {
+            return $apiResponse->error(null, 'Invalid verification code.', 422);
+        }
+
+        // Optionally check OTP expiration here
+
+        $user->password = Hash::make($request->password);
+        $user->password_reset_otp = null; // Clear OTP after use
+        $user->save();
+
+        return $apiResponse->success(null, 'Password reset successfully.', 200);
+    }
+
 }
