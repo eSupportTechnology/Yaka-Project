@@ -41,6 +41,8 @@ class User extends Authenticatable
         'key',
         'status',
         'profileImage',
+        'password_reset_otp',
+        'password_reset_otp_created_at',
         'social_login_name',
         'is_mobile_verifed',
     ];
