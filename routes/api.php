@@ -71,6 +71,11 @@ Route::post('/login', [AuthControllerMobile::class, 'mobileLogin']);
 Route::post('/logout', [AuthControllerMobile::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/register', [AuthControllerMobile::class, 'register']);
 
+Route::post('/password/reset-code', [AuthControllerMobile::class, 'sendPasswordResetCode']);
+Route::post('/password/verify-code', [AuthControllerMobile::class, 'verifyPasswordResetOtp']);
+Route::post('/password/reset', [AuthControllerMobile::class, 'resetPassword']);
+
+
 //
 Route::post('/ads/search', [AdsControllerMobile::class, 'searchByTitle']);
 
