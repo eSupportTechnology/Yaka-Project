@@ -36,6 +36,67 @@
 
     </style>
 
+    <style>
+        .ai-generator-section {
+            background: linear-gradient(to bottom, rgb(102, 17, 17), rgb(171, 18, 18), rgb(253, 6, 6));
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 8px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-generator-section h6 {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .generate-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .generate-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: white;
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .ai-loading {
+            display: none;
+            color: white;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+           .language-selector {
+               background: rgba(255, 255, 255, 0.15);
+               border: 1px solid rgba(255, 255, 255, 0.3);
+               color: white;
+               border-radius: 4px;
+               padding: 4px 8px;
+               font-size: 11px;
+               min-width: 80px;
+           }
+
+        .language-selector option {
+            background: #333;
+            color: white;
+        }
+    </style>
+
     @php
         $cat_id = request()->get('cat_id');
         $sub_cat_id = request()->get('sub_cat_id');
@@ -262,6 +323,30 @@
                                             <div class="mb-3 col-lg-12">
                                                 <div class="form-group">
                                                     <label class="form-label text-dark"><strong>@lang('messages.Description') <i class="text-danger">*</i></strong></label>
+
+                                                        <div class="ai-generator-section" id="aiGeneratorSection" style="display: none; position: relative; margin-bottom: 10px;">
+                                                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                                <div>
+                                                                    <h6 style="margin-bottom: 5px;"><i class="fas fa-magic"></i> AI Description Generator</h6>
+                                                                    <p style="font-size: 11px; margin-bottom: 0; opacity: 0.9; color: white">
+                                                                        Generate professional description automatically
+                                                                    </p>
+                                                                </div>
+                                                                <div class="d-flex align-items-center">
+                                                                    <select class="language-selector" id="languageSelect" style="margin-right: 10px;">
+                                                                        <option value="english">English</option>
+                                                                        <option value="sinhala">සිංහල</option>
+                                                                    </select>
+                                                                    <button type="button" class="generate-btn" id="generateDescBtn">
+                                                                        <i class="fas fa-robot"></i> Generate
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ai-loading" id="aiLoading">
+                                                                <i class="fas fa-spinner fa-spin"></i> Generating description...
+                                                            </div>
+                                                        </div>
+
                                                     <textarea id="ad_description" name="description" class="form-control" rows="4" required></textarea>
                                                 </div>
                                             </div>
@@ -836,28 +921,256 @@
         });
     </script>
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+
     <script>
-        ClassicEditor
-          .create(document.querySelector('#ad_description'), {
-              toolbar: {
-                  items: [
-                      'heading', '|',
-                      'bold', 'italic', 'underline', 'strikethrough', '|',
-                      'link', 'bulletedList', 'numberedList', '|',
-                      'insertTable', 'mediaEmbed', 'blockQuote', '|',
-                      'undo', 'redo', 'codeBlock', 'alignment'
-                  ]
-              },
-              table: {
-                  contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
-              },
-              mediaEmbed: {
-                  previewsInData: true
-              },
-          })
-          .catch(error => {
-              console.error('Editor initialization error:', error);
-          });
-      </script>
+        $(document).ready(function() {
+            let editorInstance = null;
+
+            // Global flag to prevent multiple initializations
+            window.ckEditorInitialized = window.ckEditorInitialized || false;
+
+            // Function to completely destroy any existing CKEditor instances
+            function destroyAllEditors() {
+                // Destroy any existing instances on the element
+                const element = document.querySelector('#ad_description');
+                if (element && element.ckeditorInstance) {
+                    element.ckeditorInstance.destroy();
+                    element.ckeditorInstance = null;
+                }
+
+                // Clear global instance
+                if (editorInstance) {
+                    editorInstance.destroy();
+                    editorInstance = null;
+                }
+
+                window.ckEditorInitialized = false;
+            }
+
+            // Function to initialize CKEditor (only once)
+            function initializeCKEditor() {
+                // Check if already initialized
+                if (window.ckEditorInitialized || editorInstance) {
+                    console.log('CKEditor already initialized, skipping...');
+                    return Promise.resolve();
+                }
+
+                const textareaElement = document.querySelector('#ad_description');
+                if (!textareaElement) {
+                    console.error('Textarea with ID "ad_description" not found');
+                    return Promise.reject('Element not found');
+                }
+
+                // Check if CKEditor is already attached to this element
+                if (textareaElement.ckeditorInstance) {
+                    console.log('CKEditor already attached to this element');
+                    editorInstance = textareaElement.ckeditorInstance;
+                    return Promise.resolve();
+                }
+
+                // Mark as initializing
+                window.ckEditorInitialized = true;
+
+                return ClassicEditor
+                    .create(textareaElement, {
+                        toolbar: {
+                            items: [
+                                'heading', '|',
+                                'bold', 'italic', 'underline', 'strikethrough', '|',
+                                'link', 'bulletedList', 'numberedList', '|',
+                                'insertTable', 'mediaEmbed', 'blockQuote', '|',
+                                'undo', 'redo', 'codeBlock', 'alignment'
+                            ]
+                        },
+                        table: {
+                            contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                        },
+                        mediaEmbed: {
+                            previewsInData: true
+                        },
+                    })
+                    .then(editor => {
+                        editorInstance = editor;
+                        textareaElement.ckeditorInstance = editor;
+                        console.log('CKEditor initialized successfully');
+
+                        // Hide the original textarea completely
+                        $(textareaElement).css({
+                            'display': 'none',
+                            'visibility': 'hidden',
+                            'position': 'absolute',
+                            'left': '-9999px'
+                        });
+
+                        return editor;
+                    })
+                    .catch(error => {
+                        console.error('CKEditor initialization error:', error);
+                        window.ckEditorInitialized = false;
+                        throw error;
+                    });
+            }
+
+            // Destroy any existing editors first, then initialize
+            destroyAllEditors();
+
+            // Wait a moment then initialize
+            setTimeout(() => {
+                initializeCKEditor();
+            }, 100);
+
+            // Show/hide AI generator based on brand and model selection
+            function toggleAIGenerator() {
+                const brandValue = $('#brand').val();
+                const modelValue = $('#model').val() || $('input[name="model"]').val();
+                const aiSection = $('#aiGeneratorSection');
+
+                if (brandValue && modelValue && modelValue.trim() !== '') {
+                    aiSection.show();
+                } else {
+                    aiSection.hide();
+                }
+            }
+
+            // Monitor brand and model changes
+            $('#brand').on('change', function() {
+                setTimeout(toggleAIGenerator, 500);
+            });
+
+            $(document).on('change input', '#model, input[name="model"]', toggleAIGenerator);
+
+            // AI Description Generation
+            $(document).on('click', '#generateDescBtn', function() {
+                const brandText = $('#brand option:selected').text();
+                const modelValue = $('#model').val() || $('input[name="model"]').val();
+                const language = $('#languageSelect').val() || 'English';
+
+                if (!brandText || brandText === 'Brand' || !modelValue) {
+                    alert('Please select both brand and model before generating description.');
+                    return;
+                }
+
+                const $btn = $(this);
+                $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Generating...');
+                $('#aiLoading').show();
+
+                $.ajax({
+                    url: window.generateDescriptionRoute || '/generate-description',
+                    method: 'POST',
+                    data: {
+                        brand: brandText,
+                        model: modelValue,
+                        language: language,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    timeout: 30000,
+                    success: function(response) {
+                        if (response && response.description) {
+                            let generatedText = '';
+
+                            if (response.description.parts && response.description.parts[0]) {
+                                generatedText = response.description.parts[0].text;
+                            } else if (typeof response.description === 'string') {
+                                generatedText = response.description;
+                            } else {
+                                generatedText = JSON.stringify(response.description);
+                            }
+
+                            // Ensure editor is ready before setting data
+                            if (editorInstance) {
+                                editorInstance.setData(generatedText);
+                            } else {
+                                // Fallback to textarea
+                                $('#ad_description').val(generatedText);
+                            }
+
+                            showNotification('Description generated successfully!', 'success');
+                        } else {
+                            showNotification('Failed to generate description. Invalid response format.', 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error generating description:', error);
+                        let errorMessage = 'Failed to generate description. ';
+
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            errorMessage += xhr.responseJSON.error;
+                        } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage += xhr.responseJSON.message;
+                        } else if (status === 'timeout') {
+                            errorMessage += 'Request timed out. Please try again.';
+                        } else {
+                            errorMessage += 'Please check your internet connection and try again.';
+                        }
+
+                        showNotification(errorMessage, 'error');
+                    },
+                    complete: function() {
+                        $btn.prop('disabled', false).html('<i class="fas fa-magic"></i> Generate Description');
+                        $('#aiLoading').hide();
+                    }
+                });
+            });
+
+            function showNotification(message, type) {
+                $('.ai-notification').remove();
+
+                const notification = $(`
+            <div class="ai-notification alert alert-${type === 'success' ? 'success' : 'danger'}" style="
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                max-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                border-radius: 4px;
+                padding: 15px;
+            ">
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}" style="margin-right: 8px;"></i>
+                ${message}
+                <button type="button" class="btn-close" style="float: right; background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
+            </div>
+        `);
+
+                $('body').append(notification);
+
+                // Close button functionality
+                notification.find('.btn-close').on('click', function() {
+                    notification.remove();
+                });
+
+                setTimeout(() => {
+                    notification.fadeOut(300, function() {
+                        $(this).remove();
+                    });
+                }, 5000);
+            }
+
+            // Form submission handler
+            $('form').on('submit', function() {
+                if (editorInstance) {
+                    const editorData = editorInstance.getData();
+                    $('#ad_description').val(editorData);
+                }
+            });
+
+            // Initial toggle check
+            setTimeout(toggleAIGenerator, 1000);
+
+            // Cleanup on page unload
+            $(window).on('beforeunload', function() {
+                destroyAllEditors();
+            });
+        });
+
+        // Additional safety check - prevent multiple script executions
+        if (!window.ckEditorScriptLoaded) {
+            window.ckEditorScriptLoaded = true;
+            console.log('CKEditor script loaded');
+        } else {
+            console.log('CKEditor script already loaded, preventing duplicate execution');
+        }
+    </script>
 
 @endsection

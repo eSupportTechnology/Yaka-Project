@@ -35,7 +35,7 @@ use App\Http\Controllers\adminPanel\categoriesManagementController;
 
 
 Route::post('/send-contact', [ContactController::class, 'send'])->name('contact.send');
-
+Route::post('/generate-description', [App\Http\Controllers\GeminiController::class, 'generateDescription'])->name('generate.description');
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 
 Route::get('/custom-login', function () {
