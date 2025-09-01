@@ -4,6 +4,8 @@ namespace App\Http\Controllers\apiMobile;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ads;
+use App\Models\Banners;
+use App\Models\BrandsModels;
 use App\Services\ApiResponseService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,7 +27,7 @@ class AdsCategoryApiController extends Controller
             $subcategory = $request->query('subcategory');
             $searchTerm = $request->query('search');
 
-            $query = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
+            $query = Ads::with(['user', 'main_location', 'sub_location', 'category', 'subcategory'])
                 ->where('status', 1)
                 ->where(function ($q) {
                     $q->whereNull('package_expire_at')
@@ -53,8 +55,19 @@ class AdsCategoryApiController extends Controller
             $ads = $query->orderBy('created_at', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
 
+            // Map over ads items to add posted_by details
+            $itemsWithPostedBy = collect($ads->items())->map(function ($ad) {
+                return array_merge($ad->toArray(), [
+                    'posted_by' => [
+                        'name' => trim(($ad->user->first_name ?? '') . ' ' . ($ad->user->last_name ?? '')),
+                        'email' => $ad->user->email ?? 'N/A',
+                        'phone' => $ad->user->phone_number ?? 'N/A',
+                    ],
+                ]);
+            });
+
             $responseData = [
-                'items' => $ads->items(),
+                'items' => $itemsWithPostedBy,
                 'meta'  => [
                     'current_page' => $ads->currentPage(),
                     'last_page' => $ads->lastPage(),
@@ -101,5 +114,86 @@ class AdsCategoryApiController extends Controller
 
             return $apiResponse->error(null, 'Failed to perform search', 500);
         }
+    }
+
+    public function apiShowDetails($adsId)
+    {
+        $ad = Ads::where('adsId', $adsId)
+            ->with(['main_location', 'sub_location', 'user', 'category'])
+            ->firstOrFail();
+
+        $brand = BrandsModels::find($ad->brand);
+        $model = BrandsModels::find($ad->model);
+        $subImages = json_decode($ad->subImage, true);
+        $ad->view_count += 1;
+        $ad->save();
+
+        $banners = Banners::where('type', 0)->get();
+        $otherbanners = Banners::where('type', 1)->get();
+
+        $relatedAds = Ads::where('adsId', '!=', $ad->adsId)
+            ->where(function ($query) use ($ad) {
+                $query->where('cat_id', $ad->cat_id)
+                    ->where('sub_cat_id', $ad->sub_cat_id)
+                    ->where('location', $ad->location);
+            })
+            ->where(function ($query) {
+                $query->whereNull('package_expire_at')
+                    ->orWhere('package_expire_at', '>=', Carbon::now());
+            })
+            ->latest()
+            ->take(12)
+            ->get();
+
+        // Fetch additional ads if related ads are less than 12 (same as your current logic)
+        if ($relatedAds->count() < 12) {
+            $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
+                ->where(function ($query) use ($ad) {
+                    $query->where('cat_id', $ad->cat_id)
+                        ->where('sub_cat_id', $ad->sub_cat_id);
+                })
+                ->latest()
+                ->take(12 - $relatedAds->count())
+                ->get();
+            $relatedAds = $relatedAds->merge($additionalAds);
+        }
+        if ($relatedAds->count() < 12) {
+            $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
+                ->where(function ($query) use ($ad) {
+                    $query->where('cat_id', $ad->cat_id)
+                        ->where('location', $ad->location);
+                })
+                ->latest()
+                ->take(12 - $relatedAds->count())
+                ->get();
+            $relatedAds = $relatedAds->merge($additionalAds);
+        }
+        if ($relatedAds->count() < 12) {
+            $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
+                ->where('cat_id', $ad->cat_id)
+                ->latest()
+                ->take(12 - $relatedAds->count())
+                ->get();
+            $relatedAds = $relatedAds->merge($additionalAds);
+        }
+        if ($relatedAds->count() < 12) {
+            $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
+                ->where('location', $ad->location)
+                ->latest()
+                ->take(12 - $relatedAds->count())
+                ->get();
+            $relatedAds = $relatedAds->merge($additionalAds);
+        }
+
+        return response()->json([
+            'ad' => $ad,
+            'brand' => $brand,
+            'model' => $model,
+            'mainImage' => $ad->mainImage,
+            'subImages' => $subImages,
+            'banners' => $banners,
+            'otherbanners' => $otherbanners,
+            'relatedAds' => $relatedAds,
+        ]);
     }
 }

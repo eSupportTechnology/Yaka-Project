@@ -288,7 +288,4 @@ class AdsController extends Controller
         return view('newFrontend.search-results', compact('ads')); // Adjust the view path if necessary
     }
 
-
-
-
 }

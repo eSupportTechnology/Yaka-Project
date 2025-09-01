@@ -13,11 +13,11 @@ use App\Http\Controllers\apiMobile\PackageApiController;
 use App\Http\Controllers\apiMobile\StaffApiController;
 use App\Http\Controllers\apiMobile\UserAdsApiController;
 use App\Http\Controllers\apiMobile\UserApiController;
+use App\Http\Controllers\frontend\AdsController;
 use App\Http\Controllers\frontend\UserAdsController;
 use App\Http\Controllers\GeminiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\AdsController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\BoostingController;
 use App\Http\Controllers\api\AdPostController;
@@ -114,6 +114,9 @@ Route::get('/search', [AdsCategoryApiController::class, 'searchApi']);
 
 Route::post('/user-ad-posts', [UserAdsApiController::class, 'store']);
 // or your API auth middleware
+
+
+Route::get('/ads/{adsId}', [AdsCategoryApiController::class, 'apiShowDetails']);
 
 
 Route::middleware('auth:api')->group(function () {
