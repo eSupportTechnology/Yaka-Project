@@ -421,4 +421,25 @@ class UserAdsController extends Controller
         }
         return $number;
     }
+
+    public function getBrandsByCategoryAndSubcategory(Request $request)
+    {
+        $cat_id = $request->query('cat_id');
+        $sub_cat_id = $request->query('sub_cat_id');
+
+        if (!$cat_id || !$sub_cat_id) {
+            return response()->json(['error' => 'cat_id and sub_cat_id are required'], 400);
+        }
+
+        $subcategory = Category::where('id', $sub_cat_id)->where('mainId', $cat_id)->first();
+        if (!$subcategory) {
+            return response()->json(['error' => 'Invalid category or subcategory'], 400);
+        }
+
+        $brands = BrandsModels::where('sub_cat_id', $sub_cat_id)
+            ->where('brandsId', 0)
+            ->get();
+
+        return response()->json(['brands' => $brands]);
+    }
 }
