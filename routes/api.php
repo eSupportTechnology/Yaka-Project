@@ -13,6 +13,7 @@ use App\Http\Controllers\apiMobile\PackageApiController;
 use App\Http\Controllers\apiMobile\StaffApiController;
 use App\Http\Controllers\apiMobile\UserAdsApiController;
 use App\Http\Controllers\apiMobile\UserApiController;
+use App\Http\Controllers\frontend\UserAdsController;
 use App\Http\Controllers\GeminiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -240,6 +241,8 @@ Route::post('/verify/registration-otp', [AuthControllerMobile::class, 'verifyReg
 Route::get('/get/districts', [CommonControllerMobile::class, 'getDistricts']); // Get all districts or a district with cities using district_id query param
 
 Route::post('/generate-description', [GeminiController::class, 'generateDescription']);
+
+Route::get('/brands', [UserAdsController::class, 'getBrandsByCategoryAndSubcategory']);
 
 /**
  * Ad Post routes
