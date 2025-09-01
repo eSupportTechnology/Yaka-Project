@@ -422,6 +422,7 @@ class UserAdsController extends Controller
         return $number;
     }
 
+
     public function getBrandsByCategoryAndSubcategory(Request $request)
     {
         $cat_id = $request->query('cat_id');
