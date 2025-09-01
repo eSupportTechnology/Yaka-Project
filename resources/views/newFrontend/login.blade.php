@@ -111,6 +111,11 @@
                         <div class="form-group message-btn">
                             <button type="submit" class="theme-btn-one">Login Now</button>
                         </div>
+
+                        <div class="othre-text right">
+                            <p><a href="{{ route('password.request') }}" class="theme-btn-reset">Forgot Password?</a></p>
+                        </div>
+
                     </form>
                     <div class="other-content centred">
                         <div class="text"><span>or</span></div>

@@ -48,6 +48,8 @@ Route::get('/', [HomeController::class, 'index'])->name('/');
 
 Route::post('/register', [RegisteredUserController::class, 'register']);
 
+Route::get('/password-reset', [CustomAuthController::class, 'passwordReset'])->name('password.request');
+
 
 
 Route::get('/',[HomeController::class,'home'])->name('/');
