@@ -274,9 +274,9 @@
                                         <label>New Password</label>
                                         <div class="password-input-wrapper">
                                             <input type="password" name="password" id="password" required>
-                                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
-                                                <i class="fas fa-eye-slash"></i>
-                                            </button>
+{{--                                            <button type="button" class="password-toggle" onclick="togglePassword('password')">--}}
+{{--                                                <i class="fas fa-eye-slash"></i>--}}
+{{--                                            </button>--}}
                                         </div>
                                         <div class="error-message" id="password-error"></div>
                                     </div>
@@ -284,9 +284,9 @@
                                         <label>Confirm Password</label>
                                         <div class="password-input-wrapper">
                                             <input type="password" name="password_confirmation" id="password_confirmation" required>
-                                            <button type="button" class="password-toggle" onclick="togglePassword('password_confirmation')">
-                                                <i class="fas fa-eye-slash"></i>
-                                            </button>
+{{--                                            <button type="button" class="password-toggle" onclick="togglePassword('password_confirmation')">--}}
+{{--                                                <i class="fas fa-eye-slash"></i>--}}
+{{--                                            </button>--}}
                                         </div>
                                         <div class="error-message" id="confirm-password-error"></div>
                                     </div>
