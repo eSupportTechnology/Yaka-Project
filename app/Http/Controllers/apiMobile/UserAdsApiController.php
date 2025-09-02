@@ -34,15 +34,6 @@ class UserAdsApiController extends Controller
     public function store(Request $request)
     {
         try {
-            // Check authentication
-            if (!auth()->check()) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'You must be authenticated to post an ad.',
-                    'data' => null
-                ], 401);
-            }
-
             // Get query parameters
             $cat_id = $request->query('cat_id');
             $sub_cat_id = $request->query('sub_cat_id');
@@ -67,8 +58,9 @@ class UserAdsApiController extends Controller
                 $request->merge(['package_type' => '0']);
             }
 
-            // Base validation rules
+            // Base validation rules with user_id required from frontend
             $validationRules = array_merge([
+                'user_id' => 'required|integer|exists:users,id', // User ID from frontend
                 'title' => 'required|string|max:255',
                 'price' => 'required|numeric',
                 'description' => 'required|string',
@@ -105,8 +97,20 @@ class UserAdsApiController extends Controller
                 'mobile_number' => 'nullable|string|max:20',
             ], $dynamicRules);
 
-            // Additional validation for staff
-            if (auth()->user()->roles === 'staff') {
+            // Get user from frontend user_id
+            $frontendUserId = $request->input('user_id');
+            $user = User::find($frontendUserId);
+
+            if (!$user) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Invalid user ID provided.',
+                    'data' => null
+                ], 400);
+            }
+
+            // Additional validation for staff users
+            if ($user->roles === 'staff') {
                 $validationRules = array_merge($validationRules, [
                     'user_first_name' => 'required|string|max:255',
                     'user_last_name' => 'required|string|max:255',
@@ -128,30 +132,30 @@ class UserAdsApiController extends Controller
             $validated = $validator->validated();
 
             // Handle user creation for staff
-            $userId = auth()->user()->id;
+            $userId = $validated['user_id']; // Get from frontend
             $createdByStaffId = null;
-            $userPhoneNumber = auth()->user()->phone_number;
+            $userPhoneNumber = $user->phone_number;
 
-            if (auth()->user()->roles === 'staff') {
+            if ($user->roles === 'staff') {
                 $checkUser = User::where('phone_number', $validated['user_phone_number'])->first();
                 if ($checkUser) {
                     $userId = $checkUser->id;
                 } else {
                     // Create new user
-                    $user = new User();
-                    $user->first_name = $validated['user_first_name'];
-                    $user->last_name = $validated['user_last_name'];
-                    $user->email = $validated['user_email'] ?? 'N/A';
-                    $user->phone_number = $this->makeMobileNumberFormat($validated['user_phone_number']);
-                    $user->roles = 'user';
-                    $user->created_by = 2;
-                    $user->active_status = 1;
-                    $user->password = Hash::make('12345678');
-                    $user->save();
+                    $newUser = new User();
+                    $newUser->first_name = $validated['user_first_name'];
+                    $newUser->last_name = $validated['user_last_name'];
+                    $newUser->email = $validated['user_email'] ?? 'N/A';
+                    $newUser->phone_number = $this->makeMobileNumberFormat($validated['user_phone_number']);
+                    $newUser->roles = 'user';
+                    $newUser->created_by = 2;
+                    $newUser->active_status = 1;
+                    $newUser->password = Hash::make('12345678');
+                    $newUser->save();
 
-                    $userId = $user->id;
+                    $userId = $newUser->id;
                 }
-                $createdByStaffId = auth()->user()->id;
+                $createdByStaffId = $validated['user_id']; // Staff user ID from frontend
                 $userPhoneNumber = $validated['user_phone_number'];
 
                 Log::info('New user created by staff', [
@@ -283,15 +287,16 @@ class UserAdsApiController extends Controller
             Log::info('Ad details saved successfully', [
                 'ad_id' => $ad->adsId,
                 'user_id' => $userId,
-                'created_by_staff_id' => $createdByStaffId
+                'created_by_staff_id' => $createdByStaffId,
+                'frontend_user_id' => $frontendUserId
             ]);
 
-            // Send SMS notification
-            if (auth()->user()->roles != 'staff') {
+            // Send SMS notification (only if not staff posting for others)
+            if ($user->roles != 'staff') {
                 OtpService::sendSingleSms($userPhoneNumber, "Your ad has been successfully submitted! It will go live after admin approval. Thank you for using our platform.");
             }
 
-            $successMessage = auth()->user()->roles === 'staff' ?
+            $successMessage = $user->roles === 'staff' ?
                 'User created and ad posted successfully!' :
                 'Ad posted successfully!';
 
@@ -300,8 +305,11 @@ class UserAdsApiController extends Controller
                 'message' => $successMessage,
                 'data' => [
                     'ad_id' => $ad->adsId,
-                    'ad' => $ad->load('details'), // Include ad details if needed
+                    'ad' => $ad->load('details'),
                     'requires_payment' => false,
+                    'user_id' => $userId,
+                    'created_for_user_id' => $userId,
+                    'created_by_user_id' => $frontendUserId
                 ]
             ], 201);
 
@@ -320,7 +328,7 @@ class UserAdsApiController extends Controller
     }
 
     /**
-     * Format mobile number (you'll need to implement this method)
+     * Format mobile number
      */
     private function makeMobileNumberFormat($phoneNumber)
     {
