@@ -59,7 +59,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/user-ad-posts', [UserAdsApiController::class, 'store']);
+});
 
 Route::get('/ping', function () {
     return response()->json([
@@ -112,7 +114,7 @@ Route::get('/browse-ads', [AdsCategoryApiController::class, 'browseAdsApi']);
 
 Route::get('/search', [AdsCategoryApiController::class, 'searchApi']);
 
-Route::post('/user-ad-posts', [UserAdsApiController::class, 'store']);
+//Route::post('/user-ad-posts', [UserAdsApiController::class, 'store']);
 // or your API auth middleware
 
 
