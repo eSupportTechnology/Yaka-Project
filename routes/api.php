@@ -59,9 +59,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::post('/user-ad-posts', [UserAdsApiController::class, 'store']);
-});
+Route::post('/user-ad-posts', [UserAdsApiController::class, 'store']);
 
 Route::get('/ping', function () {
     return response()->json([
