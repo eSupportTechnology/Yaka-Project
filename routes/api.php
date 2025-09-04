@@ -13,6 +13,7 @@ use App\Http\Controllers\apiMobile\PackageApiController;
 use App\Http\Controllers\apiMobile\StaffApiController;
 use App\Http\Controllers\apiMobile\UserAdsApiController;
 use App\Http\Controllers\apiMobile\UserApiController;
+use App\Http\Controllers\ExpiredAdsController;
 use App\Http\Controllers\frontend\AdsController;
 use App\Http\Controllers\frontend\UserAdsController;
 use App\Http\Controllers\GeminiController;
@@ -58,6 +59,12 @@ use App\Http\Controllers\adminPanel\dashboardController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+    Route::delete('/cleanup/expired-ads', [ExpiredAdsController::class, 'deleteExpiredAds']);
+    Route::get('/cleanup/expired-ads/count', [ExpiredAdsController::class, 'getExpiredAdsCount']);
+    Route::get('/cleanup/expired-ads/list', [ExpiredAdsController::class, 'getExpiredAdsList']);
+
+
 Route::post('/ads/store', [AdsController::class, 'apiStore'])->name('api.ads.store');
 Route::post('/user-ad-posts', [UserAdsApiController::class, 'store']);
 
