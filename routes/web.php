@@ -2,6 +2,7 @@
 
 use App\Models\BrandsModels;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Laravel\Telescope\Telescope;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
