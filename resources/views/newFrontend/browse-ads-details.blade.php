@@ -192,6 +192,8 @@
                             @endif
 
 
+
+
                             @if ($ad->condition)
                                 <p class="mb-0"><strong> @lang('messages.Condition'):</strong> {{ $ad->condition }}</p>
                             @endif
