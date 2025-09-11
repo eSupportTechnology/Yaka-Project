@@ -448,7 +448,7 @@
                 @endforeach
             </div>
     </section>
-    <section class="superad-section">
+    <section class="superad-section ">
         <div class="row auto-container">
             <div class="col-md-6 d-flex flex-column-reverse justify-content-center">
                 <div class="first-row">
