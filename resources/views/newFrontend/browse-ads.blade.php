@@ -455,6 +455,16 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+
+        .sidebar-search,
+        .sidebar-category {
+            font-weight: bold;
+        }
+
+        .sidebar-search *,
+        .sidebar-category * {
+            font-weight: bold !important;
+        }
         .pagination {
             display: flex;
             gap: 6px;
@@ -648,7 +658,7 @@
                                 <input type="hidden" name="location" id="location">
                                 <input type="hidden" name="city" id="cityId">
                                 <div class="form-group">
-                                    <input type="search" name="search-field" style="padding-right: 20px"
+                                    <input type="search" name="search-field" style="padding-right: 25px; padding-left: 5px;"
                                         placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
                                         oninput="this.form.submit()">
                                     <button type="submit" style="display:none;"><i class="icon-2"></i></button>
@@ -688,9 +698,10 @@
                             </form>
                             <div id="location-filter">
                                 <!-- District Search -->
-                                <div class="district-section form-group">
+                                <div class="district-section form-group" style="position: relative;">
                                     <input class="form-control" type="text" id="district-search"
-                                        value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
+                                        value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter" style="padding-left: 35px; position: relative;">
+                                    <i class="fas fa-map-marker-alt" style="position: absolute; left: 12px; top: 12px; color: #b30000; z-index: 999; pointer-events: none;"></i>
                                     <div id="district-results" class="results-container"></div>
                                 </div>
 
