@@ -193,7 +193,7 @@
                     <div class="content-one single-box">
                         <div class="text">
                             <h3 style="color:rgb(176, 5, 5)">
-                                @lang('messages.Rs') {{ $ad->price }}
+                                @lang('messages.Rs') {{ number_format($ad->price) }}
                                 <span style="font-size: 13px; font-style: italic;" class="text-muted">
                                     @lang('messages.' . $ad->price_type)
                                 </span>
