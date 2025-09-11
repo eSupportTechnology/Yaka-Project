@@ -120,16 +120,16 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <div class="auto-container">
-                    <div class="clearfix footer-inner">
-                        <div class="copyright pull-left"><p>Copyright © 2025 . All Rights Reserved.</p></div>
-                        <ul class="clearfix footer-nav pull-right">
-                            {{--  <li><a href="index.html"></a></li>
-                            <li><a href="index.html"></a></li>  --}}
-                        </ul>
-                    </div>
-                </div>
-            </div>
+     <div class="footer-bottom">
+         <div class="auto-container">
+             <div class="footer-inner">
+                 <div class="copyright">
+                     <p>Copyright © 2025. All Rights Reserved. Powered by
+                         <a href="https://esupport.live/" target="_blank" class="powered-by-link">eSupport</a>
+                     </p>
+                 </div>
+             </div>
+         </div>
+     </div>
         </footer>
         <!-- main-footer end -->
