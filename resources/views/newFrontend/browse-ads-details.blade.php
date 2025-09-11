@@ -148,7 +148,7 @@
                             </p>
                         </div>
 
-                        <div class="view-count-container">
+                        <div class="view-count-container">Ö
                             <i class="fas fa-eye" style="color:rgb(176, 5, 5)"></i>
                             <span>
                                 {{ $ad->view_count }}
@@ -199,33 +199,32 @@
                                 </span>
                             </h3>
 
+                            <div style="background-color: #f8d7da; padding: 15px; border-radius: 5px; margin: 10px 0; width: 60%; max-width: 400px;">
+                                @if ($brand)
+                                    <p class="mb-2" style="color: #721c24;"><strong> @lang('messages.Brand'):</strong> {{ $brand->name }}</p>
+                                @endif
+
+                                @if ($model)
+                                    <p class="mb-2" style="color: #721c24;"><strong> @lang('messages.Model'):</strong> {{ $model->name }}</p>
+                                @endif
+
+                                @if ($ad->condition)
+                                    <p class="mb-2" style="color: #721c24;"><strong> @lang('messages.Condition'):</strong> {{ $ad->condition }}</p>
+                                @endif
+
+                                @foreach ($ad->adDetail as $detail)
+                                    @if ($detail->value)
+                                        <p class="mb-2" style="color: #721c24;"><strong>{{ $detail->additional_info }}:</strong>
+                                            {{ $detail->value }}</p>
+                                    @endif
+                                @endforeach
+                            </div>
+
                             <h6>@lang('messages.Product Description')</h6>
                             <div class="mb-1">
                                 {!! $ad->description !!}
                             </div>
                             {{-- <p class="mb-1">{{ $ad->description }}</p> --}}
-
-                            @if ($brand)
-                                <p class="mb-0"><strong> @lang('messages.Brand'):</strong> {{ $brand->name }}</p>
-                            @endif
-
-                            @if ($model)
-                                <p class="mb-0"><strong> @lang('messages.Model'):</strong> {{ $model->name }}</p>
-                            @endif
-
-
-
-
-                            @if ($ad->condition)
-                                <p class="mb-0"><strong> @lang('messages.Condition'):</strong> {{ $ad->condition }}</p>
-                            @endif
-
-                            @foreach ($ad->adDetail as $detail)
-                                @if ($detail->value)
-                                    <p class="mb-0"><strong>{{ $detail->additional_info }}:</strong>
-                                        {{ $detail->value }}</p>
-                                @endif
-                            @endforeach
                         </div>
                     </div>
                 </div>
