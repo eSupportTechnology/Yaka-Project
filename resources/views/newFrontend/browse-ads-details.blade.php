@@ -125,7 +125,7 @@
                             </p>
                         </div>
 
-                        <div class="view-count-container">Ö
+                        <div class="view-count-container">
                             <i class="fas fa-eye" style="color:rgb(176, 5, 5)"></i>
                             <span>
                                 {{ $ad->view_count }}
