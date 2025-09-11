@@ -8,9 +8,16 @@ $(document).ready(function() {
         cityId = $(this).data('id');
         console.log(cityId);
 
-        $('#location').val(districtId);
-        $('#cityId').val(cityId);
-        $('#search-form').submit();
+        // Update both sidebar and top search forms
+        $('#location, #location-top').val(districtId);
+        $('#cityId, #cityId-top').val(cityId);
+        
+        // Submit the first available form
+        if ($('#search-form').length) {
+            $('#search-form').submit();
+        } else if ($('#search-form-top').length) {
+            $('#search-form-top').submit();
+        }
     });
 
 
