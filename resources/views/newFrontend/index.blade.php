@@ -323,10 +323,12 @@
         .carousel-slide-sup.active {
             display: block;
         }
+
         .carousel-thumbnails {
             overflow-x: auto;
             padding: 10px 0;
         }
+
         .carousel-thumbnails {
             justify-content: center;
             flex-wrap: wrap;
@@ -341,6 +343,7 @@
         .super-thumb.active-thumb {
             border-color: red;
         }
+
         .top-thumb {
             transition: border 0.3s ease;
             border: 2px solid transparent;
@@ -349,6 +352,7 @@
         .top-thumb.active-thumb {
             border-color: green;
         }
+
         .top-thumb {
             transition: border 0.3s ease;
         }
@@ -356,16 +360,17 @@
         .active-thumb {
             border: 2px solid red !important;
         }
+
         @media (max-width: 399px) {
             #topAdsThumbnails {
                 display: none !important;
             }
+
             #superAdsThumbnails {
                 display: none !important;
             }
         }
-
-</style>
+    </style>
 
     </style>
 
@@ -448,60 +453,66 @@
                 @endforeach
             </div>
     </section>
-    <section class="superad-section ">
-        <div class="row auto-container">
-            <div class="col-md-6 d-flex flex-column-reverse justify-content-center">
-                <div class="first-row">
-                    <div id="superAdsCarousel" class="custom-carousel-container">
-                        @foreach ($superAds as $index => $adss)
-                            <div class="custom-slide @if ($index == 0) active @endif"
-                                style="position: relative; border: 4px solid #0b128e; border-radius: 4px; overflow: hidden; padding: 0; margin: 2px; animation: blinkBlue 1.5s infinite; height: 500px; background-color: white; display: none;">
+    <section class="superad-section">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <h2 class="heading"><b>@lang('messages.indextitle') <br>
+                        @lang('messages.Best') <span> @lang('messages.Super')</span></b></h2>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-md-10">
+                        <p style="font-size:16px; text-align:justify;">@lang('messages.para2')</p>
+                    </div>
+                </div>
+                @foreach ($superAds as $index => $adss)
+                    <div class="col-md-5 mb-4">
+                        <div class="superad-card"
+                            style="position: relative; border: 4px solid #0b128e; border-radius: 8px; overflow: hidden; height: 500px; background-color: white; animation: blinkBlue 1.5s infinite;">
 
-                                <a href="/browse_ads_details/{{ $adss->adsId }}" style="display: block; height: 100%;">
-                                    <img src="{{ asset('storage/'.$adss->mainImage) }}"
-                                        class="d-block w-100"
-                                        style="height: 100%; width: 100%; object-fit: contain; background-color: white;"
-                                        alt="Slide {{ $index + 1 }}">
+                            <a href="/browse_ads_details/{{ $adss->adsId }}" style="display: block; height: 100%;">
+                                <img src="{{ asset('storage/' . $adss->mainImage) }}" class="d-block w-100 h-100"
+                                    style="object-fit: contain; background-color: white;" alt="Ad {{ $index + 1 }}">
 
-                                    <button class="sale"
-                                        style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                                        Sale
-                                    </button>
+                                <button class="sale"
+                                    style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                    Sale
+                                </button>
 
-                                    <div class="badge" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
-                                        <img src="{{ asset('02.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
-                                    </div>
-
-                                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
-                                                background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
-                                                border-radius: 5px;">
-                                    </div>
-                                </a>
-
-                                <!-- Ad Details (must be inside the slide) -->
-                                <div class="p-2 details"
-                                    style="position: absolute; bottom: 0; left: 0; width: 100%;
-                                        background: rgba(0, 0, 0, 0.6); color: white; z-index: 3;
-                                        text-align: center;">
-
-                                    <p>{{ $adss->category->name ?? 'Uncategorized' }} &raquo; {{ $adss->subcategory->name ?? '' }}</p>
-
-                                    <h3 style="font-weight: bold; font-size: 1.1rem; color: white;">
-                                        {{ $adss->title }}
-                                    </h3>
-
-                                    <p class="price" style="color: white; font-size: 1.2rem;">
-                                        @lang('messages.Rs') {{ number_format($adss->price, 2) }}
-                                    </p>
-
-                                    <p><i class="fas fa-clock"></i> {{ $adss->created_at->diffForHumans() }}</p>
+                                <div class="badge" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+                                    <img src="{{ asset('02.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
                                 </div>
 
-                            </div>
-                        @endforeach
-                    </div>
+                                <div
+                                    style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+                                        background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+                                        border-radius: 5px;">
+                                </div>
+                            </a>
 
-                    <div class="mt-3 d-flex justify-content-center gap-2 flex-wrap carousel-thumbnails" id="superAdsThumbnails" style="gap: 10px;">
+                            <!-- Ad Details -->
+                            <div class="p-2 details"
+                                style="position: absolute; bottom: 0; left: 0; width: 100%;
+                                background: rgba(0, 0, 0, 0.6); color: white; z-index: 3;
+                                text-align: center;">
+
+                                <p>{{ $adss->category->name ?? 'Uncategorized' }} &raquo;
+                                    {{ $adss->subcategory->name ?? '' }}</p>
+
+                                <h3 style="font-weight: bold; font-size: 1.1rem; color: white;">
+                                    {{ $adss->title }}
+                                </h3>
+
+                                <p class="price" style="color: white; font-size: 1.2rem;">
+                                    @lang('messages.Rs') {{ number_format($adss->price, 2) }}
+                                </p>
+
+                                <p><i class="fas fa-clock"></i> {{ $adss->created_at->diffForHumans() }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            {{-- <div class="mt-3 d-flex justify-content-center gap-2 flex-wrap carousel-thumbnails" id="superAdsThumbnails" style="gap: 10px;">
                         @foreach ($superAds as $index => $adss)
                         <img src="{{ asset('storage/'.$adss->mainImage) }}"
                             data-index="{{ $index }}"
@@ -509,16 +520,10 @@
                             class="super-thumb @if ($index == 0) active-thumb @endif"
                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; cursor: pointer; flex-shrink: 0; border: 2px solid red;">
                         @endforeach
-                    </div>
-                </div>
+                    </div> --}}
+        </div>
 
-
-                <div class="second-row">
-                    <p style="font-size:16px; text-align:justify;">@lang('messages.para2')
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-6 d-flex flex-column justify-content-start align-items-center ">
+        {{-- <div class="col-md-6 d-flex flex-column justify-content-start align-items-center ">
                 <div class="first-row">
                     <h2 class="heading"><b>@lang('messages.indextitle') <br>
                             @lang('messages.Best') <span> @lang('messages.Super')</span></b></h2>
@@ -538,12 +543,13 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </section>
     <section class="mt-5 topad-section">
         <div class="row auto-container">
-            <div class="col-md-6 d-flex flex-column justify-content-start align-items-center ">
+
+            {{-- <div class="col-md-6 d-flex flex-column justify-content-start align-items-center ">
                 <div class="first-row">
                     <h2 class="heading"><b>Top Ads</b></h2>
                 </div>
@@ -562,83 +568,83 @@
                         @endforeach
                     </div>
                 </div>
+            </div> --}}
+            <div class="row justify-content-center text-center">
+                <div class="first-row">
+                    <h2 class="heading"><b>Top Ads</b></h2>
+                </div>
+                <div class="row justify-content-center mt-4">
+                <div class="col-md-10">
+                    <p style="font-size:16px; text-align:justify;">@lang('messages.para1')</p>
+                </div>
             </div>
-            <div class="col-md-6 d-flex flex-column-reverse justify-content-center">
-                <div class="second-row">
+                @foreach ($topAds->take(2) as $index => $ad)
+                    <div class="col-md-5 mb-4">
+                        <div class="topad-card"
+                            style="position: relative; border: 4px solid #00ff44; border-radius: 8px; overflow: hidden;
+                               height: 500px; background-color: white; animation: blinkGreen 1.5s infinite;">
 
-                    <!-- Ad Section -->
-                    <div id="topAds" class="carousel slide">
-                        <div class="carousel-inner">
+                            <!-- Link to Ad Details -->
+                            <a href="/browse_ads_details/{{ $ad->adsId }}"
+                                style="display: block; height: 100%; width: 100%;">
+                                <!-- Full-size Image -->
+                                <img src="{{ asset('storage/' . $ad->mainImage) }}" class="d-block w-100 h-100"
+                                    style="object-fit: contain; background-color: white;" alt="Top Ad Image">
 
-                            @foreach ($topAds as $index => $ad)
-                                <div class="carousel-item @if ($index == 0) active @endif"
-                                    style="position: relative; border: 4px solid #00ff44; border-radius: 4px; overflow: hidden;
-                                        padding: 0; margin: 2px; animation: blinkGreen 1.5s infinite; height: 500px; background-color: white;">
+                                <!-- Sale Badge -->
+                                <button class="sale"
+                                    style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px;
+                                       border-radius: 2px; background-color: red; color: white; font-weight: bold;
+                                       font-size: 12px; border: none; z-index: 2;">
+                                    Sale
+                                </button>
 
-                                    <!-- Link to Ad Details -->
-                                    <a href="/browse_ads_details/{{ $ad->adsId }}" style="display: block; height: 100%; width: 100%;">
-                                        <!-- Full-size Image -->
-                                        <img src="{{ asset('storage/'.$ad->mainImage) }}"
-                                            class="d-block w-100"
-                                            style="height: 100%; width: 100%; object-fit: contain; background-color: white;"
-                                            alt="Top Ad Image">
-
-                                        <!-- Sale Badge -->
-                                        <button class="sale"
-                                            style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px;
-                                                background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                                            Sale
-                                        </button>
-
-                                        <!-- Top Ad Badge -->
-                                        <div class="badge" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
-                                            <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
-                                        </div>
-
-                                        <!-- Overlay Gradient -->
-                                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
-                                                    background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent); border-radius: 5px;">
-                                        </div>
-
-                                        <!-- Ad Details Overlay -->
-                                        <div class="p-2 details"
-                                            style="position: absolute; bottom: 0; left: 0; width: 100%;
-                                                background: rgba(0, 0, 0, 0.6); color: white; z-index: 3; text-align: center;">
-                                            <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo; {{ $ad->subcategory->name ?? '' }}</p>
-                                            <h3 style="font-weight: bold; font-size: 1.1rem; color: white;">
-                                                {{ $ad->title }}
-                                            </h3>
-                                            <p class="price" style="color: white; font-size: 1.2rem;">
-                                                @lang('messages.Rs') {{ number_format($ad->price, 2) }}
-                                            </p>
-                                            <p><i class="fas fa-clock"></i> {{ $ad->created_at->diffForHumans() }}</p>
-                                        </div>
-                                    </a>
+                                <!-- Top Ad Badge -->
+                                <div class="badge" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+                                    <img src="{{ asset('01.png') }}" alt="Top Ad" style="width: 20px; height: 20px;">
                                 </div>
-                            @endforeach
 
+                                <!-- Overlay Gradient -->
+                                <div
+                                    style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+                                        background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+                                        border-radius: 5px;">
+                                </div>
+
+                                <!-- Ad Details Overlay -->
+                                <div class="p-2 details"
+                                    style="position: absolute; bottom: 0; left: 0; width: 100%;
+                                       background: rgba(0, 0, 0, 0.6); color: white; z-index: 3; text-align: center;">
+                                    <p>{{ $ad->category->name ?? 'Uncategorized' }} &raquo;
+                                        {{ $ad->subcategory->name ?? '' }}</p>
+                                    <h3 style="font-weight: bold; font-size: 1.1rem; color: white;">
+                                        {{ $ad->title }}
+                                    </h3>
+                                    <p class="price" style="color: white; font-size: 1.2rem;">
+                                        @lang('messages.Rs') {{ number_format($ad->price, 2) }}
+                                    </p>
+                                    <p><i class="fas fa-clock"></i> {{ $ad->created_at->diffForHumans() }}</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
+                @endforeach
+            </div>
 
-                    <!-- Thumbnails -->
-                    <div class="mt-3 d-flex justify-content-center flex-wrap" id="topAdsThumbnails"
+            <!-- Thumbnails -->
+            {{-- <div class="mt-3 d-flex justify-content-center flex-wrap" id="topAdsThumbnails"
                         style="gap: 10px; margin-top: 20px; z-index: 10;">
 
                         @foreach ($topAds as $index => $ad)
-                                <img src="{{ asset('storage/'.$ad->mainImage) }}"
-                                    class="top-thumb @if ($index == 0) active-thumb @endif"
-                                    style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px; cursor: pointer; border: 2px solid #ccc;">
+                            <img src="{{ asset('storage/' . $ad->mainImage) }}"
+                                class="top-thumb @if ($index == 0) active-thumb @endif"
+                                style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px; cursor: pointer; border: 2px solid #ccc;">
                         @endforeach
 
-                    </div>
+                    </div> --}}
+            {{-- </div> --}}
 
-                </div>
 
-                <div class="second-row">
-                    <p style="font-size:16px; text-align:justify;">@lang('messages.para1')
-                    </p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -664,11 +670,13 @@
                                                 style="border: 4px solid red; border-radius: 4px; overflow: hidden; animation: blinkRed 1.5s infinite;">
                                                 <div class="image-box">
                                                     <figure class="image"><img
-                                                            src="{{ asset('storage/' . $ads->mainImage) }}" alt=""
+                                                            src="{{ asset('storage/' . $ads->mainImage) }}"
+                                                            alt=""
                                                             style="width: 370px; height: 220px; object-fit: contain;">
                                                     </figure>
 
-                                                    <div class="feature" style="background-color: rgb(171, 18, 18);">Urgent
+                                                    <div class="feature" style="background-color: rgb(171, 18, 18);">
+                                                        Urgent
                                                     </div>
 
                                                 </div>
@@ -730,7 +738,8 @@
                             <a href="{{ $banner->url }}" target="_blank">
                         @endif
                         <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                            <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                            <img src="{{ asset('banners/' . $banner->img) }}" class="mx-auto d-block"
+                                alt="Banner Image">
                         </div>
                         @if (isset($banner->url))
                             </a>
@@ -810,7 +819,7 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('#superAdsCarousel .custom-slide');
             const thumbnails = document.querySelectorAll('#superAdsThumbnails .super-thumb');
             let currentIndex = 0;
@@ -862,7 +871,7 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('#topAds .carousel-item');
             const thumbnails = document.querySelectorAll('#topAdsThumbnails .top-thumb');
             let currentIndex = 0;

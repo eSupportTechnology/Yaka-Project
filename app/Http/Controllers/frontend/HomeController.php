@@ -38,16 +38,16 @@ class HomeController extends Controller
         $superbanners = \App\Models\Banners::where('type', 1)->get();
 
         // Get Super Ads that are active and not expired
-        $superAds = Ads::with(['category', 'subcategory'])
-            ->where('ads_package', 6)
-            ->where('status', 1)
-            ->where(function($query) {
-                $query->whereNull('package_expire_at')
-                      ->orWhere('package_expire_at', '>=', now());
-            })
-            ->latest()
-            ->take(5)
-            ->get();
+        // $superAds = Ads::with(['category', 'subcategory'])
+        //     ->where('ads_package', 6)
+        //     ->where('status', 1)
+        //     ->where(function($query) {
+        //         $query->whereNull('package_expire_at')
+        //               ->orWhere('package_expire_at', '>=', now());
+        //     })
+        //     ->latest()
+        //     ->take(2)
+        //     ->get();
 
         // Get Top Ads that are active and not expired
         $topAds = Ads::with(['category', 'subcategory'])
@@ -58,7 +58,7 @@ class HomeController extends Controller
                       ->orWhere('package_expire_at', '>=', now());
             })
             ->latest()
-            ->take(10)
+            ->take(2)
             ->get();
 
         // Get Latest Ads that are active and not expired
@@ -81,7 +81,7 @@ class HomeController extends Controller
                       ->orWhere('package_expire_at', '>=', now());
             })
             ->latest()
-            ->take(10)
+            ->take(2)
             ->get();
         return view('newFrontend.index', compact('banners', 'categories', 'topAds', 'topbanners', 'latestAds', 'superbanners', 'superAds'));
     }
