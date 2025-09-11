@@ -7,7 +7,7 @@
             padding: 30px;
             text-align: center;
             color: white;
-            height: 400px;
+            height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
