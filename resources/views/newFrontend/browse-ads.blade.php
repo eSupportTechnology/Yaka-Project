@@ -1308,6 +1308,15 @@
                 image-rendering: crisp-edges;
             }
         }
+        /* Bold text for sidebar sections */
+        .sidebar-search * {
+            font-weight: bold !important;
+        }
+
+        .sidebar-category * {
+            font-weight: bold !important;
+            font-size: 13px !important;
+        }
     </style>
 
     <!-- Page Title -->
@@ -1396,7 +1405,10 @@
                                                     <input type="radio" name="category" value="all"
                                                            onchange="window.location='{{ route('browse-ads') }}'"
                                                         {{ !request()->input('category') ? 'checked' : '' }}>
-                                                    <span class="text-dark">@lang('messages.All Categories')</span>
+                                                    <span class="text-dark">
+                                                <i class="fas fa-th-large" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                                @lang('messages.All Categories')
+                                            </span>
 
                                                 </label>
                                             </li>
@@ -1407,7 +1419,30 @@
                                                         <input type="radio" name="category" value="{{ $category->id }}"
                                                                onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                             {{ request()->input('category') == $category->id ? 'checked' : '' }}>
-                                                        <span> @lang('messages.' . $category->name)</span>
+                                                        <span>
+                                                            @php
+                                                                $categoryIcons = [
+                                                                    'Electronics' => 'fas fa-laptop',
+                                                                    'Motor vehicles' => 'fas fa-car',
+                                                                    'Home, lands & buildings' => 'fas fa-home',
+                                                                    'Home & Garden' => 'fas fa-seedling',
+                                                                    'Pets' => 'fas fa-paw',
+                                                                    'Services' => 'fas fa-tools',
+                                                                    'Business And Industry' => 'fas fa-industry',
+                                                                    'leisure,kids items & sports' => 'fas fa-gamepad',
+                                                                    'Fancy & Cosmetics' => 'fas fa-gem',
+                                                                    'Daily Essentials' => 'fas fa-shopping-basket',
+                                                                    'Education' => 'fas fa-graduation-cap',
+                                                                    'Agriculture' => 'fas fa-tractor',
+                                                                    'Jobs & Overseas jobs' => 'fas fa-briefcase',
+                                                                    'Other Ads' => 'fas fa-list',
+                                                                    'Testing' => 'fas fa-flask'
+                                                                ];
+                                                                $iconClass = $categoryIcons[$category->name] ?? 'fas fa-tag';
+                                                            @endphp
+                                                            <i class="{{ $iconClass }}" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                                            @lang('messages.' . $category->name)
+                                                        </span>
                                                     </label>
 
                                                     @if ($category->subcategories->isNotEmpty())
@@ -1463,25 +1498,15 @@
                     <div class="default-sidebar category-sidebar">
                         <div class="sidebar-search sidebar-widget">
                             <div class="widget-title ">
-                                <h3>@lang('messages.Search')</h3>
+                                <h3>@lang('messages.Location')</h3>
                             </div>
                             <div class="widget-content">
-                                <form action="{{ route('browse-ads') }}" method="GET" class="search-form"
-                                      id="search-form">
-                                    <input type="hidden" name="location" id="location">
-                                    <input type="hidden" name="city" id="cityId">
-                                    <div class="form-group">
-                                        <input type="search" name="search-field" style="padding-right: 20px"
-                                               placeholder="@lang('messages.Search Keyword')..."
-                                               value="{{ request()->input('search-field') }}" oninput="this.form.submit()">
-                                        <button type="submit" style="display:none;"><i class="icon-2"></i></button>
-                                    </div>
-                                </form>
                                 <div id="location-filter">
                                     <!-- District Search -->
-                                    <div class="district-section form-group">
+                                    <div class="district-section form-group" style="position: relative;">
                                         <input class="form-control" type="text" id="district-search"
-                                               value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
+                                               value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter" style="padding-left: 35px; position: relative;">
+                                        <i class="fas fa-map-marker-alt" style="position: absolute; left: 12px; top: 12px; color: #b30000; z-index: 999; pointer-events: none;"></i>
                                         <div id="district-results" class="results-container"></div>
                                     </div>
 
@@ -1505,7 +1530,10 @@
                                             <input type="radio" name="category" value="all"
                                                    onchange="window.location='{{ route('browse-ads') }}'"
                                                 {{ !request()->input('category') ? 'checked' : '' }}>
-                                            <span class="text-dark">@lang('messages.All Categories')</span>
+                                            <span class="text-dark">
+                                                <i class="fas fa-th-large" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                                @lang('messages.All Categories')
+                                            </span>
 
                                         </label>
                                     </li>
@@ -1516,7 +1544,30 @@
                                                 <input type="radio" name="category" value="{{ $category->id }}"
                                                        onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                     {{ request()->input('category') == $category->id ? 'checked' : '' }}>
-                                                <span> @lang('messages.' . $category->name)</span>
+                                                <span>
+                                                    @php
+                                                        $categoryIcons = [
+                                                            'Electronics' => 'fas fa-laptop',
+                                                            'Motor vehicles' => 'fas fa-car',
+                                                            'Home, lands & buildings' => 'fas fa-home',
+                                                            'Home & Garden' => 'fas fa-seedling',
+                                                            'Pets' => 'fas fa-paw',
+                                                            'Services' => 'fas fa-tools',
+                                                            'Business And Industry' => 'fas fa-industry',
+                                                            'leisure,kids items & sports' => 'fas fa-gamepad',
+                                                            'Fancy & Cosmetics' => 'fas fa-gem',
+                                                            'Daily Essentials' => 'fas fa-shopping-basket',
+                                                            'Education' => 'fas fa-graduation-cap',
+                                                            'Agriculture' => 'fas fa-tractor',
+                                                            'Jobs & Overseas jobs' => 'fas fa-briefcase',
+                                                            'Other Ads' => 'fas fa-list',
+                                                            'Testing' => 'fas fa-flask'
+                                                        ];
+                                                        $iconClass = $categoryIcons[$category->name] ?? 'fas fa-tag';
+                                                    @endphp
+                                                    <i class="{{ $iconClass }}" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                                    @lang('messages.' . $category->name)
+                                                </span>
                                             </label>
 
                                             @if ($category->subcategories->isNotEmpty())
@@ -1548,14 +1599,21 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 content-side">
                     <div class="category-details-content">
                         <div class="clearfix item-shorting">
-                            <div class="text pull-left">
-                                <h6>@lang('messages.Buy, Sell, Rent or Find Anything in Sri Lanka')</h6>
-                                <p><span>@lang('messages.Search Results'):</span> @lang('messages.Showing')
-                                    {{ $ads->firstItem() }}-{{ $ads->lastItem() }} @lang('messages.of') {{ $ads->total() }}
-                                    @lang('messages.Listings')</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h6 style="margin: 0; display: inline-block;">@lang('messages.Buy, Sell, Rent or Find Anything in Sri Lanka')</h6>
+                                <form action="{{ route('browse-ads') }}" method="GET" class="search-form" id="search-form-main" style="display: flex; align-items: center; gap: 10px; margin: 0;">
+                                    <input type="hidden" name="location" id="location-main">
+                                    <input type="hidden" name="city" id="cityId-main">
+                                    <div class="form-group" style="margin: 0;">
+                                        <input type="search" name="search-field" style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 25px; width: 220px;"
+                                            placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
+                                            oninput="this.form.submit()">
+                                    </div>
+                                </form>
                             </div>
-                            <div class="clearfix right-column pull-right">
-                            </div>
+                            <p style="margin: 0; font-size: 12px; color: #666;"><span>@lang('messages.Search Results'):</span> @lang('messages.Showing')
+                                {{ $ads->firstItem() }}-{{ $ads->lastItem() }} @lang('messages.of') {{ $ads->total() }}
+                                @lang('messages.Listings')</p>
                         </div>
                         <div class="carousel-inner">
                             @php
