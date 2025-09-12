@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Models\BrandsModels;
 use App\Models\User;
+use App\Services\PusherNotificationService;
 use Carbon\Carbon;
 use App\Models\Ads;
 use App\Models\Package;
@@ -21,9 +22,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Pusher\Pusher;
 
 class UserAdsController extends Controller
 {
+
+    private $pusherService;
+
+    public function __construct(PusherNotificationService $pusherService)
+    {
+        $this->pusherService = $pusherService;
+    }
 
     public function ad_posts_categories(Request $request)
     {
@@ -346,6 +355,10 @@ class UserAdsController extends Controller
                 OtpService::sendSingleSms($userPhoneNumber, "Your ad has been successfully submitted! It will go live after admin approval. Thank you for using our platform.");
             }
 
+            $this->pusherService->sendNewAdNotification($ad, $userId, $cat_id, $location);
+
+
+
             $successMessage = auth()->user()->roles === 'staff' ?
                 'User created and ad posted successfully!' :
                 'Ad posted successfully!';
@@ -442,5 +455,63 @@ class UserAdsController extends Controller
             ->get();
 
         return response()->json(['brands' => $brands]);
+    }
+
+    private function sendPusherNotification($ad, $userId, $catId, $location)
+    {
+        try {
+            $user = User::find($userId);
+
+            $category = Category::find($catId);
+
+            $notificationData = [
+                'type' => 'new_ad_created',
+                'ad_id' => $ad->adsId,
+                'title' => $ad->title,
+                'price' => $ad->price,
+                'description' => substr($ad->description, 0, 100) . '...',
+                'main_image' => asset('storage/' . $ad->mainImage),
+                'category' => $category ? $category->name : 'Unknown',
+                'location' => $location,
+                'brand' => $ad->brand,
+                'model' => $ad->model,
+                'condition' => $ad->condition,
+                'post_type' => $ad->post_type,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->first_name . ' ' . $user->last_name,
+                    'phone' => $user->phone_number
+                ],
+                'created_at' => $ad->created_at->toISOString(),
+                'timestamp' => now()->timestamp
+            ];
+
+            $pusher = new Pusher(
+                config('broadcasting.connections.pusher.key'),
+                config('broadcasting.connections.pusher.secret'),
+                config('broadcasting.connections.pusher.app_id'),
+                [
+                    'cluster' => config('broadcasting.connections.pusher.options.cluster'),
+                    'useTLS' => true
+                ]
+            );
+
+            $pusher->trigger('new-ads', 'ad.created', $notificationData);
+
+            $pusher->trigger('category-' . $catId, 'ad.created', $notificationData);
+
+            $pusher->trigger('location-' . str_replace(' ', '-', strtolower($location)), 'ad.created', $notificationData);
+
+            Log::info('Pusher notification sent successfully', [
+                'ad_id' => $ad->adsId,
+                'channels' => ['new-ads', 'category-' . $catId, 'location-' . str_replace(' ', '-', strtolower($location))]
+            ]);
+
+        } catch (Exception $e) {
+            Log::error('Failed to send Pusher notification', [
+                'error' => $e->getMessage(),
+                'ad_id' => $ad->adsId ?? 'unknown'
+            ]);
+        }
     }
 }

@@ -10,6 +10,7 @@ use App\Models\PackageType;
 use App\Models\AdDetail;
 use App\Models\User;
 use App\Services\OtpService;
+use App\Services\PusherNotificationService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -25,10 +26,12 @@ use Illuminate\Support\Facades\Validator;
 class UserAdsApiController extends Controller
 {
     protected $apiResponse;
+    protected $pusherService;
 
-    public function __construct(ApiResponseService $apiResponse)
+    public function __construct(ApiResponseService $apiResponse, PusherNotificationService $pusherService)
     {
         $this->apiResponse = $apiResponse;
+        $this->pusherService = $pusherService;
     }
 
     public function store(Request $request)
@@ -295,6 +298,8 @@ class UserAdsApiController extends Controller
             if ($user->roles != 'staff') {
                 OtpService::sendSingleSms($userPhoneNumber, "Your ad has been successfully submitted! It will go live after admin approval. Thank you for using our platform.");
             }
+
+            $this->pusherService->sendNewAdNotification($ad, $userId, $cat_id, $location);
 
             $successMessage = $user->roles === 'staff' ?
                 'User created and ad posted successfully!' :
