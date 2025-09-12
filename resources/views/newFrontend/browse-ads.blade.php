@@ -641,56 +641,15 @@
 
                     <div class="sidebar-search sidebar-widget">
                         <div class="widget-title ">
-                            <h3>@lang('messages.Search')</h3>
+                            <h3>@lang('messages.Location')</h3>
                         </div>
                         <div class="widget-content">
-                            <form action="{{ route('browse-ads') }}" method="GET" class="search-form" id="search-form">
-                                <input type="hidden" name="location" id="location">
-                                <input type="hidden" name="city" id="cityId">
-                                <div class="form-group">
-                                    <input type="search" name="search-field" style="padding-right: 20px"
-                                        placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
-                                        oninput="this.form.submit()">
-                                    <button type="submit" style="display:none;"><i class="icon-2"></i></button>
-                                </div>
-                                {{-- <div class="form-group">
-                                    <i class="icon-3"></i>
-                                    <select class="wide" name="location" onchange="this.form.submit()">
-                                        <option data-display="@lang('messages.Select Location')">@lang('messages.Select Location')</option>
-                                        @foreach ($districts as $district)
-                                            @php
-                                                $locale = App::getLocale();
-                                                $districtName = 'name_' . $locale;
-                                            @endphp
-                                            <option value="{{ $district->id }}"
-                                                {{ request()->input('location') == $district->id ? 'selected' : '' }}>
-                                                {{ $district->$districtName }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
-                                {{-- City Dropdown --}}
-                                {{-- <div class="form-group">
-                                    <select class="wide" name="city" id="city" onchange="this.form.submit()">
-                                        <option data-display="@lang('messages.Select City')">@lang('messages.Select City')</option>
-                                        @foreach ($citys as $city)
-                                            @php
-                                                $locale = App::getLocale();
-                                                $cityName = 'name_' . $locale;
-                                            @endphp
-                                            <option value="{{ $city->id }}"
-                                                {{ request()->input('location') == $city->id ? 'selected' : '' }}>
-                                                {{ $city->$cityName }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
-                            </form>
                             <div id="location-filter">
                                 <!-- District Search -->
-                                <div class="district-section form-group">
+                                <div class="district-section form-group" style="position: relative;">
                                     <input class="form-control" type="text" id="district-search"
-                                        value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
+                                        value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter" style="padding-left: 35px; position: relative;">
+                                    <i class="fas fa-map-marker-alt" style="position: absolute; left: 12px; top: 12px; color: #b30000; z-index: 999; pointer-events: none;"></i>
                                     <div id="district-results" class="results-container"></div>
                                 </div>
 
@@ -798,6 +757,15 @@
                                 @lang('messages.Listings')</p>
                         </div>
                         <div class="clearfix right-column pull-right">
+                            <form action="{{ route('browse-ads') }}" method="GET" class="search-form" id="search-form-main" style="display: flex; align-items: center; gap: 10px;">
+                                <input type="hidden" name="location" id="location-main">
+                                <input type="hidden" name="city" id="cityId-main">
+                                <div class="form-group" style="margin: 0;">
+                                    <input type="search" name="search-field" style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 25px; width: 300px;"
+                                        placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
+                                        oninput="this.form.submit()">
+                                </div>
+                            </form>
                         </div>
                     </div>
 
