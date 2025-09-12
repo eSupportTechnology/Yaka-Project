@@ -1599,18 +1599,20 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 content-side">
                     <div class="category-details-content">
                         <div class="clearfix item-shorting">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <h6 style="margin: 0; display: inline-block;">@lang('messages.Buy, Sell, Rent or Find Anything in Sri Lanka')</h6>
+                            <h6 style="margin: 0 0 10px 0;">@lang('messages.Buy, Sell, Rent or Find Anything in Sri Lanka')</h6>
+
+                            <div style="display: flex; justify-content: center; margin-bottom: 10px;">
                                 <form action="{{ route('browse-ads') }}" method="GET" class="search-form" id="search-form-main" style="display: flex; align-items: center; gap: 10px; margin: 0;">
                                     <input type="hidden" name="location" id="location-main">
                                     <input type="hidden" name="city" id="cityId-main">
                                     <div class="form-group" style="margin: 0;">
-                                        <input type="search" name="search-field" style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 25px; width: 220px;"
+                                        <input type="search" name="search-field" style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 20px; width: 600px;"
                                             placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
                                             oninput="this.form.submit()">
                                     </div>
                                 </form>
                             </div>
+
                             <p style="margin: 0; font-size: 12px; color: #666;"><span>@lang('messages.Search Results'):</span> @lang('messages.Showing')
                                 {{ $ads->firstItem() }}-{{ $ads->lastItem() }} @lang('messages.of') {{ $ads->total() }}
                                 @lang('messages.Listings')</p>
