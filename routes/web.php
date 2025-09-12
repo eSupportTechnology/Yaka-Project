@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PusherTestController;
 use App\Models\BrandsModels;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -51,6 +52,10 @@ Route::post('/register', [RegisteredUserController::class, 'register']);
 
 Route::get('/password-reset', [CustomAuthController::class, 'passwordReset'])->name('password.request');
 
+Route::prefix('pusher-test')->group(function () {
+    Route::get('/connection', [PusherTestController::class, 'testConnection']);
+    Route::get('/new-ad', [PusherTestController::class, 'simulateNewAd']);
+});
 
 
 Route::get('/',[HomeController::class,'home'])->name('/');

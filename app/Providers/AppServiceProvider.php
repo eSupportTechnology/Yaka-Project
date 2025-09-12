@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\PusherNotificationService;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,12 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(\App\Services\ApiResponseService::class);
+
+        $this->app->singleton(PusherNotificationService::class, function ($app) {
+            return new PusherNotificationService();
+        });
     }
+
 
     /**
      * Bootstrap any application services.
