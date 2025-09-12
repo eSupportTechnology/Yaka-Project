@@ -2,10 +2,6 @@
 
 @section('content')
 
-
-
-
-
     <style>
         .view-count-container {
             position: absolute;
@@ -49,11 +45,38 @@
 
         .thumb-item {
             cursor: pointer;
+            flex: 0 0 auto;
+        }
+
+        .slider-pager {
+            margin-top: 15px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .thumb-box {
+            display: flex;
+            gap: 10px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            min-width: max-content;
+        }
+
+        .thumb-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            background: #fff;
         }
 
         .thumb-item:hover img {
             opacity: 0.7;
-            /* Optional: Add opacity effect on hover for better UX */
         }
 
         .watermark {
@@ -155,8 +178,7 @@
                                                         class="thumbnail">
                                                         <figure>
                                                             <img src="{{ asset('storage/' . $subImage) }}"
-                                                                alt="Thumbnail {{ $index + 1 }}"
-                                                                style="height: 150px; width: auto; object-fit: contain;">
+                                                                alt="Thumbnail {{ $index + 1 }}">
                                                         </figure>
                                                     </a>
                                                 </li>
@@ -266,12 +288,34 @@
                                 <hr class="my-2">
 
                                 <div class="d-flex align-items-center">
-                                    <div class="text-white icon-circle bg-primary">
-                                        <i class="fas fa-phone"></i>
+                                    <div class="text-white icon-circle bg-success">
+                                        <i class="fab fa-whatsapp"></i>
                                     </div>
                                     <strong class="w-45" style="padding-right: 5px">@lang('messages.Phone'):</strong>
-                                    <span class="flex-grow-1 text-wrap">{{ $ad->user->phone_number ?? 'N/A' }}</span>
+
+                                    @if (!empty($ad->user->phone_number))
+                                        @php
+                                            // Remove non-digits
+                                            $rawNumber = preg_replace('/\D/', '', $ad->user->phone_number);
+
+                                            // If number starts with 0, remove it
+                                            if (substr($rawNumber, 0, 1) === '0') {
+                                                $rawNumber = substr($rawNumber, 1);
+                                            }
+
+                                            // Add country code +94
+                                            $waNumber = '94' . $rawNumber;
+                                        @endphp
+
+                                        <a href="https://wa.me/{{ $waNumber }}" target="_blank"
+                                            class="flex-grow-1 text-wrap text-success">
+                                            {{ $ad->user->phone_number }}
+                                        </a>
+                                    @else
+                                        <span class="flex-grow-1 text-wrap">N/A</span>
+                                    @endif
                                 </div>
+
                             </div>
 
 
