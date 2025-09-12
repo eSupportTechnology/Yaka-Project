@@ -455,6 +455,55 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+        /* Reduce font size for categories */
+        .sidebar-category .category-list li label,
+        .sidebar-category .category-list li label span,
+        .modal-content .sidebar-category .category-list li label,
+        .modal-content .sidebar-category .category-list li label span {
+            font-size: 12px !important;
+        }
+
+        .sidebar-category .category-list li label span i,
+        .modal-content .sidebar-category .category-list li label span i {
+            font-size: 11px !important;
+            margin-right: 6px !important;
+        }
+
+        .sidebar-category .widget-title h3 {
+            font-size: 14px !important;
+        }
+
+        /* Make all sidebar sections bold */
+        .sidebar-search, 
+        .sidebar-category,
+        .sidebar-search *,
+        .sidebar-category * {
+            font-weight: bold !important;
+        }
+
+        /* Ensure location section text is bold */
+        .sidebar-search .widget-content input,
+        .sidebar-search .widget-title h3 {
+            font-weight: bold !important;
+        }
+
+        /* Reduce spacing between categories */
+        .sidebar-category .category-list li {
+            margin-bottom: 3px !important;
+            padding: 2px 0 !important;
+        }
+
+        .sidebar-category .category-list li label {
+            padding: 1px 0 !important;
+            margin: 0 !important;
+        }
+
+        /* Reduce spacing for subcategories */
+        .sidebar-category .category-list li ul li {
+            margin-bottom: 2px !important;
+            padding: 1px 0 !important;
+        }
+
         .pagination {
             display: flex;
             gap: 6px;
@@ -591,7 +640,10 @@
                                                     <input type="radio" name="category" value="all"
                                                         onchange="window.location='{{ route('browse-ads') }}'"
                                                         {{ !request()->input('category') ? 'checked' : '' }}>
-                                                    <span class="text-dark">@lang('messages.All Categories')</span>
+                                                    <span class="text-dark">
+                                            <i class="fas fa-th-large" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                            @lang('messages.All Categories')
+                                        </span>
 
                                                 </label>
                                             </li>
@@ -602,7 +654,30 @@
                                                         <input type="radio" name="category" value="{{ $category->id }}"
                                                             onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                             {{ request()->input('category') == $category->id ? 'checked' : '' }}>
-                                                        <span> @lang('messages.' . $category->name)</span>
+                                                        <span>
+                                                            @php
+                                                                $categoryIcons = [
+                                                                    'Electronics' => 'fas fa-laptop',
+                                                                    'Motor vehicles' => 'fas fa-car',
+                                                                    'Home, lands & buildings' => 'fas fa-home',
+                                                                    'Home & Garden' => 'fas fa-seedling',
+                                                                    'Pets' => 'fas fa-paw',
+                                                                    'Services' => 'fas fa-tools',
+                                                                    'Business And Industry' => 'fas fa-industry',
+                                                                    'leisure,kids items & sports' => 'fas fa-gamepad',
+                                                                    'Fancy & Cosmetics' => 'fas fa-gem',
+                                                                    'Daily Essentials' => 'fas fa-shopping-basket',
+                                                                    'Education' => 'fas fa-graduation-cap',
+                                                                    'Agriculture' => 'fas fa-tractor',
+                                                                    'Jobs & Overseas jobs' => 'fas fa-briefcase',
+                                                                    'Other Ads' => 'fas fa-list',
+                                                                    'Testing' => 'fas fa-flask'
+                                                                ];
+                                                                $iconClass = $categoryIcons[$category->name] ?? 'fas fa-tag';
+                                                            @endphp
+                                                            <i class="{{ $iconClass }}" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                                            @lang('messages.' . $category->name)
+                                                        </span>
                                                     </label>
 
                                                     @if ($category->subcategories->isNotEmpty())
@@ -673,7 +748,10 @@
                                         <input type="radio" name="category" value="all"
                                             onchange="window.location='{{ route('browse-ads') }}'"
                                             {{ !request()->input('category') ? 'checked' : '' }}>
-                                        <span class="text-dark">@lang('messages.All Categories')</span>
+                                        <span class="text-dark">
+                                            <i class="fas fa-th-large" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                            @lang('messages.All Categories')
+                                        </span>
 
                                     </label>
                                 </li>
@@ -684,7 +762,30 @@
                                             <input type="radio" name="category" value="{{ $category->id }}"
                                                 onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                 {{ request()->input('category') == $category->id ? 'checked' : '' }}>
-                                            <span> @lang('messages.' . $category->name)</span>
+                                            <span>
+                                                @php
+                                                    $categoryIcons = [
+                                                        'Electronics' => 'fas fa-laptop',
+                                                        'Motor vehicles' => 'fas fa-car',
+                                                        'Home, lands & buildings' => 'fas fa-home',
+                                                        'Home & Garden' => 'fas fa-seedling',
+                                                        'Pets' => 'fas fa-paw',
+                                                        'Services' => 'fas fa-tools',
+                                                        'Business And Industry' => 'fas fa-industry',
+                                                        'leisure,kids items & sports' => 'fas fa-gamepad',
+                                                        'Fancy & Cosmetics' => 'fas fa-gem',
+                                                        'Daily Essentials' => 'fas fa-shopping-basket',
+                                                        'Education' => 'fas fa-graduation-cap',
+                                                        'Agriculture' => 'fas fa-tractor',
+                                                        'Jobs & Overseas jobs' => 'fas fa-briefcase',
+                                                        'Other Ads' => 'fas fa-list',
+                                                        'Testing' => 'fas fa-flask'
+                                                    ];
+                                                    $iconClass = $categoryIcons[$category->name] ?? 'fas fa-tag';
+                                                @endphp
+                                                <i class="{{ $iconClass }}" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                                @lang('messages.' . $category->name)
+                                            </span>
                                         </label>
 
                                         @if ($category->subcategories->isNotEmpty())
