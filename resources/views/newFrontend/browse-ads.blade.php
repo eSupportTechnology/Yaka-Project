@@ -1332,11 +1332,11 @@
                     @if ($banner->type == 0)
                         @if (isset($banner->url))
                             <a href="{{ $banner->url }}" target="_blank">
-                        @endif
-                        <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                            <img src="{{ url('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
-                        </div>
-                        @if (isset($banner->url))
+                                @endif
+                                <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                    <img src="{{ url('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                                </div>
+                                @if (isset($banner->url))
                             </a>
                         @endif
                     @endif
@@ -1361,7 +1361,7 @@
                     <!-- District Search -->
                     <div class="district-section form-group">
                         <input class="form-control" type="text" id="district-search-mob"
-                            value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
+                               value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
                         <div id="district-results-mob" class="results-container"></div>
                     </div>
 
@@ -1394,7 +1394,7 @@
                                             <li>
                                                 <label>
                                                     <input type="radio" name="category" value="all"
-                                                        onchange="window.location='{{ route('browse-ads') }}'"
+                                                           onchange="window.location='{{ route('browse-ads') }}'"
                                                         {{ !request()->input('category') ? 'checked' : '' }}>
                                                     <span class="text-dark">@lang('messages.All Categories')</span>
 
@@ -1405,7 +1405,7 @@
                                                 <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
                                                     <label>
                                                         <input type="radio" name="category" value="{{ $category->id }}"
-                                                            onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
+                                                               onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                             {{ request()->input('category') == $category->id ? 'checked' : '' }}>
                                                         <span> @lang('messages.' . $category->name)</span>
                                                     </label>
@@ -1416,8 +1416,8 @@
                                                                 <li>
                                                                     <label>
                                                                         <input type="radio" name="subcategory"
-                                                                            value="{{ $subcategory->id }}"
-                                                                            onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
+                                                                               value="{{ $subcategory->id }}"
+                                                                               onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
                                                                             {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
                                                                         <span> @lang('messages.' . $subcategory->name)</span>
                                                                     </label>
@@ -1467,13 +1467,13 @@
                             </div>
                             <div class="widget-content">
                                 <form action="{{ route('browse-ads') }}" method="GET" class="search-form"
-                                    id="search-form">
+                                      id="search-form">
                                     <input type="hidden" name="location" id="location">
                                     <input type="hidden" name="city" id="cityId">
                                     <div class="form-group">
                                         <input type="search" name="search-field" style="padding-right: 20px"
-                                            placeholder="@lang('messages.Search Keyword')..."
-                                            value="{{ request()->input('search-field') }}" oninput="this.form.submit()">
+                                               placeholder="@lang('messages.Search Keyword')..."
+                                               value="{{ request()->input('search-field') }}" oninput="this.form.submit()">
                                         <button type="submit" style="display:none;"><i class="icon-2"></i></button>
                                     </div>
                                 </form>
@@ -1481,7 +1481,7 @@
                                     <!-- District Search -->
                                     <div class="district-section form-group">
                                         <input class="form-control" type="text" id="district-search"
-                                            value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
+                                               value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
                                         <div id="district-results" class="results-container"></div>
                                     </div>
 
@@ -1503,7 +1503,7 @@
                                     <li>
                                         <label>
                                             <input type="radio" name="category" value="all"
-                                                onchange="window.location='{{ route('browse-ads') }}'"
+                                                   onchange="window.location='{{ route('browse-ads') }}'"
                                                 {{ !request()->input('category') ? 'checked' : '' }}>
                                             <span class="text-dark">@lang('messages.All Categories')</span>
 
@@ -1514,7 +1514,7 @@
                                         <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
                                             <label>
                                                 <input type="radio" name="category" value="{{ $category->id }}"
-                                                    onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
+                                                       onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                     {{ request()->input('category') == $category->id ? 'checked' : '' }}>
                                                 <span> @lang('messages.' . $category->name)</span>
                                             </label>
@@ -1525,8 +1525,8 @@
                                                         <li>
                                                             <label>
                                                                 <input type="radio" name="subcategory"
-                                                                    value="{{ $subcategory->id }}"
-                                                                    onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
+                                                                       value="{{ $subcategory->id }}"
+                                                                       onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
                                                                     {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
                                                                 <span> @lang('messages.' . $subcategory->name)</span>
                                                             </label>
@@ -1569,20 +1569,20 @@
                                     <div class="blink-border-wrapper">
                                         @if ($ad->post_type)
                                             <button class="sale"
-                                                style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
+                                                    style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
                                                 {{ $ad->post_type }}
                                             </button>
                                         @endif
 
                                         <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
-                                            style="display: block; height: 100%; text-decoration: none;">
+                                           style="display: block; height: 100%; text-decoration: none;">
                                             <div class="carousel-item-content">
                                                 <div class="image-container"
-                                                    style="position: relative; max-height: 385px; overflow: hidden; text-align: center;">
+                                                     style="position: relative; max-height: 385px; overflow: hidden; text-align: center;">
                                                     <img src="{{ asset('storage/' . $ad->mainImage) }}"
-                                                        alt="{{ $ad->title }}"
-                                                        style="max-height: 385px !important; width: 100%; object-fit: contain;"
-                                                        onerror="this.style.display='none';
+                                                         alt="{{ $ad->title }}"
+                                                         style="max-height: 385px !important; width: 100%; object-fit: contain;"
+                                                         onerror="this.style.display='none';
                                                                         const msg = document.createElement('div');
                                                                         msg.innerText = 'Ad is not available';
                                                                         msg.style.color = 'red';
@@ -1596,7 +1596,7 @@
                                                 <div class="carousel-overlay"></div>
                                                 <div class="badge">
                                                     <img src="{{ asset('02.png') }}" alt="Top Ad"
-                                                        style="width: 30px; height: 30px;">
+                                                         style="width: 30px; height: 30px;">
                                                 </div>
 
                                                 <div class="carousel-caption d-sm-block text-start">
@@ -1619,7 +1619,7 @@
 
                             @if (!$hasAdWithImage)
                                 <div class="text-center"
-                                    style="color: red; font-weight: bold; padding: 50px 0; font-size: 1.2rem;">
+                                     style="color: red; font-weight: bold; padding: 50px 0; font-size: 1.2rem;">
                                     Ad is not available
                                 </div>
                             @endif
@@ -1630,33 +1630,33 @@
                                 <div
                                     class="ad-card {{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 4 ? 'urgent-ad' : ($ad->ads_package == 6 ? 'super-ad' : '')) }}">
                                     <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
-                                        style="text-decoration: none; color: inherit; height: 100%; display: flex; flex-direction: column;">
+                                       style="text-decoration: none; color: inherit; height: 100%; display: flex; flex-direction: column;">
                                         <div class="ad-image">
                                             <img src="{{ asset('storage/' . $ad->mainImage) }}"
-                                                alt="{{ $ad->title }}">
+                                                 alt="{{ $ad->title }}">
 
                                             @if ($ad->ads_package == 3)
                                                 <div class="ad-badge badge-top">
                                                     <img src="{{ asset('01.png') }}" alt="Top Ad"
-                                                        style="width: 20px; height: 20px;">
+                                                         style="width: 20px; height: 20px;">
                                                 </div>
                                             @elseif($ad->ads_package == 4)
                                                 <div class="ad-badge badge-urgent">Urgent</div>
                                             @elseif($ad->ads_package == 6)
                                                 <div class="ad-badge badge-super">
                                                     <img src="{{ asset('02.png') }}" alt="Super Ad"
-                                                        style="width: 20px; height: 20px;">
+                                                         style="width: 20px; height: 20px;">
                                                 </div>
                                             @elseif($ad->ads_package == 5)
                                                 <div class="ad-badge badge-jump">
                                                     <img src="{{ asset('04.png') }}" alt="Jump Ad"
-                                                        style="width: 20px; height: 20px;">
+                                                         style="width: 20px; height: 20px;">
                                                 </div>
                                             @endif
 
                                             @if ($ad->post_type)
                                                 <div class="ad-badge"
-                                                    style="right: 10px; left: auto; background: #dc3545;">
+                                                     style="right: 10px; left: auto; background: #dc3545;">
                                                     {{ $ad->post_type }}
                                                 </div>
                                             @endif
@@ -1766,14 +1766,14 @@
                                 @foreach ($banners as $key => $banner)
                                     @if (isset($banner->url))
                                         <a href="{{ $banner->url }}" target="_blank">
-                                    @endif
-                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                        <div class="banner d-flex justify-content-center">
-                                            <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
-                                                class="img-fluid banner-img">
-                                        </div>
-                                    </div>
-                                    @if (isset($banner->url))
+                                            @endif
+                                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                <div class="banner d-flex justify-content-center">
+                                                    <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
+                                                         class="img-fluid banner-img">
+                                                </div>
+                                            </div>
+                                            @if (isset($banner->url))
                                         </a>
                                     @endif
                                 @endforeach
