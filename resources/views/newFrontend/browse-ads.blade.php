@@ -465,6 +465,136 @@
         .sidebar-category * {
             font-weight: bold !important;
         }
+
+        /* Category icons styling */
+        .sidebar-category .category-list li label {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .sidebar-category .category-list li label span {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .sidebar-category .category-list li label span i {
+            flex-shrink: 0;
+            font-size: 12px;
+            opacity: 0.8;
+            margin-right: 6px;
+            width: 14px;
+        }
+
+        .sidebar-category .category-list li label:hover span i {
+            opacity: 1;
+            transform: scale(1.1);
+            transition: all 0.2s ease;
+        }
+
+        /* Remove ALL dropdown styling completely */
+        .sidebar-category .category-list li::after,
+        .sidebar-category .category-list li.dropdown::after,
+        .sidebar-category .category-list li::before,
+        .sidebar-category .category-list li.dropdown::before {
+            display: none !important;
+            content: none !important;
+        }
+
+        .sidebar-category .category-list li,
+        .sidebar-category .category-list li.dropdown {
+            position: static !important;
+        }
+
+        /* Remove any inherited dropdown styles from nested ul */
+        .sidebar-category .category-list ul li::after,
+        .sidebar-category .category-list ul li::before {
+            display: none !important;
+            content: none !important;
+        }
+
+        /* Hide subcategories by default, show on hover */
+        .default-sidebar .sidebar-category .category-list li.dropdown ul {
+            position: static !important;
+            display: none !important;
+            margin-top: 10px !important;
+            margin-left: 20px !important;
+            padding: 0 !important;
+            background: transparent !important;
+            left: auto !important;
+            top: auto !important;
+            width: auto !important;
+            z-index: auto !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+            -webkit-transform: none !important;
+            -ms-transform: none !important;
+            transition: none !important;
+        }
+
+        /* Show subcategories on hover */
+        .default-sidebar .sidebar-category .category-list > li.dropdown:hover ul {
+            display: block !important;
+        }
+
+        /* Add dropdown arrow for main categories only */
+        .default-sidebar .sidebar-category .category-list > li.dropdown:before {
+            position: absolute !important;
+            content: "▼" !important;
+            font-family: Arial, sans-serif !important;
+            font-size: 10px !important;
+            color: #666 !important;
+            top: 8px !important;
+            right: 5px !important;
+            z-index: 2 !important;
+        }
+
+        .default-sidebar .sidebar-category .category-list > li.dropdown:hover:before {
+            color: #b30000 !important;
+        }
+
+        /* Fix subcategory items */
+        .default-sidebar .sidebar-category .category-list li ul li {
+            margin: 3px 0 !important;
+            padding: 0 !important;
+            position: static !important;
+        }
+
+        /* Mobile modal dropdown functionality */
+        .modal-content .sidebar-category .category-list li.dropdown ul {
+            display: none !important;
+            margin-top: 10px !important;
+            margin-left: 20px !important;
+            padding: 0 !important;
+        }
+
+        .modal-content .sidebar-category .category-list > li.dropdown:hover ul {
+            display: block !important;
+        }
+
+        .modal-content .sidebar-category .category-list > li.dropdown:before {
+            position: absolute !important;
+            content: "▼" !important;
+            font-family: Arial, sans-serif !important;
+            font-size: 10px !important;
+            color: #666 !important;
+            top: 8px !important;
+            right: 5px !important;
+            z-index: 2 !important;
+        }
+
+        .modal-content .sidebar-category .category-list > li.dropdown:hover:before {
+            color: #b30000 !important;
+        }
+
+        .sidebar-category .category-list li label input[type="radio"] {
+            margin-right: 8px;
+            margin-top: 0;
+            flex-shrink: 0;
+        }
         .pagination {
             display: flex;
             gap: 6px;
@@ -601,7 +731,10 @@
                                                     <input type="radio" name="category" value="all"
                                                         onchange="window.location='{{ route('browse-ads') }}'"
                                                         {{ !request()->input('category') ? 'checked' : '' }}>
-                                                    <span class="text-dark">@lang('messages.All Categories')</span>
+                                                    <span class="text-dark">
+                                            <i class="fas fa-th-large" style="margin-right: 6px; color: #b30000; width: 14px;"></i>
+                                            @lang('messages.All Categories')
+                                        </span>
                                                 </label>
                                             </li>
 
@@ -611,7 +744,30 @@
                                                         <input type="radio" name="category" value="{{ $category->id }}"
                                                             onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                             {{ request()->input('category') == $category->id ? 'checked' : '' }}>
-                                                        <span>@lang('messages.' . $category->name)</span>
+                                                        <span>
+                                                            @php
+                                                                $categoryIcons = [
+                                                                    'Electronics' => 'fas fa-laptop',
+                                                                    'Motor vehicles' => 'fas fa-car',
+                                                                    'Home, lands & buildings' => 'fas fa-home',
+                                                                    'Home & Garden' => 'fas fa-seedling',
+                                                                    'Pets' => 'fas fa-paw',
+                                                                    'Services' => 'fas fa-tools',
+                                                                    'Business And Industry' => 'fas fa-industry',
+                                                                    'leisure,kids items & sports' => 'fas fa-gamepad',
+                                                                    'Fancy & Cosmetics' => 'fas fa-gem',
+                                                                    'Daily Essentials' => 'fas fa-shopping-basket',
+                                                                    'Education' => 'fas fa-graduation-cap',
+                                                                    'Agriculture' => 'fas fa-tractor',
+                                                                    'Jobs & Overseas jobs' => 'fas fa-briefcase',
+                                                                    'Other Ads' => 'fas fa-list',
+                                                                    'Testing' => 'fas fa-flask'
+                                                                ];
+                                                                $iconClass = $categoryIcons[$category->name] ?? 'fas fa-tag';
+                                                            @endphp
+                                                            <i class="{{ $iconClass }}" style="margin-right: 6px; color: #b30000; width: 14px;"></i>
+                                                            @lang('messages.' . $category->name)
+                                                        </span>
                                                     </label>
 
                                                     @if ($category->subcategories->isNotEmpty())
@@ -679,7 +835,10 @@
                                         <input type="radio" name="category" value="all"
                                             onchange="window.location='{{ route('browse-ads') }}'"
                                             {{ !request()->input('category') ? 'checked' : '' }}>
-                                        <span class="text-dark">@lang('messages.All Categories')</span>
+                                        <span class="text-dark">
+                                            <i class="fas fa-th-large" style="margin-right: 6px; color: #b30000; width: 14px;"></i>
+                                            @lang('messages.All Categories')
+                                        </span>
 
                                     </label>
                                 </li>
@@ -690,7 +849,30 @@
                                             <input type="radio" name="category" value="{{ $category->id }}"
                                                 onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                 {{ request()->input('category') == $category->id ? 'checked' : '' }}>
-                                            <span> @lang('messages.' . $category->name)</span>
+                                            <span>
+                                                @php
+                                                    $categoryIcons = [
+                                                        'Electronics' => 'fas fa-laptop',
+                                                        'Motor vehicles' => 'fas fa-car',
+                                                        'Home, lands & buildings' => 'fas fa-home',
+                                                        'Home & Garden' => 'fas fa-seedling',
+                                                        'Pets' => 'fas fa-paw',
+                                                        'Services' => 'fas fa-tools',
+                                                        'Business And Industry' => 'fas fa-industry',
+                                                        'leisure,kids items & sports' => 'fas fa-gamepad',
+                                                        'Fancy & Cosmetics' => 'fas fa-gem',
+                                                        'Daily Essentials' => 'fas fa-shopping-basket',
+                                                        'Education' => 'fas fa-graduation-cap',
+                                                        'Agriculture' => 'fas fa-tractor',
+                                                        'Jobs & Overseas jobs' => 'fas fa-briefcase',
+                                                        'Other Ads' => 'fas fa-list',
+                                                        'Testing' => 'fas fa-flask'
+                                                    ];
+                                                    $iconClass = $categoryIcons[$category->name] ?? 'fas fa-tag';
+                                                @endphp
+                                                <i class="{{ $iconClass }}" style="margin-right: 6px; color: #b30000; width: 14px;"></i>
+                                                @lang('messages.' . $category->name)
+                                            </span>
                                         </label>
 
                                         @if ($category->subcategories->isNotEmpty())
