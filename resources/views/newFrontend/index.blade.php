@@ -651,11 +651,11 @@
     <!-- feature-style-two -->
     <section class="feature-style-two">
         <div class="auto-container">
-            {{--  <div class="sec-title centred">
-                    <span>@lang('messages.Urgent')</span>
-                    <h2>@lang('messages.Urgent') Ads</h2>
+             <div class="sec-title centred">
+                    {{-- <span>@lang('messages.Urgent')</span> --}}
+                    <h2>@lang('messages.Urgent')</h2>
                     <p>@lang('messages.para3')</p>
-                </div>  --}}
+                </div>
             <div class="tabs-box">
 
                 <div class="tabs-content">
