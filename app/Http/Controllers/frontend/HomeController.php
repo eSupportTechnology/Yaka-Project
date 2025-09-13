@@ -58,7 +58,6 @@ class HomeController extends Controller
                       ->orWhere('package_expire_at', '>=', now());
             })
             ->latest()
-            ->take(2)
             ->get();
 
         // Get Latest Ads that are active and not expired
@@ -69,7 +68,6 @@ class HomeController extends Controller
                 $query->whereNull('package_expire_at')
                       ->orWhere('package_expire_at', '>=', now());
             })
-            ->take(4)
             ->get();
 
         // Get Super Ads again but make sure they are not expired and active
@@ -81,7 +79,6 @@ class HomeController extends Controller
                       ->orWhere('package_expire_at', '>=', now());
             })
             ->latest()
-            ->take(2)
             ->get();
         return view('newFrontend.index', compact('banners', 'categories', 'topAds', 'topbanners', 'latestAds', 'superbanners', 'superAds'));
     }
