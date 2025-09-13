@@ -23,7 +23,10 @@
         }
 
         .sticky-banner {
+            position: -webkit-sticky;
+            /* For Safari */
             position: sticky;
+            align-self: flex-start;
             top: 20px;
             width: 160px !important;
             height: 600px !important;
@@ -31,6 +34,7 @@
         }
 
         .banner-img {
+            position: relative;
             width: 160px !important;
             height: 600px !important;
             object-fit: cover;
@@ -54,10 +58,12 @@
         }
 
         .banner-area {
-            position: fixed;
+            position: relative;
+            left: 1rem;
             display: flex;
             justify-content: right;
             right: 8rem;
+            height: fit-content;
             grid-area: banner;
         }
 
@@ -490,23 +496,32 @@
                 gap: 40px;
             }
 
-            .sticky-banner,
+            .sticky-banner {
+                position: -webkit-sticky;
+                /* For Safari */
+                position: sticky;
+                align-self: flex-start;
+            }
+
+            ,
             .banner-img {
                 width: 400px !important;
                 height: 600px !important;
+                object-fit: cover;
             }
 
             .ads-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 30px;
             }
+
             .banner-area {
                 right: 14rem;
             }
 
             /* .screen-info::after {
-                content: " - 2700px+";
-            } */
+                    content: " - 2700px+";
+                } */
         }
 
         /* For screens 1700px to 2699px */
@@ -516,16 +531,25 @@
                 gap: 30px;
             }
 
-            .sticky-banner,
+            .sticky-banner {
+                position: -webkit-sticky;
+                /* For Safari */
+                position: sticky;
+                align-self: flex-start;
+            }
+
+            ,
             .banner-img {
                 width: 400px !important;
                 height: 600px !important;
+                object-fit: cover;
             }
 
             .ads-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 25px;
             }
+
             .banner-area {
                 right: 8rem;
             }
@@ -541,6 +565,10 @@
             }
 
             .sticky-banner {
+                position: -webkit-sticky;
+                /* For Safari */
+                position: sticky;
+                align-self: flex-start;
                 width: 200px !important;
                 height: 600px !important;
             }
@@ -548,6 +576,7 @@
             .banner-img {
                 width: 200px !important;
                 height: 600px !important;
+                object-fit: cover;
             }
 
             .banner-area {
@@ -572,6 +601,10 @@
             }
 
             .sticky-banner {
+                position: -webkit-sticky;
+                /* For Safari */
+                position: sticky;
+                align-self: flex-start;
                 width: 200px !important;
                 height: 600px !important;
             }
@@ -579,6 +612,7 @@
             .banner-img {
                 width: 200px !important;
                 height: 600px !important;
+                object-fit: cover;
             }
 
             .banner-area {
@@ -605,11 +639,19 @@
             .sticky-banner {
                 width: 200px !important;
                 height: 600px !important;
+                position: -webkit-sticky;
+                /* For Safari */
+                position: sticky;
+                top: 20px;
+                /* distance from top when sticking */
+                align-self: flex-start;
+                /* keeps it at top of its grid column */
             }
 
             .banner-img {
                 width: 200px !important;
-                height: 600px !important;
+                height: 60rem !important;
+                object-fit: cover;
             }
 
             .banner-area {
@@ -637,6 +679,10 @@
             }
 
             .sticky-banner {
+                position: -webkit-sticky;
+                /* For Safari */
+                position: sticky;
+                align-self: flex-start;
                 width: 160px !important;
                 height: 600px !important;
             }
@@ -644,6 +690,7 @@
             .banner-img {
                 width: 160px !important;
                 height: 600px !important;
+                object-fit: cover;
             }
 
             .ads-grid {
@@ -663,6 +710,10 @@
             }
 
             .sticky-banner {
+                position: -webkit-sticky;
+                /* For Safari */
+                position: sticky;
+                align-self: flex-start;
                 width: 140px !important;
                 height: 500px !important;
             }
@@ -670,6 +721,7 @@
             .banner-img {
                 width: 140px !important;
                 height: 500px !important;
+                object-fit: cover;
             }
 
             .banner-area {
@@ -742,7 +794,10 @@
             }
 
             .sticky-banner {
-                position: static;
+                position: -webkit-sticky;
+                /* For Safari */
+                position: sticky;
+                align-self: flex-start;
                 width: 120px !important;
                 height: 400px !important;
                 margin: 0;
@@ -751,6 +806,7 @@
             .banner-img {
                 width: 120px !important;
                 height: 400px !important;
+
             }
 
             .ads-grid {
