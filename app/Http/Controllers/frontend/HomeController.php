@@ -26,14 +26,14 @@ class HomeController extends Controller
                 ->get();
 
 
-        // $banners = Banners::with('bannerPackage') // eager load the relationship
-        //     ->where('type', 0)
-        //     ->where(function ($query) {
-        //         $query->whereNull('expired_at')
-        //                 ->orWhere('expired_at', '>', Carbon::now());
-        //     })
-        //     ->get();
-            $banners = Banners::where('type', 1)->get();
+        $banners = Banners::with('bannerPackage') // eager load the relationship
+            ->where('type', 0)
+            ->where(function ($query) {
+                $query->whereNull('expired_at')
+                        ->orWhere('expired_at', '>', Carbon::now());
+            })
+            ->get();
+            $all_banners = \App\Models\Banners::where('type', 0)->get();
 
         $topbanners = \App\Models\Banners::where('type', 1)->get();
         $superbanners = \App\Models\Banners::where('type', 1)->get();
@@ -81,7 +81,7 @@ class HomeController extends Controller
             })
             ->latest()
             ->get();
-        return view('newFrontend.index', compact('banners', 'categories', 'topAds', 'topbanners', 'latestAds', 'superbanners', 'superAds'));
+        return view('newFrontend.index', compact('banners', 'categories', 'topAds', 'topbanners', 'latestAds', 'superbanners', 'superAds', 'all_banners'));
     }
 
 
