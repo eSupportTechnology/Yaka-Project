@@ -834,7 +834,7 @@
                         </div>
                     @endforeach
 
-                    @if($totalAds > 3)
+                    @if($totalAds > 1)
                         <div class="navigation-buttons" style="position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;">
                             <button class="nav-btn nav-prev" onclick="previousSlide()"
                                 style="position: absolute; left: -30rem; background: rgba(11, 18, 142, 0.8); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; transition: all 0.3s ease;">
@@ -855,7 +855,7 @@
                     @endif
                 </div>
 
-                @if($totalAds > 3)
+                @if($totalAds > 1)
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             const superAdsData = @json($superAds->values());
@@ -1105,7 +1105,7 @@
                         </div>
                     @endforeach
 
-                    @if($totalTopAds > 3)
+                    @if($totalTopAds > 1)
                         <div class="top-navigation-buttons" style="position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;">
                             <button class="top-nav-btn top-nav-prev" onclick="previousTopSlide()"
                                 style="position: absolute; left: -30rem; background: rgba(0, 255, 68, 0.8); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; transition: all 0.3s ease;">
@@ -1126,7 +1126,7 @@
                     @endif
                 </div>
 
-                @if($totalTopAds > 3)
+                @if($totalTopAds > 1)
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             const topAdsData = @json($topAds->values());
