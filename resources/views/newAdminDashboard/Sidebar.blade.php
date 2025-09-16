@@ -59,6 +59,13 @@
                 </a>
             </li>
 
+            <li class="menu-item {{ request()->routeIs('membership-plans') ? 'active' : '' }}">
+                <a class="menu-link" href="{{ route('membership-plans') }}">
+                    <i class="icon material-icons md-people"></i>
+                    <span class="text">Membership Plans</span>
+                </a>
+            </li>
+
             <li class="menu-item {{ request()->routeIs('dashboard.categories') ? 'active' : '' }}">
                 <a class="menu-link" href="{{route('dashboard.categories')}}">
                     <i class="icon material-icons md-category"></i>
