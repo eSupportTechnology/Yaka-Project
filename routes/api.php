@@ -17,6 +17,7 @@ use App\Http\Controllers\ExpiredAdsController;
 use App\Http\Controllers\frontend\AdsController;
 use App\Http\Controllers\frontend\UserAdsController;
 use App\Http\Controllers\GeminiController;
+use App\Http\Controllers\MembershipPlanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AuthController;
@@ -239,6 +240,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/staff/{id}', [StaffApiController::class, 'staffGetStaffId']);
 
         Route::put('/update-user/{id}', [UserApiController::class, 'userUpdate']);
+
+        Route::get('/membership-plans', [MembershipPlanController::class, 'index']);
+        Route::post('/membership-plans', [MembershipPlanController::class, 'store']);
+        Route::get('/membership-plans/{id}', [MembershipPlanController::class, 'show']);
+        Route::put('/membership-plans/{id}', [MembershipPlanController::class, 'update']);
+        Route::delete('/membership-plans/{id}', [MembershipPlanController::class, 'destroy']);
     });
 });
 
