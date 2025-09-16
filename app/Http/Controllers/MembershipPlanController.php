@@ -105,4 +105,58 @@ class MembershipPlanController extends Controller
             return $this->apiResponse->error($e->getMessage(), 'Failed to delete membership plan', 500);
         }
     }
+
+    // for web
+    public function membershipPlanIndex()
+    {
+        $plans = MembershipPlan::all();
+        return view('newAdminDashboard.membershipPlans.index', compact('plans'));
+    }
+    public function membershipPlancreate()
+    {
+        return view('newAdminDashboard.membershipPlans.create');
+    }
+    public function membershipPlanstore(Request $request)
+    {
+        $request->validate([
+            'month_count' => 'required|integer|min:1',
+            'ads_per_month' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:0',
+            'promotion_voucher_cost' => 'nullable|numeric|min:0',
+            'valid_month' => 'required|integer|min:1',
+        ]);
+
+        MembershipPlan::create($request->all());
+        return redirect()->route('membership-plans')->with('success', 'Membership plan created successfully.');
+    }
+    public function membershipPlanedit($id)
+    {
+        $plan = MembershipPlan::find($id);
+        return view('newAdminDashboard.membershipPlans.edit', compact('plan'));
+    }
+    public function membershipPlanupdate(Request $request, $id)
+    {
+        $request->validate([
+            'month_count' => 'sometimes|required|integer|min:1',
+            'ads_per_month' => 'sometimes|required|integer|min:0',
+            'price' => 'sometimes|required|numeric|min:0',
+            'promotion_voucher_cost' => 'nullable|numeric|min:0',
+            'valid_month' => 'sometimes|required|integer|min:1',
+        ]);
+
+        $plan = MembershipPlan::find($id);
+        $plan->update($request->all());
+        return redirect()->route('membership-plans')->with('success', 'Membership plan updated successfully.');
+    }
+    public function membershipPlanshow($id)
+    {
+        $plan = MembershipPlan::find($id);
+        return view('newAdminDashboard.membershipPlans.show', compact('plan'));
+    }
+    public function membershipPlandestroy($id)
+    {
+        $plan = MembershipPlan::find($id);
+        $plan->delete();
+        return redirect()->route('membership-plans')->with('success', 'Membership plan deleted successfully.');
+    }
 }

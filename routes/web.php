@@ -157,6 +157,7 @@ Route::get('/api/cities', [LocationController::class, 'getCitiesByDistrict']);
 
 use App\Http\Controllers\adminPanel\subPackageManagementController;
 use App\Http\Controllers\adminPanel\subCategoriesManagementController;
+use App\Http\Controllers\MembershipPlanController;
 
 Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
@@ -297,9 +298,13 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::get('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'delete'])->name('dashboard.banner.delete');
     Route::post('/dashboard/banner/delete/{id}',[bannerManagementController::class ,'deletebanner'])->name('dashboard.banner.delete-banner');
 
-
-
-
+    Route::get('/membership-plans', [MembershipPlanController::class, 'membershipPlanIndex'])->name('membership-plans');
+    Route::get('/dashboard/membership-plans/create', [MembershipPlanController::class, 'membershipPlancreate'])->name('membership-plans.create');
+    Route::post('/membership-plans', [MembershipPlanController::class, 'membershipPlanstore'])->name('membership-plans.store');
+    Route::get('/membership-plans/{id}/edit', [MembershipPlanController::class, 'membershipPlanedit'])->name('membership-plans.edit');
+    Route::put('/membership-plans/{id}', [MembershipPlanController::class, 'membershipPlanupdate'])->name('membership-plans.update');
+    Route::get('/membership-plans/{id}/show', [MembershipPlanController::class, 'membershipPlanshow'])->name('membership-plans.show');
+    Route::delete('/membership-plans/{id}', [MembershipPlanController::class, 'membershipPlandestroy'])->name('membership-plans.destroy');
 
 });
 Route::get('/ad-boost-billing-details', [BoostingController::class, 'showBillingDetails'])->name('boosting.billingDetails');
