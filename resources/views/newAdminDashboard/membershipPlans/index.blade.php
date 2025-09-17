@@ -35,9 +35,9 @@
                                         <td>{{ $plan->id }}</td>
                                         <td>{{ $plan->month_count }}</td>
                                         <td>{{ $plan->ads_per_month }}</td>
-                                        <td>${{ number_format($plan->price, 2) }}</td>
+                                        <td>Rs.{{ number_format($plan->price, 2) }}</td>
                                         <td>{{ $plan->valid_month }}</td>
-                                        <td>${{ number_format($plan->promotion_voucher_cost, 2) }}</td>
+                                        <td>Rs.{{ number_format($plan->promotion_voucher_cost, 2) }}</td>
                                         <td>
                                             <div class="template-demo d-flex flex-nowrap">
                                                 <a href="{{ route('membership-plans.show', [$plan->id]) }}"
@@ -48,11 +48,17 @@
                                                     class="btn btn-warning btn-sm me-2">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="{{ route('membership-plans.destroy', $plan->id) }}"
-                                                    class="btn btn-danger btn-sm me-2">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <form action="{{ route('membership-plans.destroy', $plan->id) }}"
+                                                    method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm me-2"
+                                                        onclick="return confirm('Are you sure?');">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
