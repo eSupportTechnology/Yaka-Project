@@ -3,7 +3,7 @@
 return [
     'You can #Buy, #Rent, #Booking anything from here.' => 'You can #Buy, #Rent, #Booking anything from here.',
 
-    'Buy and sell everything from used cars to mobile phones' => 
+    'Buy and sell everything from used cars to mobile phones' =>
     'Buy and sell everything from used cars to mobile phones and computers, or search for property, jobs and more in Sri Lanka.',
 
     'Categories' => 'Categories',
@@ -21,14 +21,14 @@ return [
     'Ads' => 'Ads',
     'Super' => 'Super',
     'Urgent' => 'Urgent',
-    'para2' => 'The Super Ads section on Sri Lanka\'s largest classified website yaka.lk guarantees your listings premium placement at the top of search results. 
+    'para2' => 'The Super Ads section on Sri Lanka\'s largest classified website yaka.lk guarantees your listings premium placement at the top of search results.
                 With higher visibility and priority ranking, super ads ensure your products or services reach more potential buyers quickly and effectively.',
-    'para1' => 'The Top Ads section on Sri Lanka\'s largest classified website yaka.lk guarantees your listings premium placement at the top of search results. with higher visibility and 
+    'para1' => 'The Top Ads section on Sri Lanka\'s largest classified website yaka.lk guarantees your listings premium placement at the top of search results. with higher visibility and
                 priority ranking.Top ads ensure your products or services reach more potential buyers quickly and effectively.',
     'para3' => 'We have some special promotion for sell urgently
                 Urgent badge which is great advantage to get more attention quickly.',
-    'para4' => 'Don’t miss out on the best deals in Sri Lanka’s largest marketplace! Subscribe now for exclusive offers, promotions, 
-                and updates on discounts for electronics, fashion, home goods, and more. 
+    'para4' => 'Don’t miss out on the best deals in Sri Lanka’s largest marketplace! Subscribe now for exclusive offers, promotions,
+                and updates on discounts for electronics, fashion, home goods, and more.
                 Be the first to know and save big—sign up today!',
     'Quick Links' => 'Quick Links',
     'About' => 'About Us',
@@ -41,13 +41,13 @@ return [
     'Ad posting criteria' => 'Ad posting criteria',
     'Home' => 'Home' ,
     'About Our Company' => 'About Our Company' ,
-    'para5' => 'Yaka.lk is the largest growing market place in Sri Lanka. 
-                This is a 100 % Sri Lankan website which designed specially to suit Sri Lankans. 
+    'para5' => 'Yaka.lk is the largest growing market place in Sri Lanka.
+                This is a 100 % Sri Lankan website which designed specially to suit Sri Lankans.
                 If you want to buy or sell anything, you have arrived to the right destination.Yaka.
-                lk has the broad selection of items so you can navigate through many categories such 
+                lk has the broad selection of items so you can navigate through many categories such
                 as Electronics, Vehicles, Property, jobs, Industrial, etc., also you can use search filters
-                in order to make it quick in findings.You can create free account in yaka.lk and post your 
-                advertisement within no time and as soon as you publish, we will review it and allow to view 
+                in order to make it quick in findings.You can create free account in yaka.lk and post your
+                advertisement within no time and as soon as you publish, we will review it and allow to view
                 in website. Also, you can choose add promotion packages for better results.' ,
     'What We Do' => 'What We Do' ,
     'para6' => 'Yaka.lk is a fast and easy platform for posting and discovering classified ads. Whether selling a product, offering a service, or finding great deals, our user-friendly interface makes it simple.
@@ -228,7 +228,7 @@ return [
 
 
 
-    
+
 
 
     'ad post' => 'ad post',
@@ -240,8 +240,8 @@ return [
                 Explore an extensive range of categories, from real estate and vehicles to electronics and fashion. Our platform connects you with local sellers and unique products, making it easier than ever to find exactly what you need. With user-friendly features, advanced search options, and exclusive offers, shopping has never been more convenient.
                 Thank you for joining yaka.lk —dive in and start discovering the best deals and services',
 
-    'Our Terms & Conditions' => 'Our Terms & Conditions',   
-    
+    'Our Terms & Conditions' => 'Our Terms & Conditions',
+
      //Terms & Conditions page
 
      'Acceptance of Terms' => 'Acceptance of Terms',
@@ -261,20 +261,20 @@ return [
     'Fees and Payment' => 'Fees and Payment',
     'Fees line1' => 'Some listings may require a fee to post. All fees are non-refundable.',
     'Fees line2' => 'Payments are processed securely through third-party payment gateways. We are not responsible for any transaction issues related to payment providers.',
-    
+
     'User Responsibilities and Conduct' => 'User Responsibilities and Conduct',
     'User line1' => 'You agree not to engage in fraudulent or deceptive activities, including false advertising or spamming.',
     'User line2' => 'Users are responsible for verifying the authenticity of goods and services before proceeding with a transaction.',
     'User line3' => 'We are not responsible for any disputes between buyers and sellers.',
-    
+
     'Prohibited Content' => 'Prohibited Content',
     'Prohibited line1' => 'You must not post content that is unlawful, defamatory, obscene, or infringes on third-party rights.',
     'Prohibited line2' => 'We reserve the right to remove content at our discretion.',
-    
+
     'Intellectual Property' => 'Intellectual Property',
     'Intellectual line1' => 'All content on the Website, including logos, design, and text, is our intellectual property.',
     'Intellectual line2' => 'You may not reproduce, distribute, or use the Website’s content without our permission.',
-    
+
     'Disclaimers and Limitation of Liability' => 'Disclaimers and Limitation of Liability',
     'Disclaimers line1' => 'We provide the Website “as is” and make no guarantees about the availability, reliability, or accuracy of listings.',
     'Disclaimers line2' => 'We are not liable for any direct, indirect, or consequential damages arising from your use of the Website.',
@@ -282,11 +282,11 @@ return [
     'Third-Party Links and Services' => 'Third-Party Links and Services',
     'ThirdParty line1' => 'The Website may contain links to third-party websites. We are not responsible for their content or practices.',
     'ThirdParty line2' => 'Your dealings with third-party services are solely between you and the respective provider.',
-    
+
     'Account Termination' => 'Account Termination',
     'Termination line1' => 'We reserve the right to terminate accounts without notice if users violate these terms or engage in suspicious activity.',
     'Termination line2' => 'Users may delete their accounts at any time by contacting support.',
-   
+
 
 
 
@@ -377,7 +377,7 @@ return [
     'Size' => 'Size',
     'Gender' => 'Gender',
     'Furniture Type' => 'Furniture Type',
-    
+
     'Land Type' => 'Land Type',
     'Land Size' => 'Land Size',
     'Address' => 'Address',
@@ -639,11 +639,17 @@ return [
 'Optional' => 'Optional',
 'Select Education' => 'Select Education',
 'Mobile Number' => 'Mobile Number',
-
-
-
-    
-
+'membership' => 'Membership',
+'ads per month' => 'Ads per month',
+'promotion voucher cost' => 'Promotion voucher cost',
+'valid month' => 'Valid month',
+'purchase now' => 'Purchase now',
+'active membership' => 'Active membership',
+'my membership' => 'My membership',
+'month' => 'Month',
+'start date' => 'Start date',
+'expiry date' => 'Expiry date',
+'voucher code' => 'Voucher code',
 ];
 
 

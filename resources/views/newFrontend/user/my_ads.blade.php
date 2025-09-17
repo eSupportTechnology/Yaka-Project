@@ -135,6 +135,7 @@
                         <div class="dash-menu-list">
                             <ul>
                                 <li><a href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
+                                <li><a href="{{route('membership-package')}}">@lang('messages.membership')</a></li>
                                 <li><a href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
                                 <li><a  class="active" href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
                                 <li><a href="{{route('user.profile')}}">@lang('messages.Profile')</a></li>

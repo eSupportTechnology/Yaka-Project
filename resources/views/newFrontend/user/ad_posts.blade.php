@@ -179,6 +179,7 @@
                                 @if(Auth::check() && Auth::user()->roles != 'staff')
                                 <li><a href="{{route('user.dashboard')}}">@lang('messages.Dashboard')</a></li>
                                 @endif
+                                <li><a href="{{route('membership-package')}}">@lang('messages.membership')</a></li>
                                 <li><a  class="active" href="{{route('user.ad_posts.categories')}}">@lang('messages.ad post')</a></li>
                                     @if(Auth::check() && Auth::user()->roles != 'staff')
                                 <li><a href="{{route('user.my_ads')}}" >@lang('messages.my ads')</a></li>
