@@ -45,7 +45,9 @@ class Ads extends Model
         'education',                // <-- Add this
         'application_deadline',     // <-- Add this
         'mobile_number',
-        'reason'
+        'reason',
+        'voucher_amount_used',
+        'ads_count_used'
     ];
 
     protected $casts = [

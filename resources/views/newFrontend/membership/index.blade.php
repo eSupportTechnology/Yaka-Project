@@ -107,42 +107,6 @@
             text-align: center;
         }
 
-        /* Button Styling */
-        .btn-primary {
-            background: var(--primary-gradient);
-            border: none;
-            border-radius: 10px;
-            padding: 0.75rem 2rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            margin-top: auto;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-            background: var(--secondary-gradient);
-        }
-
         /* Empty State Styling */
         .text-center {
             padding: 4rem 2rem;
@@ -345,7 +309,7 @@
                                             <input type="hidden" name="ads_per_month"
                                                 value="{{ $package->ads_per_month }}">
                                             <input type="hidden" name="valid_month" value="{{ $package->valid_month }}">
-                                            <button type="submit" class="btn btn-primary">@lang('messages.purchase now')</button>
+                                            <button type="submit" class="theme-btn-one">@lang('messages.purchase now')</button>
                                         </form>
                                     </div>
                                 </div>

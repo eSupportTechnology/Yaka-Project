@@ -141,15 +141,12 @@ Route::middleware(['auth'])->group(function () {
 
     //paymentController
     Route::get('/payment', [PaymentProcessingController::class, 'show'])->name('payment.page');
+    Route::post('/payment/free-complete', [PaymentProcessingController::class, 'freeComplete'])->name('payment.free.complete');
     // Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
     Route::get('/payment/checking', [PaymentProcessingController::class, 'complete'])->name('payment.checking');
 
     Route::get('/membership-package', [MembershipPackagesController::class, 'index'])->name('membership-package');
     Route::post('/membership/store', [MembershipPackagesController::class, 'store'])->name('membership.store');
-//     Route::get('/membership-package/{id}/edit', [MembershipPackagesController::class, 'edit'])->name('membership-package.edit');
-//     Route::put('/membership-package/{id}', [MembershipPackagesController::class, 'update'])->name('membership-package.update');
-//     Route::get('/membership-package/{id}/show', [MembershipPackagesController::class, 'show'])->name('membership-package.show');
-//     Route::delete('/membership-package/{id}', [MembershipPackagesController::class, 'destroy'])->name('membership-package.destroy');
  });
 
 
