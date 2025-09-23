@@ -16,7 +16,11 @@ class MembershipPackagesController extends Controller
     public function index()
     {
         $packages = MembershipPlan::all();
-        $myMemberships = MembershipPackage::where('user_id', Auth::id())->get();
+
+        $myMemberships = MembershipPackage::where('user_id', Auth::id())
+            ->where('expiry_date', '>', now())
+            ->get();
+
         return view('newFrontend.membership.index', compact('packages', 'myMemberships'));
     }
 
@@ -30,20 +34,29 @@ class MembershipPackagesController extends Controller
     {
         $user = Auth::user();
 
-        // Validate request (if needed)
+        // Validate request
         $request->validate([
-            'price' => 'required|numeric',
-            'promotion_voucher_cost' => 'nullable|numeric',
-            'ads_per_month' => 'required|integer',
-            'valid_month' => 'required|integer',
+            'price' => 'required|numeric|min:0',
+            'promotion_voucher_cost' => 'nullable|numeric|min:0',
+            'ads_per_month' => 'required|integer|min:1',
+            'valid_month' => 'required|integer|min:1',
         ]);
 
+        // Check if user already has an active membership
+        $activeMembership = MembershipPackage::where('user_id', $user->id)
+            ->where('expiry_date', '>', now()) // not expired yet
+            ->first();
+
+        if ($activeMembership) {
+            return redirect()->back()->with('error', 'You already have an active membership. You can purchase another after it expires.');
+        }
+
         // Calculate dates
-        $startDate = Carbon::now();
-        $expiryDate = Carbon::now()->addMonths((int) $request->valid_month);
+        $startDate = now();
+        $expiryDate = now()->addMonths((int) $request->valid_month);
 
         // Create membership package
-        $package = MembershipPackage::create([
+        MembershipPackage::create([
             'user_id' => $user->id,
             'start_date' => $startDate,
             'expiry_date' => $expiryDate,
@@ -56,5 +69,4 @@ class MembershipPackagesController extends Controller
 
         return redirect()->back()->with('success', 'Membership purchased successfully!');
     }
-
 }
