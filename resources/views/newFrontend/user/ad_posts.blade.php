@@ -951,75 +951,148 @@
 
             // Function to initialize CKEditor (only once)
             function initializeCKEditor() {
-                // Check if already initialized
-                if (window.ckEditorInitialized || editorInstance) {
-                    console.log('CKEditor already initialized, skipping...');
-                    return Promise.resolve();
+    // Check if already initialized
+    if (window.ckEditorInitialized || editorInstance) {
+        console.log('CKEditor already initialized, skipping...');
+        return Promise.resolve();
+    }
+
+    const textareaElement = document.querySelector('#ad_description');
+    if (!textareaElement) {
+        console.error('Textarea with ID "ad_description" not found');
+        return Promise.reject('Element not found');
+    }
+
+    // Check if CKEditor is already attached to this element
+    if (textareaElement.ckeditorInstance) {
+        console.log('CKEditor already attached to this element');
+        editorInstance = textareaElement.ckeditorInstance;
+        return Promise.resolve();
+    }
+
+    // Mark as initializing
+    window.ckEditorInitialized = true;
+
+    return ClassicEditor
+        .create(textareaElement, {
+            toolbar: {
+                items: [
+                    'heading', '|',
+                    'bold', 'italic', 'underline', 'strikethrough', '|',
+                    'link', 'bulletedList', 'numberedList', '|',
+                    'insertTable', 'mediaEmbed', 'blockQuote', '|',
+                    'undo', 'redo', 'codeBlock', 'alignment'
+                ]
+            },
+            table: {
+                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+            },
+            mediaEmbed: {
+                previewsInData: true
+            },
+        })
+        .then(editor => {
+            editorInstance = editor;
+            textareaElement.ckeditorInstance = editor;
+            console.log('CKEditor initialized successfully');
+
+            // Add real-time data synchronization for form validation
+            editor.model.document.on('change:data', () => {
+                const data = editor.getData();
+                textareaElement.value = data;
+
+                // Update validation state immediately
+                if (data.trim()) {
+                    textareaElement.setCustomValidity('');
+                } else {
+                    textareaElement.setCustomValidity('Description is required');
                 }
 
-                const textareaElement = document.querySelector('#ad_description');
-                if (!textareaElement) {
-                    console.error('Textarea with ID "ad_description" not found');
-                    return Promise.reject('Element not found');
-                }
+                // Trigger input event to notify other listeners
+                textareaElement.dispatchEvent(new Event('input', { bubbles: true }));
+            });
 
-                // Check if CKEditor is already attached to this element
-                if (textareaElement.ckeditorInstance) {
-                    console.log('CKEditor already attached to this element');
-                    editorInstance = textareaElement.ckeditorInstance;
-                    return Promise.resolve();
-                }
-
-                // Mark as initializing
-                window.ckEditorInitialized = true;
-
-                return ClassicEditor
-                    .create(textareaElement, {
-                        toolbar: {
-                            items: [
-                                'heading', '|',
-                                'bold', 'italic', 'underline', 'strikethrough', '|',
-                                'link', 'bulletedList', 'numberedList', '|',
-                                'insertTable', 'mediaEmbed', 'blockQuote', '|',
-                                'undo', 'redo', 'codeBlock', 'alignment'
-                            ]
-                        },
-                        table: {
-                            contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
-                        },
-                        mediaEmbed: {
-                            previewsInData: true
-                        },
-                    })
-                    .then(editor => {
-                        editorInstance = editor;
-                        textareaElement.ckeditorInstance = editor;
-                        console.log('CKEditor initialized successfully');
-
-                        // Hide the original textarea completely
-                        $(textareaElement).css({
-                            'display': 'none',
-                            'visibility': 'hidden',
-                            'position': 'absolute',
-                            'left': '-9999px'
-                        });
-
-                        return editor;
-                    })
-                    .catch(error => {
-                        console.error('CKEditor initialization error:', error);
-                        window.ckEditorInitialized = false;
-                        throw error;
-                    });
+            // Initialize with current content if any
+            const initialData = editor.getData();
+            textareaElement.value = initialData;
+            if (!initialData.trim()) {
+                textareaElement.setCustomValidity('Description is required');
             }
 
-            // Destroy any existing editors first, then initialize
-            destroyAllEditors();
+            // Hide the original textarea but keep it accessible for validation
+            $(textareaElement).css({
+                'position': 'absolute',
+                'left': '-9999px',
+                'top': '-9999px',
+                'width': '1px',
+                'height': '1px',
+                'opacity': '0',
+                'pointer-events': 'none',
+                'tab-index': '-1'
+            });
 
-            // Wait a moment then initialize
-            setTimeout(() => {
-                initializeCKEditor();
-            }, 100);
+            // Handle focus events for validation highlighting
+            textareaElement.addEventListener('focus', () => {
+                if (editor && editor.editing && editor.editing.view) {
+                    editor.editing.view.focus();
+                }
+            });
+
+            // Handle invalid events to focus on CKEditor
+            textareaElement.addEventListener('invalid', (e) => {
+                e.preventDefault();
+                if (editor && editor.editing && editor.editing.view) {
+                    editor.editing.view.focus();
+
+                    // Show custom validation message
+                    showNotification('Please fill in the description field.', 'error');
+                }
+            });
+
+            return editor;
+        })
+        .catch(error => {
+            console.error('CKEditor initialization error:', error);
+            window.ckEditorInitialized = false;
+            throw error;
+        });
+}
+
+// Enhanced form submission handler to ensure data synchronization
+$('form').on('submit', function(e) {
+    if (editorInstance) {
+        const editorData = editorInstance.getData();
+        const textareaElement = document.querySelector('#ad_description');
+
+        // Synchronize data
+        textareaElement.value = editorData;
+
+        // Validate manually before allowing submission
+        if (!editorData.trim()) {
+            e.preventDefault();
+            textareaElement.setCustomValidity('Description is required');
+            textareaElement.reportValidity();
+
+            // Focus on CKEditor
+            if (editorInstance.editing && editorInstance.editing.view) {
+                editorInstance.editing.view.focus();
+            }
+
+            showNotification('Please fill in the description field.', 'error');
+            return false;
+        } else {
+            textareaElement.setCustomValidity('');
+        }
+    }
+});
+
+// Destroy any existing editors first, then initialize
+destroyAllEditors();
+
+// Wait a moment then initialize
+setTimeout(() => {
+    initializeCKEditor();
+}, 100);
 
             // Show/hide AI generator based on brand and model selection
             function toggleAIGenerator() {
