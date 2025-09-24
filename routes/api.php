@@ -18,6 +18,7 @@ use App\Http\Controllers\frontend\AdsController;
 use App\Http\Controllers\frontend\UserAdsController;
 use App\Http\Controllers\GeminiController;
 use App\Http\Controllers\MembershipPlanController;
+use App\Http\Controllers\SocialMobileAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AuthController;
@@ -260,6 +261,7 @@ Route::get('/get/districts', [CommonControllerMobile::class, 'getDistricts']); /
 Route::post('/generate-description', [GeminiController::class, 'generateDescription']);
 
 Route::get('/brands', [UserAdsController::class, 'getBrandsByCategoryAndSubcategory']);
+Route::post('/auth/social-login', [SocialMobileAuthController::class, 'socialLogin']);
 
 /**
  * Ad Post routes
