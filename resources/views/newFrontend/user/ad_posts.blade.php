@@ -102,7 +102,15 @@
         $sub_cat_id = request()->get('sub_cat_id');
     @endphp
 
-
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <section  class="page-title style-two banner-part" style="background-image: url(assets/images/background/page-title.jpg); height:350px">
         <div class="auto-container">
             @if(Auth::check() && Auth::user()->roles != 'staff')

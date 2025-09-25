@@ -113,6 +113,13 @@
                 </a>
             </li>
 
+            <li class="menu-item {{ request()->routeIs('dashboard.limit.index') ? 'active' : '' }}">
+                <a class="menu-link" href="{{route('dashboard.limit.index')}}">
+                    <i class="icon material-icons md-markunread_mailbox"></i>
+                    <span class="text">Ads Limit</span>
+                </a>
+            </li>
+
             <li class="menu-item {{ request()->routeIs('dashboard.adsTypes') ? 'active' : '' }}">
                 <a class="menu-link" href="{{route('dashboard.adsTypes')}}">
                     <i class="icon material-icons md-format_list_bulleted"></i>
