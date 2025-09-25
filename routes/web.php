@@ -25,6 +25,7 @@ use App\Http\Controllers\frontend\userDashboardController;
 use App\Http\Controllers\adminPanel\adsManagementController;
 
 use App\Http\Controllers\adminPanel\adminManagementController;
+use App\Http\Controllers\adminPanel\AdsLimitationController;
 use App\Http\Controllers\adminPanel\usersManagementController;
 use App\Http\Controllers\frontend\PaymentProcessingController;
 use App\Http\Controllers\staffPanel\staffManagementController;
@@ -306,6 +307,14 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::put('/membership-plans/{id}', [MembershipPlanController::class, 'membershipPlanupdate'])->name('membership-plans.update');
     Route::get('/membership-plans/{id}/show', [MembershipPlanController::class, 'membershipPlanshow'])->name('membership-plans.show');
     Route::delete('/membership-plans/{id}', [MembershipPlanController::class, 'membershipPlandestroy'])->name('membership-plans.destroy');
+
+    // Ads Limitation Management
+    Route::get('/ads-limitations', [AdsLimitationController::class, 'index'])->name('dashboard.limit.index');
+    Route::get('/ads-limitations/create', [AdsLimitationController::class, 'create'])->name('dashboard.limit.create');
+    Route::post('/ads-limitations/store', [AdsLimitationController::class, 'store'])->name('dashboard.limit.store');
+    Route::get('/ads-limitations/edit/{id}', [AdsLimitationController::class, 'edit'])->name('dashboard.limit.edit');
+    Route::put('/ads-limitations/update/{id}', [AdsLimitationController::class, 'update'])->name('dashboard.limit.update');
+    Route::delete('/ads-limitations/delete/{id}', [AdsLimitationController::class, 'destroy'])->name('dashboard.limit.delete');
 });
 Route::get('/ad-boost-billing-details', [BoostingController::class, 'showBillingDetails'])->name('boosting.billingDetails');
 Route::post('/boosting/save-info', [BoostingController::class, 'saveInfo'])->name('boosting.saveInfo');

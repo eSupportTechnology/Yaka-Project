@@ -19,6 +19,7 @@ use App\Services\OtpService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\AdsLimitation;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -160,6 +161,15 @@ class UserAdsController extends Controller
 
             if ($request->boosting_option == '0') {
                 $request->merge(['package_type' => '0']);
+
+                $adsLimit = AdsLimitation::where('status', 1)->first();
+                $userAdsCount = Ads::where('user_id', auth()->id())->count();
+
+                if ($userAdsCount >= $adsLimit->limit) {
+                    return redirect()->back()->withErrors([
+                        'limit' => "You cannot post more than {$adsLimit->limit} ads under the current plan."
+                    ])->withInput();
+                }
             }
 
             $validationRules = array_merge([
@@ -215,7 +225,7 @@ class UserAdsController extends Controller
 
             if (auth()->user()->roles === 'staff') {
                 $checkUser = User::where('phone_number', $validated['user_phone_number'])->first();
-                if($checkUser) {
+                if ($checkUser) {
                     $userId = $checkUser->id;
                 } else {
                     // Create new user
@@ -362,11 +372,10 @@ class UserAdsController extends Controller
             $successMessage = auth()->user()->roles === 'staff' ?
                 'User created and ad posted successfully!' :
                 'Ad posted successfully!';
-            if(auth()->user()->roles === 'staff') {
+            if (auth()->user()->roles === 'staff') {
                 return redirect()->route('user.ad_posts.categories')->with('success', $successMessage);
             }
             return redirect()->route('user.my_ads')->with('success', $successMessage);
-
         } catch (Exception $e) {
             Log::error('Error in store method', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             return redirect()->back()->with('error', 'Something went wrong! Please try again.');
@@ -506,7 +515,6 @@ class UserAdsController extends Controller
                 'ad_id' => $ad->adsId,
                 'channels' => ['new-ads', 'category-' . $catId, 'location-' . str_replace(' ', '-', strtolower($location))]
             ]);
-
         } catch (Exception $e) {
             Log::error('Failed to send Pusher notification', [
                 'error' => $e->getMessage(),
