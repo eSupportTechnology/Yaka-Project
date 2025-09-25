@@ -11,6 +11,7 @@ class SocialMobileAuthController extends Controller
 {
     public function socialLogin()
     {
+
         request()->validate([
             'provider' => 'required|in:google,facebook',
             'access_token' => 'required',

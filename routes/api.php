@@ -261,6 +261,7 @@ Route::get('/get/districts', [CommonControllerMobile::class, 'getDistricts']); /
 Route::post('/generate-description', [GeminiController::class, 'generateDescription']);
 
 Route::get('/brands', [UserAdsController::class, 'getBrandsByCategoryAndSubcategory']);
+
 Route::post('/auth/social-login', [SocialMobileAuthController::class, 'socialLogin']);
 
 /**
