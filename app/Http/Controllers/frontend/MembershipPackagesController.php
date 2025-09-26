@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\MembershipPackage;
 use App\Models\MembershipPlan;
+use App\Models\PaymentInfo;
+use App\Services\IpgHashService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,4 +71,31 @@ class MembershipPackagesController extends Controller
 
         return redirect()->back()->with('success', 'Membership purchased successfully!');
     }
+
+    public function initPayment(Request $request)
+{
+    $user = auth()->user();
+
+    $invoiceId = "YKMB" . now()->format('YmdHis') . $user->id;
+    $checkValue = IpgHashService::hash($request->price, $invoiceId);
+
+    // Save payment info (membership context)
+    PaymentInfo::create([
+        'check_value' => $checkValue,
+        'invoice_id'  => $invoiceId,
+        'user_id'     => $user->id,
+        'ad_data'     => json_encode($request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])),
+        'payment_for' => 'membership',
+    ]);
+
+    session(['checkValue' => $checkValue, 'invoiceId' => $invoiceId, 'membership_data' => $request->all()]);
+
+    return view('newFrontend.user.membership-payment', [
+        'price' => $request->price,
+        'invoiceId' => $invoiceId,
+        'checkValue' => $checkValue,
+        'membershipData' => $request->all()
+    ]);
+}
+
 }
