@@ -287,24 +287,62 @@ class PaymentProcessingController extends Controller
 
 
     public function complete(Request $request)
-    {
-        try {
-            $invoiceId = $request->query('invId');
-            $paymentInfo = PaymentInfo::where('invoice_id', $invoiceId)->first();
-            if ($paymentInfo->payment_status == 0) {
-                return view('newFrontend.user.payment-confirming');
-            } else if ($paymentInfo->payment_status == 1) {
-                // Decode ad data
+{
+    try {
+        $invoiceId = $request->query('invId');
+        $paymentInfo = PaymentInfo::where('invoice_id', $invoiceId)->first();
 
-                return redirect()->route('user.my_ads')->with('success', 'Payment successful! Your ad has been posted.');
-            } else {
-                return view('newFrontend.user.payment-error');
-            }
-        } catch (\Exception $e) {
-            Log::error('Payment processing error', ['error' => $e->getMessage()]);
-            return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
+        if (!$paymentInfo) {
+            return view('newFrontend.user.payment-error')->with('error', 'Invalid payment reference.');
         }
+
+        // Payment still pending
+        if ($paymentInfo->payment_status == 0) {
+            return view('newFrontend.user.payment-confirming');
+        }
+
+        // Payment successful
+        if ($paymentInfo->payment_status == 1) {
+            // If this payment was for membership
+            if ($paymentInfo->payment_for === 'membership') {
+                $data = json_decode($paymentInfo->ad_data, true);
+
+                // Check if membership already exists to avoid duplicates
+                $alreadyExists = MembershipPackage::where('user_id', $paymentInfo->user_id)
+                    ->where('expiry_date', '>', now())
+                    ->exists();
+
+                if (!$alreadyExists) {
+                    MembershipPackage::create([
+                        'user_id' => $paymentInfo->user_id,
+                        'start_date' => now(),
+                        'expiry_date' => now()->addMonths($data['valid_month']),
+                        'ads_per_month' => $data['ads_per_month'],
+                        'voucher_code' => strtoupper(Str::random(6)),
+                        'price' => $data['price'],
+                        'promotion_voucher_cost' => $data['promotion_voucher_cost'],
+                        'valid_month' => $data['valid_month'],
+                    ]);
+                }
+
+                return redirect()->route('membership-package')
+                    ->with('success', 'Membership purchased successfully!');
+            }
+
+            // Else → payment was for ad posting
+            return redirect()->route('user.my_ads')
+                ->with('success', 'Payment successful! Your ad has been posted.');
+        }
+
+        // Payment failed
+        return view('newFrontend.user.payment-error');
+
+    } catch (\Exception $e) {
+        Log::error('Payment processing error', ['error' => $e->getMessage()]);
+        return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
     }
+}
+
 
 
     private function saveAd($adData, $invoiceId, $userId)

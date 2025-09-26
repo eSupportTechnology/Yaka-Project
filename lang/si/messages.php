@@ -648,6 +648,8 @@ return [
 'start date' => 'ආරම්භක දිනය',
 'expiry date' => 'කල් ඉකුත් වීමේ දිනය',
 'voucher code' => 'වවුචර් කේතය',
+'membership payment' => 'සාමාජිකත්ව ගෙවීම්',
+'pay now' => 'දැන් ගෙවන්න',
 
 
 

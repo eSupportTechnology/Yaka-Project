@@ -650,6 +650,8 @@ return [
 'start date' => 'Start date',
 'expiry date' => 'Expiry date',
 'voucher code' => 'Voucher code',
+'membership payment' => 'Membership payment',
+'pay now' => 'Pay now',
 ];
 
 

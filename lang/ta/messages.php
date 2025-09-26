@@ -656,4 +656,6 @@ return [
 'start date' => 'தொடக்க தேதி',
 'expiry date' => 'முடிவு தேதி',
 'voucher code' => 'வவுச்சர் குறியீடு',
+'membership payment' => 'உறுப்பினர் கட்டணம்',
+'pay now' => 'இப்போது செலுத்தவும்',
   ];

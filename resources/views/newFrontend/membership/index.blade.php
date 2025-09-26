@@ -301,7 +301,7 @@
                                         </p>
 
                                         <!-- Purchase form -->
-                                        <form action="{{ route('membership.store') }}" method="POST">
+                                        <form action="{{ route('membership.payment.init') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="price" value="{{ $package->price }}">
                                             <input type="hidden" name="promotion_voucher_cost"
