@@ -75,9 +75,11 @@ class MembershipPackagesController extends Controller
     public function initPayment(Request $request)
     {
         $user = auth()->user();
+
         $price = (float) $request->price;
 
-        $invoiceId = "YKMB" . now()->format('YmdHis') . $user->id;
+        $invoiceId = "YKMB" . now()->format('ymdHis');
+
         $checkValue = IpgHashService::hash($price, $invoiceId);
 
         PaymentInfo::create([
