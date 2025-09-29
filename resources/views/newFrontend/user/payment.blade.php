@@ -312,7 +312,7 @@
                 @else
                     billingCountry
                 @endif ,
-                amount: paymentAmount, // Use the properly formatted amount
+                amount: paymentAmount.toFixed(2), // Convert to string with 2 decimals
                 currencyCode: "LKR",
                 paymentType: "1",
                 notifyUrl: "{{ config('ipg.notify-url') }}"
