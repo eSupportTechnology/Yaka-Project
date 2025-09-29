@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MembershipAdUsage;
+use App\Models\MembershipPackage;
 use App\Models\MembershipPlan;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\ApiResponseService;
@@ -158,5 +161,21 @@ class MembershipPlanController extends Controller
         $plan = MembershipPlan::find($id);
         $plan->delete();
         return redirect()->route('membership-plans')->with('success', 'Membership plan deleted successfully.');
+    }
+
+    public function purchased()
+    {
+        $plans = MembershipPackage::all();
+        return view('newAdminDashboard.membershipPlans.purchased', compact('plans'));
+    }
+    public function purchased_view($userId)
+    {
+         $user = User::findOrFail($userId);
+
+    $plans = MembershipAdUsage::where('user_id', $userId)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+    return view('newAdminDashboard.membershipPlans.purchased_view', compact('user', 'plans'));
     }
 }
