@@ -73,29 +73,32 @@ class MembershipPackagesController extends Controller
     }
 
     public function initPayment(Request $request)
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
+        $price = (float) $request->price;
 
-    $invoiceId = "YKMB" . now()->format('YmdHis') . $user->id;
-    $checkValue = IpgHashService::hash($request->price, $invoiceId);
+        $invoiceId = "YKMB" . now()->format('YmdHis') . $user->id;
+        $checkValue = IpgHashService::hash($price, $invoiceId);
 
-    // Save payment info (membership context)
-    PaymentInfo::create([
-        'check_value' => $checkValue,
-        'invoice_id'  => $invoiceId,
-        'user_id'     => $user->id,
-        'ad_data'     => json_encode($request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])),
-        'payment_for' => 'membership',
-    ]);
+        PaymentInfo::create([
+            'check_value' => $checkValue,
+            'invoice_id'  => $invoiceId,
+            'user_id'     => $user->id,
+            'ad_data'     => json_encode($request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])),
+            'payment_for' => 'membership',
+        ]);
 
-    session(['checkValue' => $checkValue, 'invoiceId' => $invoiceId, 'membership_data' => $request->all()]);
+        session([
+            'checkValue' => $checkValue,
+            'invoiceId' => $invoiceId,
+            'membership_data' => $request->all()
+        ]);
 
-    return view('newFrontend.user.membership-payment', [
-        'price' => $request->price,
-        'invoiceId' => $invoiceId,
-        'checkValue' => $checkValue,
-        'membershipData' => $request->all()
-    ]);
-}
-
+        return view('newFrontend.user.membership-payment', [
+            'price' => $price,
+            'invoiceId' => $invoiceId,
+            'checkValue' => $checkValue,
+            'membershipData' => $request->all()
+        ]);
+    }
 }
