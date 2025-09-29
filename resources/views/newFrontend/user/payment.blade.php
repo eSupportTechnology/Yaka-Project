@@ -169,86 +169,89 @@
     </div>
 
     <script>
-        let finalPrice = {{ $selectedPackagePrice }};
+        let finalPrice = parseFloat({{ $selectedPackagePrice }});
 
         @if ($activeMembership)
-            // Voucher handling
-            document.getElementById('voucher_code').addEventListener('input', function() {
-                const enteredCode = this.value.trim();
-                const validCode = "{{ $activeMembership->voucher_code }}";
-                const discount = {{ $activeMembership->promotion_voucher_cost }};
-                const originalPrice = {{ $selectedPackagePrice }};
+        // Voucher handling
+        document.getElementById('voucher_code').addEventListener('input', function() {
+            const enteredCode = this.value.trim();
+            const validCode = "{{ $activeMembership->voucher_code }}";
+            const discount = parseFloat({{ $activeMembership->promotion_voucher_cost }});
+            const originalPrice = parseFloat({{ $selectedPackagePrice }});
 
-                const discountDisplay = document.getElementById('discount-display');
-                const discountAmountEl = document.getElementById('discount-amount');
-                const finalPriceEl = document.getElementById('final-price-display');
-                const buttonPrice = document.getElementById('button-price');
+            const discountDisplay = document.getElementById('discount-display');
+            const discountAmountEl = document.getElementById('discount-amount');
+            const finalPriceEl = document.getElementById('final-price-display');
+            const buttonPrice = document.getElementById('button-price');
 
-                if (enteredCode && enteredCode === validCode) {
-                    finalPrice = originalPrice - discount;
-                    if (finalPrice < 0) finalPrice = 0;
+            if (enteredCode && enteredCode === validCode) {
+                finalPrice = originalPrice - discount;
+                if (finalPrice < 0) finalPrice = 0;
 
-                    // Show discount section
-                    discountDisplay.style.display = 'block';
-                    discountAmountEl.textContent = "LKR " + discount.toFixed(2);
-                    finalPriceEl.textContent = "LKR " + finalPrice.toFixed(2);
+                // Show discount section
+                discountDisplay.style.display = 'block';
+                discountAmountEl.textContent = "LKR " + finalPrice.toFixed(2);
+                finalPriceEl.textContent = "LKR " + finalPrice.toFixed(2);
 
-                    // Update button price
-                    buttonPrice.textContent = finalPrice.toFixed(2);
+                // Update button price
+                buttonPrice.textContent = finalPrice.toFixed(2);
 
-                } else {
-                    finalPrice = originalPrice;
+            } else {
+                finalPrice = originalPrice;
 
-                    // Hide discount section
-                    discountDisplay.style.display = 'none';
+                // Hide discount section
+                discountDisplay.style.display = 'none';
 
-                    // Reset button price
-                    buttonPrice.textContent = originalPrice.toFixed(2);
-                }
-            });
+                // Reset button price
+                buttonPrice.textContent = originalPrice.toFixed(2);
+            }
+        });
         @endif
 
         function returnForm() {
             @if (!$activeMembership)
-                // Only validate billing if no membership
-                const billingStreet = document.getElementById('billing_street').value.trim();
-                const billingCity = document.getElementById('billing_city').value.trim();
-                const billingCountry = document.getElementById('billing_country').value.trim();
+            // Only validate billing if no membership
+            const billingStreet = document.getElementById('billing_street').value.trim();
+            const billingCity = document.getElementById('billing_city').value.trim();
+            const billingCountry = document.getElementById('billing_country').value.trim();
 
-                if (!billingStreet || !billingCity || !billingCountry) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Missing Billing Information',
-                        text: 'Please fill in all required billing details.',
-                    });
-                    return;
-                }
+            if (!billingStreet || !billingCity || !billingCountry) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Missing Billing Information',
+                    text: 'Please fill in all required billing details.',
+                });
+                return;
+            }
             @endif
 
             // Show spinner & disable button
             document.getElementById('btnSpinner').style.display = 'inline-block';
             document.getElementById('payNowBtn').disabled = true;
 
+            // Ensure finalPrice is a proper number with 2 decimals
+            const paymentAmount = parseFloat(finalPrice.toFixed(2));
+
             // If final price is zero, skip payment gateway
-            if (finalPrice === 0) {
+            if (paymentAmount === 0) {
                 document.getElementById('payNowText').textContent = "Completing...";
 
                 fetch("{{ route('payment.free.complete') }}", {
-                        method: "POST",
-                        headers: {
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            invoiceId: "{{ $invoiceId }}",
-                            adData: {
-                                ...{!! json_encode($adData) !!},
-                                user_id: "{{ auth()->id() }}",
-                                voucher_amount: (finalPrice === 0 ?
-                                    {{ $activeMembership->promotion_voucher_cost ?? 0 }} : 0),
-                            }
-                        })
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        invoiceId: "{{ $invoiceId }}",
+                        adData: {
+                            ...{!! json_encode($adData) !!},
+                            user_id: "{{ auth()->id() }}",
+                            voucher_amount: (paymentAmount === 0 ?
+                                {{ $activeMembership->promotion_voucher_cost ?? 0 }} : 0),
+                        }
                     })
+                })
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
@@ -262,8 +265,7 @@
                             // Re-enable button if error
                             document.getElementById('btnSpinner').style.display = 'none';
                             document.getElementById('payNowBtn').disabled = false;
-                            document.getElementById('payNowText').textContent = "Pay Now - LKR " + finalPrice.toFixed(
-                            2);
+                            document.getElementById('payNowText').textContent = "Pay Now - LKR " + paymentAmount.toFixed(2);
                         }
                     })
                     .catch(() => {
@@ -275,7 +277,7 @@
                         // Re-enable button if error
                         document.getElementById('btnSpinner').style.display = 'none';
                         document.getElementById('payNowBtn').disabled = false;
-                        document.getElementById('payNowText').textContent = "Pay Now - LKR " + finalPrice.toFixed(2);
+                        document.getElementById('payNowText').textContent = "Pay Now - LKR " + paymentAmount.toFixed(2);
                     });
 
                 return; // Stop further execution
@@ -310,7 +312,7 @@
                 @else
                     billingCountry
                 @endif ,
-                amount: finalPrice,
+                amount: paymentAmount, // Use the properly formatted amount
                 currencyCode: "LKR",
                 paymentType: "1",
                 notifyUrl: "{{ config('ipg.notify-url') }}"
