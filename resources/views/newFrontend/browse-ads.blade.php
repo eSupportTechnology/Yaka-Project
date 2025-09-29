@@ -58,14 +58,14 @@
         }
 
         .banner-area {
-            position: relative;
-            left: 1rem;
-            display: flex;
-            justify-content: right;
-            right: 8rem;
-            height: fit-content;
-            grid-area: banner;
-        }
+    position: relative;
+    left: 1rem;
+    display: flex;
+    justify-content: right;
+    right: 8rem;
+    height: fit-content;
+    grid-area: banner;
+}
 
         /* Content Grid for Ads */
         .ads-grid {

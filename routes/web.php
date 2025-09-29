@@ -308,6 +308,8 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::put('/membership-plans/{id}', [MembershipPlanController::class, 'membershipPlanupdate'])->name('membership-plans.update');
     Route::get('/membership-plans/{id}/show', [MembershipPlanController::class, 'membershipPlanshow'])->name('membership-plans.show');
     Route::delete('/membership-plans/{id}', [MembershipPlanController::class, 'membershipPlandestroy'])->name('membership-plans.destroy');
+    Route::get('/purchase-membership', [MembershipPlanController::class, 'purchased'])->name('membership-plans.purchase');
+    Route::get('/purchase-membership/{userId}', [MembershipPlanController::class, 'purchased_view'])->name('membership-plans.purchase_view');
 
     // Ads Limitation Management
     Route::get('/ads-limitations', [AdsLimitationController::class, 'index'])->name('dashboard.limit.index');
