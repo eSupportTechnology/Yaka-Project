@@ -12,9 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('payment_infos', function (Blueprint $table) {
-            $table->string('check_value')->nullable();
-            $table->longText('ad_data')->nullable();
+            if (!Schema::hasColumn('payment_infos', 'check_value')) {
+                $table->string('check_value')->nullable();
+            } else {
+                $table->string('check_value')->nullable()->change();
+            }
 
+            if (!Schema::hasColumn('payment_infos', 'ad_data')) {
+                $table->longText('ad_data')->nullable();
+            } else {
+                $table->longText('ad_data')->nullable()->change();
+            }
         });
     }
 
