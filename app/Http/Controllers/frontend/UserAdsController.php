@@ -161,15 +161,6 @@ class UserAdsController extends Controller
 
             if ($request->boosting_option == '0') {
                 $request->merge(['package_type' => '0']);
-
-                $adsLimit = AdsLimitation::where('status', 1)->first();
-                $userAdsCount = Ads::where('user_id', auth()->id())->count();
-
-                if ($userAdsCount >= $adsLimit->limit) {
-                    return redirect()->back()->withErrors([
-                        'limit' => "You cannot post more than {$adsLimit->limit} ads under the current plan."
-                    ])->withInput();
-                }
             }
 
             $validationRules = array_merge([
