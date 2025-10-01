@@ -298,6 +298,7 @@ class UserAdsController extends Controller
                         'selected_package_price' => $request->input('selected_package_price'),
                         'selected_package_duration' => $request->input('selected_package_duration'),
                         'ad_data' => $adData,
+                        'payment_for' => 'ad',
                     ]);
             }
 

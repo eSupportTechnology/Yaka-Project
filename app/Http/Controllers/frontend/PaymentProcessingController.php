@@ -20,20 +20,39 @@ use App\Models\MembershipPackage;
 use App\Models\PackageType;
 use App\Services\PusherNotificationService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Artisan;
-
 
 class PaymentProcessingController extends Controller
 {
-
     private $pusherService;
 
     public function __construct(PusherNotificationService $pusherService)
     {
         $this->pusherService = $pusherService;
     }
+
+
     public function show(Request $request)
+    {
+        $membershipData = session('membership_data');
+        $adData = session('ad_data');
+        $paymentFor = session('payment_for');
+
+        if ($membershipData && $paymentFor === 'membership') {
+            return $this->showMembershipPayment();
+        }
+
+        return $this->showAdPayment();
+    }
+
+    private function getPaymentType($invoiceId)
+    {
+        if (str_starts_with($invoiceId, 'YKMB')) {
+            return 'membership';
+        }
+        return 'ad';
+    }
+    private function showAdPayment()
     {
         $packageId = session('package_id');
         $packageType = session('package_type');
@@ -42,21 +61,19 @@ class PaymentProcessingController extends Controller
         $selectedPackageDuration = session('selected_package_duration');
         $adData = session('ad_data');
 
-        $invoiceId = "YKAD" . date('YmsHsi');
+        $invoiceId = "YKAD" . date('YmdHis');
         $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
 
         PaymentInfo::create([
             'check_value' => $checkValue,
             'invoice_id' => $invoiceId,
-            'ad_data' => $adData,
+            'ad_data' => json_encode($adData),
             'user_id' => auth()->id(),
         ]);
 
         session(['checkValue' => $checkValue]);
         session(['invoiceId' => $invoiceId]);
-        session([$invoiceId . 'add_data' => $adData]);
 
-        // Find active membership (if any)
         $activeMembership = MembershipPackage::where('user_id', auth()->id())
             ->where('expiry_date', '>', now())
             ->where('promotion_voucher_cost', '>', 0)
@@ -71,38 +88,96 @@ class PaymentProcessingController extends Controller
             'checkValue',
             'invoiceId',
             'activeMembership'
-        ));
+        ))->with('paymentType', 'ad');
+    }
+
+    private function showMembershipPayment()
+    {
+        $membershipData = session('membership_data');
+
+        if (!$membershipData) {
+            return redirect()->route('membership-package')
+                ->with('error', 'Invalid session. Please try again.');
+        }
+
+        $price = (float) $membershipData['price'];
+        $invoiceId = session('invoiceId', "YKMB" . now()->format('ymdHis'));
+        $checkValue = session('checkValue');
+
+        if (!$checkValue) {
+            $checkValue = IpgHashService::hash($price, $invoiceId);
+
+            PaymentInfo::create([
+                'check_value' => $checkValue,
+                'invoice_id'  => $invoiceId,
+                'user_id'     => auth()->id(),
+                'ad_data'     => json_encode($membershipData),
+            ]);
+
+            session(['checkValue' => $checkValue]);
+            session(['invoiceId' => $invoiceId]);
+        }
+
+        return view('newFrontend.user.payment', [
+            'selectedPackageName' => 'Membership Package',
+            'selectedPackageDuration' => $membershipData['valid_month'] . ' month(s)',
+            'selectedPackagePrice' => $price,
+            'packageType' => null,
+            'adData' => null,
+            'checkValue' => $checkValue,
+            'invoiceId' => $invoiceId,
+            'activeMembership' => null,
+            'paymentType' => 'membership',
+            'membershipData' => $membershipData
+        ]);
     }
 
     public function freeComplete(Request $request)
-{
-    try {
-        $invoiceId = $request->input('invoiceId');
-        $rawAdData = $request->input('adData');
+    {
+        try {
+            $invoiceId = $request->input('invoiceId');
+            $rawAdData = $request->input('adData');
 
-        // Decode ad data safely
-        if (is_string($rawAdData)) {
-            $adData = json_decode($rawAdData, true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                Log::warning('freeComplete: adData JSON decode failed', [
-                    'invoice_id' => $invoiceId,
-                    'json_error' => json_last_error_msg(),
-                    'rawAdData' => $rawAdData
-                ]);
-                $adData = [];
+            if (is_string($rawAdData)) {
+                $adData = json_decode($rawAdData, true);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    Log::warning('freeComplete: adData JSON decode failed', [
+                        'invoice_id' => $invoiceId,
+                        'json_error' => json_last_error_msg(),
+                    ]);
+                    $adData = [];
+                }
+            } else {
+                $adData = $rawAdData ?? [];
             }
-        } else {
-            $adData = $rawAdData ?? [];
+
+            Log::info('freeComplete called', ['invoice' => $invoiceId, 'adData' => $adData]);
+
+            $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
+            if (!$payment) {
+                return response()->json(['success' => false, 'message' => 'Payment record not found']);
+            }
+
+            $paymentType = $this->getPaymentType($invoiceId);
+
+            if ($paymentType === 'membership') {
+                return $this->completeMembershipPurchase($payment);
+            }
+
+            return $this->completeAdPosting($payment, $adData);
+
+        } catch (\Exception $e) {
+            Log::error("Free payment completion error: " . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'invoice_id' => $invoiceId ?? null
+            ]);
+            return response()->json(['success' => false, 'message' => 'Server error occurred']);
         }
+    }
 
-        Log::info('freeComplete called', ['invoice' => $invoiceId, 'adData' => $adData]);
 
-        $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
-        if (!$payment) {
-            return response()->json(['success' => false, 'message' => 'Payment record not found']);
-        }
-
-        // Mark payment as completed
+    private function completeAdPosting($payment, $adData)
+    {
         $payment->payment_status = 1;
         $payment->save();
 
@@ -112,19 +187,19 @@ class PaymentProcessingController extends Controller
             ? (float) $adData['selected_package_price']
             : (float) ($adData['price'] ?? 0.0);
 
-        // Resolve MembershipPackage
         $membershipPackage = null;
         if (!empty($adData['membership_package_id'])) {
             $membershipPackage = MembershipPackage::find($adData['membership_package_id']);
         } elseif (!empty($userId)) {
-            $membershipPackage = MembershipPackage::where('user_id', $userId)->latest()->first();
+            $membershipPackage = MembershipPackage::where('user_id', $userId)
+                ->where('expiry_date', '>', now())
+                ->latest()
+                ->first();
         }
 
-        // Handle vouchers
         $voucherUsed = 0;
         if ($voucherRequested > 0 && $membershipPackage) {
             $availableVoucher = (float) ($membershipPackage->promotion_voucher_cost ?? 0.0);
-
             $voucherUsed = min($voucherRequested, $availableVoucher, $selectedPackagePrice);
 
             if ($voucherUsed > 0) {
@@ -132,24 +207,17 @@ class PaymentProcessingController extends Controller
                 $membershipPackage->save();
             }
 
-            Log::info('Voucher cost updated successfully', [
-                'membership_package_id'       => $membershipPackage->id,
-                'voucher_amount_requested'    => $voucherRequested,
-                'voucher_amount_used'         => $voucherUsed,
-                'previous_voucher_cost'       => $availableVoucher,
-                'new_voucher_cost'            => $membershipPackage->promotion_voucher_cost,
-                'invoice_id'                  => $invoiceId
+            Log::info('Voucher deducted', [
+                'membership_id' => $membershipPackage->id,
+                'voucher_used' => $voucherUsed,
+                'remaining' => $membershipPackage->promotion_voucher_cost
             ]);
         }
 
-        // -------------------------
-        // ENFORCE MONTHLY QUOTA
-        // -------------------------
         $currentYear = now()->year;
         $currentMonth = now()->month;
 
         if ($membershipPackage) {
-            // Check validity
             if ($membershipPackage->expiry_date && $membershipPackage->expiry_date < now()) {
                 return response()->json([
                     'success' => false,
@@ -157,7 +225,6 @@ class PaymentProcessingController extends Controller
                 ]);
             }
 
-            // Get or create monthly usage record
             $usage = MembershipAdUsage::firstOrCreate(
                 [
                     'membership_package_id' => $membershipPackage->id,
@@ -168,7 +235,6 @@ class PaymentProcessingController extends Controller
                 ['ads_used' => 0]
             );
 
-            // Check if quota exceeded
             if ($usage->ads_used >= $membershipPackage->ads_per_month) {
                 return response()->json([
                     'success' => false,
@@ -176,29 +242,19 @@ class PaymentProcessingController extends Controller
                 ]);
             }
 
-            // Deduct one ad
             $usage->increment('ads_used');
         }
 
-        // -------------------------
-        // PACKAGE EXPIRY HANDLING
-        // -------------------------
         $packageExpireAt = null;
         if (isset($adData['boosting_option']) && $adData['boosting_option'] != '0') {
             $packageType = PackageType::find($adData['package_type'] ?? null);
             if ($packageType) {
-                $packageExpireAt = Carbon::now()->addDays((int) ($packageType->duration));
+                $packageExpireAt = Carbon::now()->addDays((int) $packageType->duration);
             }
         } else {
             $packageExpireAt = Carbon::now()->addDays(30);
         }
 
-        $brand = $adData['brand'] ?? 'no brand';
-        $model = $adData['model'] ?? 'no model';
-
-        // -------------------------
-        // CREATE AD
-        // -------------------------
         $ad = Ads::create([
             'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
             'user_id' => $userId,
@@ -208,8 +264,8 @@ class PaymentProcessingController extends Controller
             'description' => $adData['description'] ?? null,
             'mainImage' => $adData['main_image'] ?? null,
             'subImage' => json_encode($adData['sub_images'] ?? []),
-            'brand' => $brand,
-            'model' => $model,
+            'brand' => $adData['brand'] ?? 'no brand',
+            'model' => $adData['model'] ?? 'no model',
             'price_type' => $adData['pricing_type'] ?? null,
             'post_type' => $adData['post_type'] ?? null,
             'condition' => $adData['condition'] ?? null,
@@ -231,7 +287,6 @@ class PaymentProcessingController extends Controller
             'ads_count_used' => $voucherUsed > 0 ? 1 : 0,
         ]);
 
-        // Save dynamic form fields
         $formFields = FormField::all();
         foreach ($formFields as $field) {
             $inputName = 'field_' . $field->id;
@@ -246,19 +301,11 @@ class PaymentProcessingController extends Controller
             }
         }
 
-        Log::info('Ad created successfully via freeComplete', [
-            'ad_id' => $ad->adsId,
-            'user_id' => $userId,
-            'invoice_id' => $invoiceId
-        ]);
-
-        // Notify user
         $user = User::find($userId);
         if ($user && (!$adData['created_by_staff_id'] || $user->roles !== 'staff')) {
-            OtpService::sendSingleSms($user->phone_number, "Your ad has been successfully submitted! It will go live after admin approval. Thank you for using our platform.");
+            OtpService::sendSingleSms($user->phone_number, "Your ad has been successfully submitted! It will go live after admin approval.");
         }
 
-        // Push notification
         if (isset($this->pusherService)) {
             $this->pusherService->sendNewAdNotification(
                 $ad,
@@ -273,152 +320,158 @@ class PaymentProcessingController extends Controller
             'message' => 'Ad created successfully',
             'ad_id' => $ad->adsId
         ]);
-    } catch (\Exception $e) {
-        Log::error("Free payment completion error: " . $e->getMessage(), [
-            'trace' => $e->getTraceAsString(),
-            'invoice_id' => $invoiceId ?? null
-        ]);
-        return response()->json(['success' => false, 'message' => 'Server error occurred while creating ad']);
     }
-}
 
 
+    private function completeMembershipPurchase($payment)
+    {
+        $payment->payment_status = 1;
+        $payment->save();
 
+        $data = json_decode($payment->ad_data, true);
+
+        $alreadyExists = MembershipPackage::where('user_id', $payment->user_id)
+            ->where('expiry_date', '>', now())
+            ->exists();
+
+        if (!$alreadyExists) {
+            MembershipPackage::create([
+                'user_id' => $payment->user_id,
+                'start_date' => now(),
+                'expiry_date' => now()->addMonths($data['valid_month']),
+                'ads_per_month' => $data['ads_per_month'],
+                'voucher_code' => strtoupper(Str::random(6)),
+                'price' => $data['price'],
+                'promotion_voucher_cost' => $data['promotion_voucher_cost'],
+                'valid_month' => $data['valid_month'],
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Membership purchased successfully',
+            'redirect' => route('membership-package')
+        ]);
+    }
 
 
     public function complete(Request $request)
-{
-    try {
-        $invoiceId = $request->query('invId');
-        $paymentInfo = PaymentInfo::where('invoice_id', $invoiceId)->first();
+    {
+        try {
+            $invoiceId = $request->query('invId');
+            $paymentInfo = PaymentInfo::where('invoice_id', $invoiceId)->first();
 
-        if (!$paymentInfo) {
-            return view('newFrontend.user.payment-error')->with('error', 'Invalid payment reference.');
-        }
-
-        // Payment still pending
-        if ($paymentInfo->payment_status == 0) {
-            return view('newFrontend.user.payment-confirming');
-        }
-
-        // Payment successful
-        if ($paymentInfo->payment_status == 1) {
-            // If this payment was for membership
-            if ($paymentInfo->payment_for === 'membership') {
-                $data = json_decode($paymentInfo->ad_data, true);
-
-                // Check if membership already exists to avoid duplicates
-                $alreadyExists = MembershipPackage::where('user_id', $paymentInfo->user_id)
-                    ->where('expiry_date', '>', now())
-                    ->exists();
-
-                if (!$alreadyExists) {
-                    MembershipPackage::create([
-                        'user_id' => $paymentInfo->user_id,
-                        'start_date' => now(),
-                        'expiry_date' => now()->addMonths($data['valid_month']),
-                        'ads_per_month' => $data['ads_per_month'],
-                        'voucher_code' => strtoupper(Str::random(6)),
-                        'price' => $data['price'],
-                        'promotion_voucher_cost' => $data['promotion_voucher_cost'],
-                        'valid_month' => $data['valid_month'],
-                    ]);
-                }
-
-                return redirect()->route('membership-package')
-                    ->with('success', 'Membership purchased successfully!');
+            if (!$paymentInfo) {
+                return view('newFrontend.user.payment-error')->with('error', 'Invalid payment reference.');
             }
 
-            // Else → payment was for ad posting
-            return redirect()->route('user.my_ads')
-                ->with('success', 'Payment successful! Your ad has been posted.');
+            if ($paymentInfo->payment_status == 0) {
+                return view('newFrontend.user.payment-confirming');
+            }
+
+            if ($paymentInfo->payment_status == 1) {
+                $paymentType = $this->getPaymentType($invoiceId);
+
+                if ($paymentType === 'membership') {
+                    return redirect()->route('membership-package')
+                        ->with('success', 'Membership purchased successfully!');
+                }
+
+                return redirect()->route('user.my_ads')
+                    ->with('success', 'Payment successful! Your ad has been posted.');
+            }
+
+            return view('newFrontend.user.payment-error');
+
+        } catch (\Exception $e) {
+            Log::error('Payment processing error', ['error' => $e->getMessage()]);
+            return redirect()->back()->with('error', 'Payment failed. Please try again.');
         }
-
-        // Payment failed
-        return view('newFrontend.user.payment-error');
-
-    } catch (\Exception $e) {
-        Log::error('Payment processing error', ['error' => $e->getMessage()]);
-        return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
     }
-}
 
+    public function getPaymentInfo(Request $request)
+    {
+        Log::info("Payment callback received", $request->all());
+
+        $invoiceNo = $request['invoiceNo'] ?? null;
+        $statusMessage = $request['statusMessage'] ?? null;
+
+        if ($statusMessage == 'SUCCESS') {
+            $paymentInfo = PaymentInfo::where('invoice_id', $invoiceNo)->first();
+
+            if ($paymentInfo && $paymentInfo->payment_status == 0) {
+                $paymentInfo->payment_status = 1;
+                $paymentInfo->save();
+
+                $paymentType = $this->getPaymentType($invoiceNo);
+
+                if ($paymentType === 'ad') {
+                    $adData = json_decode($paymentInfo->ad_data, true);
+                    $this->saveAd($adData, $paymentInfo->invoice_id, $paymentInfo->user_id);
+                }
+            }
+        }
+    }
 
 
     private function saveAd($adData, $invoiceId, $userId)
     {
         try {
             $packageExpireAt = null;
-            if ($adData['boosting_option'] != '0') {
-                $packageType = \App\Models\PackageType::find($adData['package_type']);
+            if (($adData['boosting_option'] ?? '0') != '0') {
+                $packageType = PackageType::find($adData['package_type'] ?? null);
                 if ($packageType) {
-                    $packageExpireAt = now()->addDays((int)($packageType->duration));
+                    $packageExpireAt = now()->addDays((int)$packageType->duration);
                 }
             }
-            $user = User::where('id', $userId)->first();
-            if ($adData['boosting_option'] == 6) {
+
+            $user = User::find($userId);
+
+            $boostOption = $adData['boosting_option'] ?? '0';
+            if ($boostOption == 6) {
                 Artisan::call('ads:rotate-super');
-            } elseif ($adData['boosting_option'] == 3) {
+            } elseif ($boostOption == 3) {
                 Artisan::call('ads:rotate-top');
-            } elseif ($adData['boosting_option'] == 4) {
+            } elseif ($boostOption == 4) {
                 Artisan::call('ads:rotate-urgent');
-            } elseif ($adData['boosting_option'] == 5) {
+            } elseif ($boostOption == 5) {
                 Artisan::call('ads:rotate-jump');
             }
-            // Save Ad in Database
+
             Ads::create([
                 'adsId' => str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT),
                 'invoice_id' => $invoiceId,
                 'user_id' => $userId,
-                'title' => $adData['title'],
-                'price' => $adData['price'],
-                'description' => $adData['description'],
-                'mainImage' => $adData['main_image'],
-                'subImage' => json_encode($adData['sub_images']),
+                'title' => $adData['title'] ?? null,
+                'price' => $adData['price'] ?? null,
+                'description' => $adData['description'] ?? null,
+                'mainImage' => $adData['main_image'] ?? null,
+                'subImage' => json_encode($adData['sub_images'] ?? []),
                 'brand' => $adData['brand'] ?? 'N/A',
                 'model' => $adData['model'] ?? 'N/A',
                 'price_type' => $adData['pricing_type'] ?? null,
                 'post_type' => $adData['post_type'] ?? null,
                 'condition' => $adData['condition'] ?? null,
-                'ads_package' => $adData['boosting_option'],
-                'package_type' => $adData['package_type'],
+                'ads_package' => $boostOption,
+                'package_type' => $adData['package_type'] ?? null,
                 'package_expire_at' => $packageExpireAt,
-                'cat_id' => $adData['cat_id'],
-                'sub_cat_id' => $adData['sub_cat_id'],
-                'location' => $adData['location'],
-                'sublocation' => $adData['sublocation'],
+                'cat_id' => $adData['cat_id'] ?? null,
+                'sub_cat_id' => $adData['sub_cat_id'] ?? null,
+                'location' => $adData['location'] ?? null,
+                'sublocation' => $adData['sublocation'] ?? null,
                 'rotation_position' => -1,
                 'last_rotated_at' => now(),
                 'status' => '0',
             ]);
-            OtpService::sendSingleSms($user->phone_number, "Payment received for '{$invoiceId}'. Your ad will be published after admin approval. Thank you!");
-            Log::info('Ad saved successfully.');
-            //  return redirect()->route('user.my_ads')->with('success', 'Ad posted successfully!');
+
+            if ($user) {
+                OtpService::sendSingleSms($user->phone_number, "Payment received. Your ad will be published after admin approval. Thank you!");
+            }
+
+            Log::info('Ad saved successfully via gateway callback', ['invoice_id' => $invoiceId]);
 
         } catch (\Exception $e) {
-            Log::error('Error in saving ad', ['error' => $e->getMessage()]);
-        }
-    }
-
-    /**
-     * Process Payment information
-     */
-    public function getPaymentInfo(Request $request)
-    {
-        Log::info("Payment Status: " . $request);
-        $invoiceNo = $request['invoiceNo'] ?? null;
-        $statusMessage = $request['statusMessage'] ?? null;
-
-        if ($statusMessage == 'SUCCESS') {
-            $paymentInfo = PaymentInfo::where('invoice_id', $invoiceNo)->first();
-            if ($paymentInfo) {
-
-                $adData = $paymentInfo->ad_data;
-                $this->saveAd($adData, $paymentInfo->invoice_id, $paymentInfo->user_id);
-
-                $paymentInfo->payment_status = 1;
-                $paymentInfo->save();
-            }
+            Log::error('Error saving ad', ['error' => $e->getMessage()]);
         }
     }
 }

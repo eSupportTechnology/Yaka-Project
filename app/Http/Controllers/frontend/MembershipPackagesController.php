@@ -75,32 +75,19 @@ class MembershipPackagesController extends Controller
     public function initPayment(Request $request)
     {
         $user = auth()->user();
-
         $price = (float) $request->price;
 
-        $invoiceId = "YKMB" . now()->format('ymdHis');
-
-        $checkValue = IpgHashService::hash($price, $invoiceId);
-
-        PaymentInfo::create([
-            'check_value' => $checkValue,
-            'invoice_id'  => $invoiceId,
-            'user_id'     => $user->id,
-            'ad_data'     => json_encode($request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])),
-            'payment_for' => 'membership',
-        ]);
 
         session([
-            'checkValue' => $checkValue,
-            'invoiceId' => $invoiceId,
-            'membership_data' => $request->all()
+            'membership_data' => $request->only([
+                'price',
+                'promotion_voucher_cost',
+                'ads_per_month',
+                'valid_month'
+            ]),
+            'payment_for' => 'membership'
         ]);
 
-        return view('newFrontend.user.membership-payment', [
-            'price' => $price,
-            'invoiceId' => $invoiceId,
-            'checkValue' => $checkValue,
-            'membershipData' => $request->all()
-        ]);
+        return redirect()->route('payment.page');
     }
 }

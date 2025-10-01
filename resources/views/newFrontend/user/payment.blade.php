@@ -38,10 +38,6 @@
             border-radius: 5px;
         }
 
-        #card-details-page {
-            display: none;
-        }
-
         .text-success {
             color: #28a745;
             font-weight: bold;
@@ -93,10 +89,15 @@
             <!-- Package Details -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h4>Package Details</h4>
+                    <h4>{{ isset($paymentType) && $paymentType === 'membership' ? 'Membership' : 'Package' }} Details</h4>
                     <p><strong>Package Name:</strong> {{ $selectedPackageName }}</p>
-                    <p><strong>Package Duration:</strong> {{ $selectedPackageDuration }}
-                        {{ $selectedPackageDuration > 1 ? 'days' : 'day' }}</p>
+                    <p><strong>Duration:</strong> {{ $selectedPackageDuration }}</p>
+
+                    @if(isset($paymentType) && $paymentType === 'membership' && isset($membershipData))
+                        <p><strong>Ads Per Month:</strong> {{ $membershipData['ads_per_month'] ?? 'N/A' }}</p>
+                        <p><strong>Voucher Credit:</strong> LKR {{ number_format($membershipData['promotion_voucher_cost'] ?? 0, 2) }}</p>
+                    @endif
+
                     <div id="pricing-section">
                         <p><strong>Package Price:</strong> <span id="original-price">LKR
                                 {{ number_format($selectedPackagePrice, 2) }}</span></p>
@@ -104,10 +105,10 @@
                             <div class="discount-info">
                                 <p class="mb-1"><strong>Original Price:</strong> <span class="text-muted">LKR
                                         {{ number_format($selectedPackagePrice, 2) }}</span></p>
-                                <p class="mb-1"><strong>Voucher Limit:</strong> <span class="text-danger"
-                                        id="discount-amount">-</span></p>
+                                <p class="mb-1"><strong>Voucher Discount:</strong> <span class="text-danger"
+                                                                                         id="discount-amount">-</span></p>
                                 <p class="mb-0"><strong>Final Price:</strong> <span class="text-success"
-                                        id="final-price-display">LKR {{ number_format($selectedPackagePrice, 2) }}</span>
+                                                                                    id="final-price-display">LKR {{ number_format($selectedPackagePrice, 2) }}</span>
                                 </p>
                             </div>
                         </div>
@@ -115,68 +116,76 @@
                 </div>
             </div>
 
-            <!-- Billing / Voucher Section -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h4>Enter Billing Details</h4>
+                    @if (isset($paymentType) && $paymentType === 'ad' && isset($activeMembership) && $activeMembership->promotion_voucher_cost > 0)
+                        <h4>Payment Options</h4>
+                        <p class="text-muted mb-3">Available voucher balance: LKR {{ number_format($activeMembership->promotion_voucher_cost, 2) }}</p>
 
-                    @if ($activeMembership && $activeMembership->promotion_voucher_cost >= $selectedPackagePrice)
-                        <!-- Voucher field -->
-                        <label for="voucher_code">Voucher Code</label>
-                        <input type="text" class="form-control mb-3" id="voucher_code"
-                            placeholder="Enter your voucher code">
-                        <p id="voucher-status" class="mt-2" style="display:none;"></p>
+                        <div class="mb-3">
+                            <label for="voucher_code">Voucher Code (Optional)</label>
+                            <input type="text" class="form-control" id="voucher_code"
+                                   placeholder="Enter voucher code to get discount">
+                            <small class="text-muted">Leave empty to pay full amount via gateway</small>
+                        </div>
+
+                        <div id="billing-fields" style="display: none;">
+                            <hr class="my-3">
+                            <h5>Billing Details</h5>
+                            <input type="hidden" name="return_url" id="return_url"
+                                   value="{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}">
+                            <label for="billing_street">Billing Address Street<span
+                                    style="color:red; font-size:18px;">*</span></label>
+                            <input class="form-control mb-3" type="text" name="billing_street" id="billing_street">
+                            <label for="billing_city">Billing Address City<span
+                                    style="color:red; font-size:18px;">*</span></label>
+                            <input class="form-control mb-3" type="text" name="billing_city" id="billing_city">
+                            <label for="billing_country">Billing Address Country<span
+                                    style="color:red; font-size:18px;">*</span></label>
+                            <input class="form-control" type="text" name="billing_country" id="billing_country"
+                                   value="LKA" readonly>
+                        </div>
                     @else
-                        <!-- Normal billing fields -->
+                        <h4>Enter Billing Details</h4>
                         <input type="hidden" name="return_url" id="return_url"
-                            value="{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}">
+                               value="{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}">
                         <label for="billing_street">Billing Address Street<span
                                 style="color:red; font-size:18px;">*</span></label>
-                        <input class="form-control" type="text" name="billing_street" id="billing_street">
+                        <input class="form-control mb-3" type="text" name="billing_street" id="billing_street">
                         <label for="billing_city">Billing Address City<span
                                 style="color:red; font-size:18px;">*</span></label>
-                        <input class="form-control" type="text" name="billing_city" id="billing_city">
+                        <input class="form-control mb-3" type="text" name="billing_city" id="billing_city">
                         <label for="billing_country">Billing Address Country<span
                                 style="color:red; font-size:18px;">*</span></label>
                         <input class="form-control" type="text" name="billing_country" id="billing_country"
-                            value="LKA" readonly>
+                               value="LKA" readonly>
                     @endif
                 </div>
             </div>
 
-            <!-- Pay Now Button -->
             <button onclick="returnForm()" type="button" id="payNowBtn"
-                class="btn btn-success w-100 d-flex justify-content-center align-items-center">
+                    class="btn btn-success w-100 d-flex justify-content-center align-items-center">
                 <span id="payNowText">Pay Now - LKR <span
                         id="button-price">{{ number_format($selectedPackagePrice, 2) }}</span></span>
                 <div id="btnSpinner" class="ms-2 spinner-border spinner-border-sm text-light" role="status"
-                    style="display: none;"></div>
+                     style="display: none;"></div>
             </button>
-        </div>
-
-        <!-- Card Details Page (Hidden initially) -->
-        <div class="payment-container mb-4" id="card-details-page">
-            <h2 class="mb-4 text-center">Enter Card Details</h2>
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h4>Package Price</h4>
-                    <p><strong>Total Amount:</strong>
-                        <span class="text-success"> LKR {{ number_format($selectedPackagePrice, 2) }}</span>
-                    </p>
-                </div>
-            </div>
         </div>
     </div>
 
     <script>
         let finalPrice = parseFloat({{ $selectedPackagePrice }});
+        const paymentType = "{{ $paymentType ?? 'ad' }}";
+        let voucherApplied = false;
 
-        @if ($activeMembership)
-        // Voucher handling
-        document.getElementById('voucher_code').addEventListener('input', function() {
+        @if (isset($paymentType) && $paymentType === 'ad' && isset($activeMembership))
+        const voucherInput = document.getElementById('voucher_code');
+        const billingFields = document.getElementById('billing-fields');
+
+        voucherInput.addEventListener('input', function() {
             const enteredCode = this.value.trim();
             const validCode = "{{ $activeMembership->voucher_code }}";
-            const discount = parseFloat({{ $activeMembership->promotion_voucher_cost }});
+            const availableVoucher = parseFloat({{ $activeMembership->promotion_voucher_cost }});
             const originalPrice = parseFloat({{ $selectedPackagePrice }});
 
             const discountDisplay = document.getElementById('discount-display');
@@ -185,56 +194,95 @@
             const buttonPrice = document.getElementById('button-price');
 
             if (enteredCode && enteredCode === validCode) {
-                finalPrice = originalPrice - discount;
-                if (finalPrice < 0) finalPrice = 0;
+                const discountAmount = Math.min(availableVoucher, originalPrice);
+                finalPrice = Math.max(0, originalPrice - discountAmount);
+                voucherApplied = true;
 
-                // Show discount section
                 discountDisplay.style.display = 'block';
-                discountAmountEl.textContent = "LKR " + finalPrice.toFixed(2);
+                discountAmountEl.textContent = "LKR " + discountAmount.toFixed(2);
                 finalPriceEl.textContent = "LKR " + finalPrice.toFixed(2);
-
-                // Update button price
                 buttonPrice.textContent = finalPrice.toFixed(2);
 
+                if (finalPrice > 0) {
+                    billingFields.style.display = 'block';
+                } else {
+                    billingFields.style.display = 'none';
+                }
             } else {
                 finalPrice = originalPrice;
-
-                // Hide discount section
+                voucherApplied = false;
                 discountDisplay.style.display = 'none';
-
-                // Reset button price
                 buttonPrice.textContent = originalPrice.toFixed(2);
+
+                billingFields.style.display = 'block';
             }
         });
+
+        billingFields.style.display = 'block';
         @endif
 
         function returnForm() {
-            @if (!$activeMembership)
-            // Only validate billing if no membership
-            const billingStreet = document.getElementById('billing_street').value.trim();
-            const billingCity = document.getElementById('billing_city').value.trim();
-            const billingCountry = document.getElementById('billing_country').value.trim();
+            const needsBilling = @if(isset($paymentType) && $paymentType === 'membership')
+                true
+                @elseif(isset($activeMembership))
+            (finalPrice > 0) // Only need billing if there's remaining amount
+            @else
+                true
+            @endif;
 
-            if (!billingStreet || !billingCity || !billingCountry) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Missing Billing Information',
-                    text: 'Please fill in all required billing details.',
-                });
-                return;
+            if (needsBilling && finalPrice > 0) {
+                const billingStreet = document.getElementById('billing_street');
+                const billingCity = document.getElementById('billing_city');
+                const billingCountry = document.getElementById('billing_country');
+
+                if (billingStreet && billingCity && billingCountry) {
+                    const street = billingStreet.value.trim();
+                    const city = billingCity.value.trim();
+                    const country = billingCountry.value.trim();
+
+                    if (!street || !city || !country) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Missing Billing Information',
+                            text: 'Please fill in all required billing details.',
+                        });
+                        return;
+                    }
+                }
             }
-            @endif
 
-            // Show spinner & disable button
             document.getElementById('btnSpinner').style.display = 'inline-block';
             document.getElementById('payNowBtn').disabled = true;
 
-            // Ensure finalPrice is a proper number with 2 decimals
             const paymentAmount = parseFloat(finalPrice.toFixed(2));
+            const originalPrice = parseFloat({{ $selectedPackagePrice }});
 
-            // If final price is zero, skip payment gateway
-            if (paymentAmount === 0) {
+            if (paymentAmount === 0 && voucherApplied) {
                 document.getElementById('payNowText').textContent = "Completing...";
+
+                const voucherUsed = originalPrice - paymentAmount;
+
+                const requestData = {
+                    invoiceId: "{{ $invoiceId }}",
+                };
+
+                if (paymentType === 'ad') {
+                    requestData.adData = {
+                        @if(isset($adData))
+                        ...{!! json_encode($adData) !!},
+                        @endif
+                        user_id: "{{ auth()->id() }}",
+                        voucher_amount: voucherUsed,
+                        selected_package_price: originalPrice,
+                        @if(isset($activeMembership))
+                        membership_package_id: "{{ $activeMembership->id }}"
+                        @endif
+                    };
+
+                    console.log('Free completion request data:', requestData);
+                } else {
+                    requestData.adData = {};
+                }
 
                 fetch("{{ route('payment.free.complete') }}", {
                     method: "POST",
@@ -242,83 +290,78 @@
                         "X-CSRF-TOKEN": "{{ csrf_token() }}",
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        invoiceId: "{{ $invoiceId }}",
-                        adData: {
-                            ...{!! json_encode($adData) !!},
-                            user_id: "{{ auth()->id() }}",
-                            voucher_amount: (paymentAmount === 0 ?
-                                {{ $activeMembership->promotion_voucher_cost ?? 0 }} : 0),
-                        }
-                    })
+                    body: JSON.stringify(requestData)
                 })
                     .then(res => res.json())
                     .then(data => {
+                        console.log('Free completion response:', data);
                         if (data.success) {
-                            window.location.href = "{{ route('user.my_ads') }}";
+                            if (data.redirect) {
+                                window.location.href = data.redirect;
+                            } else if (paymentType === 'membership') {
+                                window.location.href = "{{ route('membership-package') }}";
+                            } else {
+                                window.location.href = "{{ route('user.my_ads') }}";
+                            }
                         } else {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
                                 text: data.message || "Something went wrong!"
                             });
-                            // Re-enable button if error
-                            document.getElementById('btnSpinner').style.display = 'none';
-                            document.getElementById('payNowBtn').disabled = false;
-                            document.getElementById('payNowText').textContent = "Pay Now - LKR " + paymentAmount.toFixed(2);
+                            resetButton(paymentAmount);
                         }
                     })
-                    .catch(() => {
+                    .catch((error) => {
+                        console.error('Free completion error:', error);
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
                             text: "Request failed. Please try again!"
                         });
-                        // Re-enable button if error
-                        document.getElementById('btnSpinner').style.display = 'none';
-                        document.getElementById('payNowBtn').disabled = false;
-                        document.getElementById('payNowText').textContent = "Pay Now - LKR " + paymentAmount.toFixed(2);
+                        resetButton(paymentAmount);
                     });
 
-                return; // Stop further execution
+                return;
             }
 
-            // Else → go through normal payment gateway
             document.getElementById('payNowText').textContent = "Processing...";
+
+            const billingStreet = needsBilling && document.getElementById('billing_street') ?
+                document.getElementById('billing_street').value : "N/A";
+            const billingCity = needsBilling && document.getElementById('billing_city') ?
+                document.getElementById('billing_city').value : "N/A";
+            const billingCountry = needsBilling && document.getElementById('billing_country') ?
+                document.getElementById('billing_country').value : "LKA";
 
             const payment = {
                 logoUrl: "{{ config('ipg.logo-url') }}",
                 returnUrl: "{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}",
-                checkValue: "{{ session('checkValue') }}",
-                orderDescription: "Payment for Yaka",
-                invoiceId: "{{ session('invoiceId') }}",
+                checkValue: "{{ $checkValue ?? session('checkValue') }}",
+                orderDescription: paymentType === 'membership' ? "Membership Package Payment" : "Ad Package Payment",
+                invoiceId: "{{ $invoiceId ?? session('invoiceId') }}",
                 merchantKey: "{{ config('ipg.merchant-key') }}",
                 customerFirstName: "{{ auth()->user()->first_name }}",
                 customerLastName: "{{ auth()->user()->last_name }}",
                 customerMobilePhone: "{{ auth()->user()->phone_number }}",
                 customerEmail: "{{ auth()->user()->email }}",
-                billingAddressStreet: @if ($activeMembership)
-                    "N/A"
-                @else
-                    billingStreet
-                @endif ,
-                billingAddressCity: @if ($activeMembership)
-                    "N/A"
-                @else
-                    billingCity
-                @endif ,
-                billingAddressCountry: @if ($activeMembership)
-                    "LKA"
-                @else
-                    billingCountry
-                @endif ,
-                amount: paymentAmount.toFixed(2), // Convert to string with 2 decimals
+                billingAddressStreet: billingStreet,
+                billingAddressCity: billingCity,
+                billingAddressCountry: billingCountry,
+                amount: paymentAmount.toFixed(2),
                 currencyCode: "LKR",
                 paymentType: "1",
                 notifyUrl: "{{ config('ipg.notify-url') }}"
             };
 
+            console.log('Payment gateway data:', payment);
             payablePayment(payment);
+        }
+
+        function resetButton(amount) {
+            document.getElementById('btnSpinner').style.display = 'none';
+            document.getElementById('payNowBtn').disabled = false;
+            document.getElementById('payNowText').textContent = "Pay Now - LKR " + amount.toFixed(2);
         }
     </script>
 @endsection
