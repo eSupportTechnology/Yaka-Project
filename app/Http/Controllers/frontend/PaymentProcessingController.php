@@ -289,28 +289,39 @@ class PaymentProcessingController extends Controller
     public function complete(Request $request)
 {
     try {
+        echo "Step 1: Entered complete() method<br>";
+
         $invoiceId = $request->query('invId');
+        echo "Step 2: Invoice ID = {$invoiceId}<br>";
+
         $paymentInfo = PaymentInfo::where('invoice_id', $invoiceId)->first();
+        echo "Step 3: PaymentInfo = " . json_encode($paymentInfo) . "<br>";
 
         if (!$paymentInfo) {
+            echo "Step 4: PaymentInfo not found<br>";
             return view('newFrontend.user.payment-error')->with('error', 'Invalid payment reference.');
         }
 
         // Payment still pending
         if ($paymentInfo->payment_status == 0) {
+            echo "Step 5: Payment status = Pending<br>";
             return view('newFrontend.user.payment-confirming');
         }
 
         // Payment successful
         if ($paymentInfo->payment_status == 1) {
-            // If this payment was for membership
-            if ($paymentInfo->payment_for === 'membership') {
-                $data = json_decode($paymentInfo->ad_data, true);
+            echo "Step 6: Payment status = Successful<br>";
 
-                // Check if membership already exists to avoid duplicates
+            if ($paymentInfo->payment_for === 'membership') {
+                echo "Step 7: Payment is for membership<br>";
+
+                $data = json_decode($paymentInfo->ad_data, true);
+                echo "Step 8: Decoded membership data = " . json_encode($data) . "<br>";
+
                 $alreadyExists = MembershipPackage::where('user_id', $paymentInfo->user_id)
                     ->where('expiry_date', '>', now())
                     ->exists();
+                echo "Step 9: Membership already exists? " . ($alreadyExists ? 'Yes' : 'No') . "<br>";
 
                 if (!$alreadyExists) {
                     MembershipPackage::create([
@@ -323,25 +334,30 @@ class PaymentProcessingController extends Controller
                         'promotion_voucher_cost' => $data['promotion_voucher_cost'],
                         'valid_month' => $data['valid_month'],
                     ]);
+                    echo "Step 10: Membership package created<br>";
                 }
 
+                echo "Step 11: Redirecting to membership-package route<br>";
                 return redirect()->route('membership-package')
                     ->with('success', 'Membership purchased successfully!');
             }
 
-            // Else → payment was for ad posting
+            echo "Step 12: Payment was for ad posting<br>";
             return redirect()->route('user.my_ads')
                 ->with('success', 'Payment successful! Your ad has been posted.');
         }
 
         // Payment failed
+        echo "Step 13: Payment failed<br>";
         return view('newFrontend.user.payment-error');
 
     } catch (\Exception $e) {
+        echo "Step 14: Exception occurred → " . $e->getMessage() . "<br>";
         Log::error('Payment processing error', ['error' => $e->getMessage()]);
         return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
     }
 }
+
 
 
 
