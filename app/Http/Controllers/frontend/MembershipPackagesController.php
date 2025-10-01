@@ -11,6 +11,7 @@ use App\Services\IpgHashService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class MembershipPackagesController extends Controller
@@ -73,14 +74,21 @@ class MembershipPackagesController extends Controller
     }
 
     public function initPayment(Request $request)
-    {
+{
+    try {
+        echo "Step 1: Entered initPayment() method<br>";
+
         $user = auth()->user();
+        echo "Step 2: Authenticated User ID = {$user->id}<br>";
 
         $price = (float) $request->price;
+        echo "Step 3: Price = {$price}<br>";
 
         $invoiceId = "YKMB" . now()->format('ymdHis');
+        echo "Step 4: Generated Invoice ID = {$invoiceId}<br>";
 
         $checkValue = IpgHashService::hash($price, $invoiceId);
+        echo "Step 5: Generated Check Value = {$checkValue}<br>";
 
         PaymentInfo::create([
             'check_value' => $checkValue,
@@ -89,18 +97,35 @@ class MembershipPackagesController extends Controller
             'ad_data'     => json_encode($request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])),
             'payment_for' => 'membership',
         ]);
+        echo "Step 6: PaymentInfo record created<br>";
 
         session([
             'checkValue' => $checkValue,
             'invoiceId' => $invoiceId,
             'membership_data' => $request->all()
         ]);
+        echo "Step 7: Session variables stored<br>";
 
+        echo "Step 8: Returning membership-payment view<br>";
         return view('newFrontend.user.membership-payment', [
             'price' => $price,
             'invoiceId' => $invoiceId,
             'checkValue' => $checkValue,
             'membershipData' => $request->all()
         ]);
+
+    } catch (\Throwable $e) {
+        echo "Step 9: Exception occurred → " . $e->getMessage() . "<br>";
+
+        // Log the error for debugging
+        Log::error('Payment initialization failed: ' . $e->getMessage(), [
+            'trace' => $e->getTraceAsString(),
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->back()->with('error', 'Something went wrong while initializing the payment. Please try again.');
     }
+}
+
+
 }
