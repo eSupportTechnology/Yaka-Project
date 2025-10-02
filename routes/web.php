@@ -149,6 +149,10 @@ Route::post('/membership/payment/init', [MembershipPackagesController::class, 'i
     ->name('membership.payment.init');
     Route::get('/membership-package', [MembershipPackagesController::class, 'index'])->name('membership-package');
     Route::post('/membership/store', [MembershipPackagesController::class, 'store'])->name('membership.store');
+
+    Route::get('/payment/checking', [PaymentProcessingController::class, 'checkPayment'])->name('payment.checking');
+Route::post('/payment/notify', [PaymentProcessingController::class, 'notifyPayment'])->name('payment.notify');
+
  });
 
 

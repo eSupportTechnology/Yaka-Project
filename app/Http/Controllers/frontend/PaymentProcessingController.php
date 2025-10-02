@@ -437,4 +437,63 @@ class PaymentProcessingController extends Controller
             }
         }
     }
+
+    public function checkPayment(Request $request)
+{
+    $invoiceId = $request->query('invId');
+
+    $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
+
+    if (!$payment) {
+        return redirect()->route('membership.index')->with('error', 'Invalid invoice.');
+    }
+
+    // (Optional) call PAYable API here to confirm payment status.
+
+    if ($payment->status === 'SUCCESS') {
+        return redirect()->route('membership.index')->with('success', 'Payment successful!');
+    }
+
+    return redirect()->route('membership.index')->with('error', 'Payment failed or pending.');
+}
+
+public function notifyPayment(Request $request)
+{
+    $invoiceId = $request->invoiceId ?? null;
+    $status = $request->status ?? null;
+    $checkValue = $request->checkValue ?? null;
+    $amount = $request->amount ?? null;
+
+    if (!$invoiceId || !$status) {
+        return response()->json(['error' => 'Invalid notification'], 400);
+    }
+
+    // Verify checkValue
+    $expected = IpgHashService::hash($amount, $invoiceId);
+    if ($checkValue !== $expected) {
+        Log::error("Payment hash mismatch for invoice: $invoiceId");
+        return response()->json(['error' => 'Hash mismatch'], 400);
+    }
+
+    // Update DB
+    $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
+    if ($payment) {
+        $payment->status = $status;
+        $payment->save();
+    }
+
+    if ($status === 'SUCCESS') {
+    MembershipPackage::create([
+        'user_id' => $payment->user_id,
+        'package_id' => json_decode($payment->ad_data)->package_id,
+        'start_date' => now(),
+        'expiry_date' => now()->addMonths(json_decode($payment->ad_data)->valid_month),
+        'voucher_code' => strtoupper(Str::random(8)),
+    ]);
+}
+
+    return response()->json(['message' => 'Payment recorded']);
+}
+
+
 }
