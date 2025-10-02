@@ -111,7 +111,8 @@ class MembershipPackagesController extends Controller
             'price' => $price,
             'invoiceId' => $invoiceId,
             'checkValue' => $checkValue,
-            'membershipData' => $request->all()
+            'membershipData' => $request->all(),
+            'gatewayUrl' => 'https://sandbox.payable.lk/ipg/v2'
         ]);
 
     } catch (\Throwable $e) {

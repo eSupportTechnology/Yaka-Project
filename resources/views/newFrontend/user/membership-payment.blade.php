@@ -135,7 +135,7 @@
 
             const payment = {
                 logoUrl: "{{ config('ipg.logo-url') }}",
-                returnUrl: "{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}",
+                refererUrl: "{{ env('APP_URL') }}",
                 checkValue: "{{ $checkValue }}",
                 orderDescription: "Membership Payment for Yaka",
                 invoiceId: "{{ $invoiceId }}",
