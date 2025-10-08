@@ -144,7 +144,7 @@ class AdsController extends Controller
         );
 
         $page = request()->get('page', 1);
-        $perPage = 30;
+        $perPage = 6;
 
         $pagedAds = new LengthAwarePaginator(
             $ads->forPage($page, $perPage),

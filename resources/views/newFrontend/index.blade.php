@@ -734,11 +734,11 @@
                     @if ($banner->type == 0)
                         @if (isset($banner->url))
                             <a href="{{ $banner->url }}" target="_blank">
-                                @endif
-                                <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                    <img src="{{ url('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
-                                </div>
-                                @if (isset($banner->url))
+                        @endif
+                        <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <img src="{{ url('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                        </div>
+                        @if (isset($banner->url))
                             </a>
                         @endif
                     @endif
@@ -1207,7 +1207,7 @@
                     </div>
 
                     {{-- Include script for 2 or more ads --}}
-                    @if ($totalTopAds >= 2)
+                    @if ($totalTopAds >= 1)
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 const topAdsData = @json($topAds->values());
@@ -1383,7 +1383,7 @@
                                 }
 
                                 // Initialize auto-play for top ads (uncomment to enable)
-                                // startTopAutoPlay();
+                                startTopAutoPlay();
 
                                 // Initialize the carousel on page load
                                 if (totalTopItems >= 2) {
@@ -1655,6 +1655,8 @@
                                 }
                             }
 
+
+
                             function calculateTotalGroups() {
                                 const chunkSize = isSmallDevice ? 2 : 4;
                                 urgentTotalGroups = Math.ceil(urgentAdsData.length / chunkSize);
@@ -1769,17 +1771,24 @@
                                 }
                             }
 
+                            // Auto-slide urgent ads
+                            let urgentAutoSlideInterval = setInterval(() => {
+                                currentUrgentIndex = (currentUrgentIndex + 1) % urgentTotalGroups;
+                                updateUrgentSlider();
+                            }, 5000); // change every 5s
+
+                            // Pause auto-slide on hover (desktop)
                             const urgentContainer = document.querySelector('.urgent-ads-container');
                             if (urgentContainer) {
-                                urgentContainer.addEventListener('touchstart', e => {
-                                    touchStartX = e.changedTouches[0].screenX;
-                                });
-
-                                urgentContainer.addEventListener('touchend', e => {
-                                    touchEndX = e.changedTouches[0].screenX;
-                                    handleSwipe();
+                                urgentContainer.addEventListener('mouseenter', () => clearInterval(urgentAutoSlideInterval));
+                                urgentContainer.addEventListener('mouseleave', () => {
+                                    urgentAutoSlideInterval = setInterval(() => {
+                                        currentUrgentIndex = (currentUrgentIndex + 1) % urgentTotalGroups;
+                                        updateUrgentSlider();
+                                    }, 5000);
                                 });
                             }
+
 
                             // Initialize on page load
                             checkScreenSize();
