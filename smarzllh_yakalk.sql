@@ -2708,6 +2708,8 @@ INSERT INTO `cities` (`id`, `district_id`, `name_en`, `url`, `name_si`, `name_ta
 (1805, 24, 'Kantalai', NULL, '', '', NULL, NULL, NULL, '31300', 8.36548300, 80.96689700, NULL, NULL),
 (1806, 24, 'Kantalai Sugar Factory', NULL, '', '', NULL, NULL, NULL, '31306', 8.36830000, 81.02810000, NULL, NULL),
 (1807, 24, 'Kiliveddy', NULL, '', '', NULL, NULL, NULL, '31220', 8.35409200, 81.27560500, NULL, NULL);
+(1808, 5, 'Kottawa', 'kottawa', 'කොට්ටාව', 'கொட்டாவா', NULL, NULL, NULL, '10230', 6.8416, 79.9678, NULL, NULL),
+(1808, 5, 'Horana', 'horana', 'හොරනා', 'ஹொரணா', NULL, NULL, NULL, '12400', 6.7167, 80.0625, NULL, NULL);
 
 -- --------------------------------------------------------
 

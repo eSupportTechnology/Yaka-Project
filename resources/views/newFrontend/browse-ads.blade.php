@@ -58,14 +58,14 @@
         }
 
         .banner-area {
-    position: relative;
-    left: 1rem;
-    display: flex;
-    justify-content: right;
-    right: 8rem;
-    height: fit-content;
-    grid-area: banner;
-}
+            position: relative;
+            left: 1rem;
+            display: flex;
+            justify-content: right;
+            right: 8rem;
+            height: fit-content;
+            grid-area: banner;
+        }
 
         /* Content Grid for Ads */
         .ads-grid {
@@ -520,8 +520,8 @@
             }
 
             /* .screen-info::after {
-                    content: " - 2700px+";
-                } */
+                        content: " - 2700px+";
+                    } */
         }
 
         /* For screens 1700px to 2699px */
@@ -1364,6 +1364,7 @@
                 image-rendering: crisp-edges;
             }
         }
+
         /* Bold text for sidebar sections */
         .sidebar-search * {
             font-weight: bold !important;
@@ -1397,11 +1398,11 @@
                     @if ($banner->type == 0)
                         @if (isset($banner->url))
                             <a href="{{ $banner->url }}" target="_blank">
-                                @endif
-                                <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                    <img src="{{ url('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
-                                </div>
-                                @if (isset($banner->url))
+                        @endif
+                        <div class="carousel-item ad-carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <img src="{{ url('banners/' . $banner->img) }}" class="mx-auto d-block" alt="Banner Image">
+                        </div>
+                        @if (isset($banner->url))
                             </a>
                         @endif
                     @endif
@@ -1426,7 +1427,7 @@
                     <!-- District Search -->
                     <div class="district-section form-group">
                         <input class="form-control" type="text" id="district-search-mob"
-                               value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
+                            value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter">
                         <div id="district-results-mob" class="results-container"></div>
                     </div>
 
@@ -1459,12 +1460,13 @@
                                             <li>
                                                 <label>
                                                     <input type="radio" name="category" value="all"
-                                                           onchange="window.location='{{ route('browse-ads') }}'"
+                                                        onchange="window.location='{{ route('browse-ads') }}'"
                                                         {{ !request()->input('category') ? 'checked' : '' }}>
                                                     <span class="text-dark">
-                                                <i class="fas fa-th-large" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
-                                                @lang('messages.All Categories')
-                                            </span>
+                                                        <i class="fas fa-th-large"
+                                                            style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                                        @lang('messages.All Categories')
+                                                    </span>
 
                                                 </label>
                                             </li>
@@ -1473,7 +1475,7 @@
                                                 <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
                                                     <label>
                                                         <input type="radio" name="category" value="{{ $category->id }}"
-                                                               onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
+                                                            onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                             {{ request()->input('category') == $category->id ? 'checked' : '' }}>
                                                         <span>
                                                             @php
@@ -1492,11 +1494,13 @@
                                                                     'Agriculture' => 'fas fa-tractor',
                                                                     'Jobs & Overseas jobs' => 'fas fa-briefcase',
                                                                     'Other Ads' => 'fas fa-list',
-                                                                    'Testing' => 'fas fa-flask'
+                                                                    'Testing' => 'fas fa-flask',
                                                                 ];
-                                                                $iconClass = $categoryIcons[$category->name] ?? 'fas fa-tag';
+                                                                $iconClass =
+                                                                    $categoryIcons[$category->name] ?? 'fas fa-tag';
                                                             @endphp
-                                                            <i class="{{ $iconClass }}" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                                            <i class="{{ $iconClass }}"
+                                                                style="margin-right: 8px; color: #b30000; width: 16px;"></i>
                                                             @lang('messages.' . $category->name)
                                                         </span>
                                                     </label>
@@ -1507,8 +1511,8 @@
                                                                 <li>
                                                                     <label>
                                                                         <input type="radio" name="subcategory"
-                                                                               value="{{ $subcategory->id }}"
-                                                                               onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
+                                                                            value="{{ $subcategory->id }}"
+                                                                            onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
                                                                             {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
                                                                         <span> @lang('messages.' . $subcategory->name)</span>
                                                                     </label>
@@ -1561,8 +1565,10 @@
                                     <!-- District Search -->
                                     <div class="district-section form-group" style="position: relative;">
                                         <input class="form-control" type="text" id="district-search"
-                                               value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter" style="padding-left: 35px; position: relative;">
-                                        <i class="fas fa-map-marker-alt" style="position: absolute; left: 12px; top: 12px; color: #b30000; z-index: 999; pointer-events: none;"></i>
+                                            value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter"
+                                            style="padding-left: 35px; position: relative;">
+                                        <i class="fas fa-map-marker-alt"
+                                            style="position: absolute; left: 12px; top: 12px; color: #b30000; z-index: 999; pointer-events: none;"></i>
                                         <div id="district-results" class="results-container"></div>
                                     </div>
 
@@ -1584,10 +1590,11 @@
                                     <li>
                                         <label>
                                             <input type="radio" name="category" value="all"
-                                                   onchange="window.location='{{ route('browse-ads') }}'"
+                                                onchange="window.location='{{ route('browse-ads') }}'"
                                                 {{ !request()->input('category') ? 'checked' : '' }}>
                                             <span class="text-dark">
-                                                <i class="fas fa-th-large" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                                <i class="fas fa-th-large"
+                                                    style="margin-right: 8px; color: #b30000; width: 16px;"></i>
                                                 @lang('messages.All Categories')
                                             </span>
 
@@ -1598,7 +1605,7 @@
                                         <li class="{{ $category->subcategories->isNotEmpty() ? 'dropdown' : '' }}">
                                             <label>
                                                 <input type="radio" name="category" value="{{ $category->id }}"
-                                                       onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
+                                                    onchange="window.location='{{ route('browse-ads', ['category' => $category->id]) }}'"
                                                     {{ request()->input('category') == $category->id ? 'checked' : '' }}>
                                                 <span>
                                                     @php
@@ -1617,11 +1624,12 @@
                                                             'Agriculture' => 'fas fa-tractor',
                                                             'Jobs & Overseas jobs' => 'fas fa-briefcase',
                                                             'Other Ads' => 'fas fa-list',
-                                                            'Testing' => 'fas fa-flask'
+                                                            'Testing' => 'fas fa-flask',
                                                         ];
                                                         $iconClass = $categoryIcons[$category->name] ?? 'fas fa-tag';
                                                     @endphp
-                                                    <i class="{{ $iconClass }}" style="margin-right: 8px; color: #b30000; width: 16px;"></i>
+                                                    <i class="{{ $iconClass }}"
+                                                        style="margin-right: 8px; color: #b30000; width: 16px;"></i>
                                                     @lang('messages.' . $category->name)
                                                 </span>
                                             </label>
@@ -1632,8 +1640,8 @@
                                                         <li>
                                                             <label>
                                                                 <input type="radio" name="subcategory"
-                                                                       value="{{ $subcategory->id }}"
-                                                                       onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
+                                                                    value="{{ $subcategory->id }}"
+                                                                    onchange="window.location='{{ route('browse-ads', ['category' => $category->id, 'subcategory' => $subcategory->id]) }}'"
                                                                     {{ request()->input('subcategory') == $subcategory->id ? 'checked' : '' }}>
                                                                 <span> @lang('messages.' . $subcategory->name)</span>
                                                             </label>
@@ -1655,48 +1663,54 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 content-side">
                     <div class="category-details-content">
                         <div class="clearfix item-shorting">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                                 <h6 style="margin: 0; display: inline-block;">@lang('messages.Buy, Sell, Rent or Find Anything in Sri Lanka')</h6>
-                                <form action="{{ route('browse-ads') }}" method="GET" class="search-form" id="search-form-main" style="display: flex; align-items: center; gap: 10px; margin: 0;">
+                                <form action="{{ route('browse-ads') }}" method="GET" class="search-form"
+                                    id="search-form-main"
+                                    style="display: flex; align-items: center; gap: 10px; margin: 0;">
                                     <input type="hidden" name="location" id="location-main">
                                     <input type="hidden" name="city" id="cityId-main">
                                     <div class="form-group" style="margin: 0;">
-                                        <input type="search" name="search-field" style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 25px; width: 220px;"
-                                            placeholder="@lang('messages.Search Keyword')..." value="{{ request()->input('search-field') }}"
-                                            oninput="this.form.submit()">
+                                        <input type="search" name="search-field"
+                                            style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 25px; width: 220px;"
+                                            placeholder="@lang('messages.Search Keyword')..."
+                                            value="{{ request()->input('search-field') }}" oninput="this.form.submit()">
                                     </div>
                                 </form>
                             </div>
-                            <p style="margin: 0; font-size: 12px; color: #666;"><span>@lang('messages.Search Results'):</span> @lang('messages.Showing')
+                            <p style="margin: 0; font-size: 12px; color: #666;"><span>@lang('messages.Search Results'):</span>
+                                @lang('messages.Showing')
                                 {{ $ads->firstItem() }}-{{ $ads->lastItem() }} @lang('messages.of') {{ $ads->total() }}
                                 @lang('messages.Listings')</p>
                         </div>
-                        <div class="carousel-inner">
-                            @php
-                                $hasAdWithImage = false;
-                            @endphp
+                        <div id="adsCarousels" class="carousel slide">
+                            <div class="carousel-inner">
+                                @php
+                                    $hasAdWithImage = false;
+                                @endphp
 
-                            @foreach ($superAds as $key => $ad)
-                                @php $hasAdWithImage = true; @endphp
+                                @foreach ($superAds as $key => $ad)
+                                    @php $hasAdWithImage = true; @endphp
 
-                                <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                    <div class="blink-border-wrapper">
-                                        @if ($ad->post_type)
-                                            <button class="sale"
+                                    <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                                        <div class="blink-border-wrapper">
+                                            @if ($ad->post_type)
+                                                <button class="sale"
                                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: 25px; border-radius: 2px; background-color: red; color: white; font-weight: bold; font-size: 12px; border: none; z-index: 2;">
-                                                {{ $ad->post_type }}
-                                            </button>
-                                        @endif
+                                                    {{ $ad->post_type }}
+                                                </button>
+                                            @endif
 
-                                        <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
-                                           style="display: block; height: 100%; text-decoration: none;">
-                                            <div class="carousel-item-content">
-                                                <div class="image-container"
-                                                     style="position: relative; max-height: 385px; overflow: hidden; text-align: center;">
-                                                    <img src="{{ asset('storage/' . $ad->mainImage) }}"
-                                                         alt="{{ $ad->title }}"
-                                                         style="max-height: 385px !important; width: 100%; object-fit: contain;"
-                                                         onerror="this.style.display='none';
+                                            <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
+                                                style="display: block; height: 100%; text-decoration: none;">
+                                                <div class="carousel-item-content">
+                                                    <div class="image-container"
+                                                        style="position: relative; max-height: 385px; overflow: hidden; text-align: center;">
+                                                        <img src="{{ asset('storage/' . $ad->mainImage) }}"
+                                                            alt="{{ $ad->title }}"
+                                                            style="max-height: 385px !important; width: 100%; object-fit: contain;"
+                                                            onerror="this.style.display='none';
                                                                         const msg = document.createElement('div');
                                                                         msg.innerText = 'Ad is not available';
                                                                         msg.style.color = 'red';
@@ -1705,38 +1719,39 @@
                                                                         msg.style.padding = '50px 0';
                                                                         msg.style.textAlign = 'center';
                                                                         this.parentNode.appendChild(msg);" />
-                                                </div>
+                                                    </div>
 
-                                                <div class="carousel-overlay"></div>
-                                                <div class="badge">
-                                                    <img src="{{ asset('02.png') }}" alt="Top Ad"
-                                                         style="width: 30px; height: 30px;">
-                                                </div>
+                                                    <div class="carousel-overlay"></div>
+                                                    <div class="badge">
+                                                        <img src="{{ asset('02.png') }}" alt="Top Ad"
+                                                            style="width: 30px; height: 30px;">
+                                                    </div>
 
-                                                <div class="carousel-caption d-sm-block text-start">
-                                                    <p>{{ $ad->title }}</p>
-                                                    <p>@lang('messages.Rs')
-                                                        {{ number_format($ad->price, 2) }}</p>
-                                                    <p><i class="fas fa-map-marker-alt"></i>
-                                                        @php
-                                                            $locale = App::getLocale();
-                                                            $locationName = 'name_' . $locale;
-                                                        @endphp
-                                                        {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}
-                                                    </p>
+                                                    <div class="carousel-caption d-sm-block text-start">
+                                                        <p>{{ $ad->title }}</p>
+                                                        <p>@lang('messages.Rs')
+                                                            {{ number_format($ad->price, 2) }}</p>
+                                                        <p><i class="fas fa-map-marker-alt"></i>
+                                                            @php
+                                                                $locale = App::getLocale();
+                                                                $locationName = 'name_' . $locale;
+                                                            @endphp
+                                                            {{ $ad->main_location ? $ad->main_location->$locationName : 'N/A' }}
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </a>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
 
-                            @if (!$hasAdWithImage)
-                                <div class="text-center"
-                                     style="color: red; font-weight: bold; padding: 50px 0; font-size: 1.2rem;">
-                                    Ad is not available
-                                </div>
-                            @endif
+                                @if (!$hasAdWithImage)
+                                    <div class="text-center"
+                                        style="color: red; font-weight: bold; padding: 50px 0; font-size: 1.2rem;">
+                                        Ad is not available
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                         <!-- Ads Grid -->
                         <div class="ads-grid">
@@ -1744,33 +1759,33 @@
                                 <div
                                     class="ad-card {{ $ad->ads_package == 3 ? 'top-ad' : ($ad->ads_package == 4 ? 'urgent-ad' : ($ad->ads_package == 6 ? 'super-ad' : '')) }}">
                                     <a href="{{ route('ads.details', ['adsId' => $ad->adsId]) }}"
-                                       style="text-decoration: none; color: inherit; height: 100%; display: flex; flex-direction: column;">
+                                        style="text-decoration: none; color: inherit; height: 100%; display: flex; flex-direction: column;">
                                         <div class="ad-image">
                                             <img src="{{ asset('storage/' . $ad->mainImage) }}"
-                                                 alt="{{ $ad->title }}">
+                                                alt="{{ $ad->title }}">
 
                                             @if ($ad->ads_package == 3)
                                                 <div class="ad-badge badge-top">
                                                     <img src="{{ asset('01.png') }}" alt="Top Ad"
-                                                         style="width: 20px; height: 20px;">
+                                                        style="width: 20px; height: 20px;">
                                                 </div>
                                             @elseif($ad->ads_package == 4)
                                                 <div class="ad-badge badge-urgent">Urgent</div>
                                             @elseif($ad->ads_package == 6)
                                                 <div class="ad-badge badge-super">
                                                     <img src="{{ asset('02.png') }}" alt="Super Ad"
-                                                         style="width: 20px; height: 20px;">
+                                                        style="width: 20px; height: 20px;">
                                                 </div>
                                             @elseif($ad->ads_package == 5)
                                                 <div class="ad-badge badge-jump">
                                                     <img src="{{ asset('04.png') }}" alt="Jump Ad"
-                                                         style="width: 20px; height: 20px;">
+                                                        style="width: 20px; height: 20px;">
                                                 </div>
                                             @endif
 
                                             @if ($ad->post_type)
                                                 <div class="ad-badge"
-                                                     style="right: 10px; left: auto; background: #dc3545;">
+                                                    style="right: 10px; left: auto; background: #dc3545;">
                                                     {{ $ad->post_type }}
                                                 </div>
                                             @endif
@@ -1880,14 +1895,14 @@
                                 @foreach ($banners as $key => $banner)
                                     @if (isset($banner->url))
                                         <a href="{{ $banner->url }}" target="_blank">
-                                            @endif
-                                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                                <div class="banner d-flex justify-content-center">
-                                                    <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
-                                                         class="img-fluid banner-img">
-                                                </div>
-                                            </div>
-                                            @if (isset($banner->url))
+                                    @endif
+                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                        <div class="banner d-flex justify-content-center">
+                                            <img src="{{ asset('banners/' . $banner->img) }}" alt="Banner Image"
+                                                class="img-fluid banner-img">
+                                        </div>
+                                    </div>
+                                    @if (isset($banner->url))
                                         </a>
                                     @endif
                                 @endforeach
@@ -1909,6 +1924,14 @@
             ride: 'carousel' // Enable auto sliding
         });
     </script>
+    <script>
+    var myCarousel = document.querySelector('#adsCarousels');
+        var carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 2000, // Set interval for auto sliding (5 seconds)
+            ride: 'carousel' // Enable auto sliding
+        });
+</script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const filterToggle = document.getElementById('filterToggle');
