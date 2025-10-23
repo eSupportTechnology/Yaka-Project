@@ -891,7 +891,7 @@
                     </div>
 
                     {{-- JavaScript now runs for 2 or more ads --}}
-                    @if ($totalAds >= 2)
+                    @if ($totalAds >= 1)
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 const superAdsData = @json($superAds->values());

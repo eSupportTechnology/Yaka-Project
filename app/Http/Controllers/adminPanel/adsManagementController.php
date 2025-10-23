@@ -20,7 +20,8 @@ class adsManagementController extends Controller
         $adsQuery = Ads::query();
 
         if (!empty($adCode)) {
-            $adsQuery->where('adsId', 'like', '%' . $adCode . '%');
+            $adsQuery->where('adsId', 'like', '%' . $adCode . '%')
+            ->orWhere('title', 'like', '%' . $adCode . '%');
         }
 
         // Order by latest ads (newest first)
