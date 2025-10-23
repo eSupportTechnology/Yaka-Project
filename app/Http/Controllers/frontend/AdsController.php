@@ -59,10 +59,10 @@ class AdsController extends Controller
         $superAdsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
             ->where('ads_package', 6)
             ->where('status', 1)
-            ->where(function($query) {
-                $query->whereNull('package_expire_at')
-                      ->orWhere('package_expire_at', '>=', now());
-            })
+            // ->where(function($query) {
+            //     $query->whereNull('package_expire_at')
+            //           ->orWhere('package_expire_at', '>=', now());
+            // })
             ->latest();
 
         if (!empty($selectedCategory)) {
@@ -72,11 +72,11 @@ class AdsController extends Controller
         $superAds = $superAdsQuery->get();
 
         $baseQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
-            ->where('status', 1)
-            ->where(function ($query) {
-                $query->whereNull('package_expire_at')
-                    ->orWhere('package_expire_at', '>=', Carbon::now());
-            });
+            ->where('status', 1);
+            // ->where(function ($query) {
+            //     $query->whereNull('package_expire_at')
+            //         ->orWhere('package_expire_at', '>=', Carbon::now());
+            // });
 
         // Apply filters dynamically
         $applyFilters = function ($query) use ($selectedLocation, $selectedCity, $selectedCategory, $selectedSubCategory, $searchTerm) {
@@ -144,7 +144,7 @@ class AdsController extends Controller
         );
 
         $page = request()->get('page', 1);
-        $perPage = 6;
+        $perPage = 30;
 
         $pagedAds = new LengthAwarePaginator(
             $ads->forPage($page, $perPage),
