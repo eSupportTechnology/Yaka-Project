@@ -21,6 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Category</th>
                                     <th>Months</th>
                                     <th>Ads per Month</th>
                                     <th>Price</th>
@@ -33,6 +34,7 @@
                                 @foreach ($plans as $plan)
                                     <tr>
                                         <td>{{ $plan->id }}</td>
+                                        <td>{{ $plan->category->name }}</td>
                                         <td>{{ $plan->month_count }}</td>
                                         <td>{{ $plan->ads_per_month }}</td>
                                         <td>Rs.{{ number_format($plan->price, 2) }}</td>

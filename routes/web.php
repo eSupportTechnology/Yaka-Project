@@ -145,15 +145,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/payment/free-complete', [PaymentProcessingController::class, 'freeComplete'])->name('payment.free.complete');
     // Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
     Route::get('/payment/checking', [PaymentProcessingController::class, 'complete'])->name('payment.checking');
-Route::post('/membership/payment/init', [MembershipPackagesController::class, 'initPayment'])
-    ->name('membership.payment.init');
+    Route::post('/membership/payment/init', [MembershipPackagesController::class, 'initPayment'])
+        ->name('membership.payment.init');
     Route::get('/membership-package', [MembershipPackagesController::class, 'index'])->name('membership-package');
     Route::post('/membership/store', [MembershipPackagesController::class, 'store'])->name('membership.store');
+    Route::get('/check-active-membership/{categoryId}', [MembershipPackagesController::class, 'checkActiveMembership']);
+Route::get('/membership/category/{id}', [MembershipPackagesController::class, 'getByCategory'])->name('membership.byCategory');
 
     Route::get('/payment/checking', [PaymentProcessingController::class, 'checkPayment'])->name('payment.checking');
-Route::post('/payment/notify', [PaymentProcessingController::class, 'notifyPayment'])->name('payment.notify');
-
- });
+    Route::post('/payment/notify', [PaymentProcessingController::class, 'notifyPayment'])->name('payment.notify');
+});
 
 
 // Ads Search
@@ -314,7 +315,6 @@ Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
     Route::delete('/membership-plans/{id}', [MembershipPlanController::class, 'membershipPlandestroy'])->name('membership-plans.destroy');
     Route::get('/purchase-membership', [MembershipPlanController::class, 'purchased'])->name('membership-plans.purchase');
     Route::get('/purchase-membership/{userId}', [MembershipPlanController::class, 'purchased_view'])->name('membership-plans.purchase_view');
-
 });
 Route::get('/ad-boost-billing-details', [BoostingController::class, 'showBillingDetails'])->name('boosting.billingDetails');
 Route::post('/boosting/save-info', [BoostingController::class, 'saveInfo'])->name('boosting.saveInfo');

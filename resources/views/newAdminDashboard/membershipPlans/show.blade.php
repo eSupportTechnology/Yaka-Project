@@ -10,6 +10,11 @@
         <div class="card">
             <div class="card-body">
                 <div id="planDetails">
+                    
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <input type="text" id="category" name="category" value="{{ $plan->category->name }}" class="form-control" readonly>
+                    </div>
                     <div class="mb-3">
                         <label for="month_count" class="form-label">Month Count</label>
                         <input type="number" id="month_count" name="month_count" value="{{ $plan->month_count }}" class="form-control" readonly>

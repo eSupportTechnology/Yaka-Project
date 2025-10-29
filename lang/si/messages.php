@@ -650,6 +650,17 @@ return [
 'voucher code' => 'වවුචර් කේතය',
 'membership payment' => 'සාමාජිකත්ව ගෙවීම්',
 'pay now' => 'දැන් ගෙවන්න',
+'benefits of being a loyalty member' => 'නියමිත සාමාජිකයෙකු වීමේ වාසි',
+'your own stall on yaka.lk' => 'yaka.lk හි ඔබේම වෙළඳසැල',
+'badges' => 'බැජ්',
+'member' => 'සාමාජික',
+'verified' => 'සත්‍යාපිත',
+'get reviews for your stall' => 'ඔබේ වෙළඳසැල සඳහා සමාලෝචන ලබා ගන්න',
+'free promo codes' => 'නොමිලේ ප්‍රවර්ධන කේත',
+'add your shop location' => 'ඔබේ වෙළඳසැල ස්ථානය එකතු කරන්න',
+'you can see statistics' => 'ඔබට සංඛ්‍යාත්මක දත්ත දැකිය හැක',
+'customer support' => 'පාරිභෝගික සහාය',
+'become a member now' => 'දැන් සාමාජිකයෙකු වන්න',
 
 
 
