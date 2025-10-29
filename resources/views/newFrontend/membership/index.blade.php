@@ -16,7 +16,7 @@
         .container {
             max-width: 1200px;
         }
-        /* Add these styles to ensure consistent card sizing */
+
         .ad-card {
             border: none;
             border-radius: var(--border-radius);
@@ -96,18 +96,6 @@
             font-weight: bold;
         }
 
-        /* Price Highlighting */
-        .card-text:contains("price") {
-            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-            padding: 0.75rem 1rem;
-            border-radius: 10px;
-            margin: 1rem 0;
-            font-weight: 700;
-            color: #2d3436;
-            text-align: center;
-        }
-
-        /* Empty State Styling */
         .text-center {
             padding: 4rem 2rem;
             color: #6c757d;
@@ -119,13 +107,11 @@
         }
 
         .text-center::before {
-            content: '📭';
             display: block;
             font-size: 3rem;
             margin-bottom: 1rem;
         }
 
-        /* Membership Card Specific Styling */
         .tab-pane#pending-ads .ad-card {
             background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
         }
@@ -138,14 +124,12 @@
             content: '🎯';
         }
 
-        /* Voucher Code Styling */
         .card-text:last-child {
             background: #f8f9fa;
             padding: 0.5rem 1rem;
             border-radius: 8px;
             font-family: 'Courier New', monospace;
             font-weight: 600;
-            border-left: 4px solid #667eea;
         }
 
         @media (min-width: 992px) {
@@ -161,7 +145,6 @@
                 max-width: 48%;
             }
         }
-
 
         @media (max-width: 576px) {
             .col-md-4 {
@@ -185,7 +168,6 @@
             </div>
         </div>
     </section>
-    <!-- End Page Title -->
 
     <section class="mb-4 dash-header-part">
         <div class="container">
@@ -254,11 +236,9 @@
                                 <li><a href="{{ route('user.ad_posts.categories') }}">@lang('messages.ad post')</a></li>
                                 <li><a href="{{ route('user.my_ads') }}">@lang('messages.my ads')</a></li>
                                 <li><a href="{{ route('user.profile') }}">@lang('messages.Profile')</a></li>
-                                {{-- <li><a href="">@lang('messages.message')</a></li> --}}
                                 <li>
                                     <a href="{{ route('user.logout') }}">@lang('messages.Logout')</a>
                                 </li>
-
                             </ul>
                         </div>
                     </div>
@@ -269,38 +249,51 @@
 
     <section class="mt-4 dashboard-part">
         <div class="container mb-4">
-            <!-- Tabs Navigation -->
             <ul class="nav nav-tabs" id="adsTabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="active-ads-tab" data-bs-toggle="tab" href="#active-ads" role="tab"
-                        aria-controls="active-ads" aria-selected="true">@lang('messages.active membership')</a>
+                    <a class="nav-link active" id="active-ads-tab" data-bs-toggle="tab" href="#active-ads-section"
+                        role="tab" aria-controls="active-ads-section" aria-selected="true">@lang('messages.active membership')</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pending-ads-tab" data-bs-toggle="tab" href="#pending-ads" role="tab"
-                        aria-controls="pending-ads" aria-selected="false">@lang('messages.my membership')</a>
+                    <a class="nav-link" id="pending-ads-tab" data-bs-toggle="tab" href="#pending-ads-section" role="tab"
+                        aria-controls="pending-ads-section" aria-selected="false">@lang('messages.my membership')</a>
                 </li>
             </ul>
 
-            <!-- Tabs Content -->
             <div class="mt-3 tab-content" id="adsTabsContent">
-                <!-- Active Ads Tab -->
-                <div class="tab-pane fade show active" id="active-ads" role="tabpanel" aria-labelledby="active-ads-tab">
-                    <div class="row">
+                <div class="tab-pane fade show active" id="active-ads-section" role="tabpanel"
+                    aria-labelledby="active-ads-tab">
+
+                    <div class="d-flex flex-wrap gap-1 mb-3" id="category-filter">
+                        @foreach ($categories as $category)
+                            <div class="p-3 border rounded category-box text-center"
+                                style="min-width: 150px; flex: 1 1 150px; cursor: pointer;"
+                                data-category-id="{{ $category->id }}">
+
+                                {{-- Category Image --}}
+                                <img src="{{ asset('images/category/' . $category->image) }}" alt="{{ $category->name }}"
+                                    style="width: 50px; height: 50px; object-fit: contain; margin-bottom: 5px;">
+
+                                <h5>{{ $category->name }}</h5>
+                            </div>
+                        @endforeach
+                    </div>
+
+
+                    <div class="row" id="active-ads">
                         @forelse($packages as $package)
                             <div class="mb-4 col-md-4">
                                 <div class="card ad-card">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $package->month_count }} @lang('messages.month')</h5>
-                                        <p class="card-text">@lang('messages.price'): @lang('messages.Rs')
-                                            {{ number_format($package->price, 2) }}</p>
-                                        <p class="card-text text-muted">@lang('messages.ads per month'):
-                                            {{ $package->ads_per_month }}</p>
+                                        <p class="card-text">@lang('messages.price'): Rs {{ number_format($package->price, 2) }}
+                                        </p>
+                                        <p class="card-text text-muted">@lang('messages.ads per month'): {{ $package->ads_per_month }}
+                                        </p>
                                         <p class="card-text text-muted">@lang('messages.promotion voucher cost'):
                                             {{ $package->promotion_voucher_cost }}</p>
-                                        <p class="card-text text-muted">@lang('messages.valid month'): {{ $package->valid_month }}
-                                        </p>
+                                        <p class="card-text text-muted">@lang('messages.valid month'): {{ $package->valid_month }}</p>
 
-                                        <!-- Purchase form -->
                                         <form action="{{ route('membership.payment.init') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="price" value="{{ $package->price }}">
@@ -308,28 +301,27 @@
                                                 value="{{ $package->promotion_voucher_cost }}">
                                             <input type="hidden" name="ads_per_month"
                                                 value="{{ $package->ads_per_month }}">
-                                            <input type="hidden" name="valid_month" value="{{ $package->valid_month }}">
+                                            <input type="hidden" name="valid_month"
+                                                value="{{ $package->valid_month }}">
                                             <button type="submit" class="theme-btn-one">@lang('messages.purchase now')</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         @empty
-                            <p class="text-center">No active ads found.</p>
+                            <p class="text-center">No active membership plans available.</p>
                         @endforelse
                     </div>
-
                 </div>
 
-                <!-- Pending Ads Tab -->
-                <div class="tab-pane fade" id="pending-ads" role="tabpanel" aria-labelledby="pending-ads-tab">
+                <div class="tab-pane fade" id="pending-ads-section" role="tabpanel" aria-labelledby="pending-ads-tab">
                     <div class="row">
                         @forelse($myMemberships as $membership)
                             <div class="mb-4 col-md-4">
                                 <div class="card ad-card">
                                     <div class="card-body">
                                         <h5 class="card-title">@lang('messages.valid month'): {{ $membership->valid_month }}</h5>
-                                        <p class="card-text">@lang('messages.price'): @lang('messages.Rs')
+                                        <p class="card-text">@lang('messages.price'): Rs
                                             {{ number_format($membership->price, 2) }}</p>
                                         <p class="card-text text-muted">@lang('messages.ads per month'):
                                             {{ $membership->ads_per_month }}</p>
@@ -345,12 +337,254 @@
                                 </div>
                             </div>
                         @empty
-                            <p class="text-center">You have no purchased memberships.</p>
+                            <p class="text-center">📭 You have no purchased memberships.</p>
                         @endforelse
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
+
+    <section class="membership-benefits-section py-5"
+        style="background: linear-gradient(135deg, #690303 0%, #B00505 100%);">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card"
+                        style="border: none; border-radius: 20px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                        <div class="card-body p-5">
+                            <h3 class="text-center mb-5" style="font-weight: 700; color: #2c3e50; font-size: 2rem;">
+                                @lang('messages.benefits of being a loyalty member')
+                            </h3>
+
+                            <div class="row align-items-start">
+                                <!-- Left Column -->
+                                <div class="col-md-6">
+                                    <!-- Benefit 1: Own Stall -->
+                                    <div class="benefit-item d-flex align-items-center mb-4">
+                                        <div class="benefit-number me-3"
+                                            style="background: linear-gradient(135deg, #B00505 0%, #B00505 100%); color: white; width: 35px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
+                                            1</div>
+                                        <div class="benefit-content flex-grow-1">
+                                            <p class="mb-0"
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                @lang('messages.your own stall on yaka.lk')
+                                            </p>
+                                        </div>
+                                        <div class="benefit-icon ms-3" style="flex-shrink: 0;">
+                                            <img src="{{ asset('images\benefits\stall.png') }}" alt="Stall"
+                                                style="width: 80px; height: 80px; object-fit: contain;">
+                                        </div>
+                                    </div>
+
+                                    <!-- Benefit 2: Badges -->
+                                    <div class="benefit-item d-flex align-items-center mb-4">
+                                        <div class="benefit-number me-3"
+                                            style="background: linear-gradient(135deg, #B00505 0%, #B00505 100%); color: white; width: 35px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
+                                            2</div>
+                                        <div class="benefit-content flex-grow-1">
+                                            <p class="mb-0"
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                @lang('messages.badges') <span style="font-weight: 700;">@lang('messages.member')/
+                                                    @lang('messages.verified')</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Badge Icons -->
+                                    <div class="d-flex justify-content-around mb-5 px-4">
+                                        <div class="badge-display text-center">
+                                            <div
+                                                style="width: 80px; height: 80px; background: linear-gradient(135deg, #B00505 0%, #ff4b2b 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(255, 65, 108, 0.3); margin: 0 auto 10px;">
+                                                <svg width="50" height="50" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M7 22V11M2 13V20C2 21.1046 2.89543 22 4 22H17.4262C18.907 22 20.1662 20.9197 20.3914 19.4562L21.4683 12.4562C21.7479 10.6389 20.3418 9 18.5032 9H15C14.4477 9 14 8.55228 14 8V4.46584C14 3.10399 12.896 2 11.5342 2C11.2093 2 10.915 2.1913 10.7831 2.48812L7.26394 10.4061C7.10344 10.7673 6.74532 11 6.35013 11H4C2.89543 11 2 11.8954 2 13Z"
+                                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                            <p class="mb-0 fw-bold" style="color: #2c3e50;">@lang('messages.member')</p>
+                                        </div>
+                                        <div class="badge-display text-center">
+                                            <div
+                                                style="width: 80px; height: 80px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3); margin: 0 auto 10px;">
+                                                <svg width="50" height="50" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M9 12L11 14L15 10M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                            <p class="mb-0 fw-bold" style="color: #2c3e50;">@lang('messages.verified')</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Benefit 3: Reviews -->
+                                    <div class="benefit-item d-flex align-items-center mb-4">
+                                        <div class="benefit-number me-3"
+                                            style="background: linear-gradient(135deg, #B00505 0%, #B00505 100%); color: white; width: 35px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
+                                            3</div>
+                                        <div class="benefit-content flex-grow-1">
+                                            <p class="mb-0"
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                @lang('messages.get reviews for your stall')
+                                            </p>
+                                        </div>
+                                        <div class="benefit-icon ms-3" style="flex-shrink: 0;">
+                                            <img src="{{ asset('images\benefits\voucher.png') }}" alt="Reviews"
+                                                style="width: 80px; height: 80px; object-fit: contain;">
+                                        </div>
+                                    </div>
+
+                                    <!-- Benefit 4: Promo Codes -->
+                                    <div class="benefit-item d-flex align-items-center mb-4">
+                                        <div class="benefit-number me-3"
+                                            style="background: linear-gradient(135deg, #B00505 0%, #B00505 100%); color: white; width: 35px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
+                                            4</div>
+                                        <div class="benefit-content flex-grow-1">
+                                            <p class="mb-0"
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                @lang('messages.free promo codes')
+                                            </p>
+                                        </div>
+                                        <div class="benefit-icon ms-3" style="flex-shrink: 0;">
+                                            <img src="{{ asset('images\benefits\review.png') }}" alt="Promo"
+                                                style="width: 80px; height: 80px; object-fit: contain;">
+                                        </div>
+                                    </div>
+
+                                    <!-- Benefit 5: Location -->
+                                    <div class="benefit-item d-flex align-items-center mb-4">
+                                        <div class="benefit-number me-3"
+                                            style="background: linear-gradient(135deg, #B00505 0%, #B00505 100%); color: white; width: 35px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
+                                            5</div>
+                                        <div class="benefit-content flex-grow-1">
+                                            <p class="mb-0"
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                @lang('messages.add your shop location')
+                                            </p>
+                                        </div>
+                                        <div class="benefit-icon ms-3" style="flex-shrink: 0;">
+                                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z"
+                                                    fill="#e74c3c" />
+                                                <path
+                                                    d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z"
+                                                    stroke="#e74c3c" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right Column -->
+                                <div class="col-md-6">
+                                    <!-- Benefit 6: Statistics -->
+                                    <div class="benefit-item d-flex align-items-center mb-4">
+                                        <div class="benefit-number me-3"
+                                            style="background: linear-gradient(135deg, #B00505 0%, #B00505 100%); color: white; width: 35px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
+                                            6</div>
+                                        <div class="benefit-content flex-grow-1">
+                                            <p class="mb-0"
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                @lang('messages.you can see statistics')
+                                            </p>
+                                        </div>
+                                        <div class="benefit-icon ms-3" style="flex-shrink: 0;">
+                                            <img src="{{ asset('images\benefits\statics.png') }}" alt="Statistics"
+                                                style="width: 80px; height: 80px; object-fit: contain;">
+                                        </div>
+                                    </div>
+
+                                    <!-- Benefit 7: Customer Support -->
+                                    <div class="benefit-item d-flex align-items-center mb-4">
+                                        <div class="benefit-number me-3"
+                                            style="background: linear-gradient(135deg, #B00505 0%, #B00505 100%); color: white; width: 35px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">
+                                            7</div>
+                                        <div class="benefit-content flex-grow-1">
+                                            <p class="mb-0"
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                @lang('messages.customer support')
+                                            </p>
+                                        </div>
+                                        <div class="benefit-icon ms-3" style="flex-shrink: 0;">
+                                            <img src="{{ asset('images\benefits\customer-care.png') }}" alt="Support"
+                                                style="width: 80px; height: 80px; object-fit: contain;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Call to Action -->
+                            <div class="text-center mt-5">
+                                <a href="#active-ads-section" class="theme-btn-one" style=color: white; border: none;
+                                    border-radius: 50px; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 30px
+                                    rgba(102, 126, 234, 0.4); transition: all 0.3s ease;"
+                                    onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 35px rgba(102, 126, 234, 0.5)'"
+                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(102, 126, 234, 0.4)'">
+                                    @lang('messages.become a member now')
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.category-box').on('click', function() {
+                let categoryId = $(this).data('category-id');
+                $('.category-box').removeClass('border-primary');
+                $(this).addClass('border-primary');
+
+                $.ajax({
+                    url: "{{ route('membership.byCategory', '') }}/" + categoryId,
+                    type: "GET",
+                    success: function(response) {
+                        let html = '';
+
+                        if (response.length > 0) {
+                            response.forEach(function(package) {
+                                html += `
+                            <div class="mb-4 col-md-4">
+                                <div class="card ad-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${package.month_count} @lang('messages.month')</h5>
+                                        <p class="card-text">@lang('messages.price'): Rs ${parseFloat(package.price).toFixed(2)}</p>
+                                        <p class="card-text text-muted">@lang('messages.ads per month'): ${package.ads_per_month}</p>
+                                        <p class="card-text text-muted">@lang('messages.promotion voucher cost'): ${package.promotion_voucher_cost}</p>
+                                        <p class="card-text text-muted">@lang('messages.valid month'): ${package.valid_month}</p>
+                                        <form action="{{ route('membership.payment.init') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="price" value="${package.price}">
+                                            <input type="hidden" name="promotion_voucher_cost" value="${package.promotion_voucher_cost}">
+                                            <input type="hidden" name="ads_per_month" value="${package.ads_per_month}">
+                                            <input type="hidden" name="valid_month" value="${package.valid_month}">
+                                            <button type="submit" class="theme-btn-one">@lang('messages.purchase now')</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>`;
+                            });
+                        } else {
+                            html =
+                                '<p class="text-center">📭 No membership plan available for this category.</p>';
+                        }
+
+                        $('#active-ads').html(html);
+                    },
+                    error: function() {
+                        alert('Failed to load membership plans.');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

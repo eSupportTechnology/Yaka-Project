@@ -15,10 +15,16 @@ class MembershipPlan extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'category_id',
         'month_count',
         'ads_per_month',
         'price',
         'promotion_voucher_cost',
         'valid_month',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

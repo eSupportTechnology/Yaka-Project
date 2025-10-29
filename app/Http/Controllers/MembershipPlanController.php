@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\MembershipAdUsage;
 use App\Models\MembershipPackage;
 use App\Models\MembershipPlan;
@@ -113,15 +114,27 @@ class MembershipPlanController extends Controller
     public function membershipPlanIndex()
     {
         $plans = MembershipPlan::all();
-        return view('newAdminDashboard.membershipPlans.index', compact('plans'));
+        $categories = Category::all();
+        return view('newAdminDashboard.membershipPlans.index', compact('plans', 'categories'));
     }
     public function membershipPlancreate()
     {
-        return view('newAdminDashboard.membershipPlans.create');
+        $categories = Category::where('mainId', 0)
+                ->where('status', 1)
+                ->withCount(['ads' => function ($query) {
+                    $query->where('status', 1)
+                        ->where(function ($q) {
+                            $q->whereNull('package_expire_at')
+                                ->orWhere('package_expire_at', '>=', now());
+                        });
+                }])
+                ->get();
+        return view('newAdminDashboard.membershipPlans.create', compact('categories'));
     }
     public function membershipPlanstore(Request $request)
     {
         $request->validate([
+            'category_id' => 'required|exists:categories,id',
             'month_count' => 'required|integer|min:1',
             'ads_per_month' => 'required|integer|min:0',
             'price' => 'required|numeric|min:0',
@@ -134,12 +147,23 @@ class MembershipPlanController extends Controller
     }
     public function membershipPlanedit($id)
     {
+         $categories = Category::where('mainId', 0)
+                ->where('status', 1)
+                ->withCount(['ads' => function ($query) {
+                    $query->where('status', 1)
+                        ->where(function ($q) {
+                            $q->whereNull('package_expire_at')
+                                ->orWhere('package_expire_at', '>=', now());
+                        });
+                }])
+                ->get();
         $plan = MembershipPlan::find($id);
-        return view('newAdminDashboard.membershipPlans.edit', compact('plan'));
+        return view('newAdminDashboard.membershipPlans.edit', compact('plan', 'categories'));
     }
     public function membershipPlanupdate(Request $request, $id)
     {
         $request->validate([
+            'category_id' => 'sometimes|required|exists:categories,id',
             'month_count' => 'sometimes|required|integer|min:1',
             'ads_per_month' => 'sometimes|required|integer|min:0',
             'price' => 'sometimes|required|numeric|min:0',
@@ -153,8 +177,9 @@ class MembershipPlanController extends Controller
     }
     public function membershipPlanshow($id)
     {
+        $categories = Category::all();
         $plan = MembershipPlan::find($id);
-        return view('newAdminDashboard.membershipPlans.show', compact('plan'));
+        return view('newAdminDashboard.membershipPlans.show', compact('plan', 'categories'));
     }
     public function membershipPlandestroy($id)
     {

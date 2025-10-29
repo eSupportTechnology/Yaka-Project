@@ -652,6 +652,17 @@ return [
 'voucher code' => 'Voucher code',
 'membership payment' => 'Membership payment',
 'pay now' => 'Pay now',
+'benefits of being a loyalty member' => 'Benefits of being a loyalty member',
+'your own stall on yaka.lk' => 'Your own stall on yaka.lk',
+'badges' => 'Badges',
+'member' => 'Member',
+'verified' => 'Verified',
+'get reviews for your stall' => 'Get reviews for your stall',
+'free promo codes' => 'Free promo codes',
+'add your shop location' => 'Add your shop location',
+'you can see statistics' => 'You can see statistics',
+'customer support' => 'Customer support',
+'become a member now' => 'Become a member now',
 ];
 
 

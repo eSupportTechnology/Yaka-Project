@@ -13,6 +13,15 @@
                     @csrf
 
                     <div class="mb-3">
+                        <label for="category_id" class="form-label">Category</label>
+                        <select id="category_id" name="category_id" class="form-select" required>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="month_count" class="form-label">Month Count</label>
                         <input type="number" id="month_count" name="month_count" class="form-control" required min="1">
                     </div>

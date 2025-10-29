@@ -15,7 +15,7 @@ class Category extends Model
         'status'
     ];
 
-    
+
 
     public function mainCategory()
     {
@@ -26,13 +26,13 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'mainId');
     }
-    
+
 
     public function ads()
     {
         return $this->hasMany(Ads::class, 'cat_id');
     }
-    
+
 
 
     public function cat()
@@ -58,6 +58,10 @@ class Category extends Model
     public function adtypes()
     {
         return $this->hasMany(AdsTypes::class, 'catergoryId');
+    }
+    public function membershipPlans()
+    {
+        return $this->hasMany(MembershipPlan::class, 'category_id');
     }
 
 

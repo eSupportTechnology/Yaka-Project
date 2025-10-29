@@ -80,6 +80,7 @@
                                     </div>
                                     <div class="widget-content">
                                         <ul class="clearfix links-list">
+                                            <li><a href="{{route('membership-package')}}">@lang('messages.membership')</a></li>
                                             <li><a href="{{route('tips')}}">@lang('messages.Tips')</a></li>
                                             <li><a href="{{route('boosting_ads')}}">@lang('messages.Boosting ads')</a></li>
                                             {{--  <li><a href="{{route('add_posting')}}">@lang('messages.Ad posting allowances')</a></li>  --}}
