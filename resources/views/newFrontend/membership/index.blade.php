@@ -281,36 +281,7 @@
 
 
                     <div class="row" id="active-ads">
-                        @forelse($packages as $package)
-                            <div class="mb-4 col-md-4">
-                                <div class="card ad-card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $package->month_count }} @lang('messages.month')</h5>
-                                        <p class="card-text">@lang('messages.price'): Rs {{ number_format($package->price, 2) }}
-                                        </p>
-                                        <p class="card-text text-muted">@lang('messages.ads per month'): {{ $package->ads_per_month }}
-                                        </p>
-                                        <p class="card-text text-muted">@lang('messages.promotion voucher cost'):
-                                            {{ $package->promotion_voucher_cost }}</p>
-                                        <p class="card-text text-muted">@lang('messages.valid month'): {{ $package->valid_month }}</p>
-
-                                        <form action="{{ route('membership.payment.init') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="price" value="{{ $package->price }}">
-                                            <input type="hidden" name="promotion_voucher_cost"
-                                                value="{{ $package->promotion_voucher_cost }}">
-                                            <input type="hidden" name="ads_per_month"
-                                                value="{{ $package->ads_per_month }}">
-                                            <input type="hidden" name="valid_month"
-                                                value="{{ $package->valid_month }}">
-                                            <button type="submit" class="theme-btn-one">@lang('messages.purchase now')</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        @empty
-                            <p class="text-center">No active membership plans available.</p>
-                        @endforelse
+                        <p class="text-center text-muted">Please select a category to view available membership plans.</p>
                     </div>
                 </div>
 
@@ -521,7 +492,7 @@
 
                             <!-- Call to Action -->
                             <div class="text-center mt-5">
-                                <a href="#active-ads-section" class="theme-btn-one" style=color: white; border: none;
+                                <a href="#active-ads-section" class="theme-btn-one" style="color: white; border: none;
                                     border-radius: 50px; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 30px
                                     rgba(102, 126, 234, 0.4); transition: all 0.3s ease;"
                                     onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 35px rgba(102, 126, 234, 0.5)'"
