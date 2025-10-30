@@ -264,17 +264,47 @@
                 <div class="tab-pane fade show active" id="active-ads-section" role="tabpanel"
                     aria-labelledby="active-ads-tab">
 
-                    <div class="d-flex flex-wrap gap-1 mb-3" id="category-filter">
-                        @foreach ($categories as $category)
-                            <div class="p-3 border rounded category-box text-center"
-                                style="min-width: 150px; flex: 1 1 150px; cursor: pointer;"
+                    <div class="clearfix inner-content responsive-category" id="category-filter"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 30px; padding: 8px; justify-items: center;">
+                        @foreach ($categories->take(14) as $category)
+
+                            <div class="category-block-one category-box"
+                                style="min-width: 150px; flex: 1 1 150px; cursor: pointer; width: 100%; break-inside: avoid;"
                                 data-category-id="{{ $category->id }}">
 
-                                {{-- Category Image --}}
-                                <img src="{{ asset('images/category/' . $category->image) }}" alt="{{ $category->name }}"
-                                    style="width: 50px; height: 50px; object-fit: contain; margin-bottom: 5px;">
+                                <div class="inner-box text-center p-3">
+                                    <div class="shape">
+                                        <div class="shape-1"
+                                            style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-1.png') }}');">
+                                        </div>
+                                        <div class="shape-2"
+                                            style="background-image: url('{{ asset('newFrontend/Clasifico/assets/images/shape/shape-2.png') }}');">
+                                        </div>
+                                    </div>
 
-                                <h5>{{ $category->name }}</h5>
+                                    <div class="icon-box">
+                                        <img src="{{ asset('images/Category/' . $category->image ?? 'default.png') }}"
+                                            alt="{{ $category->name }}"
+                                            style="width: 70px; height: 70px; object-fit: contain;">
+                                    </div>
+
+                                    <h5
+                                        style="min-height: 60px; display: -webkit-box;
+                                            -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+                                            overflow: hidden; text-overflow: ellipsis; ">
+                                        @lang('messages.' . $category->name)
+                                    </h5>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="clearfix inner-content responsive-category" id="category-filter"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 30px; padding: 8px; justify-items: center;">
+                        @foreach ($categories->take(14) as $category)
+                            <div class="category-block-one" style="width: 100%; break-inside: avoid;">
+
+
                             </div>
                         @endforeach
                     </div>
@@ -492,7 +522,8 @@
 
                             <!-- Call to Action -->
                             <div class="text-center mt-5">
-                                <a href="#active-ads-section" class="theme-btn-one" style="color: white; border: none;
+                                <a href="#active-ads-section" class="theme-btn-one"
+                                    style="color: white; border: none;
                                     border-radius: 50px; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 30px
                                     rgba(102, 126, 234, 0.4); transition: all 0.3s ease;"
                                     onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 35px rgba(102, 126, 234, 0.5)'"
