@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 
 class subpackageController extends Controller
 {
-    function index($url){
-        $package=Package::where('url',$url)->first();
-        $sub=PackageType::where('package_id',$package->id)->get();
-        return view('newAdminDashboard.packageManagement.subpackages',compact(['sub','package']));
+    function index($url)
+    {
+        $package = Package::where('url', $url)->first();
+        $sub = PackageType::where('package_id', $package->id)->get();
+        return view('newAdminDashboard.packageManagement.subpackages', compact(['sub', 'package']));
     }
     public function update($url)
     {
@@ -33,8 +34,8 @@ class subpackageController extends Controller
         // $pack = Package::where('url', $url)->select('id', 'url')->first();
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'duration'=>'required',
-            'price'=>'required',
+            'duration' => 'required',
+            'price' => 'required',
             'status' => 'required' // Assuming status is required for the category
         ]);
 
@@ -53,15 +54,15 @@ class subpackageController extends Controller
 
         $category = new PackageType();
 
-        if(isset($request->mainid)){
+        if (isset($request->mainid)) {
             $category->package_id = $request->mainid;
         }
 
         //$category->package_id=$pack->id;
-        $category->url=$url;
+        $category->url = $url;
         $category->name = $validatedData['name'];
-        $category->duration=$validatedData['duration'];
-        $category->price=$validatedData['price'];
+        $category->duration = $validatedData['duration'];
+        $category->price = $validatedData['price'];
 
         $category->status = $validatedData['status'];
 
@@ -70,14 +71,13 @@ class subpackageController extends Controller
         $category->save();
 
         // Redirect based on whether it's a subcategory or not
-        if(isset($request->mainid)){
-            $maincategory = Package::where('id',$request->mainid )->select('id','url')->first();
+        if (isset($request->mainid)) {
+            $maincategory = Package::where('id', $request->mainid)->select('id', 'url')->first();
             return redirect()->route('dashboard.package.create', ['url' => $maincategory->url])
                 ->with('success', 'Your success message here.');
-        }else{
-            return view('newAdminDashboard.packageManagement.createNewPackage')->with('success', $validatedData['name'].' created successfully.');
+        } else {
+            return view('newAdminDashboard.packageManagement.createNewPackage')->with('success', $validatedData['name'] . ' created successfully.');
         }
-
     }
     public function view($url)
     {
@@ -99,14 +99,14 @@ class subpackageController extends Controller
 
         return view('newAdminDashboard.packageManagement.updateSubPackage', ['category' => $category, 'maincategory' => $maincategory]);
     }
-    public function updateSubPackage(Request $request )
+    public function updateSubPackage(Request $request)
     {
         // Find the category by ID for updating
         $category = PackageType::find($request->id);
-        $maincategory=[];
+        $maincategory = [];
 
         // If the category has a main category, retrieve it
-        if($category->package_id != 0){
+        if ($category->package_id != 0) {
             $maincategory = PackageType::find($category->mainId);
         }
 
@@ -127,7 +127,6 @@ class subpackageController extends Controller
         // Check if category name is changing and add validation rule accordingly
         if ($category->name != $request->name) {
             $rules['name'] = 'required|string|max:255|unique:package_typess,name';
-
         }
 
         // Validate incoming data
@@ -144,29 +143,29 @@ class subpackageController extends Controller
         // Update category data
         $category->name = $validatedData['name'] ?? $category->name;
         $category->url = $url;
-        $category->duration = $validatedData['duration'] ;
-        $category->price = $validatedData['price'] ;
+        $category->duration = $validatedData['duration'];
+        $category->price = $validatedData['price'];
         $category->status = $validatedData['status'];
 
         $category->save();
 
-        return view('newAdminDashboard.packageManagement.updateSubPackage', ['category' => $category ,'maincategory' => $maincategory ])->with('success', 'Category updated successfully.');
+        return view('newAdminDashboard.packageManagement.updateSubPackage', ['category' => $category, 'maincategory' => $maincategory])->with('success', 'Category updated successfully.');
     }
     public function delete($url)
     {
         // Find the category by URL for deletion
-        $category = PackageType::where('url',$url )->first();
-        return view('adminPanel.packageManagement.deleteSubPackage',['category' => $category]);
+        $category = PackageType::where('url', $url)->first();
+        return view('adminPanel.packageManagement.deleteSubPackage', ['category' => $category]);
     }
-    function deleteSubPackage($url){
-        $category =PackageType::where('url',$url )->first();
+    function deleteSubPackage($url)
+    {
+        $category = PackageType::where('url', $url)->first();
 
-        $maincategory=[];
+        $maincategory = [];
 
         // If the category has a main category, retrieve it
-        if($category->package_id != 0){
+        if ($category->package_id != 0) {
             $maincategory = PackageType::find($category->id);
-
         }
 
         // If category not found, redirect back with error message
@@ -178,14 +177,12 @@ class subpackageController extends Controller
         $category->delete();
 
         // Redirect based on whether it's a subcategory or not
-        if($category->package_id != 1){
+        if ($category->package_id != 1) {
             $maincategory = PackageType::find($category->id);
 
             return redirect()->route('dashboard.packages')->with('success', 'Category deleted successfully.');
-        }else{
+        } else {
             return redirect()->route('dashboard.packages')->with('success', 'Category deleted successfully.');
         }
-
     }
-
 }

@@ -35,7 +35,7 @@ class MembershipPackagesController extends Controller
             ->where('expiry_date', '>', now())
             ->get();
 
-        return view('newFrontend.membership.index', compact('packages', 'myMemberships','categories'));
+        return view('newFrontend.membership.index', compact('packages', 'myMemberships', 'categories'));
     }
 
     public function create()
