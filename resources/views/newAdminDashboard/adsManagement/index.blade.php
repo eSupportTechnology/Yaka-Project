@@ -97,6 +97,7 @@
                                 <th>Sub Category</th>
                                 <th>District</th>
                                 <th>City</th>
+                                <th>Mobile</th>
                                 <th>Disapprove  Reason</th>
                                 <th>Ads Status</th>
                                 <th>Action</th>
@@ -112,6 +113,7 @@
                                     <td>{{ $ads->subcategory->name }}</td>
                                     <td>{{ $ads->main_location ? $ads->main_location->name_en : 'N/A' }}</td>
                                     <td>{{ $ads->sub_location ? $ads->sub_location->name_en : 'N/A' }}</td>
+                                    <td>{{ $ads->mobile_number ?? 'N/A' }}</td>
                                     <td>{{ $ads->reason ?? 'N/A' }}</td>
                                     <td>
                                         @if($ads->status == 1)
