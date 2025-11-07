@@ -113,7 +113,7 @@
                                     <td>{{ $ads->subcategory->name }}</td>
                                     <td>{{ $ads->main_location ? $ads->main_location->name_en : 'N/A' }}</td>
                                     <td>{{ $ads->sub_location ? $ads->sub_location->name_en : 'N/A' }}</td>
-                                    <td>{{ $ads->mobile_number ?? 'N/A' }}</td>
+                                    <td>{{ $ads->user->phone_number ?? 'N/A' }}</td>
                                     <td>{{ $ads->reason ?? 'N/A' }}</td>
                                     <td>
                                         @if($ads->status == 1)
