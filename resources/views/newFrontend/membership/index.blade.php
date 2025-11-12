@@ -267,7 +267,6 @@
                     <div class="clearfix inner-content responsive-category" id="category-filter"
                         style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 30px; padding: 8px; justify-items: center;">
                         @foreach ($categories->take(14) as $category)
-
                             <div class="category-block-one category-box"
                                 style="min-width: 150px; flex: 1 1 150px; cursor: pointer; width: 100%; break-inside: avoid;"
                                 data-category-id="{{ $category->id }}">
@@ -309,10 +308,13 @@
                         @endforeach
                     </div>
 
+                    <div class="row mt-4 mb-4" id="extra-fields"></div>
 
                     <div class="row" id="active-ads">
                         <p class="text-center text-muted">Please select a category to view available membership plans.</p>
                     </div>
+
+
                 </div>
 
                 <div class="tab-pane fade" id="pending-ads-section" role="tabpanel" aria-labelledby="pending-ads-tab">
@@ -539,54 +541,96 @@
     </section>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.category-box').on('click', function() {
-                let categoryId = $(this).data('category-id');
-                $('.category-box').removeClass('border-primary');
-                $(this).addClass('border-primary');
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.category-box').on('click', function() {
+            let categoryId = $(this).data('category-id');
+            $('.category-box').removeClass('border-primary');
+            $(this).addClass('border-primary');
 
-                $.ajax({
-                    url: "{{ route('membership.byCategory', '') }}/" + categoryId,
-                    type: "GET",
-                    success: function(response) {
-                        let html = '';
+            $.ajax({
+                url: "{{ route('membership.byCategory', '') }}/" + categoryId,
+                type: "GET",
+                success: function(response) {
+                    let html = '';
+                    let extraFields = '';
 
-                        if (response.length > 0) {
-                            response.forEach(function(package) {
-                                html += `
-                            <div class="mb-4 col-md-4">
-                                <div class="card ad-card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${package.month_count} @lang('messages.month')</h5>
-                                        <p class="card-text">@lang('messages.price'): Rs ${parseFloat(package.price).toFixed(2)}</p>
-                                        <p class="card-text text-muted">@lang('messages.ads per month'): ${package.ads_per_month}</p>
-                                        <p class="card-text text-muted">@lang('messages.promotion voucher cost'): ${package.promotion_voucher_cost}</p>
-                                        <p class="card-text text-muted">@lang('messages.valid month'): ${package.valid_month}</p>
-                                        <form action="{{ route('membership.payment.init') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="price" value="${package.price}">
-                                            <input type="hidden" name="promotion_voucher_cost" value="${package.promotion_voucher_cost}">
-                                            <input type="hidden" name="ads_per_month" value="${package.ads_per_month}">
-                                            <input type="hidden" name="valid_month" value="${package.valid_month}">
-                                            <button type="submit" class="theme-btn-one">@lang('messages.purchase now')</button>
-                                        </form>
+                    if (response.length > 0) {
+                        // Add extra fields for business info
+                        extraFields = `
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold text-dark">@lang('messages.business name')</label>
+                                <input type="text" id="business_name" class="form-control" placeholder="Enter business name" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold text-dark">@lang('messages.email')</label>
+                                <input type="email" id="business_email" class="form-control" placeholder="Enter email" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold text-dark">@lang('messages.phone number')</label>
+                                <input type="text" id="business_phone" class="form-control" placeholder="Enter phone number" required>
+                            </div>
+                        `;
+
+                        // Display memberships
+                        response.forEach(function(package) {
+                            html += `
+                                <div class="mb-4 col-md-4">
+                                    <div class="card ad-card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${package.month_count} @lang('messages.month')</h5>
+                                            <p class="card-text">@lang('messages.price'): Rs ${parseFloat(package.price).toFixed(2)}</p>
+                                            <p class="card-text text-muted">@lang('messages.ads per month'): ${package.ads_per_month}</p>
+                                            <p class="card-text text-muted">@lang('messages.promotion voucher cost'): ${package.promotion_voucher_cost}</p>
+                                            <p class="card-text text-muted">@lang('messages.valid month'): ${package.valid_month}</p>
+
+                                            <form action="{{ route('membership.payment.init') }}" method="POST" class="membership-form">
+                                                @csrf
+                                                <input type="hidden" name="price" value="${package.price}">
+                                                <input type="hidden" name="promotion_voucher_cost" value="${package.promotion_voucher_cost}">
+                                                <input type="hidden" name="ads_per_month" value="${package.ads_per_month}">
+                                                <input type="hidden" name="valid_month" value="${package.valid_month}">
+                                                <input type="hidden" name="business_name">
+                                                <input type="hidden" name="business_email">
+                                                <input type="hidden" name="business_phone">
+                                                <button type="submit" class="theme-btn-one purchase-btn">@lang('messages.purchase now')</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>`;
-                            });
-                        } else {
-                            html =
-                                '<p class="text-center">📭 No membership plan available for this category.</p>';
-                        }
-
-                        $('#active-ads').html(html);
-                    },
-                    error: function() {
-                        alert('Failed to load membership plans.');
+                                </div>`;
+                        });
+                    } else {
+                        html = '<p class="text-center">📭 No membership plan available for this category.</p>';
                     }
-                });
+
+                    $('#active-ads').html(html);
+                    $('#extra-fields').html(extraFields);
+                },
+                error: function() {
+                    alert('Failed to load membership plans.');
+                }
             });
         });
-    </script>
+
+        // Validate business fields before submitting purchase
+        $(document).on('submit', '.membership-form', function(e) {
+            let name = $('#business_name').val();
+            let email = $('#business_email').val();
+            let phone = $('#business_phone').val();
+
+            if (!name || !email || !phone) {
+                e.preventDefault();
+                alert('⚠️ Please fill in Business Name, Email, and Phone Number before purchasing.');
+                return false;
+            }
+
+            // Pass values to hidden inputs before submit
+            $(this).find('input[name="business_name"]').val(name);
+            $(this).find('input[name="business_email"]').val(email);
+            $(this).find('input[name="business_phone"]').val(phone);
+        });
+    });
+</script>
+
 @endsection

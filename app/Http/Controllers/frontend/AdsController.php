@@ -34,7 +34,7 @@ class AdsController extends Controller
     public function browseAds(Request $request)
     {
         $locale = App::getLocale();
-        $searchName = 'name_'.$locale;
+        $searchName = 'name_' . $locale;
         // Get selected filters from the request
         $selectedLocation = $request->input('location');
         $selectedCity = $request->input('city');
@@ -44,33 +44,48 @@ class AdsController extends Controller
 
         $selectedCityName = 'Locations';
         $selectedCategoryName = 'Categories';
-        if(isset($selectedCity)) {
-            $selectedCityName = City::where('id', $selectedCity)->first()->$searchName;
+        if (!empty($selectedCity)) {
+            $city = City::find($selectedCity);
+            if ($city) {
+                $selectedCityName = $city->$searchName;
+            }
         }
-        if(isset($selectedCategory)) {
-            $selectedCategoryName = Category::where('mainId', $selectedCategory)->first()->name;
+        if (!empty($selectedCategory)) {
+            $cat = Category::where('mainId', $selectedCategory)->first();
+            if ($cat) $selectedCategoryName = $cat->name;
         }
 
         $categories = Category::where('mainId', 0)->get();
         $districts = Districts::all();
         $citys = Cities::all();
 
-        // Fetch urgent ads based on the selected category and package expiry date check
+        // Build base superAds query and apply category + location/city filters
         $superAdsQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
             ->where('ads_package', 6)
             ->where('status', 1)
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->whereNull('package_expire_at')
-                      ->orWhere('package_expire_at', '>=', now());
-            })
-            ->latest();
+                    ->orWhere('package_expire_at', '>=', now());
+            });
 
         if (!empty($selectedCategory)) {
             $superAdsQuery->where('cat_id', $selectedCategory);
         }
 
-        $superAds = $superAdsQuery->get();
+        // If city provided, narrow by city (and optionally by district if both provided)
+        if (!empty($selectedCity)) {
+            $superAdsQuery->where('sublocation', $selectedCity);
+            if (!empty($selectedLocation)) {
+                $superAdsQuery->where('location', $selectedLocation);
+            }
+        } elseif (!empty($selectedLocation)) {
+            // only district provided
+            $superAdsQuery->where('location', $selectedLocation);
+        }
 
+        $superAds = $superAdsQuery->latest()->get();
+
+        // Base query for all ads
         $baseQuery = Ads::with(['main_location', 'sub_location', 'category', 'subcategory'])
             ->where('status', 1)
             ->where(function ($query) {
@@ -78,13 +93,15 @@ class AdsController extends Controller
                     ->orWhere('package_expire_at', '>=', Carbon::now());
             });
 
-        // Apply filters dynamically
+        // Apply filters: prefer city filter when present, otherwise district
         $applyFilters = function ($query) use ($selectedLocation, $selectedCity, $selectedCategory, $selectedSubCategory, $searchTerm) {
-            if (!empty($selectedLocation)) {
-                $query->where(function ($q) use ($selectedLocation, $selectedCity) {
-                    $q->where('location', $selectedLocation)
-                    ->orWhere('sublocation', $selectedCity);
-                });
+            if (!empty($selectedCity)) {
+                $query->where('sublocation', $selectedCity);
+                if (!empty($selectedLocation)) {
+                    $query->where('location', $selectedLocation);
+                }
+            } elseif (!empty($selectedLocation)) {
+                $query->where('location', $selectedLocation);
             }
 
             if (!empty($selectedCategory)) {
@@ -98,7 +115,7 @@ class AdsController extends Controller
             if (!empty($searchTerm)) {
                 $query->where(function ($q) use ($searchTerm) {
                     $q->where('title', 'like', "%{$searchTerm}%")
-                    ->orWhere('description', 'like', "%{$searchTerm}%");
+                        ->orWhere('description', 'like', "%{$searchTerm}%");
                 });
             }
 
@@ -159,19 +176,17 @@ class AdsController extends Controller
 
         $banners = Banners::where('type', 1)->get();
 
-        $all_banners = \App\Models\Banners::where('type', 0)->get();
+        $all_banners = Banners::where('type', 0)->get();
 
-        return view('newFrontend.browse-ads', compact('categories', 'superAds','all_banners', 'ads', 'districts', 'banners', 'category','citys', 'selectedCityName', 'selectedCategoryName'));
+        return view('newFrontend.browse-ads', compact('categories', 'superAds', 'all_banners', 'ads', 'districts', 'banners', 'category', 'citys', 'selectedCityName', 'selectedCategoryName'));
     }
-
-
 
     public function show_details($adsId)
     {
         // Fetch the ad details with eager loading for the related data
         $ad = Ads::where('adsId', $adsId)
-                 ->with(['main_location', 'sub_location', 'user', 'category'])
-                 ->firstOrFail();
+            ->with(['main_location', 'sub_location', 'user', 'category'])
+            ->firstOrFail();
 
         // Manually fetch the brand and model based on the brand and model IDs
         $brand = BrandsModels::find($ad->brand);
@@ -188,64 +203,163 @@ class AdsController extends Controller
         $otherbanners = Banners::where('type', 1)->get();
 
         $relatedAds = Ads::where('adsId', '!=', $ad->adsId)
-                ->where(function ($query) use ($ad) {
-                    $query->where('cat_id', $ad->cat_id)
-                        ->where('sub_cat_id', $ad->sub_cat_id)
-                        ->where('location', $ad->location);
-                })
-                ->where(function ($query) {
-                    $query->whereNull('package_expire_at')
-                          ->orWhere('package_expire_at', '>=', Carbon::now());
-                })
-                ->latest()
-                ->take(12)
-                ->get();
-
-    if ($relatedAds->count() < 12) {
-        $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
             ->where(function ($query) use ($ad) {
                 $query->where('cat_id', $ad->cat_id)
-                    ->where('sub_cat_id', $ad->sub_cat_id);
-            })
-            ->latest()
-            ->take(12 - $relatedAds->count())
-            ->get();
-        $relatedAds = $relatedAds->merge($additionalAds);
-    }
-
-    if ($relatedAds->count() < 12) {
-        $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
-            ->where(function ($query) use ($ad) {
-                $query->where('cat_id', $ad->cat_id)
+                    ->where('sub_cat_id', $ad->sub_cat_id)
                     ->where('location', $ad->location);
             })
+            ->where(function ($query) {
+                $query->whereNull('package_expire_at')
+                    ->orWhere('package_expire_at', '>=', Carbon::now());
+            })
             ->latest()
-            ->take(12 - $relatedAds->count())
+            ->take(12)
             ->get();
-        $relatedAds = $relatedAds->merge($additionalAds);
-    }
 
-    if ($relatedAds->count() < 12) {
-        $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
-            ->where('cat_id', $ad->cat_id)
-            ->latest()
-            ->take(12 - $relatedAds->count())
-            ->get();
-        $relatedAds = $relatedAds->merge($additionalAds);
-    }
+        if ($relatedAds->count() < 12) {
+            $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
+                ->where(function ($query) use ($ad) {
+                    $query->where('cat_id', $ad->cat_id)
+                        ->where('sub_cat_id', $ad->sub_cat_id);
+                })
+                ->latest()
+                ->take(12 - $relatedAds->count())
+                ->get();
+            $relatedAds = $relatedAds->merge($additionalAds);
+        }
 
-    if ($relatedAds->count() < 12) {
-        $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
-            ->where('location', $ad->location)
-            ->latest()
-            ->take(12 - $relatedAds->count())
-            ->get();
-        $relatedAds = $relatedAds->merge($additionalAds);
-    }
+        if ($relatedAds->count() < 12) {
+            $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
+                ->where(function ($query) use ($ad) {
+                    $query->where('cat_id', $ad->cat_id)
+                        ->where('location', $ad->location);
+                })
+                ->latest()
+                ->take(12 - $relatedAds->count())
+                ->get();
+            $relatedAds = $relatedAds->merge($additionalAds);
+        }
+
+        if ($relatedAds->count() < 12) {
+            $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
+                ->where('cat_id', $ad->cat_id)
+                ->latest()
+                ->take(12 - $relatedAds->count())
+                ->get();
+            $relatedAds = $relatedAds->merge($additionalAds);
+        }
+
+        if ($relatedAds->count() < 12) {
+            $additionalAds = Ads::where('adsId', '!=', $ad->adsId)
+                ->where('location', $ad->location)
+                ->latest()
+                ->take(12 - $relatedAds->count())
+                ->get();
+            $relatedAds = $relatedAds->merge($additionalAds);
+        }
 
 
         return view('newFrontend.browse-ads-details', compact('ad', 'banners', 'mainImage', 'subImages', 'otherbanners', 'relatedAds', 'brand', 'model'));
     }
+
+    public function edit(Request $request, $adsId)
+{
+    $ad = Ads::findOrFail($adsId); // ✅ Get existing ad
+
+    $categories = Category::where('status', 1)->where('mainId', 0)->get();
+
+    $subcategories = Category::where('mainId', $ad->cat_id)->get();
+    $brands = BrandsModels::where('sub_cat_id', $ad->sub_cat_id)->where('brandsId', 0)->get();
+    $models = BrandsModels::where('brandsId', $ad->brand)->where('sub_cat_id', $ad->sub_cat_id)->get();
+
+    $formFields = FormField::where('main_category_id', $ad->cat_id)
+        ->where('subcategory_id', $ad->sub_cat_id)
+        ->get();
+
+    $packages = Package::with('packageTypes')
+        ->where('name', '!=', 'Jump Up')
+        ->where('id', '!=', 5)
+        ->get();
+
+    return view('newFrontend.edit-ad', [
+        'ad' => $ad,
+        'categories' => $categories,
+        'subcategories' => $subcategories,
+        'brands' => $brands,
+        'models' => $models,
+        'formFields' => $formFields,
+        'packages' => $packages,
+        'adsId' => $adsId,
+    ]);
+}
+
+
+
+    public function update(Request $request, $adsId)
+{
+    $ad = Ads::findOrFail($adsId);
+
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'price' => 'required|numeric|min:0',
+        'description' => 'nullable|string',
+        'brand' => 'nullable|exists:brands_models,id',
+        'model' => 'nullable|exists:brands_models,id',
+        'condition' => 'nullable|string|max:50',
+        'main_image' => 'nullable|image|max:10048',
+        'sub_images.*' => 'nullable|image|max:10048',
+        'price_type' => 'nullable|string|max:50',
+        'post_type' => 'nullable|string|max:50',
+        'boosting_option' => 'nullable|integer',
+        'package_type' => 'nullable|integer',
+    ]);
+
+    $ad->title = $request->title;
+    $ad->price = $request->price;
+    $ad->description = $request->description;
+    $ad->brand = $request->brand;
+    $ad->model = $request->model;
+    $ad->condition = $request->condition;
+    $ad->price_type = $request->price_type;
+    $ad->post_type = $request->post_type;
+    $ad->ads_package = $request->boosting_option;
+    $ad->package_type = $request->package_type;
+
+    if ($request->hasFile('main_image')) {
+        if ($ad->mainImage && Storage::disk('public')->exists($ad->mainImage)) {
+            Storage::disk('public')->delete($ad->mainImage);
+        }
+
+        $mainImagePath = $request->file('main_image')->store('ads', 'public');
+        $ad->mainImage = $mainImagePath;
+    }
+
+    if ($request->hasFile('sub_images')) {
+        $subImages = [];
+
+        if ($ad->subImage) {
+            foreach (json_decode($ad->subImage, true) as $oldImg) {
+                if (Storage::disk('public')->exists($oldImg)) {
+                    Storage::disk('public')->delete($oldImg);
+                }
+            }
+        }
+
+        foreach ($request->file('sub_images') as $file) {
+            $path = $file->store('ads', 'public');
+            $subImages[] = $path;
+        }
+
+        $ad->subImage = json_encode($subImages);
+    }
+
+    $ad->save();
+
+    return redirect()
+        ->route('ads.details', $adsId)
+        ->with('success', 'Ad updated successfully!');
+}
+
 
 
 
@@ -255,7 +369,7 @@ class AdsController extends Controller
         $ad = Ads::findOrFail($adsId);
         $packages = Package::all(); // Fetch all packages
         $packageTypes = PackageType::all(); // Fetch all package types
-        $invoiceId = "YKAD".date('YmsHsi');
+        $invoiceId = "YKAD" . date('YmsHsi');
 
         session(['invoiceId' => $invoiceId]);
 
@@ -263,7 +377,7 @@ class AdsController extends Controller
 
 
 
-        return view('newFrontend.ads_boost_plans', compact('ad', 'mainImage', 'packages', 'packageTypes','invoiceId'));
+        return view('newFrontend.ads_boost_plans', compact('ad', 'mainImage', 'packages', 'packageTypes', 'invoiceId'));
     }
 
 
@@ -279,8 +393,8 @@ class AdsController extends Controller
         }
 
         $ads = Ads::with(['category', 'subcategory', 'main_location'])
-                ->where(function ($q) use ($query) {
-                    $q->where('title', 'like', "%$query%")
+            ->where(function ($q) use ($query) {
+                $q->where('title', 'like', "%$query%")
                     ->orWhere('description', 'like', "%$query%")
                     ->orWhereHas('category', function ($q) use ($query) {
                         $q->where('name', 'like', "%$query%");
@@ -288,9 +402,9 @@ class AdsController extends Controller
                     ->orWhereHas('subcategory', function ($q) use ($query) {
                         $q->where('name', 'like', "%$query%");
                     });
-                })
-                ->where('status', '1') // this now applies to the whole group
-                ->get();
+            })
+            ->where('status', '1') // this now applies to the whole group
+            ->get();
 
 
         return view('newFrontend.search-results', compact('ads')); // Adjust the view path if necessary
@@ -566,7 +680,6 @@ class AdsController extends Controller
                     'package_expire_at' => $ad->package_expire_at
                 ]
             ], 201);
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('API Validation Error', [
                 'errors' => $e->errors(),
@@ -578,7 +691,6 @@ class AdsController extends Controller
                 'message' => 'Validation failed',
                 'errors' => $e->errors()
             ], 422);
-
         } catch (Exception $e) {
             Log::error('API Error in store method', [
                 'error' => $e->getMessage(),
@@ -594,7 +706,7 @@ class AdsController extends Controller
         }
     }
 
-// Helper method to save base64 image
+    // Helper method to save base64 image
     private function saveBase64Image($base64String, $path)
     {
         try {
@@ -618,14 +730,13 @@ class AdsController extends Controller
             Storage::disk('public')->put($fullPath, $imageData);
 
             return $fullPath;
-
         } catch (Exception $e) {
             Log::error('Error saving base64 image', ['error' => $e->getMessage()]);
             return null;
         }
     }
 
-// Helper method to save image from URL
+    // Helper method to save image from URL
     private function saveImageFromUrl($imageUrl, $path)
     {
         try {
@@ -642,7 +753,6 @@ class AdsController extends Controller
             Storage::disk('public')->put($fullPath, $imageData);
 
             return $fullPath;
-
         } catch (Exception $e) {
             Log::error('Error saving image from URL', ['error' => $e->getMessage(), 'url' => $imageUrl]);
             return null;

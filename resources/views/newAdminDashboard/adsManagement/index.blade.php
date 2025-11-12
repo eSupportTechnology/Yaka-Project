@@ -130,6 +130,10 @@
                                                 <i class="fas fa-eye"></i>
                                             </a>
 
+                                            <a href="{{ route('ads.edit', [$ads->adsId]) }}" class="btn btn-warning btn-sm me-2">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+
                                             @if($ads->status == 0)
                                                 <a href="javascript:void(0);"
                                                    class="btn btn-danger btn-sm"

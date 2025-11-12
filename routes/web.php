@@ -85,6 +85,9 @@ Route::get('/ad_post_criteria', [HomeController::class, 'add_post'])->name('add_
 
 Route::get('/browse_ads', [AdsController::class, 'browseAds'])->name('browse-ads');
 Route::get('/browse_ads_details/{adsId}', [AdsController::class, 'show_details'])->name('ads.details');
+Route::get('/ads/{adsId}/edit', [AdsController::class, 'edit'])->name('ads.edit');
+Route::put('/ads/{adsId}', [AdsController::class, 'update'])->name('ads.update');
+
 
 // Mobile number verify
 Route::get('/verify-mobile', [CustomAuthController::class, 'verifyMobile'])->name('verify-mobile');
