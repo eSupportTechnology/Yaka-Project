@@ -45,44 +45,52 @@ class MembershipPackagesController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        // Validate request
-        $request->validate([
-            'price' => 'required|numeric|min:0',
-            'promotion_voucher_cost' => 'nullable|numeric|min:0',
-            'ads_per_month' => 'required|integer|min:1',
-            'valid_month' => 'required|integer|min:1',
-        ]);
+    // Validate request
+    $request->validate([
+        'price' => 'required|numeric|min:0',
+        'promotion_voucher_cost' => 'nullable|numeric|min:0',
+        'ads_per_month' => 'required|integer|min:1',
+        'valid_month' => 'required|integer|min:1',
+        'business_name' => 'required|string|max:255',
+        'business_email' => 'required|email|max:255',
+        'business_phone' => 'required|string|max:20',
+    ]);
 
-        // Check if user already has an active membership
-        $activeMembership = MembershipPackage::where('user_id', $user->id)
-            ->where('expiry_date', '>', now()) // not expired yet
-            ->first();
+    // Check if user already has an active membership
+    $activeMembership = MembershipPackage::where('user_id', $user->id)
+        ->where('expiry_date', '>', now()) // not expired yet
+        ->first();
 
-        if ($activeMembership) {
-            return redirect()->back()->with('error', 'You already have an active membership. You can purchase another after it expires.');
-        }
-
-        // Calculate dates
-        $startDate = now();
-        $expiryDate = now()->addMonths((int) $request->valid_month);
-
-        // Create membership package
-        MembershipPackage::create([
-            'user_id' => $user->id,
-            'start_date' => $startDate,
-            'expiry_date' => $expiryDate,
-            'ads_per_month' => $request->ads_per_month,
-            'voucher_code' => strtoupper(Str::random(6)),
-            'price' => $request->price,
-            'promotion_voucher_cost' => $request->promotion_voucher_cost,
-            'valid_month' => $request->valid_month,
-        ]);
-
-        return redirect()->back()->with('success', 'Membership purchased successfully!');
+    if ($activeMembership) {
+        return redirect()->back()->with('error', 'You already have an active membership. You can purchase another after it expires.');
     }
+
+    // Calculate dates
+    $startDate = now();
+    $expiryDate = now()->addMonths((int) $request->valid_month);
+
+    // Create membership package
+    $membership = MembershipPackage::create([
+        'user_id' => $user->id,
+        'start_date' => $startDate,
+        'expiry_date' => $expiryDate,
+        'ads_per_month' => $request->ads_per_month,
+        'voucher_code' => strtoupper(Str::random(6)),
+        'price' => $request->price,
+        'promotion_voucher_cost' => $request->promotion_voucher_cost,
+        'valid_month' => $request->valid_month,
+        'business_name' => $request->business_name,
+        'business_email' => $request->business_email,
+        'business_phone' => $request->business_phone,
+    ]);
+
+    // Redirect to initPayment with membership id
+    return redirect()->route('membership.payment.init', ['membershipId' => $membership->id]);
+}
+
 
     public function initPayment(Request $request)
     {
