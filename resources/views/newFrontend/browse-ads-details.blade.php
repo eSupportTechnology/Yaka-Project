@@ -199,22 +199,27 @@
                                 </span>
                             </h3>
 
-                            <div style="background-color: #f8d7da; padding: 15px; border-radius: 5px; margin: 10px 0; width: 60%; max-width: 400px;">
+                            <div
+                                style="background-color: #f8d7da; padding: 15px; border-radius: 5px; margin: 10px 0; width: 60%; max-width: 400px;">
                                 @if ($brand)
-                                    <p class="mb-2" style="color: #721c24;"><strong> @lang('messages.Brand'):</strong> {{ $brand->name }}</p>
+                                    <p class="mb-2" style="color: #721c24;"><strong> @lang('messages.Brand'):</strong>
+                                        {{ $brand->name }}</p>
                                 @endif
 
                                 @if ($model)
-                                    <p class="mb-2" style="color: #721c24;"><strong> @lang('messages.Model'):</strong> {{ $model->name }}</p>
+                                    <p class="mb-2" style="color: #721c24;"><strong> @lang('messages.Model'):</strong>
+                                        {{ $model->name }}</p>
                                 @endif
 
                                 @if ($ad->condition)
-                                    <p class="mb-2" style="color: #721c24;"><strong> @lang('messages.Condition'):</strong> {{ $ad->condition }}</p>
+                                    <p class="mb-2" style="color: #721c24;"><strong> @lang('messages.Condition'):</strong>
+                                        {{ $ad->condition }}</p>
                                 @endif
 
                                 @foreach ($ad->adDetail as $detail)
                                     @if ($detail->value)
-                                        <p class="mb-2" style="color: #721c24;"><strong>{{ $detail->additional_info }}:</strong>
+                                        <p class="mb-2" style="color: #721c24;">
+                                            <strong>{{ $detail->additional_info }}:</strong>
                                             {{ $detail->value }}</p>
                                     @endif
                                 @endforeach
@@ -292,30 +297,63 @@
                                     <div class="text-white icon-circle bg-success">
                                         <i class="fab fa-whatsapp"></i>
                                     </div>
+
                                     <strong class="w-45" style="padding-right: 5px">@lang('messages.Phone'):</strong>
 
-                                    @if (!empty($ad->user->phone_number))
-                                        @php
-                                            // Remove non-digits
-                                            $rawNumber = preg_replace('/\D/', '', $ad->user->phone_number);
+                                    @php
+                                        // Helper function inside Blade
+                                        function formatWa($number)
+                                        {
+                                            if (empty($number)) {
+                                                return null;
+                                            }
 
-                                            // If number starts with 0, remove it
-                                            if (substr($rawNumber, 0, 1) === '0') {
-                                                $rawNumber = substr($rawNumber, 1);
+                                            // Keep only digits
+                                            $num = preg_replace('/\D/', '', $number);
+
+                                            // Remove starting zero
+                                            if (substr($num, 0, 1) === '0') {
+                                                $num = substr($num, 1);
                                             }
 
                                             // Add country code +94
-                                            $waNumber = '94' . $rawNumber;
-                                        @endphp
+                                            return '94' . $num;
+                                        }
 
-                                        <a href="https://wa.me/{{ $waNumber }}" target="_blank"
-                                            class="flex-grow-1 text-wrap text-success">
-                                            {{ $ad->user->phone_number }}
-                                        </a>
-                                    @else
-                                        <span class="flex-grow-1 text-wrap">N/A</span>
-                                    @endif
+                                        $wa1 = formatWa($ad->user->phone_number);
+                                        $wa2 = formatWa($ad->mobile1);
+                                        $wa3 = formatWa($ad->mobile2);
+                                    @endphp
+
+                                    <div class="flex-grow-1 text-wrap">
+                                        {{-- Phone Number 1 --}}
+                                        @if ($wa1)
+                                            <a href="https://wa.me/{{ $wa1 }}" target="_blank"
+                                                class="text-success">
+                                                {{ $ad->user->phone_number }}
+                                            </a>
+                                        @else
+                                            N/A
+                                        @endif
+
+                                        {{-- Phone Number 2 --}}
+                                        @if ($wa2)
+                                            / <a href="https://wa.me/{{ $wa2 }}" target="_blank"
+                                                class="text-success">
+                                                {{ $ad->mobile1 }}
+                                            </a>
+                                        @endif
+
+                                        {{-- Phone Number 3 --}}
+                                        @if ($wa3)
+                                            / <a href="https://wa.me/{{ $wa3 }}" target="_blank"
+                                                class="text-success">
+                                                {{ $ad->mobile2 }}
+                                            </a>
+                                        @endif
+                                    </div>
                                 </div>
+
 
                             </div>
 

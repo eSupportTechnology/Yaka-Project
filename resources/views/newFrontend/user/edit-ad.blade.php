@@ -126,7 +126,11 @@
                             </div>
                         @endif
 
-                        <form id="adForm" action="{{ route('ads.update', $adsId) }}" method="POST"
+                        @php
+        $cat_id = request()->get('cat_id');
+    @endphp
+
+                        <form id="adForm" action="{{ route('ads.update', $adsId) }}?cat_id={{ $cat_id }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
@@ -219,6 +223,29 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="mb-3 col-lg-12">
+                                            <div class="row">
+                                                <div class="mb-3 col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label text-dark"><strong>@lang('messages.Contact')<i
+                                                                    class="text-danger">*</i></strong></label>
+                                                        <input type="tel" name="mobile1" class="form-control"
+                                                            pattern="[0-9]{10}" value="{{ old('mobile1', $ad->mobile1) }}"
+                                                            placeholder="Enter 10-digit mobile number">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label text-dark"><strong>@lang('messages.Contact')<i
+                                                                    class="text-danger">*</i></strong></label>
+                                                        <input type="tel" name="mobile2" class="form-control"
+                                                            pattern="[0-9]{10}" value="{{ old('mobile2', $ad->mobile2) }}"
+                                                            placeholder="Enter 10-digit mobile number">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                     <div class="mb-3 col-lg-12">
                                         <div class="form-group">
@@ -379,6 +406,59 @@
 
                                     </div>
                                 </div>
+
+                                @if (request()->cat_id == 20)
+                                        <!-- Required Work Experience -->
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.Address')</strong>
+                                                </label>
+                                                <input type="text" name="address" class="form-control" value="{{ old('address', $ad->address) }}"
+                                                     placeholder="Enter address">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.Bed Room')</strong>
+                                                </label>
+                                                <input type="number" name="bed_room" class="form-control" value="{{ old('bed_room', $ad->bed_room) }}"
+                                                    min="0" placeholder="0">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.Bath Room')</strong>
+                                                </label>
+                                                <input type="number" name="bath_room" class="form-control" value="{{ old('bath_room', $ad->bath_room) }}"
+                                                    min="0" placeholder="0">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.House Size (sqft)')</strong>
+                                                </label>
+                                                <input type="text" name="house_size" class="form-control" value="{{ old('house_size', $ad->house_size) }}"
+                                                    min="0" placeholder="0 sqft">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.Land Size (purches)')</strong>
+                                                </label>
+                                                <input type="text" name="land_size" class="form-control" value="{{ old('land_size', $ad->land_size) }}"
+                                                    min="0" placeholder="0 purches">
+                                            </div>
+                                        </div>
+                                    @endif
 
                                 @if (request()->cat_id != 103)
                                     <!-- category Information -->

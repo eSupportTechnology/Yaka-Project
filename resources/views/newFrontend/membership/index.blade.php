@@ -370,7 +370,7 @@
                                             1</div>
                                         <div class="benefit-content flex-grow-1">
                                             <p class="mb-0"
-                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500; margin-left: 10px;">
                                                 @lang('messages.your own stall on yaka.lk')
                                             </p>
                                         </div>
@@ -387,7 +387,7 @@
                                             2</div>
                                         <div class="benefit-content flex-grow-1">
                                             <p class="mb-0"
-                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500; margin-left: 10px;">
                                                 @lang('messages.badges') <span style="font-weight: 700;">@lang('messages.member')/
                                                     @lang('messages.verified')</span>
                                             </p>
@@ -431,7 +431,7 @@
                                             3</div>
                                         <div class="benefit-content flex-grow-1">
                                             <p class="mb-0"
-                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500; margin-left: 10px;">
                                                 @lang('messages.get reviews for your stall')
                                             </p>
                                         </div>
@@ -448,7 +448,7 @@
                                             4</div>
                                         <div class="benefit-content flex-grow-1">
                                             <p class="mb-0"
-                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500; margin-left: 10px;">
                                                 @lang('messages.free promo codes')
                                             </p>
                                         </div>
@@ -465,7 +465,7 @@
                                             5</div>
                                         <div class="benefit-content flex-grow-1">
                                             <p class="mb-0"
-                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500; margin-left: 10px;">
                                                 @lang('messages.add your shop location')
                                             </p>
                                         </div>
@@ -493,7 +493,7 @@
                                             6</div>
                                         <div class="benefit-content flex-grow-1">
                                             <p class="mb-0"
-                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500; margin-left: 10px;">
                                                 @lang('messages.you can see statistics')
                                             </p>
                                         </div>
@@ -510,7 +510,7 @@
                                             7</div>
                                         <div class="benefit-content flex-grow-1">
                                             <p class="mb-0"
-                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500;">
+                                                style="color: #2c3e50; font-size: 1.1rem; font-weight: 500; margin-left: 10px;">
                                                 @lang('messages.customer support')
                                             </p>
                                         </div>

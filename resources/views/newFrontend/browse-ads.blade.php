@@ -59,6 +59,7 @@
 
         .banner-area {
             position: relative;
+            top: 10rem;
             left: 1rem;
             display: flex;
             justify-content: right;
@@ -502,8 +503,9 @@
                 position: sticky;
                 align-self: flex-start;
             }
-
-            ,
+            .item-shorting {
+                width: 10rem;
+            }
             .banner-img {
                 width: 400px !important;
                 height: 600px !important;
@@ -520,8 +522,8 @@
             }
 
             /* .screen-info::after {
-                        content: " - 2700px+";
-                    } */
+                            content: " - 2700px+";
+                        } */
         }
 
         /* For screens 1700px to 2699px */
@@ -587,6 +589,9 @@
                 grid-template-columns: repeat(3, 1fr);
                 gap: 25px;
             }
+            .item-shorting {
+                width: 150%;
+            }
 
             #adsCarousel .carousel-inner {
                 height: 500px;
@@ -622,6 +627,9 @@
             .ads-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 25px;
+            }
+            .item-shorting {
+                width: 150%;
             }
 
             #adsCarousel .carousel-inner {
@@ -662,6 +670,9 @@
                 grid-template-columns: repeat(3, 1fr);
                 gap: 25px;
             }
+            .item-shorting {
+                width: 150%;
+            }
 
             #adsCarousel .carousel-inner {
                 height: 500px;
@@ -695,6 +706,9 @@
 
             .ads-grid {
                 grid-template-columns: repeat(3, 1fr);
+            }
+            .item-shorting {
+                width: 135%;
             }
         }
 
@@ -731,6 +745,10 @@
             .ads-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 18px;
+            }
+
+            .item-shorting {
+                width: 135%;
             }
 
             #adsCarousel .carousel-inner {
@@ -823,6 +841,10 @@
             .sidebar-search,
             .sidebar-category {
                 display: none;
+            }
+
+            .item-shorting {
+                width: 135%;
             }
 
             #adsCarousel .carousel-inner {
@@ -1564,18 +1586,19 @@
                                 <div id="location-filter">
                                     <!-- District Search -->
                                     <div class="district-section form-group" style="position: relative;">
-    <input class="form-control" type="text" id="district-search"
-        value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter"
-        style="padding-left: 35px; position: relative;">
-    <i class="fas fa-map-marker-alt"
-        style="position: absolute; left: 12px; top: 12px; color: #b30000; z-index: 999; pointer-events: none;"></i>
-    <div id="district-results" class="results-container"></div>
+                                        <input class="form-control" type="text" id="district-search"
+                                            value="{{ $selectedCityName ?? '' }}" placeholder="Type 3 Letters to Filter"
+                                            style="padding-left: 35px; position: relative;">
+                                        <i class="fas fa-map-marker-alt"
+                                            style="position: absolute; left: 12px; top: 12px; color: #b30000; z-index: 999; pointer-events: none;"></i>
+                                        <div id="district-results" class="results-container"></div>
 
-    <!-- new: apply district button (hidden until a district selected) -->
-    <div style="margin-top:8px;">
-        <button id="apply-district" class="btn btn-sm btn-primary" style="display:none;">Apply District</button>
-    </div>
-</div>
+                                        <!-- new: apply district button (hidden until a district selected) -->
+                                        <div style="margin-top:8px;">
+                                            <button id="apply-district" class="btn btn-sm btn-primary"
+                                                style="display:none;">Apply District</button>
+                                        </div>
+                                    </div>
 
                                     <!-- City Selection (Hidden Initially) -->
                                     <div class="city-section" style="display: none;">
@@ -1678,8 +1701,8 @@
                                     <input type="hidden" name="city" id="cityId-main">
                                     <div class="form-group" style="margin: 0;">
                                         <input type="search" name="search-field"
-                                            style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 25px; width: 220px;"
-                                            placeholder="@lang('messages.Search Keyword')..."
+                                            style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 25px; width: 24rem;"
+                                            placeholder="@lang('messages.Type anything you are looking')..."
                                             value="{{ request()->input('search-field') }}" oninput="this.form.submit()">
                                     </div>
                                 </form>
@@ -1930,12 +1953,12 @@
         });
     </script>
     <script>
-    var myCarousel = document.querySelector('#adsCarousels');
+        var myCarousel = document.querySelector('#adsCarousels');
         var carousel = new bootstrap.Carousel(myCarousel, {
             interval: 2000, // Set interval for auto sliding (5 seconds)
             ride: 'carousel' // Enable auto sliding
         });
-</script>
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -2008,145 +2031,148 @@
         });
     </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // store last selected district id so city click can send both
-    let selectedDistrictId = null;
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // store last selected district id so city click can send both
+            let selectedDistrictId = null;
 
-    function submitLocationForm(locationId = '', cityId = '') {
-        const locationInput = document.getElementById('location-main');
-        const cityInput = document.getElementById('cityId-main');
-        const searchForm = document.getElementById('search-form-main');
+            function submitLocationForm(locationId = '', cityId = '') {
+                const locationInput = document.getElementById('location-main');
+                const cityInput = document.getElementById('cityId-main');
+                const searchForm = document.getElementById('search-form-main');
 
-        if (locationInput) locationInput.value = locationId || '';
-        if (cityInput) cityInput.value = cityId || '';
+                if (locationInput) locationInput.value = locationId || '';
+                if (cityInput) cityInput.value = cityId || '';
 
-        // close mobile modal if open
-        const filterModal = document.getElementById('filterModal');
-        if (filterModal) filterModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+                // close mobile modal if open
+                const filterModal = document.getElementById('filterModal');
+                if (filterModal) filterModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
 
-        // submit form (preserves other GET inputs like category, search-field)
-        if (searchForm) {
-            // remove page param to reset pagination
-            const pageInput = searchForm.querySelector('input[name="page"]');
-            if (pageInput) pageInput.remove();
-            searchForm.submit();
-        } else {
-            // fallback: rebuild url
-            const url = new URL(window.location.href);
-            if (locationId) url.searchParams.set('location', locationId);
-            else url.searchParams.delete('location');
-            if (cityId) url.searchParams.set('city', cityId);
-            else url.searchParams.delete('city');
-            url.searchParams.delete('page');
-            window.location.href = url.toString();
-        }
-    }
-
-    // when a district is clicked: DON'T submit immediately.
-    // instead load its cities and show city-section, allow user to pick city or apply district-only.
-    $(document).on('click', '.district-item', function (e) {
-        e.preventDefault();
-
-        const districtId = $(this).data('id');
-        const districtName = $(this).data('name') || $(this).text().trim();
-
-        selectedDistrictId = districtId;
-
-        // update visible search fields
-        $('#district-search').val(districtName);
-        if ($('#district-search-mob').length) $('#district-search-mob').val(districtName);
-
-        // show apply button so user can submit district-only if desired
-        $('#apply-district').show();
-
-        // fetch cities for this district (API route required, see note)
-        // expected JSON: [{id:1, name_en:'Buttala', district_id: X}, ...]
-        $('#city-results').empty();
-        $('#city-results-mob').empty();
-
-        fetch(`/api/districts/${districtId}/cities`)
-            .then(res => {
-                if (!res.ok) throw new Error('Network response not ok');
-                return res.json();
-            })
-            .then(data => {
-                if (!Array.isArray(data) || data.length === 0) {
-                    $('#city-results').html('<div class="city-item">No cities found</div>');
-                    $('#city-results-mob').html('<div class="city-item">No cities found</div>');
+                // submit form (preserves other GET inputs like category, search-field)
+                if (searchForm) {
+                    // remove page param to reset pagination
+                    const pageInput = searchForm.querySelector('input[name="page"]');
+                    if (pageInput) pageInput.remove();
+                    searchForm.submit();
                 } else {
-                    data.forEach(city => {
-                        const cityEl = $(`
-                            <div class="city-item" data-id="${city.id}" data-name="${(city.name_en||city.name)}" data-district-id="${districtId}">
-                                ${city.name_en || city.name}
-                            </div>
-                        `);
-                        $('#city-results').append(cityEl);
-                        // mobile
-                        const cityElMob = $(`
-                            <div class="city-item" data-id="${city.id}" data-name="${(city.name_en||city.name)}" data-district-id="${districtId}">
-                                ${city.name_en || city.name}
-                            </div>
-                        `);
-                        $('#city-results-mob').append(cityElMob);
-                    });
+                    // fallback: rebuild url
+                    const url = new URL(window.location.href);
+                    if (locationId) url.searchParams.set('location', locationId);
+                    else url.searchParams.delete('location');
+                    if (cityId) url.searchParams.set('city', cityId);
+                    else url.searchParams.delete('city');
+                    url.searchParams.delete('page');
+                    window.location.href = url.toString();
                 }
+            }
 
-                // show city section and hide raw district results to guide user
-                $('.city-section').show();
-                $('#district-results').hide();
-                $('#district-results-mob').hide();
-            })
-            .catch(err => {
-                console.error('Failed to load cities:', err);
-                // still show city section but with message
-                $('#city-results').html('<div class="city-item">Failed to load cities</div>');
-                $('#city-results-mob').html('<div class="city-item">Failed to load cities</div>');
-                $('.city-section').show();
-                $('#district-results').hide();
-                $('#district-results-mob').hide();
+            // when a district is clicked: DON'T submit immediately.
+            // instead load its cities and show city-section, allow user to pick city or apply district-only.
+            $(document).on('click', '.district-item', function(e) {
+                e.preventDefault();
+
+                const districtId = $(this).data('id');
+                const districtName = $(this).data('name') || $(this).text().trim();
+
+                selectedDistrictId = districtId;
+
+                // update visible search fields
+                $('#district-search').val(districtName);
+                if ($('#district-search-mob').length) $('#district-search-mob').val(districtName);
+
+                // show apply button so user can submit district-only if desired
+                $('#apply-district').show();
+
+                // fetch cities for this district (API route required, see note)
+                // expected JSON: [{id:1, name_en:'Buttala', district_id: X}, ...]
+                $('#city-results').empty();
+                $('#city-results-mob').empty();
+
+                fetch(`/api/districts/${districtId}/cities`)
+                    .then(res => {
+                        if (!res.ok) throw new Error('Network response not ok');
+                        return res.json();
+                    })
+                    .then(data => {
+                        if (!Array.isArray(data) || data.length === 0) {
+                            $('#city-results').html('<div class="city-item">No cities found</div>');
+                            $('#city-results-mob').html('<div class="city-item">No cities found</div>');
+                        } else {
+                            data.forEach(city => {
+                                const cityEl = $(`
+                            <div class="city-item" data-id="${city.id}" data-name="${(city.name_en||city.name)}" data-district-id="${districtId}">
+                                ${city.name_en || city.name}
+                            </div>
+                        `);
+                                $('#city-results').append(cityEl);
+                                // mobile
+                                const cityElMob = $(`
+                            <div class="city-item" data-id="${city.id}" data-name="${(city.name_en||city.name)}" data-district-id="${districtId}">
+                                ${city.name_en || city.name}
+                            </div>
+                        `);
+                                $('#city-results-mob').append(cityElMob);
+                            });
+                        }
+
+                        // show city section and hide raw district results to guide user
+                        $('.city-section').show();
+                        $('#district-results').hide();
+                        $('#district-results-mob').hide();
+                    })
+                    .catch(err => {
+                        console.error('Failed to load cities:', err);
+                        // still show city section but with message
+                        $('#city-results').html('<div class="city-item">Failed to load cities</div>');
+                        $('#city-results-mob').html(
+                            '<div class="city-item">Failed to load cities</div>');
+                        $('.city-section').show();
+                        $('#district-results').hide();
+                        $('#district-results-mob').hide();
+                    });
             });
-    });
 
-    // back button to go back to district list
-    $(document).on('click', '.back-button', function () {
-        $('.city-section').hide();
-        $('#district-results').show();
-        $('#district-results-mob').show();
-        $('#apply-district').hide();
-    });
+            // back button to go back to district list
+            $(document).on('click', '.back-button', function() {
+                $('.city-section').hide();
+                $('#district-results').show();
+                $('#district-results-mob').show();
+                $('#apply-district').hide();
+            });
 
-    // apply district-only (submit with location only)
-    $(document).on('click', '#apply-district', function () {
-        if (!selectedDistrictId) return;
-        submitLocationForm(selectedDistrictId, '');
-    });
+            // apply district-only (submit with location only)
+            $(document).on('click', '#apply-district', function() {
+                if (!selectedDistrictId) return;
+                submitLocationForm(selectedDistrictId, '');
+            });
 
-    // when city is clicked -> submit both district and city (page will refresh as desired)
-    $(document).on('click', '.city-item', function () {
-        const cityId = $(this).data('id');
-        const cityName = $(this).data('name') || $(this).text().trim();
-        const districtId = $(this).data('district-id') || selectedDistrictId || '';
+            // when city is clicked -> submit both district and city (page will refresh as desired)
+            $(document).on('click', '.city-item', function() {
+                const cityId = $(this).data('id');
+                const cityName = $(this).data('name') || $(this).text().trim();
+                const districtId = $(this).data('district-id') || selectedDistrictId || '';
 
-        // update visible field(s)
-        $('#district-search').val(cityName);
-        if ($('#district-search-mob').length) $('#district-search-mob').val(cityName);
+                // update visible field(s)
+                $('#district-search').val(cityName);
+                if ($('#district-search-mob').length) $('#district-search-mob').val(cityName);
 
-        submitLocationForm(districtId, cityId);
-    });
+                submitLocationForm(districtId, cityId);
+            });
 
-    // optional: close city section if user clicks outside (keeps behavior consistent)
-    $(document).on('click', function (e) {
-        if (!$(e.target).closest('#location-filter, .city-section, .district-section, #district-results, #city-results').length) {
-            // hide dropdown lists but do not clear selectedDistrictId
-            $('#district-results').hide();
-            $('#city-results').hide();
-            $('#district-results-mob').hide();
-            $('#city-results-mob').hide();
-        }
-    });
-});
-</script>
+            // optional: close city section if user clicks outside (keeps behavior consistent)
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest(
+                        '#location-filter, .city-section, .district-section, #district-results, #city-results'
+                        ).length) {
+                    // hide dropdown lists but do not clear selectedDistrictId
+                    $('#district-results').hide();
+                    $('#city-results').hide();
+                    $('#district-results-mob').hide();
+                    $('#city-results-mob').hide();
+                }
+            });
+        });
+    </script>
 
 @endsection

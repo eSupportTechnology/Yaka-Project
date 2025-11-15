@@ -85,8 +85,7 @@ Route::get('/ad_post_criteria', [HomeController::class, 'add_post'])->name('add_
 
 Route::get('/browse_ads', [AdsController::class, 'browseAds'])->name('browse-ads');
 Route::get('/browse_ads_details/{adsId}', [AdsController::class, 'show_details'])->name('ads.details');
-Route::get('/ads/{adsId}/edit', [AdsController::class, 'edit'])->name('ads.edit');
-Route::put('/ads/{adsId}', [AdsController::class, 'update'])->name('ads.update');
+
 
 
 // Mobile number verify
@@ -113,7 +112,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user/my_ads', [userDashboardController::class, 'my_ads'])->name('user.my_ads');
 
-
+Route::get('/ads/{adsId}/edit/{cat_id?}', [userDashboardController::class, 'edit'])->name('ads.edit');
+Route::put('/ads/{adsId}', [userDashboardController::class, 'update'])->name('ads.update');
 
     Route::delete('/ads/{adsId}/delete', [userDashboardController::class, 'destroy'])->name('ads.delete');
 
