@@ -134,7 +134,7 @@ return [
     'free_ad_posting' => 'Free ad posting is available in every category. Contact us to become a Yaka.lk subscriber and own your stall today.',
 
     'Search' => 'Search',
-    'Search Keyword' => 'Search Keyword',
+    'Type anything you are looking' => 'Type anything you are looking',
     'Select Location' => 'Select Location',
 
     'Buy, Sell, Rent or Find Anything in Sri Lanka' => 'Buy, Sell, Rent or Find Anything in Sri Lanka',

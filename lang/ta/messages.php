@@ -140,7 +140,7 @@ return [
     'Free Ads'=>'இலவச விளம்பரங்கள்',
 
     'Search' => 'தேடல்',
-    'Search Keyword' => 'தேடல் முக்கிய சொல்',
+    'Type anything you are looking' => 'கண்டுபிடிக்கவும் எதையாவது தட்டச்சு செய்யவும்',
     'Select Location' => 'இருப்பிடம்',
 
     'Buy, Sell, Rent or Find Anything in Sri Lanka' => ' இலங்கையில் வாங்கவும், விற்கவும், வாடகைக்கு விடவும் அல்லது ஏதேனும் கண்டுபிடிக்கவும்',

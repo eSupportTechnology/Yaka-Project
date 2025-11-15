@@ -166,6 +166,8 @@ class UserAdsController extends Controller
             $validationRules = array_merge([
                 'title'         => 'required|string|max:255',
                 'price'         => 'required|numeric',
+                'mobile1'       => 'nullable',
+                'mobile2'       => 'nullable',
                 'description'   => 'required|string',
                 'main_image'    => 'required|image|mimes:jpeg,png,jpg,gif,bmp,svg,webp,tiff|max:20480',
                 'sub_images'    => 'nullable|array',
@@ -175,6 +177,11 @@ class UserAdsController extends Controller
                 'condition'     => 'nullable|in:New,Used',
                 'pricing_type'  => 'nullable|in:Fixed,Negotiable,Daily,Weekly,Monthly,Yearly',
                 'post_type'     => 'nullable|in:Booking,Sale,Rent',
+                'address'       => 'nullable|string|max:255',
+                'bed_room'      => 'nullable|integer|min:0',
+                'bath_room'     => 'nullable|integer|min:0',
+                'house_size'    => 'nullable|string|max:255',
+                'land_size'     => 'nullable|string|max:255',
                 'boosting_option' => [
                     'required',
                     function ($attribute, $value, $fail) {
@@ -310,6 +317,8 @@ class UserAdsController extends Controller
                 'created_by_staff_id' => $createdByStaffId,
                 'title' => $validated['title'],
                 'price' => $validated['price'],
+                'mobile1' =>$validated['mobile1'],
+                'mobile2' =>$validated['mobile2'],
                 'description' => $validated['description'],
                 'mainImage' => $mainImagePath,
                 'subImage' => json_encode($subImagesPaths),
@@ -332,6 +341,11 @@ class UserAdsController extends Controller
                 'mobile_number' => $request->input('mobile_number'),
                 'rotation_position' => -1,
                 'last_rotated_at' => now(),
+                'address' =>$validated['address'],
+                'bed_room' =>$validated['bed_room'],
+                'bath_room' =>$validated['bath_room'],
+                'house_size' =>$validated['house_size'],
+                'land_size' =>$validated['land_size'],
             ]);
 
             foreach ($formFields as $field) {
@@ -469,6 +483,8 @@ class UserAdsController extends Controller
                 'ad_id' => $ad->adsId,
                 'title' => $ad->title,
                 'price' => $ad->price,
+                'mobile1' => $ad->mobile1,
+                'mobile2' => $ad->mobile2,
                 'description' => substr($ad->description, 0, 100) . '...',
                 'main_image' => asset('storage/' . $ad->mainImage),
                 'category' => $category ? $category->name : 'Unknown',
@@ -483,7 +499,12 @@ class UserAdsController extends Controller
                     'phone' => $user->phone_number
                 ],
                 'created_at' => $ad->created_at->toISOString(),
-                'timestamp' => now()->timestamp
+                'timestamp' => now()->timestamp,
+                'address' => $ad->address,
+                'bed_room' => $ad->bed_room,
+                'bath_room' => $ad->bath_room,
+                'house_size' => $ad->house_size,
+                'land_size' => $ad->land_size
             ];
 
             $pusher = new Pusher(

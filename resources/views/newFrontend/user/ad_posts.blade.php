@@ -355,399 +355,458 @@
                                                 <input type="number" name="price" class="form-control" required>
                                             </div>
                                         </div>
-
-                                        {{-- <div class="mb-3 col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-label text-dark"><strong>@lang('messages.Contact')<i
-                                                            class="text-danger">*</i></strong></label>
-                                                <input type="tel" name="contact" class="form-control"
-                                                        required pattern="[0-9]{10}"
-                                                        placeholder="Enter 10-digit mobile number">
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="row">
+                                                <div class="mb-3 col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label text-dark"><strong>@lang('messages.Contact')<i
+                                                                    class="text-danger">*</i></strong></label>
+                                                        <input type="tel" name="mobile1" class="form-control"
+                                                            pattern="[0-9]{10}"
+                                                            placeholder="Enter 10-digit mobile number">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label text-dark"><strong>@lang('messages.Contact')<i
+                                                                    class="text-danger">*</i></strong></label>
+                                                        <input type="tel" name="mobile2" class="form-control"
+                                                            pattern="[0-9]{10}"
+                                                            placeholder="Enter 10-digit mobile number">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                     </div>
 
-                                        <div class="mb-3 col-lg-12">
-                                            <div class="form-group">
-                                                <label class="form-label text-dark"><strong>@lang('messages.Description') <i
-                                                            class="text-danger">*</i></strong></label>
+                                    <div class="mb-3 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark"><strong>@lang('messages.Description') <i
+                                                        class="text-danger">*</i></strong></label>
 
-                                                <div class="ai-generator-section" id="aiGeneratorSection"
-                                                    style="display: none; position: relative; margin-bottom: 10px;">
-                                                    <div
-                                                        style="display: flex; justify-content: space-between; align-items: center;">
-                                                        <div>
-                                                            <h6 style="margin-bottom: 5px;"><i class="fas fa-magic"></i>
-                                                                AI
-                                                                Description Generator</h6>
-                                                            <p
-                                                                style="font-size: 11px; margin-bottom: 0; opacity: 0.9; color: white">
-                                                                Generate professional description automatically
-                                                            </p>
-                                                        </div>
-                                                        <div class="d-flex align-items-center">
-                                                            <select class="language-selector" id="languageSelect"
-                                                                style="margin-right: 10px;">
-                                                                <option value="english">English</option>
-                                                                <option value="sinhala">සිංහල</option>
-                                                            </select>
-                                                            <button type="button" class="generate-btn"
-                                                                id="generateDescBtn">
-                                                                <i class="fas fa-robot"></i> Generate
-                                                            </button>
-                                                        </div>
+                                            <div class="ai-generator-section" id="aiGeneratorSection"
+                                                style="display: none; position: relative; margin-bottom: 10px;">
+                                                <div
+                                                    style="display: flex; justify-content: space-between; align-items: center;">
+                                                    <div>
+                                                        <h6 style="margin-bottom: 5px;"><i class="fas fa-magic"></i>
+                                                            AI
+                                                            Description Generator</h6>
+                                                        <p
+                                                            style="font-size: 11px; margin-bottom: 0; opacity: 0.9; color: white">
+                                                            Generate professional description automatically
+                                                        </p>
                                                     </div>
-                                                    <div class="ai-loading" id="aiLoading">
-                                                        <i class="fas fa-spinner fa-spin"></i> Generating description...
+                                                    <div class="d-flex align-items-center">
+                                                        <select class="language-selector" id="languageSelect"
+                                                            style="margin-right: 10px;">
+                                                            <option value="english">English</option>
+                                                            <option value="sinhala">සිංහල</option>
+                                                        </select>
+                                                        <button type="button" class="generate-btn" id="generateDescBtn">
+                                                            <i class="fas fa-robot"></i> Generate
+                                                        </button>
                                                     </div>
                                                 </div>
+                                                <div class="ai-loading" id="aiLoading">
+                                                    <i class="fas fa-spinner fa-spin"></i> Generating description...
+                                                </div>
+                                            </div>
 
-                                                <textarea id="ad_description" name="description" class="form-control" rows="4" required></textarea>
+                                            <textarea id="ad_description" name="description" class="form-control" rows="4" required></textarea>
+                                        </div>
+                                    </div>
+
+                                    @if (request()->cat_id == 103)
+                                        <!-- Required Work Experience -->
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.Required Work Experience (years)')</strong>
+                                                </label>
+                                                <input type="number" name="experience_years" class="form-control"
+                                                    min="0" placeholder="0">
                                             </div>
                                         </div>
 
-                                        @if (request()->cat_id == 103)
-                                            <!-- Required Work Experience -->
-                                            <div class="mb-3 col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-label text-dark">
-                                                        <strong>@lang('messages.Required Work Experience (years)')</strong>
-                                                    </label>
-                                                    <input type="number" name="experience_years" class="form-control"
-                                                        min="0" placeholder="0">
-                                                </div>
+                                        <!-- Required Education -->
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.Required Education')</strong>
+                                                </label>
+                                                <select name="education" class="form-control">
+                                                    <option value="">@lang('messages.Select Education')</option>
+                                                    <option value="Ordinary Level">Ordinary Level</option>
+                                                    <option value="Advanced Level">Advanced Level</option>
+                                                    <option value="Certificate">Certificate</option>
+                                                    <option value="Diploma">Diploma</option>
+                                                    <option value="Higher Diploma">Higher Diploma</option>
+                                                    <option value="Degree">Degree</option>
+                                                    <option value="Masters">Masters</option>
+                                                    <option value="Doctorate">Doctorate</option>
+                                                    <option value="Skilled Apprentice">Skilled Apprentice</option>
+                                                </select>
                                             </div>
+                                        </div>
 
-                                            <!-- Required Education -->
-                                            <div class="mb-3 col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-label text-dark">
-                                                        <strong>@lang('messages.Required Education')</strong>
-                                                    </label>
-                                                    <select name="education" class="form-control">
-                                                        <option value="">@lang('messages.Select Education')</option>
-                                                        <option value="Ordinary Level">Ordinary Level</option>
-                                                        <option value="Advanced Level">Advanced Level</option>
-                                                        <option value="Certificate">Certificate</option>
-                                                        <option value="Diploma">Diploma</option>
-                                                        <option value="Higher Diploma">Higher Diploma</option>
-                                                        <option value="Degree">Degree</option>
-                                                        <option value="Masters">Masters</option>
-                                                        <option value="Doctorate">Doctorate</option>
-                                                        <option value="Skilled Apprentice">Skilled Apprentice</option>
-                                                    </select>
-                                                </div>
+                                        <!-- Application Deadline -->
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.Application Deadline') (@lang('messages.Optional'))</strong>
+                                                </label>
+                                                <input type="date" name="application_deadline" class="form-control">
                                             </div>
+                                        </div>
 
-                                            <!-- Application Deadline -->
-                                            <div class="mb-3 col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-label text-dark">
-                                                        <strong>@lang('messages.Application Deadline') (@lang('messages.Optional'))</strong>
-                                                    </label>
-                                                    <input type="date" name="application_deadline"
-                                                        class="form-control">
-                                                </div>
+                                        <!-- Mobile Number -->
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.Mobile Number') <i class="text-danger">*</i></strong>
+                                                </label>
+                                                <input type="tel" name="mobile_number" class="form-control" required
+                                                    pattern="[0-9]{10}" placeholder="Enter 10-digit mobile number">
                                             </div>
+                                        </div>
+                                    @endif
 
-                                            <!-- Mobile Number -->
-                                            <div class="mb-3 col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-label text-dark">
-                                                        <strong>@lang('messages.Mobile Number') <i class="text-danger">*</i></strong>
-                                                    </label>
-                                                    <input type="tel" name="mobile_number" class="form-control"
-                                                        required pattern="[0-9]{10}"
-                                                        placeholder="Enter 10-digit mobile number">
-                                                </div>
+                                    @if (request()->cat_id == 20)
+                                        <!-- Required Work Experience -->
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.Address')</strong>
+                                                </label>
+                                                <input type="text" name="address" class="form-control"
+                                                     placeholder="Enter address">
                                             </div>
-                                        @endif
+                                        </div>
 
                                         <div class="mb-3 col-lg-12">
                                             <div class="form-group">
                                                 <label class="form-label text-dark">
-                                                    <strong>
-                                                        @if (request()->cat_id == 103)
-                                                            @lang('messages.Logo')
-                                                        @else
-                                                            @lang('messages.Upload Main Image')
-                                                        @endif
-                                                        <i class="text-danger">*</i>
-                                                    </strong>
+                                                    <strong>@lang('messages.Bed Room')</strong>
                                                 </label>
-                                                <small class=" text-muted">jpeg,png,jpg,gif,bmp,svg,webp,tiff ,up to
-                                                    20MB.</small>
-                                                <input type="file" name="main_image" class="form-control"
-                                                    id="main_image" required>
-                                                <div id="main_image_preview" style="margin-top: 10px;"></div>
+                                                <input type="number" name="bed_room" class="form-control"
+                                                    min="0" placeholder="0">
                                             </div>
                                         </div>
+
                                         <div class="mb-3 col-lg-12">
                                             <div class="form-group">
                                                 <label class="form-label text-dark">
-                                                    <strong>
-                                                        @if (request()->cat_id == 103)
-                                                            @lang('messages.Description Image')
-                                                        @else
-                                                            @lang('messages.Upload Sub Image')
-                                                        @endif
-                                                    </strong>
+                                                    <strong>@lang('messages.Bath Room')</strong>
                                                 </label>
-                                                <small class=" text-muted">Simply select all images at once.</small>
-                                                <input type="file" name="sub_images[]" class="form-control"
-                                                    id="sub_images" multiple>
-                                                <div id="sub_images_preview" style="margin-top: 10px;"></div>
+                                                <input type="number" name="bath_room" class="form-control"
+                                                    min="0" placeholder="0">
                                             </div>
+                                        </div>
+
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.House Size (sqft)')</strong>
+                                                </label>
+                                                <input type="text" name="house_size" class="form-control"
+                                                    min="0" placeholder="0 sqft">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label text-dark">
+                                                    <strong>@lang('messages.Land Size (purches)')</strong>
+                                                </label>
+                                                <input type="text" name="land_size" class="form-control"
+                                                    min="0" placeholder="0 purches">
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    <div class="mb-3 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark">
+                                                <strong>
+                                                    @if (request()->cat_id == 103)
+                                                        @lang('messages.Logo')
+                                                    @else
+                                                        @lang('messages.Upload Main Image')
+                                                    @endif
+                                                    <i class="text-danger">*</i>
+                                                </strong>
+                                            </label>
+                                            <small class=" text-muted">jpeg,png,jpg,gif,bmp,svg,webp,tiff ,up to
+                                                20MB.</small>
+                                            <input type="file" name="main_image" class="form-control" id="main_image"
+                                                required>
+                                            <div id="main_image_preview" style="margin-top: 10px;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark">
+                                                <strong>
+                                                    @if (request()->cat_id == 103)
+                                                        @lang('messages.Description Image')
+                                                    @else
+                                                        @lang('messages.Upload Sub Image')
+                                                    @endif
+                                                </strong>
+                                            </label>
+                                            <small class=" text-muted">Simply select all images at once.</small>
+                                            <input type="file" name="sub_images[]" class="form-control"
+                                                id="sub_images" multiple>
+                                            <div id="sub_images_preview" style="margin-top: 10px;"></div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                @if (request()->cat_id != 103)
-                                    <!-- category Information -->
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="section-box">
-                                            <label class="form-label text-dark"><strong>@lang('messages.Condition')</strong></label>
-                                            <div class="d-flex">
-                                                @foreach (['New', 'Used'] as $option)
-                                                    <div class="form-check me-3">
-                                                        <input class="form-check-input" type="radio" name="condition"
-                                                            value="{{ $option }}">
-                                                        <label class="form-check-label"
-                                                            style="margin-right:15px">@lang('messages.' . $option)</label>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="section-box">
-                                            <label class="form-label text-dark"><strong>Additional
-                                                    Information</strong></label>
-                                            <!-- Render the form fields -->
-                                            @foreach ($formFields as $field)
-                                                <div class="form-group">
-                                                    <!-- Check field type and render appropriate input box -->
-                                                    @if ($field->field_type == 'text')
-                                                        <label
-                                                            for="field_{{ $field->id }}">{{ $field->field_name }}</label>
-                                                        <input type="text" id="field_{{ $field->id }}"
-                                                            name="field_{{ $field->id }}" class="form-control">
-                                                    @elseif($field->field_type == 'number')
-                                                        <label
-                                                            for="field_{{ $field->id }}">{{ $field->field_name }}</label>
-                                                        <input type="number" id="field_{{ $field->id }}"
-                                                            name="field_{{ $field->id }}" class="form-control">
-                                                    @elseif($field->field_type == 'email')
-                                                        <label
-                                                            for="field_{{ $field->id }}">{{ $field->field_name }}</label>
-                                                        <input type="email" id="field_{{ $field->id }}"
-                                                            name="field_{{ $field->id }}" class="form-control">
-                                                    @elseif($field->field_type == 'textarea')
-                                                        <label
-                                                            for="field_{{ $field->id }}">{{ $field->field_name }}</label>
-                                                        <textarea id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control"></textarea>
-                                                    @elseif($field->field_type == 'dropdown')
-                                                        <label
-                                                            for="field_{{ $field->id }}">{{ $field->field_name }}</label>
-                                                        <select id="field_{{ $field->id }}"
-                                                            name="field_{{ $field->id }}" class="form-control">
-                                                            <option value="">Select</option>
-                                                        </select>
-                                                    @elseif($field->field_type == 'checkbox')
-                                                        <div class="form-check">
-                                                            <input type="checkbox" id="field_{{ $field->id }}"
-                                                                name="field_{{ $field->id }}[]"
-                                                                class="form-check-input"
-                                                                style="width: auto; height: auto;">
-                                                            <label for="field_{{ $field->id }}"
-                                                                class="form-check-label">
-                                                                {{ $field->field_name }}
-                                                            </label>
-                                                        </div>
-                                                    @elseif($field->field_type == 'radio')
-                                                        <div id="field_{{ $field->id }}">
-                                                            <input type="radio" name="field_{{ $field->id }}"
-                                                                value="option1" id="option1_{{ $field->id }}"> Option
-                                                            1
-                                                            <input type="radio" name="field_{{ $field->id }}"
-                                                                value="option2" id="option2_{{ $field->id }}"> Option
-                                                            2
-                                                        </div>
-                                                    @elseif($field->field_type == 'tel')
-                                                        <label
-                                                            for="field_{{ $field->id }}">{{ $field->field_name }}</label>
-                                                        <input type="tel" id="field_{{ $field->id }}"
-                                                            name="field_{{ $field->id }}" class="form-control">
-                                                    @elseif($field->field_type == 'date')
-                                                        <label
-                                                            for="field_{{ $field->id }}">{{ $field->field_name }}</label>
-                                                        <input type="date" id="field_{{ $field->id }}"
-                                                            name="field_{{ $field->id }}" class="form-control">
-                                                    @elseif($field->field_type == 'time')
-                                                        <label
-                                                            for="field_{{ $field->id }}">{{ $field->field_name }}</label>
-                                                        <input type="time" id="field_{{ $field->id }}"
-                                                            name="field_{{ $field->id }}" class="form-control">
-                                                    @elseif($field->field_type == 'month')
-                                                        <label
-                                                            for="field_{{ $field->id }}">{{ $field->field_name }}</label>
-                                                        <input type="month" id="field_{{ $field->id }}"
-                                                            name="field_{{ $field->id }}" class="form-control">
-                                                    @endif
+                            @if (request()->cat_id != 103)
+                                <!-- category Information -->
+                                <div class="mb-3 col-lg-12">
+                                    <div class="section-box">
+                                        <label class="form-label text-dark"><strong>@lang('messages.Condition')</strong></label>
+                                        <div class="d-flex">
+                                            @foreach (['New', 'Used'] as $option)
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="radio" name="condition"
+                                                        value="{{ $option }}">
+                                                    <label class="form-check-label"
+                                                        style="margin-right:15px">@lang('messages.' . $option)</label>
                                                 </div>
                                             @endforeach
                                         </div>
                                     </div>
+                                </div>
 
-                                    <!-- Pricing Type -->
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="section-box">
-                                            <h4>@lang('messages.Pricing Type')</h4>
-                                            <div class="flex-wrap d-flex align-items-center">
-                                                @foreach (['Fixed', 'Negotiable', 'Daily', 'Weekly', 'Monthly', 'Yearly'] as $option)
-                                                    <div class="form-check me-4">
+                                <div class="mb-3 col-lg-12">
+                                    <div class="section-box">
+                                        <label class="form-label text-dark"><strong>Additional
+                                                Information</strong></label>
+                                        <!-- Render the form fields -->
+                                        @foreach ($formFields as $field)
+                                            <div class="form-group">
+                                                <!-- Check field type and render appropriate input box -->
+                                                @if ($field->field_type == 'text')
+                                                    <label
+                                                        for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                                    <input type="text" id="field_{{ $field->id }}"
+                                                        name="field_{{ $field->id }}" class="form-control">
+                                                @elseif($field->field_type == 'number')
+                                                    <label
+                                                        for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                                    <input type="number" id="field_{{ $field->id }}"
+                                                        name="field_{{ $field->id }}" class="form-control">
+                                                @elseif($field->field_type == 'email')
+                                                    <label
+                                                        for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                                    <input type="email" id="field_{{ $field->id }}"
+                                                        name="field_{{ $field->id }}" class="form-control">
+                                                @elseif($field->field_type == 'textarea')
+                                                    <label
+                                                        for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                                    <textarea id="field_{{ $field->id }}" name="field_{{ $field->id }}" class="form-control"></textarea>
+                                                @elseif($field->field_type == 'dropdown')
+                                                    <label
+                                                        for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                                    <select id="field_{{ $field->id }}"
+                                                        name="field_{{ $field->id }}" class="form-control">
+                                                        <option value="">Select</option>
+                                                    </select>
+                                                @elseif($field->field_type == 'checkbox')
+                                                    <div class="form-check">
+                                                        <input type="checkbox" id="field_{{ $field->id }}"
+                                                            name="field_{{ $field->id }}[]" class="form-check-input"
+                                                            style="width: auto; height: auto;">
+                                                        <label for="field_{{ $field->id }}" class="form-check-label">
+                                                            {{ $field->field_name }}
+                                                        </label>
+                                                    </div>
+                                                @elseif($field->field_type == 'radio')
+                                                    <div id="field_{{ $field->id }}">
+                                                        <input type="radio" name="field_{{ $field->id }}"
+                                                            value="option1" id="option1_{{ $field->id }}"> Option
+                                                        1
+                                                        <input type="radio" name="field_{{ $field->id }}"
+                                                            value="option2" id="option2_{{ $field->id }}"> Option
+                                                        2
+                                                    </div>
+                                                @elseif($field->field_type == 'tel')
+                                                    <label
+                                                        for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                                    <input type="tel" id="field_{{ $field->id }}"
+                                                        name="field_{{ $field->id }}" class="form-control">
+                                                @elseif($field->field_type == 'date')
+                                                    <label
+                                                        for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                                    <input type="date" id="field_{{ $field->id }}"
+                                                        name="field_{{ $field->id }}" class="form-control">
+                                                @elseif($field->field_type == 'time')
+                                                    <label
+                                                        for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                                    <input type="time" id="field_{{ $field->id }}"
+                                                        name="field_{{ $field->id }}" class="form-control">
+                                                @elseif($field->field_type == 'month')
+                                                    <label
+                                                        for="field_{{ $field->id }}">{{ $field->field_name }}</label>
+                                                    <input type="month" id="field_{{ $field->id }}"
+                                                        name="field_{{ $field->id }}" class="form-control">
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <!-- Pricing Type -->
+                                <div class="mb-3 col-lg-12">
+                                    <div class="section-box">
+                                        <h4>@lang('messages.Pricing Type')</h4>
+                                        <div class="flex-wrap d-flex align-items-center">
+                                            @foreach (['Fixed', 'Negotiable', 'Daily', 'Weekly', 'Monthly', 'Yearly'] as $option)
+                                                <div class="form-check me-4">
+                                                    <input class="form-check-input" type="radio" name="pricing_type"
+                                                        value="{{ $option }}">
+                                                    <label class="form-check-label"
+                                                        style="margin-right:15px">@lang('messages.' . $option)</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Post Type -->
+                                <div class="mb-3 col-lg-12">
+                                    <div class="section-box">
+                                        <label class="form-label text-dark"><strong>@lang('messages.Post Type')</strong></label>
+                                        <div class="d-flex">
+                                            @foreach (['Booking', 'Sale', 'Rent'] as $option)
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="radio" name="post_type"
+                                                        value="{{ $option }}">
+                                                    <label class="form-check-label"
+                                                        style="margin-right:15px">@lang('messages.' . $option)</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+
+                            @if (Auth::check() && Auth::user()->roles != 'staff')
+                                <div class="mb-3 col-lg-12">
+                                    <div class="section-box">
+                                        <h4>@lang('messages.Boosting Option')<i class="text-danger">*</i></h4>
+
+                                        <!-- Top Ads, Super Ads, Urgent Ads Section -->
+                                        <div class="mt-4 row">
+                                            <!-- Top Ads Box -->
+                                            <div class="mb-3 col-md-4">
+                                                <div class="p-3 border rounded box border-success equal-height">
+                                                    <h5 class="text-success">@lang('messages.Top Ads')</h5>
+                                                    <p class="text-muted">@lang('messages.TopAds description')</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Super Ads Box -->
+                                            <div class="mb-3 col-md-4">
+                                                <div class="p-3 border rounded box border-primary equal-height">
+                                                    <h5 class="text-primary">@lang('messages.Super Ads')</h5>
+                                                    <p class="text-muted">@lang('messages.SuperAds description')</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Urgent Ads Box -->
+                                            <div class="mb-3 col-md-4">
+                                                <div class="p-3 border rounded box border-danger equal-height">
+                                                    <h5 class="text-danger">@lang('messages.Urgent Ads')</h5>
+                                                    <p class="text-muted">@lang('messages.UrgentAds description')</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Package and Package Type Selection Section -->
+                                        <div class="mt-4 row">
+                                            <!-- Package Selection Column -->
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <h5 class="mb-2">@lang('messages.Select a Package'):</h5>
+
+                                                    <!-- Free Ad Option (Always visible) -->
+                                                    <div class="mt-2 form-check">
                                                         <input class="form-check-input" type="radio"
-                                                            name="pricing_type" value="{{ $option }}">
-                                                        <label class="form-check-label"
-                                                            style="margin-right:15px">@lang('messages.' . $option)</label>
+                                                            name="boosting_option" id="package_free" value="0"
+                                                            checked>
+                                                        <label class="form-check-label text-dark" for="package_free">
+                                                            <h5>@lang('messages.Free Ad')</h5>
+                                                        </label>
                                                     </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <!-- Post Type -->
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="section-box">
-                                            <label class="form-label text-dark"><strong>@lang('messages.Post Type')</strong></label>
-                                            <div class="d-flex">
-                                                @foreach (['Booking', 'Sale', 'Rent'] as $option)
-                                                    <div class="form-check me-3">
-                                                        <input class="form-check-input" type="radio" name="post_type"
-                                                            value="{{ $option }}">
-                                                        <label class="form-check-label"
-                                                            style="margin-right:15px">@lang('messages.' . $option)</label>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-
-
-                                @if (Auth::check() && Auth::user()->roles != 'staff')
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="section-box">
-                                            <h4>@lang('messages.Boosting Option')<i class="text-danger">*</i></h4>
-
-                                            <!-- Top Ads, Super Ads, Urgent Ads Section -->
-                                            <div class="mt-4 row">
-                                                <!-- Top Ads Box -->
-                                                <div class="mb-3 col-md-4">
-                                                    <div class="p-3 border rounded box border-success equal-height">
-                                                        <h5 class="text-success">@lang('messages.Top Ads')</h5>
-                                                        <p class="text-muted">@lang('messages.TopAds description')</p>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Super Ads Box -->
-                                                <div class="mb-3 col-md-4">
-                                                    <div class="p-3 border rounded box border-primary equal-height">
-                                                        <h5 class="text-primary">@lang('messages.Super Ads')</h5>
-                                                        <p class="text-muted">@lang('messages.SuperAds description')</p>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Urgent Ads Box -->
-                                                <div class="mb-3 col-md-4">
-                                                    <div class="p-3 border rounded box border-danger equal-height">
-                                                        <h5 class="text-danger">@lang('messages.Urgent Ads')</h5>
-                                                        <p class="text-muted">@lang('messages.UrgentAds description')</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Package and Package Type Selection Section -->
-                                            <div class="mt-4 row">
-                                                <!-- Package Selection Column -->
-                                                <div class="col-md-3">
-                                                    <div class="mb-3">
-                                                        <h5 class="mb-2">@lang('messages.Select a Package'):</h5>
-
-                                                        <!-- Free Ad Option (Always visible) -->
+                                                    @foreach ($packages as $package)
                                                         <div class="mt-2 form-check">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="boosting_option" id="package_free" value="0"
-                                                                checked>
-                                                            <label class="form-check-label text-dark" for="package_free">
-                                                                <h5>@lang('messages.Free Ad')</h5>
+                                                            <input class="form-check-input package-radio" type="radio"
+                                                                name="boosting_option" id="package_{{ $package->id }}"
+                                                                value="{{ $package->id }}"
+                                                                data-name="{{ $package->name }}">
+                                                            <label class="form-check-label text-dark"
+                                                                for="package_{{ $package->id }}">
+                                                                <h5>@lang('messages.' . $package->name)</h5>
                                                             </label>
                                                         </div>
-
-                                                        @foreach ($packages as $package)
-                                                            <div class="mt-2 form-check">
-                                                                <input class="form-check-input package-radio"
-                                                                    type="radio" name="boosting_option"
-                                                                    id="package_{{ $package->id }}"
-                                                                    value="{{ $package->id }}"
-                                                                    data-name="{{ $package->name }}">
-                                                                <label class="form-check-label text-dark"
-                                                                    for="package_{{ $package->id }}">
-                                                                    <h5>@lang('messages.' . $package->name)</h5>
-                                                                </label>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
+                                                    @endforeach
                                                 </div>
+                                            </div>
 
-                                                <!-- Package Type Selection Column -->
-                                                <div class="col-md-4">
-                                                    <div id="package-types" class="d-none">
-                                                        <h4>@lang('messages.Select Package Type')</h4>
-                                                        @foreach ($packages as $package)
-                                                            <div class="package-types-for-{{ $package->id }} d-none">
-                                                                @foreach ($package->packageTypes as $packageType)
-                                                                    <div class="mt-2 form-check">
-                                                                        <input class="form-check-input package-type-radio"
-                                                                            type="radio" name="package_type"
-                                                                            id="packageType_{{ $packageType->id }}"
-                                                                            value="{{ $packageType->id }}"
-                                                                            data-price="{{ $packageType->price }}"
-                                                                            data-duration="{{ $packageType->duration }}">
-                                                                        <label class="form-check-label text-dark"
-                                                                            for="packageType_{{ $packageType->id }}">
-                                                                            {{ $packageType->duration }}
-                                                                            (@lang('messages.Rs')
-                                                                            {{ number_format($packageType->price, 2) }})
-                                                                        </label>
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
+                                            <!-- Package Type Selection Column -->
+                                            <div class="col-md-4">
+                                                <div id="package-types" class="d-none">
+                                                    <h4>@lang('messages.Select Package Type')</h4>
+                                                    @foreach ($packages as $package)
+                                                        <div class="package-types-for-{{ $package->id }} d-none">
+                                                            @foreach ($package->packageTypes as $packageType)
+                                                                <div class="mt-2 form-check">
+                                                                    <input class="form-check-input package-type-radio"
+                                                                        type="radio" name="package_type"
+                                                                        id="packageType_{{ $packageType->id }}"
+                                                                        value="{{ $packageType->id }}"
+                                                                        data-price="{{ $packageType->price }}"
+                                                                        data-duration="{{ $packageType->duration }}">
+                                                                    <label class="form-check-label text-dark"
+                                                                        for="packageType_{{ $packageType->id }}">
+                                                                        {{ $packageType->duration }}
+                                                                        (@lang('messages.Rs')
+                                                                        {{ number_format($packageType->price, 2) }})
+                                                                    </label>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                @endif
-
-                                @if (Auth::check() && Auth::user()->roles == 'staff')
-                                    <div class="mt-2 form-check d-none" id="free-ad-option">
-                                        <input class="form-check-input" type="radio" name="boosting_option"
-                                            id="package_free" value="0" checked>
-                                        <label class="form-check-label text-dark" for="package_free">
-                                            <h5>@lang('messages.Free Ad')</h5>
-                                        </label>
-                                    </div>
-                                @endif
-
-                                <div class="mt-4 col-lg-12">
-                                    <button type="submit" id="publishBtn" class="theme-btn-one">
-                                        <i class="fas fa-check"></i>
-                                        <span>@lang('messages.Publish Your Ad')</span>
-                                    </button>
                                 </div>
+                            @endif
+
+                            @if (Auth::check() && Auth::user()->roles == 'staff')
+                                <div class="mt-2 form-check d-none" id="free-ad-option">
+                                    <input class="form-check-input" type="radio" name="boosting_option"
+                                        id="package_free" value="0" checked>
+                                    <label class="form-check-label text-dark" for="package_free">
+                                        <h5>@lang('messages.Free Ad')</h5>
+                                    </label>
+                                </div>
+                            @endif
+
+                            <div class="mt-4 col-lg-12">
+                                <button type="submit" id="publishBtn" class="theme-btn-one">
+                                    <i class="fas fa-check"></i>
+                                    <span>@lang('messages.Publish Your Ad')</span>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

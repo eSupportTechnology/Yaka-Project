@@ -47,7 +47,14 @@ class Ads extends Model
         'mobile_number',
         'reason',
         'voucher_amount_used',
-        'ads_count_used'
+        'ads_count_used',
+        'mobile1',
+        'mobile2',
+        'address',
+        'bed_room',
+        'bath_room',
+        'house_size',
+        'land_size'
     ];
 
     protected $casts = [

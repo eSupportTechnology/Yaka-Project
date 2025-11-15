@@ -142,7 +142,7 @@ return [
     'free_ad_posting' => 'සෑම කාණ්ඩයකම නොමිලේ දැන්වීම් පළ කිරීමේ හැකියාව ඇත. Yaka.lk සබැඳිවරුක් වීමට සහ ඔබේ ස්ථානය අදම හිමිකර ගැනීමට අප හා සම්බන්ධ වන්න.',
 
     'Search' => 'සෙවීම',
-    'Search Keyword' => 'සෙවුම් මූල පදය',
+    'Type anything you are looking' => 'ඔබ සොයන ඕනෑම දෙයක් ටයිප් කරන්න',
     'Select Location' => 'ස්ථානයක් තෝරන්න',
 
     'Buy, Sell, Rent or Find Anything in Sri Lanka' => 'ශ්‍රී ලංකාවේ මිලදී ගන්න, විකුණන්න, බදුදියන්න හෝ යමක් සොයාගන්න',
