@@ -72,6 +72,8 @@
         <div class="container">
             <div class="payment-container">
                 <h3 class="mb-4 text-center">@lang('messages.membership payment')</h3>
+
+                {{-- Membership Information --}}
                 <div class="card mb-4">
                     <div class="card-body">
                         <p><strong>@lang('messages.price'):</strong> Rs {{ number_format($price, 2) }}</p>
@@ -80,41 +82,44 @@
                         <p><strong>@lang('messages.promotion voucher cost'):</strong> Rs {{ number_format($membershipData['promotion_voucher_cost'], 2) }}</p>
                     </div>
                 </div>
+
+                {{-- Billing Form --}}
                 <div class="card mb-4">
                     <div class="card-body">
 
                         <input type="hidden" name="return_url" id="return_url"
                                value="{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}">
 
-                        <label for="billing_street">@lang('messages.billing address street')<span
-                                style="color:red; font-size:18px;">*</span></label>
-                        <input class="form-control" type="text" name="billing_street" id="billing_street"
-                               placeholder="Enter street address">
+                        <label for="billing_street">@lang('messages.billing address street')<span style="color:red;">*</span></label>
+                        <input class="form-control" type="text" id="billing_street" placeholder="Enter street address">
 
-                        <label for="billing_city">@lang('messages.billing address city')<span
-                                style="color:red; font-size:18px;">*</span></label>
-                        <input class="form-control" type="text" name="billing_city" id="billing_city"
-                               placeholder="Enter city">
+                        <label for="billing_city">@lang('messages.billing address city')<span style="color:red;">*</span></label>
+                        <input class="form-control" type="text" id="billing_city" placeholder="Enter city">
 
-                        <label for="billing_country">@lang('messages.billing address country')<span
-                                style="color:red; font-size:18px;">*</span></label>
-                        <input class="form-control" type="text" name="billing_country" id="billing_country"
-                               value="LKA" readonly>
+                        <label for="billing_country">@lang('messages.billing address country')<span style="color:red;">*</span></label>
+                        <input class="form-control" type="text" id="billing_country" value="LKA" readonly>
                     </div>
                 </div>
+
+                {{-- Button --}}
                 <button id="payNowBtn" type="button"
                         class="btn btn-success w-100 d-flex justify-content-center align-items-center">
-                    <span id="payNowText">@lang('messages.pay now') - Rs {{ number_format($price, 2) }}</span>
-                    <div id="btnSpinner" class="ms-2 spinner-border spinner-border-sm text-light" role="status"
+                    <span id="payNowText">
+                        @lang('messages.pay now') - Rs {{ number_format($price, 2) }}
+                    </span>
+                    <div id="btnSpinner" class="ms-2 spinner-border spinner-border-sm text-light"
                          style="display: none;"></div>
                 </button>
             </div>
         </div>
     </section>
 
+    {{-- Payable.lk JS --}}
     <script src="https://sandboxipgsdk.payable.lk/sdk/v4/payable-checkout.js"></script>
+
     <script>
         document.getElementById('payNowBtn').addEventListener('click', function () {
+
             const billingStreet = document.getElementById('billing_street').value.trim();
             const billingCity = document.getElementById('billing_city').value.trim();
             const billingCountry = document.getElementById('billing_country').value.trim();
@@ -122,20 +127,22 @@
             if (!billingStreet || !billingCity || !billingCountry) {
                 Swal.fire({
                     icon: 'error',
-                    title: '@lang('messages.missing information')',
-                    text: '@lang('messages.please fill in all required billing details')',
+                    title: 'Missing Information',
+                    text: 'Please fill in all required billing details.',
                 });
                 return;
             }
+
+            // Button Loading UI
             document.getElementById('btnSpinner').style.display = 'inline-block';
             document.getElementById('payNowBtn').disabled = true;
-            document.getElementById('payNowText').textContent = '@lang('messages.processing')...';
+            document.getElementById('payNowText').textContent = 'Processing...';
 
             const paymentAmount = parseFloat({{ $price }}).toFixed(2);
 
             const payment = {
                 logoUrl: "{{ config('ipg.logo-url') }}",
-                refererUrl: "{{ env('APP_URL') }}",
+                returnUrl: "{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}",
                 checkValue: "{{ $checkValue }}",
                 orderDescription: "Membership Payment for Yaka",
                 invoiceId: "{{ $invoiceId }}",
@@ -156,4 +163,5 @@
             payablePayment(payment);
         });
     </script>
+
 @endsection
