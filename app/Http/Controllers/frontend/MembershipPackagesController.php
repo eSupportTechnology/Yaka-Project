@@ -93,49 +93,47 @@ class MembershipPackagesController extends Controller
 
 
     public function initPayment(Request $request)
-    {
-        try {
+{
+    try {
+        $user = auth()->user();
+        $price = (float) $request->price;
 
-            $user = auth()->user();
+        $invoiceId = "YKMB" . now()->format('ymdHis');
 
-            $price = (float) $request->price;
+        $checkValue = IpgHashService::hash($price, $invoiceId);
 
-            $invoiceId = "YKMB" . now()->format('ymdHis');
+        PaymentInfo::create([
+            'check_value' => $checkValue,
+            'invoice_id'  => $invoiceId,
+            'user_id'     => $user->id,
+            'ad_data'     => json_encode($request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])),
+            'payment_for' => 'membership',
+        ]);
 
-            $checkValue = IpgHashService::hash($price, $invoiceId);
+        session([
+            'checkValue' => $checkValue,
+            'invoiceId' => $invoiceId,
+            'membership_data' => $request->all(),
+            $invoiceId . 'add_data' => $request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])
+        ]);
 
-            PaymentInfo::create([
-                'check_value' => $checkValue,
-                'invoice_id'  => $invoiceId,
-                'user_id'     => $user->id,
-                'ad_data'     => json_encode($request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])),
-                'payment_for' => 'membership',
-            ]);
+        return view('newFrontend.user.membership-payment', [
+            'price' => $price,
+            'invoiceId' => $invoiceId,
+            'checkValue' => $checkValue,
+            'membershipData' => $request->all(),
+            'gatewayUrl' => 'https://sandbox.payable.lk/ipg/v2'
+        ]);
+    } catch (\Throwable $e) {
+        Log::error('Payment initialization failed: ' . $e->getMessage(), [
+            'trace' => $e->getTraceAsString(),
+            'user_id' => auth()->id(),
+        ]);
 
-            session([
-                'checkValue' => $checkValue,
-                'invoiceId' => $invoiceId,
-                'membership_data' => $request->all()
-            ]);
-
-            return view('newFrontend.user.membership-payment', [
-                'price' => $price,
-                'invoiceId' => $invoiceId,
-                'checkValue' => $checkValue,
-                'membershipData' => $request->all(),
-                'gatewayUrl' => 'https://sandbox.payable.lk/ipg/v2'
-            ]);
-        } catch (\Throwable $e) {
-
-            // Log the error for debugging
-            Log::error('Payment initialization failed: ' . $e->getMessage(), [
-                'trace' => $e->getTraceAsString(),
-                'user_id' => auth()->id(),
-            ]);
-
-            return redirect()->back()->with('error', 'Something went wrong while initializing the payment. Please try again.');
-        }
+        return redirect()->back()->with('error', 'Something went wrong while initializing the payment. Please try again.');
     }
+}
+
     public function getByCategory($id)
     {
         $plans = MembershipPlan::where('category_id', $id)->get();
