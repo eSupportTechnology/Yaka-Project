@@ -384,23 +384,37 @@
                 customerEmail: "{{ auth()->user()->email }}",
 
                 // Billing details depend on membershipData
+
                 billingAddressStreet: @if (!empty($membershipData))
-                    "N/A"
-                @else
                     billingStreet
+                @else
+                    @if ($activeMembership)
+                        "N/A"
+                    @else
+                        billingStreet
+                    @endif
                 @endif ,
 
                 billingAddressCity: @if (!empty($membershipData))
-                    "N/A"
-                @else
                     billingCity
+                @else
+                    @if ($activeMembership)
+                        "N/A"
+                    @else
+                        billingCity
+                    @endif
                 @endif ,
 
                 billingAddressCountry: @if (!empty($membershipData))
-                    "LKA"
-                @else
                     billingCountry
+                @else
+                    @if ($activeMembership)
+                        "LKA"
+                    @else
+                        billingCountry
+                    @endif
                 @endif ,
+
 
                 amount: paymentAmount.toFixed(2), // 2 decimals
                 currencyCode: "LKR",
