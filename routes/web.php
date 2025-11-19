@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PusherTestController;
 use App\Models\BrandsModels;
 use Illuminate\Http\Request;
@@ -327,5 +328,17 @@ Route::get('/boostpayment/checking', [BoostingController::class, 'boostcomplete'
 Route::get('auth/{provider}', [SocialAuthController::class, 'redirectToProvider']);
 Route::get('auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback']);
 
+// Payment Routes
+Route::prefix('payment')->group(function () {
+    Route::get('/page', [PaymentController::class, 'paymentPage'])
+        ->name('payment.pages')
+        ->middleware('auth');
+    Route::get('/return', [PaymentController::class, 'paymentReturn'])
+        ->name('payment.return');
+    Route::get('/cancel', [PaymentController::class, 'paymentCancel'])
+        ->name('payment.cancel');
+});
 
+Route::post('/api/payment/notify', [PaymentController::class, 'paymentNotify'])
+    ->name('payment.notify');
 require __DIR__ . '/auth.php';
