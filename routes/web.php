@@ -112,8 +112,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user/my_ads', [userDashboardController::class, 'my_ads'])->name('user.my_ads');
 
-Route::get('/ads/{adsId}/edit/{cat_id?}', [userDashboardController::class, 'edit'])->name('ads.edit');
-Route::put('/ads/{adsId}', [userDashboardController::class, 'update'])->name('ads.update');
+    Route::get('/ads/{adsId}/edit/{cat_id?}', [userDashboardController::class, 'edit'])->name('ads.edit');
+    Route::put('/ads/{adsId}', [userDashboardController::class, 'update'])->name('ads.update');
 
     Route::delete('/ads/{adsId}/delete', [userDashboardController::class, 'destroy'])->name('ads.delete');
 
@@ -153,7 +153,7 @@ Route::put('/ads/{adsId}', [userDashboardController::class, 'update'])->name('ad
     Route::get('/membership-package', [MembershipPackagesController::class, 'index'])->name('membership-package');
     Route::post('/membership/store', [MembershipPackagesController::class, 'store'])->name('membership.store');
     Route::get('/check-active-membership/{categoryId}', [MembershipPackagesController::class, 'checkActiveMembership']);
-Route::get('/membership/category/{id}', [MembershipPackagesController::class, 'getByCategory'])->name('membership.byCategory');
+    Route::get('/membership/category/{id}', [MembershipPackagesController::class, 'getByCategory'])->name('membership.byCategory');
 
     Route::get('/payment/checking', [PaymentProcessingController::class, 'checkPayment'])->name('payment.checking');
     Route::post('/payment/notify', [PaymentProcessingController::class, 'notifyPayment'])->name('payment.notify');
