@@ -246,184 +246,179 @@
     </div>
 
     <script>
-        let finalPrice = parseFloat({{ !empty($membershipData) ? $price : $selectedPackagePrice }});
+    let finalPrice = parseFloat({{ !empty($membershipData) ? $price : $selectedPackagePrice }});
 
-        @if (empty($membershipData))
-            @if ($activeMembership)
-                // Voucher handling
-                document.getElementById('voucher_code').addEventListener('input', function() {
-                    const enteredCode = this.value.trim();
-                    const validCode = "{{ $activeMembership->voucher_code }}";
-                    const discount = parseFloat({{ $activeMembership->promotion_voucher_cost }});
-                    const originalPrice = parseFloat({{ $selectedPackagePrice }});
+    @if (empty($membershipData))
+        @if ($activeMembership)
+            // Voucher handling for ad packages
+            document.getElementById('voucher_code').addEventListener('input', function() {
+                const enteredCode = this.value.trim();
+                const validCode = "{{ $activeMembership->voucher_code }}";
+                const discount = parseFloat({{ $activeMembership->promotion_voucher_cost }});
+                const originalPrice = parseFloat({{ $selectedPackagePrice }});
 
-                    const discountDisplay = document.getElementById('discount-display');
-                    const discountAmountEl = document.getElementById('discount-amount');
-                    const finalPriceEl = document.getElementById('final-price-display');
-                    const buttonPrice = document.getElementById('button-price');
+                const discountDisplay = document.getElementById('discount-display');
+                const discountAmountEl = document.getElementById('discount-amount');
+                const finalPriceEl = document.getElementById('final-price-display');
+                const buttonPrice = document.getElementById('button-price');
 
-                    if (enteredCode && enteredCode === validCode) {
-                        finalPrice = originalPrice - discount;
-                        if (finalPrice < 0) finalPrice = 0;
+                if (enteredCode && enteredCode === validCode) {
+                    finalPrice = originalPrice - discount;
+                    if (finalPrice < 0) finalPrice = 0;
 
-                        // Show discount section
-                        discountDisplay.style.display = 'block';
-                        discountAmountEl.textContent = "LKR " + finalPrice.toFixed(2);
-                        finalPriceEl.textContent = "LKR " + finalPrice.toFixed(2);
+                    // Show discount section
+                    discountDisplay.style.display = 'block';
+                    discountAmountEl.textContent = "LKR " + finalPrice.toFixed(2);
+                    finalPriceEl.textContent = "LKR " + finalPrice.toFixed(2);
 
-                        // Update button price
-                        buttonPrice.textContent = finalPrice.toFixed(2);
+                    // Update button price
+                    buttonPrice.textContent = finalPrice.toFixed(2);
 
-                    } else {
-                        finalPrice = originalPrice;
+                } else {
+                    finalPrice = originalPrice;
 
-                        // Hide discount section
-                        discountDisplay.style.display = 'none';
+                    // Hide discount section
+                    discountDisplay.style.display = 'none';
 
-                        // Reset button price
-                        buttonPrice.textContent = originalPrice.toFixed(2);
-                    }
-                });
+                    // Reset button price
+                    buttonPrice.textContent = originalPrice.toFixed(2);
+                }
+            });
+        @endif
+    @endif
+
+
+    function returnForm() {
+        // Show spinner & disable button
+        document.getElementById('btnSpinner').style.display = 'inline-block';
+        document.getElementById('payNowBtn').disabled = true;
+
+        // Define billing variables
+        let billingStreet, billingCity, billingCountry;
+        let needsBillingValidation = false;
+
+        // Determine if we need billing validation
+        @if (!empty($membershipData))
+            // Membership purchase always needs billing
+            needsBillingValidation = true;
+        @else
+            @if (!$activeMembership)
+                // Ad package without active membership needs billing
+                needsBillingValidation = true;
             @endif
         @endif
 
+        // Get billing details if needed
+        if (needsBillingValidation) {
+            billingStreet = document.getElementById('billing_street').value.trim();
+            billingCity = document.getElementById('billing_city').value.trim();
+            billingCountry = document.getElementById('billing_country').value.trim();
 
-        function returnForm() {
-            @if (empty($membershipData))
-                @if (!$activeMembership)
-                    // Only validate billing if no membership
-                    const billingStreet = document.getElementById('billing_street').value.trim();
-                    const billingCity = document.getElementById('billing_city').value.trim();
-                    const billingCountry = document.getElementById('billing_country').value.trim();
+            if (!billingStreet || !billingCity || !billingCountry) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Missing Billing Information',
+                    text: 'Please fill in all required billing details.',
+                });
+                // Re-enable button
+                document.getElementById('btnSpinner').style.display = 'none';
+                document.getElementById('payNowBtn').disabled = false;
+                return;
+            }
+        } else {
+            // Use placeholder values for ad packages with active membership
+            billingStreet = "N/A";
+            billingCity = "N/A";
+            billingCountry = "LKA";
+        }
 
-                    if (!billingStreet || !billingCity || !billingCountry) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Missing Billing Information',
-                            text: 'Please fill in all required billing details.',
-                        });
-                        return;
-                    }
-                @endif
+        // Calculate final payment amount
+        const paymentAmount = parseFloat(finalPrice.toFixed(2));
 
+        // Check if this is a free (voucher-covered) transaction
+        @if (empty($membershipData))
+            if (paymentAmount === 0) {
+                document.getElementById('payNowText').textContent = "Completing...";
 
-                // Show spinner & disable button
-                document.getElementById('btnSpinner').style.display = 'inline-block';
-                document.getElementById('payNowBtn').disabled = true;
-
-                // Ensure finalPrice is a proper number with 2 decimals
-                const paymentAmount = parseFloat(finalPrice.toFixed(2));
-
-                // If final price is zero, skip payment gateway
-                if (paymentAmount === 0) {
-                    document.getElementById('payNowText').textContent = "Completing...";
-
-                    fetch("{{ route('payment.free.complete') }}", {
-                            method: "POST",
-                            headers: {
-                                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                invoiceId: "{{ $invoiceId }}",
-                                adData: {
-                                    ...{!! json_encode($adData) !!},
-                                    user_id: "{{ auth()->id() }}",
-                                    voucher_amount: (paymentAmount === 0 ?
-                                        {{ $activeMembership->promotion_voucher_cost ?? 0 }} : 0),
-                                }
-                            })
-                        })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.success) {
-                                window.location.href = "{{ route('user.my_ads') }}";
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: data.message || "Something went wrong!"
-                                });
-                                // Re-enable button if error
-                                document.getElementById('btnSpinner').style.display = 'none';
-                                document.getElementById('payNowBtn').disabled = false;
-                                document.getElementById('payNowText').textContent = "Pay Now - LKR " + paymentAmount
-                                    .toFixed(2);
+                fetch("{{ route('payment.free.complete') }}", {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            invoiceId: "{{ $invoiceId }}",
+                            adData: {
+                                ...{!! json_encode($adData) !!},
+                                user_id: "{{ auth()->id() }}",
+                                voucher_amount: {{ $activeMembership->promotion_voucher_cost ?? 0 }},
                             }
                         })
-                        .catch(() => {
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = "{{ route('user.my_ads') }}";
+                        } else {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
-                                text: "Request failed. Please try again!"
+                                text: data.message || "Something went wrong!"
                             });
                             // Re-enable button if error
                             document.getElementById('btnSpinner').style.display = 'none';
                             document.getElementById('payNowBtn').disabled = false;
                             document.getElementById('payNowText').textContent = "Pay Now - LKR " + paymentAmount
                                 .toFixed(2);
+                        }
+                    })
+                    .catch(() => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: "Request failed. Please try again!"
                         });
+                        // Re-enable button if error
+                        document.getElementById('btnSpinner').style.display = 'none';
+                        document.getElementById('payNowBtn').disabled = false;
+                        document.getElementById('payNowText').textContent = "Pay Now - LKR " + paymentAmount
+                            .toFixed(2);
+                    });
 
-                    return; // Stop further execution
-                }
-            @endif
-            // Else → go through normal payment gateway
-            document.getElementById('payNowText').textContent = "Processing...";
+                return; // Stop further execution
+            }
+        @endif
 
-            const payment = {
-                logoUrl: "{{ config('ipg.logo-url') }}",
-                returnUrl: "{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}",
-                checkValue: "{{ session('checkValue') }}",
-                orderDescription: "Payment for Yaka",
-                invoiceId: "{{ session('invoiceId') }}",
-                merchantKey: "{{ config('ipg.merchant-key') }}",
+        // Proceed with payment gateway for non-zero amounts
+        document.getElementById('payNowText').textContent = "Processing...";
 
-                customerFirstName: "{{ auth()->user()->first_name }}",
-                customerLastName: "{{ auth()->user()->last_name }}",
-                customerMobilePhone: "{{ auth()->user()->phone_number }}",
-                customerEmail: "{{ auth()->user()->email }}",
+        const payment = {
+            logoUrl: "{{ config('ipg.logo-url') }}",
+            returnUrl: "{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}",
+            checkValue: "{{ session('checkValue') }}",
+            orderDescription: "Payment for Yaka",
+            invoiceId: "{{ session('invoiceId') }}",
+            merchantKey: "{{ config('ipg.merchant-key') }}",
 
-                // Billing details depend on membershipData
+            customerFirstName: "{{ auth()->user()->first_name }}",
+            customerLastName: "{{ auth()->user()->last_name }}",
+            customerMobilePhone: "{{ auth()->user()->phone_number }}",
+            customerEmail: "{{ auth()->user()->email }}",
 
-                billingAddressStreet: @if (!empty($membershipData))
-                    billingStreet
-                @else
-                    @if ($activeMembership)
-                        "N/A"
-                    @else
-                        billingStreet
-                    @endif
-                @endif ,
+            billingAddressStreet: billingStreet,
+            billingAddressCity: billingCity,
+            billingAddressCountry: billingCountry,
 
-                billingAddressCity: @if (!empty($membershipData))
-                    billingCity
-                @else
-                    @if ($activeMembership)
-                        "N/A"
-                    @else
-                        billingCity
-                    @endif
-                @endif ,
+            amount: paymentAmount.toFixed(2),
+            currencyCode: "LKR",
+            paymentType: "1",
+            notifyUrl: "{{ config('ipg.notify-url') }}"
+        };
 
-                billingAddressCountry: @if (!empty($membershipData))
-                    billingCountry
-                @else
-                    @if ($activeMembership)
-                        "LKA"
-                    @else
-                        billingCountry
-                    @endif
-                @endif ,
+        console.log("Payment data being sent:", payment);
 
-
-                amount: paymentAmount.toFixed(2), // 2 decimals
-                currencyCode: "LKR",
-                paymentType: "1",
-                notifyUrl: "{{ config('ipg.notify-url') }}"
-            };
-
-
-            payablePayment(payment);
-        }
-    </script>
+        // Call the v4 SDK function
+        payablePayment(payment);
+    }
+</script>
 @endsection
