@@ -34,45 +34,53 @@ class PaymentProcessingController extends Controller
         $this->pusherService = $pusherService;
     }
     public function show(Request $request)
-    {
-        $packageId = session('package_id');
-        $packageType = session('package_type');
-        $selectedPackageName = session('selected_package_name');
-        $selectedPackagePrice = session('selected_package_price');
-        $selectedPackageDuration = session('selected_package_duration');
-        $adData = session('ad_data');
+{
+    $packageId = session('package_id');
+    $packageType = session('package_type');
+    $selectedPackageName = session('selected_package_name');
+    $selectedPackagePrice = session('selected_package_price');
+    $selectedPackageDuration = session('selected_package_duration');
+    $adData = session('ad_data');
+    $user = auth()->user();
+    $price = (float) $request->price;
 
-        $invoiceId = "YKAD" . date('YmsHsi');
-        $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
+    $invoiceId = "YKAD" . date('YmsHsi');
+    $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
 
-        PaymentInfo::create([
-            'check_value' => $checkValue,
-            'invoice_id' => $invoiceId,
-            'ad_data' => $adData,
-            'user_id' => auth()->id(),
-        ]);
+    PaymentInfo::create([
+        'check_value' => $checkValue,
+        'invoice_id' => $invoiceId,
+        'ad_data' => $adData ?? json_encode($request->only(['price','promotion_voucher_cost','ads_per_month','valid_month'])),
+        'user_id' => $user->id,
+    ]);
 
-        session(['checkValue' => $checkValue]);
-        session(['invoiceId' => $invoiceId]);
-        session([$invoiceId . 'add_data' => $adData]);
+    session([
+        'checkValue' => $checkValue,
+        'invoiceId' => $invoiceId,
+        'membership_data' => $request->all(),
+        $invoiceId . '_add_data' => $request->only(['price','promotion_voucher_cost','ads_per_month','valid_month'])
+    ]);
 
-        // Find active membership (if any)
-        $activeMembership = MembershipPackage::where('user_id', auth()->id())
-            ->where('expiry_date', '>', now())
-            ->where('promotion_voucher_cost', '>', 0)
-            ->first();
+    // Find active membership
+    $activeMembership = MembershipPackage::where('user_id', $user->id)
+        ->where('expiry_date', '>', now())
+        ->where('promotion_voucher_cost', '>', 0)
+        ->first();
 
-        return view('newFrontend.user.payment', compact(
-            'selectedPackageName',
-            'selectedPackageDuration',
-            'selectedPackagePrice',
-            'packageType',
-            'adData',
-            'checkValue',
-            'invoiceId',
-            'activeMembership'
-        ));
-    }
+    return view('newFrontend.user.payment', [
+        'selectedPackageName' => $selectedPackageName,
+        'selectedPackageDuration' => $selectedPackageDuration,
+        'selectedPackagePrice' => $selectedPackagePrice,
+        'packageType' => $packageType,
+        'adData' => $adData,
+        'checkValue' => $checkValue,
+        'invoiceId' => $invoiceId,
+        'activeMembership' => $activeMembership,
+        'price' => $price,
+        'membershipData' => $request->all(),
+    ]);
+}
+
 
     public function freeComplete(Request $request)
     {
