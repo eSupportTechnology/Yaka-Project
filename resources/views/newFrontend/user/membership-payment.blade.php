@@ -195,7 +195,7 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            window.location.href = "{{ route('membership-package')}}";
+                            window.location.href = "{{ route('membership-package') }}";
                         } else {
                             Swal.fire({
                                 icon: 'error',
