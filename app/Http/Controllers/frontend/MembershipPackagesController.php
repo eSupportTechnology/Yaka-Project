@@ -117,7 +117,7 @@ class MembershipPackagesController extends Controller
             $invoiceId . 'add_data' => $request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])
         ]);
 
-        return view('newFrontend.user.membership-payment', [
+        return view('newFrontend.user.payment', [
             'price' => $price,
             'invoiceId' => $invoiceId,
             'checkValue' => $checkValue,

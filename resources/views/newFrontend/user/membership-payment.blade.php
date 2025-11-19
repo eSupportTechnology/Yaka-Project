@@ -169,7 +169,7 @@
             // show spinner + disable
             document.getElementById('btnSpinner').style.display = 'inline-block';
             document.getElementById('payNowBtn').disabled = true;
-            document.getElementById('payNowText').textContent = 'Processing...';
+
 
             const paymentAmount = parseFloat(finalPrice.toFixed(2));
 
@@ -195,7 +195,7 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            window.location.href = "{{ route('user.my_membership') ?? route('user.my_ads') }}";
+                            window.location.href = "{{ route('membership-package')}}";
                         } else {
                             Swal.fire({
                                 icon: 'error',
@@ -221,6 +221,7 @@
                     });
                 return;
             }
+            document.getElementById('payNowText').textContent = 'Processing...';
 
             // Normal IPG flow — payload shaped the same as ad-payment
             const payment = {
