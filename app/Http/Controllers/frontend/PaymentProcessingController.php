@@ -45,7 +45,13 @@ class PaymentProcessingController extends Controller
     $price = (float) $request->price;
 
     $invoiceId = "YKAD" . date('YmsHsi');
-    $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
+    if(!empty($price) && $price > 0){
+        $checkSource = 'price';
+        $checkValue = IpgHashService::hash($price, $invoiceId);
+    }else{
+        $checkSource = 'selectedPackagePrice';
+        $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
+    }
 
     PaymentInfo::create([
         'check_value' => $checkValue,
@@ -66,6 +72,15 @@ class PaymentProcessingController extends Controller
         ->where('expiry_date', '>', now())
         ->where('promotion_voucher_cost', '>', 0)
         ->first();
+
+        Log::info('Payment Debug', [
+    'invoiceId' => $invoiceId,
+    'checkValue' => $checkValue,
+    'checkSource' => $checkSource,
+    'price' => $price,
+    'selectedPackagePrice' => $selectedPackagePrice
+]);
+
 
     return view('newFrontend.user.payment', [
         'selectedPackageName' => $selectedPackageName,
