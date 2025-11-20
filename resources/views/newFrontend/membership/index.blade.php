@@ -541,7 +541,6 @@
     </section>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
         $('.category-box').on('click', function() {
@@ -585,7 +584,7 @@
                                             <p class="card-text text-muted">@lang('messages.promotion voucher cost'): ${package.promotion_voucher_cost}</p>
                                             <p class="card-text text-muted">@lang('messages.valid month'): ${package.valid_month}</p>
 
-                                            <form action="{{ route('payment.page') }}" method="GET" class="membership-form">
+                                            <form action="{{ route('membership.payment.init') }}" method="POST" class="membership-form">
                                                 @csrf
                                                 <input type="hidden" name="price" value="${package.price}">
                                                 <input type="hidden" name="promotion_voucher_cost" value="${package.promotion_voucher_cost}">

@@ -56,6 +56,7 @@
             <div class="payment-container">
                 <h3 class="mb-4 text-center">Membership Payment</h3>
 
+
                 <div class="card mb-4">
                     <div class="card-body">
                         <p><strong>Price:</strong> Rs {{ number_format($price, 2) }}</p>
@@ -151,113 +152,104 @@
         @endif
 
         document.getElementById('payNowBtn').addEventListener('click', function() {
-            @if (!$hasVoucher)
-                const billingStreet = document.getElementById('billing_street').value.trim();
-                const billingCity = document.getElementById('billing_city').value.trim();
-                const billingCountry = document.getElementById('billing_country').value.trim();
+    alert('Button clicked!'); // Add this line first
 
-                if (!billingStreet || !billingCity || !billingCountry) {
+    @if (!$hasVoucher)
+        const billingStreet = document.getElementById('billing_street').value.trim();
+        const billingCity = document.getElementById('billing_city').value.trim();
+        const billingCountry = document.getElementById('billing_country').value.trim();
+
+        if (!billingStreet || !billingCity || !billingCountry) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Information',
+                text: 'Please fill in all required billing details.'
+            });
+            return;
+        }
+    @endif
+
+    document.getElementById('btnSpinner').style.display = 'inline-block';
+    document.getElementById('payNowBtn').disabled = true;
+
+    const paymentAmount = parseFloat(finalPrice.toFixed(2));
+
+    if (paymentAmount === 0) {
+        document.getElementById('payNowText').textContent = "Completing...";
+        fetch("{{ route('payment.free.complete') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    invoiceId: "{{ $invoiceId }}",
+                    adData: {
+                        ...{!! json_encode($membershipData) !!},
+                        user_id: "{{ auth()->id() }}",
+                        voucher_amount: (paymentAmount === 0 ? {{ $membershipData['promotion_voucher_cost'] ?? 0 }} : 0),
+                    }
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "{{ route('membership-package') }}";
+                } else {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Missing Information',
-                        text: 'Please fill in all required billing details.'
+                        title: 'Error',
+                        text: data.message || "Something went wrong!"
                     });
-                    return;
+                    document.getElementById('btnSpinner').style.display = 'none';
+                    document.getElementById('payNowBtn').disabled = false;
+                    document.getElementById('payNowText').textContent = "Pay Now - Rs " + paymentAmount.toFixed(2);
                 }
-            @endif
+            })
+            .catch(() => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: "Request failed. Please try again!"
+                });
+                document.getElementById('btnSpinner').style.display = 'none';
+                document.getElementById('payNowBtn').disabled = false;
+                document.getElementById('payNowText').textContent = "Pay Now - Rs " + paymentAmount.toFixed(2);
+            });
+        return;
+    }
 
-            // show spinner + disable
-            document.getElementById('btnSpinner').style.display = 'inline-block';
-            document.getElementById('payNowBtn').disabled = true;
+    document.getElementById('payNowText').textContent = 'Processing...';
 
+    const payment = {
+        logoUrl: "{{ config('ipg.logo-url') }}",
+        returnUrl: "{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}",
+        checkValue: "{{ $checkValue }}",
+        orderDescription: "Membership Payment for Yaka",
+        invoiceId: "{{ $invoiceId }}",
+        merchantKey: "{{ config('ipg.merchant-key') }}",
+        customerFirstName: "{{ auth()->user()->first_name }}",
+        customerLastName: "{{ auth()->user()->last_name }}",
+        customerMobilePhone: "{{ auth()->user()->phone_number }}",
+        customerEmail: "{{ auth()->user()->email }}",
+        billingAddressStreet: @if ($hasVoucher) "N/A" @else billingStreet @endif,
+        billingAddressCity: @if ($hasVoucher) "N/A" @else billingCity @endif,
+        billingAddressCountry: "LKA",
+        amount: paymentAmount.toFixed(2),
+        currencyCode: "LKR",
+        paymentType: "1",
+        notifyUrl: "{{ config('ipg.notify-url') }}"
+    };
 
-            const paymentAmount = parseFloat(finalPrice.toFixed(2));
+    console.log('=== Payment Data Being Sent ===');
+console.log('Invoice ID:', payment.invoiceId);
+console.log('Check Value:', payment.checkValue);
+console.log('Merchant Key:', payment.merchantKey);
+console.log('Amount:', payment.amount);
+console.log('Full Payment Object:', payment);
+console.log('================================');
 
-            // if zero -> call free-complete endpoint (mirror ad behavior)
-            if (paymentAmount === 0) {
-                document.getElementById('payNowText').textContent = "Completing...";
-                fetch("{{ route('payment.free.complete') }}", {
-                        method: "POST",
-                        headers: {
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            invoiceId: "{{ $invoiceId }}",
-                            adData: {
-                                ...{!! json_encode($membershipData) !!},
-                                user_id: "{{ auth()->id() }}",
-                                voucher_amount: (paymentAmount === 0 ?
-                                    {{ $membershipData['promotion_voucher_cost'] ?? 0 }} : 0),
-                            }
-                        })
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            window.location.href = "{{ route('membership-package') }}";
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: data.message || "Something went wrong!"
-                            });
-                            document.getElementById('btnSpinner').style.display = 'none';
-                            document.getElementById('payNowBtn').disabled = false;
-                            document.getElementById('payNowText').textContent = "Pay Now - Rs " + paymentAmount
-                                .toFixed(2);
-                        }
-                    })
-                    .catch(() => {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: "Request failed. Please try again!"
-                        });
-                        document.getElementById('btnSpinner').style.display = 'none';
-                        document.getElementById('payNowBtn').disabled = false;
-                        document.getElementById('payNowText').textContent = "Pay Now - Rs " + paymentAmount
-                            .toFixed(2);
-                    });
-                return;
-            }
-            document.getElementById('payNowText').textContent = 'Processing...';
-
-            // Normal IPG flow — payload shaped the same as ad-payment
-            const payment = {
-                logoUrl: "{{ config('ipg.logo-url') }}",
-                returnUrl: "{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}",
-                checkValue: "{{ session('checkValue') }}",
-                orderDescription: "Membership Payment for Yaka",
-                invoiceId: "{{ session('invoiceId') }}",
-                merchantKey: "{{ config('ipg.merchant-key') }}",
-                customerFirstName: "{{ auth()->user()->first_name }}",
-                customerLastName: "{{ auth()->user()->last_name }}",
-                customerMobilePhone: "{{ auth()->user()->phone_number }}",
-                customerEmail: "{{ auth()->user()->email }}",
-                billingAddressStreet: @if ($hasVoucher)
-                    "N/A"
-                @else
-                    billingStreet
-                @endif ,
-                billingAddressCity: @if ($hasVoucher)
-                    "N/A"
-                @else
-                    billingCity
-                @endif ,
-                billingAddressCountry: @if ($hasVoucher)
-                    "LKA"
-                @else
-                    billingCountry
-                @endif ,
-                amount: paymentAmount.toFixed(2),
-                currencyCode: "LKR",
-                paymentType: "1",
-                notifyUrl: "{{ config('ipg.notify-url') }}"
-            };
-
-            // call the same helper that your ad flow uses
-            payablePayment(payment);
-        });
+payablePayment(payment);
+});
     </script>
 @endsection

@@ -148,8 +148,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/payment/free-complete', [PaymentProcessingController::class, 'freeComplete'])->name('payment.free.complete');
     // Route::post('/payment/complete', [PaymentProcessingController::class, 'complete'])->name('payment.complete');
     Route::get('/payment/checking', [PaymentProcessingController::class, 'complete'])->name('payment.checking');
-    Route::post('/membership/payment/init', [MembershipPackagesController::class, 'initPayment'])
-        ->name('membership.payment.init');
+    Route::match(['get', 'post'], '/membership/payment/init', [MembershipPackagesController::class, 'initPayment'])
+    ->name('membership.payment.init');
     Route::get('/membership-package', [MembershipPackagesController::class, 'index'])->name('membership-package');
     Route::post('/membership/store', [MembershipPackagesController::class, 'store'])->name('membership.store');
     Route::get('/check-active-membership/{categoryId}', [MembershipPackagesController::class, 'checkActiveMembership']);
