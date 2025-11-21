@@ -157,7 +157,7 @@ class MembershipPackagesController extends Controller
         $invoiceId = "YKMB" . now()->format('ymdHis');
 
         // Generates the checkValue using the IpgHashService (make sure implementation matches Payable docs)
-        $checkValue = IpgHashService::hash($price, $invoiceId);
+        $checkValue = IpgHashService::hash(number_format($price, 2, '.', ''), $invoiceId);
 
         PaymentInfo::create([
             'check_value' => $checkValue,
@@ -174,8 +174,15 @@ class MembershipPackagesController extends Controller
             $invoiceId . 'add_data' => $request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])
         ]);
 
+        Log::info('Payment Debug', [
+    'invoiceId' => $invoiceId,
+    'price' => $price,
+    'checkValue' => $checkValue,
+
+]);
+
         // Blade view will include Payable SDK integration (see newFrontend.user.payment below)
-        return view('newFrontend.user.payment', [
+        return view('newFrontend.user.membership-payment', [
             'price' => $price,
             'invoiceId' => $invoiceId,
             'checkValue' => $checkValue,
