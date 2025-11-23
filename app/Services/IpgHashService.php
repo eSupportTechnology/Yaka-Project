@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Log;
 
 class IpgHashService
 {
@@ -12,6 +13,11 @@ class IpgHashService
         $amount = $amount;
         $currencyCode = 'LKR';
         $merchantToken = config('ipg.merchant-token');
+
+       Log::info('Payment hash', [
+                'amount' => $amount,
+
+            ]);
 
         // Step 1: Generate SHA512 of merchantToken and convert to uppercase
         $hashedToken = strtoupper(hash('sha512', $merchantToken));

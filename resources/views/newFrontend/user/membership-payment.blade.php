@@ -73,29 +73,6 @@
                         <input type="hidden" name="return_url" id="return_url"
                             value="{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}">
 
-                        @php
-                            $hasVoucher =
-                                isset($membershipData['promotion_voucher_cost']) &&
-                                (float) $membershipData['promotion_voucher_cost'] > 0;
-                        @endphp
-
-                        @if ($hasVoucher && (float) $membershipData['promotion_voucher_cost'] >= (float) $price)
-                            <label for="voucher_code">Voucher Code</label>
-                            <input type="text" class="form-control" id="voucher_code"
-                                placeholder="Enter your voucher code">
-                            <p id="voucher-status" class="mt-2" style="display:none;"></p>
-
-                            <div id="discount-display" style="display:none;" class="mt-2">
-                                <div class="card p-2">
-                                    <p class="mb-1"><strong>Original Price:</strong> <span class="text-muted">Rs
-                                            {{ number_format($price, 2) }}</span></p>
-                                    <p class="mb-1"><strong>Voucher Amount:</strong> <span id="discount-amount">-</span>
-                                    </p>
-                                    <p class="mb-0"><strong>Final Price:</strong> Rs <span
-                                            id="final-price-display">{{ number_format($price, 2) }}</span></p>
-                                </div>
-                            </div>
-                        @else
                             <label for="billing_street">Billing Address Street <span style="color:red;">*</span></label>
                             <input class="form-control" type="text" id="billing_street"
                                 placeholder="Enter street address">
@@ -105,7 +82,6 @@
 
                             <label for="billing_country">Billing Address Country <span style="color:red;">*</span></label>
                             <input class="form-control" type="text" id="billing_country" value="LKA" readonly>
-                        @endif
 
                     </div>
                 </div>
@@ -123,34 +99,6 @@
 
         // keep finalPrice consistent with ad flow
         let finalPrice = parseFloat({{ $price }});
-
-        // @if ($hasVoucher)
-        //     document.getElementById('voucher_code').addEventListener('input', function() {
-        //         const enteredCode = this.value.trim();
-        //         const validCode = "{{ $membershipData['voucher_code'] ?? '' }}";
-        //         const discount = parseFloat({{ $membershipData['promotion_voucher_cost'] ?? 0 }});
-        //         const originalPrice = parseFloat({{ $price }});
-
-        //         const discountDisplay = document.getElementById('discount-display');
-        //         const discountAmountEl = document.getElementById('discount-amount');
-        //         const finalPriceEl = document.getElementById('final-price-display');
-        //         const buttonPrice = document.getElementById('button-price');
-
-        //         if (enteredCode && enteredCode === validCode) {
-        //             finalPrice = originalPrice - discount;
-        //             if (finalPrice < 0) finalPrice = 0;
-
-        //             discountDisplay.style.display = 'block';
-        //             discountAmountEl.textContent = "Rs " + discount.toFixed(2);
-        //             finalPriceEl.textContent = finalPrice.toFixed(2);
-        //             buttonPrice.textContent = finalPrice.toFixed(2);
-        //         } else {
-        //             finalPrice = originalPrice;
-        //             discountDisplay.style.display = 'none';
-        //             buttonPrice.textContent = originalPrice.toFixed(2);
-        //         }
-        //     });
-        // @endif
 
         document.getElementById('payNowBtn').addEventListener('click', function() {
 
@@ -227,7 +175,7 @@
 
             const payment = {
                 logoUrl: "{{ config('ipg.logo-url') }}",
-                returnUrl: "{{ env('APP_URL') }}/payment/checking?invId={{ $invoiceId }}",
+                returnUrl: "{{ config('ipg.base_url') }}/payment/checking?invId={{ $invoiceId }}",
                 checkValue: "{{ $checkValue }}",
                 orderDescription: "Membership Payment for Yaka",
                 invoiceId: "{{ $invoiceId }}",
