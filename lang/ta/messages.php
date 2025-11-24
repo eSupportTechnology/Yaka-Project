@@ -672,4 +672,6 @@ return [
     'business name' => 'வணிகத்தின் பெயர்',
     'email' => 'மின்னஞ்சல்',
     'phone number' => 'தொலைபேசி எண்',
+    'No super ads available at the moment' => 'தற்போது எந்த சூப்பர் விளம்பரங்களும் கிடைக்கவில்லை',
+    'No top ads available at the moment' => 'தற்போது எந்த சிறப்பு விளம்பரங்களும் கிடைக்கவில்லை',
 ];

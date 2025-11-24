@@ -664,6 +664,8 @@ return [
     'business name' => 'නිර්මාණුවාකයේ නම',
     'email' => 'ඊමේල්',
     'phone number' => 'දුරකථන අංකය',
+    'No super ads available at the moment' => 'මේ මොහොතේ සුපිරි දැන්වීම් නොමැත.',
+    'No top ads available at the moment' => 'මේ මොහොතේ ඉහළම දැන්වීම් නොමැත.',
 
 
 
