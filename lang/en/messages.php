@@ -666,4 +666,6 @@ return [
     'business name' => 'Business name',
     'email' => 'Email',
     'phone number' => 'Phone number',
+    'No super ads available at the moment' => 'No super ads available at the moment.',
+    'No top ads available at the moment' => 'No Top ads available at the moment.',
 ];
