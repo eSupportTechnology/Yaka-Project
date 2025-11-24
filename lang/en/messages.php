@@ -35,12 +35,12 @@ return [
     'Privacy & Safety' => 'Privacy & Safety',
     'Terms & Conditions' => 'Terms & Conditions',
     'General' => 'General',
-    'Tips' => 'Tips' ,
+    'Tips' => 'Tips',
     'Boosting ads' => 'Boosting ads',
     'Ad posting allowances' => 'Ad posting allowances',
     'Ad posting criteria' => 'Ad posting criteria',
-    'Home' => 'Home' ,
-    'About Our Company' => 'About Our Company' ,
+    'Home' => 'Home',
+    'About Our Company' => 'About Our Company',
     'para5' => 'Yaka.lk is the largest growing market place in Sri Lanka.
                 This is a 100 % Sri Lankan website which designed specially to suit Sri Lankans.
                 If you want to buy or sell anything, you have arrived to the right destination.Yaka.
@@ -48,11 +48,11 @@ return [
                 as Electronics, Vehicles, Property, jobs, Industrial, etc., also you can use search filters
                 in order to make it quick in findings.You can create free account in yaka.lk and post your
                 advertisement within no time and as soon as you publish, we will review it and allow to view
-                in website. Also, you can choose add promotion packages for better results.' ,
-    'What We Do' => 'What We Do' ,
+                in website. Also, you can choose add promotion packages for better results.',
+    'What We Do' => 'What We Do',
     'para6' => 'Yaka.lk is a fast and easy platform for posting and discovering classified ads. Whether selling a product, offering a service, or finding great deals, our user-friendly interface makes it simple.
                                         We efficiently connect buyers and sellers with advanced search filters and location-based listings, ensuring a hassle-free experience.
-                                        Our goal is to make online classifieds secure and effective with quick ad approvals and reliable support, helping you buy and sell with confidence.' ,
+                                        Our goal is to make online classifieds secure and effective with quick ad approvals and reliable support, helping you buy and sell with confidence.',
 
     'Process' => 'Process',
     'How it Works' => 'How it Works',
@@ -130,7 +130,7 @@ return [
     'Jobs & Overseas jobs' => 'Jobs & Overseas jobs',
     'Other Ads' => 'Other Ads',
     'Browse Ads' => 'Browse Ads',
-    'Free Ads'=>'Free Ads',
+    'Free Ads' => 'Free Ads',
     'free_ad_posting' => 'Free ad posting is available in every category. Contact us to become a Yaka.lk subscriber and own your stall today.',
 
     'Search' => 'Search',
@@ -175,10 +175,10 @@ return [
     'Top Ad' => 'Top Ads',
     'Super' => 'Super Ads',
     'Urgent' => 'Urgent Ads',
-    'Select Package Type'=>'Select Package Type',
-    'Upload Main Image'=>'Upload Main Image',
-    'Upload Sub Image'=>'Upload Sub Image',
-    'Publish Your Ad'=>'Publish Your Ad',
+    'Select Package Type' => 'Select Package Type',
+    'Upload Main Image' => 'Upload Main Image',
+    'Upload Sub Image' => 'Upload Sub Image',
+    'Publish Your Ad' => 'Publish Your Ad',
 
 
 
@@ -242,21 +242,21 @@ return [
 
     'Our Terms & Conditions' => 'Our Terms & Conditions',
 
-     //Terms & Conditions page
+    //Terms & Conditions page
 
-     'Acceptance of Terms' => 'Acceptance of Terms',
-     'Acceptance line1'=>'By accessing or using [Yaka.lk] (“the Website”), you agree to be bound by these Terms and Conditions.',
-     'Acceptance line2'=>'If you do not agree to these terms, you may not use the Website',
+    'Acceptance of Terms' => 'Acceptance of Terms',
+    'Acceptance line1' => 'By accessing or using [Yaka.lk] (“the Website”), you agree to be bound by these Terms and Conditions.',
+    'Acceptance line2' => 'If you do not agree to these terms, you may not use the Website',
 
-     'User Registration and Eligibility' => 'User Registration and Eligibility',
-     'Eligibility line1'=>'Users must be at least 18 years old to create an account.',
-     'Eligibility line2'=>'You agree to provide accurate and up-to-date information during registration.',
-     'Eligibility line3'=>'We reserve the right to terminate accounts that violate these terms.',
+    'User Registration and Eligibility' => 'User Registration and Eligibility',
+    'Eligibility line1' => 'Users must be at least 18 years old to create an account.',
+    'Eligibility line2' => 'You agree to provide accurate and up-to-date information during registration.',
+    'Eligibility line3' => 'We reserve the right to terminate accounts that violate these terms.',
 
-     'Listing and Posting Rules' => 'Listing and Posting Rules',
-    'Posting Rules line1'=>'You are responsible for ensuring that the information provided in your listing is accurate and complete.',
-    'Posting Rules line2'=>'Illegal items, stolen goods, counterfeit products, and prohibited services are strictly forbidden.',
-    'Posting Rules line3'=>'We reserve the right to remove or suspend listings that violate these terms without notice.',
+    'Listing and Posting Rules' => 'Listing and Posting Rules',
+    'Posting Rules line1' => 'You are responsible for ensuring that the information provided in your listing is accurate and complete.',
+    'Posting Rules line2' => 'Illegal items, stolen goods, counterfeit products, and prohibited services are strictly forbidden.',
+    'Posting Rules line3' => 'We reserve the right to remove or suspend listings that violate these terms without notice.',
 
     'Fees and Payment' => 'Fees and Payment',
     'Fees line1' => 'Some listings may require a fee to post. All fees are non-refundable.',
@@ -410,8 +410,8 @@ return [
 
 
 
-    'Main Categories'=>'Main Categories',
-    'Subcategories'=>'Sub categories',
+    'Main Categories' => 'Main Categories',
+    'Subcategories' => 'Sub categories',
 
     //Search-results
     'search_results' => 'Search Results',
@@ -621,48 +621,49 @@ return [
     'Painter' => 'Painter',
     'Architect' => 'Architect',
 
-    'Other Ad'=>'Other Ad',
+    'Other Ad' => 'Other Ad',
 
-    'Land For  Sale / Rent / booking'=>'Land For Sale / Rent / booking',
-    'Houses For  Sale / Rent / booking'=>'Houses For  Sale / Rent / booking',
-    'Apartments For  Sale / Rent / booking'=>'Apartments For  Sale / Rent / booking',
-    'Commercial Properties For  Sale / Rent / booking'=>'Commercial Properties For  Sale / Rent / booking',
+    'Land For  Sale / Rent / booking' => 'Land For Sale / Rent / booking',
+    'Houses For  Sale / Rent / booking' => 'Houses For  Sale / Rent / booking',
+    'Apartments For  Sale / Rent / booking' => 'Apartments For  Sale / Rent / booking',
+    'Commercial Properties For  Sale / Rent / booking' => 'Commercial Properties For  Sale / Rent / booking',
 
-    'Salary'=>'Salary',
-     'Logo' => 'Logo',
+    'Salary' => 'Salary',
+    'Logo' => 'Logo',
     'Description Image' => 'Description Image',
     'Job Description' => 'Job Description',
 
     'Required Work Experience (years)' => 'Required Work Experience (years)',
-'Required Education' => 'Required Education',
-'Application Deadline' => 'Application Deadline',
-'Optional' => 'Optional',
-'Select Education' => 'Select Education',
-'Mobile Number' => 'Mobile Number',
-'membership' => 'Membership',
-'ads per month' => 'Ads per month',
-'promotion voucher cost' => 'Promotion voucher cost',
-'valid month' => 'Valid month',
-'purchase now' => 'Purchase now',
-'active membership' => 'Active membership',
-'my membership' => 'My membership',
-'month' => 'Month',
-'start date' => 'Start date',
-'expiry date' => 'Expiry date',
-'voucher code' => 'Voucher code',
-'membership payment' => 'Membership payment',
-'pay now' => 'Pay now',
-'benefits of being a loyalty member' => 'Benefits of being a loyalty member',
-'your own stall on yaka.lk' => 'Your own stall on yaka.lk',
-'badges' => 'Badges',
-'member' => 'Member',
-'verified' => 'Verified',
-'get reviews for your stall' => 'Get reviews for your stall',
-'free promo codes' => 'Free promo codes',
-'add your shop location' => 'Add your shop location',
-'you can see statistics' => 'You can see statistics',
-'customer support' => 'Customer support',
-'become a member now' => 'Become a member now',
+    'Required Education' => 'Required Education',
+    'Application Deadline' => 'Application Deadline',
+    'Optional' => 'Optional',
+    'Select Education' => 'Select Education',
+    'Mobile Number' => 'Mobile Number',
+    'membership' => 'Membership',
+    'ads per month' => 'Ads per month',
+    'promotion voucher cost' => 'Promotion voucher cost',
+    'valid month' => 'Valid month',
+    'purchase now' => 'Purchase now',
+    'active membership' => 'Active membership',
+    'my membership' => 'My membership',
+    'month' => 'Month',
+    'start date' => 'Start date',
+    'expiry date' => 'Expiry date',
+    'voucher code' => 'Voucher code',
+    'membership payment' => 'Membership payment',
+    'pay now' => 'Pay now',
+    'benefits of being a loyalty member' => 'Benefits of being a loyalty member',
+    'your own stall on yaka.lk' => 'Your own stall on yaka.lk',
+    'badges' => 'Badges',
+    'member' => 'Member',
+    'verified' => 'Verified',
+    'get reviews for your stall' => 'Get reviews for your stall',
+    'free promo codes' => 'Free promo codes',
+    'add your shop location' => 'Add your shop location',
+    'you can see statistics' => 'You can see statistics',
+    'customer support' => 'Customer support',
+    'become a member now' => 'Become a member now',
+    'business name' => 'Business name',
+    'email' => 'Email',
+    'phone number' => 'Phone number',
 ];
-
-
