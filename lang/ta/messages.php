@@ -674,4 +674,9 @@ return [
     'phone number' => 'தொலைபேசி எண்',
     'No super ads available at the moment' => 'தற்போது எந்த சூப்பர் விளம்பரங்களும் கிடைக்கவில்லை',
     'No top ads available at the moment' => 'தற்போது எந்த சிறப்பு விளம்பரங்களும் கிடைக்கவில்லை',
+    'Bed Rooms' => 'படுக்கையறைகள்',
+    'Bath Rooms' => 'குளியலறைகள்',
+    'House Size (sqft)' => 'வீட்டின் அளவு (சதுர அடி)',
+    'Land Size (Perches)' => 'நில அளவு (பேர்சஸ்)',
+    'Update Your Ad' => 'உங்கள் விளம்பரத்தை புதுப்பிக்கவும்',
 ];

@@ -668,4 +668,9 @@ return [
     'phone number' => 'Phone number',
     'No super ads available at the moment' => 'No super ads available at the moment.',
     'No top ads available at the moment' => 'No Top ads available at the moment.',
+    'Bed Rooms' => 'Bed Rooms',
+    'Bath Rooms' => 'Bath Rooms',
+    'House Size (sqft)' => 'House Size (sqft)',
+    'Land Size (Perches)' => 'Land Size (Perches)',
+    'Update Your Ad' => 'Update Your Ad',
 ];

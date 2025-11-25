@@ -262,7 +262,7 @@ class AdsController extends Controller
         return view('newFrontend.browse-ads-details', compact('ad', 'banners', 'mainImage', 'subImages', 'otherbanners', 'relatedAds', 'brand', 'model'));
     }
 
-    
+
 
 
 
@@ -465,7 +465,7 @@ class AdsController extends Controller
                     $packageExpireAt = Carbon::now()->addDays((int)($packageType->duration));
                 }
             } else {
-                $packageExpireAt = Carbon::now()->addDays(30);
+                $packageExpireAt = Carbon::now()->addDays(180);
             }
 
             // Handle images (for API, you might want to handle base64 or URLs)
