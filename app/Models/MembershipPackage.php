@@ -14,7 +14,10 @@ class MembershipPackage extends Model
         'voucher_code',
         'price',
         'promotion_voucher_cost',
-        'valid_month'
+        'valid_month',
+        'business_name',
+        'business_email',
+        'business_phone',
     ];
 
     public function user()

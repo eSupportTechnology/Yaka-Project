@@ -472,7 +472,7 @@ class PaymentProcessingController extends Controller
 
         // (Optional) call PAYable API here to confirm payment status.
 
-        if ($payment->status === 'SUCCESS') {
+        if ($payment->status === 'SUCCESS' || $payment->status === 1) {
             return redirect()->route('membership-package')->with('success', 'Payment successful!');
         }
 
@@ -504,13 +504,19 @@ class PaymentProcessingController extends Controller
             $payment->save();
         }
 
-        if ($status === 'SUCCESS') {
+        if ($status === 'SUCCESS' || $status === 1) {
             MembershipPackage::create([
                 'user_id' => $payment->user_id,
-                'package_id' => json_decode($payment->ad_data)->package_id,
                 'start_date' => now(),
                 'expiry_date' => now()->addMonths(json_decode($payment->ad_data)->valid_month),
-                'voucher_code' => strtoupper(Str::random(8)),
+                'ads_per_month' => json_decode($payment->ad_data)->ads_per_month,
+                'voucher_code' => strtoupper(Str::random(6)),
+                'price' => json_decode($payment->ad_data)->price,
+                'promotion_voucher_cost' => json_decode($payment->ad_data)->promotion_voucher_cost,
+                'valid_month' => json_decode($payment->ad_data)->valid_month,
+                'business_name' => json_decode($payment->ad_data)->business_name,
+                'business_email' => json_decode($payment->ad_data)->business_email,
+                'business_phone' => json_decode($payment->ad_data)->business_phone,
             ]);
         }
 
