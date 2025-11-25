@@ -176,7 +176,7 @@ class UserAdsApiController extends Controller
                     $packageExpireAt = Carbon::now()->addDays((int)($packageType->duration));
                 }
             } else {
-                $packageExpireAt = Carbon::now()->addDays(30);
+                $packageExpireAt = Carbon::now()->addDays(180);
             }
 
             // Image processing

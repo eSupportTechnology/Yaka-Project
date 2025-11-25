@@ -213,7 +213,7 @@ class PaymentProcessingController extends Controller
                     $packageExpireAt = Carbon::now()->addDays((int) ($packageType->duration));
                 }
             } else {
-                $packageExpireAt = Carbon::now()->addDays(30);
+                $packageExpireAt = Carbon::now()->addDays(180);
             }
 
             $brand = $adData['brand'] ?? 'no brand';
@@ -467,16 +467,16 @@ class PaymentProcessingController extends Controller
         $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
 
         if (!$payment) {
-            return redirect()->route('membership.index')->with('error', 'Invalid invoice.');
+            return redirect()->route('membership-package')->with('error', 'Invalid invoice.');
         }
 
         // (Optional) call PAYable API here to confirm payment status.
 
         if ($payment->status === 'SUCCESS') {
-            return redirect()->route('membership.index')->with('success', 'Payment successful!');
+            return redirect()->route('membership-package')->with('success', 'Payment successful!');
         }
 
-        return redirect()->route('membership.index')->with('error', 'Payment failed or pending.');
+        return redirect()->route('membership-package')->with('error', 'Payment failed or pending.');
     }
 
     public function notifyPayment(Request $request)

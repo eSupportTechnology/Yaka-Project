@@ -86,8 +86,11 @@ class UserAdsController extends Controller
 
 
     public function ad_posts(Request $request)
-    {
-        $categories = Category::where('status', 1)->where('mainId', 0)->get();
+{
+    try {
+        $categories = Category::where('status', 1)
+            ->where('mainId', 0)
+            ->get();
 
         $subcategories = collect();
         if ($request->cat_id) {
@@ -101,7 +104,6 @@ class UserAdsController extends Controller
                 ->get();
         }
 
-        // Get models based on brandId and subCatId
         $models = collect();
         if ($request->brand && $request->sub_cat_id) {
             $models = BrandsModels::where('brandsId', $request->brand)
@@ -119,18 +121,31 @@ class UserAdsController extends Controller
             ->get();
 
         return view('newFrontend.user.ad_posts', [
-            'categories' => $categories,
+            'categories'    => $categories,
             'subcategories' => $subcategories,
-            'brands' => $brands,
-            'models' => $models,
-            'formFields' => $formFields,
-            'packages' => $packages,
-            'cat_id' => $request->query('cat_id', 0),
-            'sub_cat_id' => $request->query('sub_cat_id', 0),
-            'location' => $request->query('location', 0),
-            'sublocation' => $request->query('sublocation', 0)
+            'brands'        => $brands,
+            'models'        => $models,
+            'formFields'    => $formFields,
+            'packages'      => $packages,
+            'cat_id'        => $request->query('cat_id', 0),
+            'sub_cat_id'    => $request->query('sub_cat_id', 0),
+            'location'      => $request->query('location', 0),
+            'sublocation'   => $request->query('sublocation', 0)
         ]);
+
+    } catch (\Exception $e) {
+
+        // Log the full error for debugging
+        Log::error('Ad post loading error: '.$e->getMessage(), [
+            'file' => $e->getFile(),
+            'line' => $e->getLine()
+        ]);
+
+        // Optional: Show a friendly message to the user
+        return redirect()->back()->with('error', 'Something went wrong while loading the ad posting page.');
     }
+}
+
 
 
 
@@ -255,7 +270,7 @@ class UserAdsController extends Controller
                     $packageExpireAt = Carbon::now()->addDays((int)($packageType->duration));
                 }
             } else {
-                $packageExpireAt = Carbon::now()->addDays(30);
+                $packageExpireAt = Carbon::now()->addDays(180);
             }
 
             $manager = new ImageManager(new Driver());
@@ -341,11 +356,11 @@ class UserAdsController extends Controller
                 'mobile_number' => $request->input('mobile_number'),
                 'rotation_position' => -1,
                 'last_rotated_at' => now(),
-                'address' =>$validated['address'],
-                'bed_room' =>$validated['bed_room'],
-                'bath_room' =>$validated['bath_room'],
-                'house_size' =>$validated['house_size'],
-                'land_size' =>$validated['land_size'],
+                'address' =>$validated['address'] ?? null,
+                'bed_room' =>$validated['bed_room']?? null,
+                'bath_room' =>$validated['bath_room']?? null,
+                'house_size' =>$validated['house_size']?? null,
+                'land_size' =>$validated['land_size']?? null,
             ]);
 
             foreach ($formFields as $field) {

@@ -666,6 +666,11 @@ return [
     'phone number' => 'දුරකථන අංකය',
     'No super ads available at the moment' => 'මේ මොහොතේ සුපිරි දැන්වීම් නොමැත.',
     'No top ads available at the moment' => 'මේ මොහොතේ ඉහළම දැන්වීම් නොමැත.',
+    'Bed Rooms' => 'නිදන කාමර',
+    'Bath Rooms' => 'නාන කාමර',
+    'House Size (sqft)' => 'නිවසේ ප්‍රමාණය (වර්ග අඩි)',
+    'Land Size (Perches)' => 'ඉඩම් ප්‍රමාණය (පර්චස්)',
+    'Update Your Ad' => 'ඔබේ දැන්වීම යාවත්කාලීන කරන්න',
 
 
 
