@@ -472,7 +472,7 @@ class PaymentProcessingController extends Controller
 
         // (Optional) call PAYable API here to confirm payment status.
 
-        if ($payment->status === 'SUCCESS' || $payment->status === 1) {
+        if ($payment->status === 'SUCCESS' || $payment->payment_status == 1) {
             return redirect()->route('membership-package')->with('success', 'Payment successful!');
         }
 
@@ -500,11 +500,11 @@ class PaymentProcessingController extends Controller
         // Update DB
         $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
         if ($payment) {
-            $payment->status = $status;
+            $payment->payment_status = $status;
             $payment->save();
         }
 
-        if ($status === 'SUCCESS' || $status === 1) {
+        if ($status === 'SUCCESS' || $payment->payment_status == 1) {
             MembershipPackage::create([
                 'user_id' => $payment->user_id,
                 'start_date' => now(),

@@ -261,9 +261,16 @@
             </ul>
 
             <div class="mt-3 tab-content" id="adsTabsContent">
+
                 <div class="tab-pane fade show active" id="active-ads-section" role="tabpanel"
                     aria-labelledby="active-ads-tab">
 
+                    <div class="row mt-4 mb-4" id="extra-fields"></div>
+
+                    <div class="row" id="active-ads">
+                        <p class="text-center text-muted">Please select a category to view available membership plans.</p>
+                    </div>
+                    
                     <div class="clearfix inner-content responsive-category" id="category-filter"
                         style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 30px; padding: 8px; justify-items: center;">
                         @foreach ($categories->take(14) as $category)
@@ -308,11 +315,7 @@
                         @endforeach
                     </div>
 
-                    <div class="row mt-4 mb-4" id="extra-fields"></div>
 
-                    <div class="row" id="active-ads">
-                        <p class="text-center text-muted">Please select a category to view available membership plans.</p>
-                    </div>
 
 
                 </div>
