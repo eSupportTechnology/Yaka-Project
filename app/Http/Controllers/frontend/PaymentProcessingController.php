@@ -34,67 +34,67 @@ class PaymentProcessingController extends Controller
         $this->pusherService = $pusherService;
     }
     public function show(Request $request)
-{
-    $packageId = session('package_id');
-    $packageType = session('package_type');
-    $selectedPackageName = session('selected_package_name');
-    $selectedPackagePrice = session('selected_package_price');
-    $selectedPackageDuration = session('selected_package_duration');
-    $adData = session('ad_data');
-    $user = auth()->user();
-    $price = (float) $request->price;
+    {
+        $packageId = session('package_id');
+        $packageType = session('package_type');
+        $selectedPackageName = session('selected_package_name');
+        $selectedPackagePrice = session('selected_package_price');
+        $selectedPackageDuration = session('selected_package_duration');
+        $adData = session('ad_data');
+        $user = auth()->user();
+        $price = (float) $request->price;
 
-    $invoiceId = "YKAD" . date('YmsHsi');
-    if(!empty($price) && $price > 0){
-        $checkSource = 'price';
-        $checkValue = IpgHashService::hash($price, $invoiceId);
-    }else{
-        $checkSource = 'selectedPackagePrice';
-        $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
-    }
+        $invoiceId = "YKAD" . date('YmsHsi');
+        if (!empty($price) && $price > 0) {
+            $checkSource = 'price';
+            $checkValue = IpgHashService::hash($price, $invoiceId);
+        } else {
+            $checkSource = 'selectedPackagePrice';
+            $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
+        }
 
-    PaymentInfo::create([
-        'check_value' => $checkValue,
-        'invoice_id' => $invoiceId,
-        'ad_data' => $adData ?? json_encode($request->only(['price','promotion_voucher_cost','ads_per_month','valid_month'])),
-        'user_id' => $user->id,
-    ]);
+        PaymentInfo::create([
+            'check_value' => $checkValue,
+            'invoice_id' => $invoiceId,
+            'ad_data' => $adData ?? json_encode($request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])),
+            'user_id' => $user->id,
+        ]);
 
-    session([
-        'checkValue' => $checkValue,
-        'invoiceId' => $invoiceId,
-        'membership_data' => $request->all(),
-        $invoiceId . '_add_data' => $request->only(['price','promotion_voucher_cost','ads_per_month','valid_month'])
-    ]);
+        session([
+            'checkValue' => $checkValue,
+            'invoiceId' => $invoiceId,
+            'membership_data' => $request->all(),
+            $invoiceId . '_add_data' => $request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])
+        ]);
 
-    // Find active membership
-    $activeMembership = MembershipPackage::where('user_id', $user->id)
-        ->where('expiry_date', '>', now())
-        ->where('promotion_voucher_cost', '>', 0)
-        ->first();
+        // Find active membership
+        $activeMembership = MembershipPackage::where('user_id', $user->id)
+            ->where('expiry_date', '>', now())
+            ->where('promotion_voucher_cost', '>', 0)
+            ->first();
 
         Log::info('Payment Debug', [
-    'invoiceId' => $invoiceId,
-    'checkValue' => $checkValue,
-    'checkSource' => $checkSource,
-    'price' => $price,
-    'selectedPackagePrice' => $selectedPackagePrice
-]);
+            'invoiceId' => $invoiceId,
+            'checkValue' => $checkValue,
+            'checkSource' => $checkSource,
+            'price' => $price,
+            'selectedPackagePrice' => $selectedPackagePrice
+        ]);
 
 
-    return view('newFrontend.user.payment', [
-        'selectedPackageName' => $selectedPackageName,
-        'selectedPackageDuration' => $selectedPackageDuration,
-        'selectedPackagePrice' => $selectedPackagePrice,
-        'packageType' => $packageType,
-        'adData' => $adData,
-        'checkValue' => $checkValue,
-        'invoiceId' => $invoiceId,
-        'activeMembership' => $activeMembership,
-        'price' => $price,
-        'membershipData' => $request->all(),
-    ]);
-}
+        return view('newFrontend.user.payment', [
+            'selectedPackageName' => $selectedPackageName,
+            'selectedPackageDuration' => $selectedPackageDuration,
+            'selectedPackagePrice' => $selectedPackagePrice,
+            'packageType' => $packageType,
+            'adData' => $adData,
+            'checkValue' => $checkValue,
+            'invoiceId' => $invoiceId,
+            'activeMembership' => $activeMembership,
+            'price' => $price,
+            'membershipData' => $request->all(),
+        ]);
+    }
 
 
     public function freeComplete(Request $request)
@@ -332,7 +332,7 @@ class PaymentProcessingController extends Controller
             }
 
             // Payment successful
-            if ($paymentInfo->payment_status == 1) {
+            if ($paymentInfo->payment_status == 1 || strtoupper($paymentInfo->status) === 'SUCCESS') {
                 echo "Step 6: Payment status = Successful<br>";
 
                 if ($paymentInfo->payment_for === 'membership') {
@@ -500,24 +500,44 @@ class PaymentProcessingController extends Controller
         // Update DB
         $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
         if ($payment) {
-            $payment->payment_status = $status;
-            $payment->save();
-        }
+            // Normalize status to numeric: 0 = pending, 1 = success, 2 = failed
+            $rawStatus = strtoupper((string)$status);
+            if ($rawStatus === 'SUCCESS' || $rawStatus === '1') {
+                $normalized = 1;
+            } elseif ($rawStatus === 'FAILED' || $rawStatus === '0' || $rawStatus === '2') {
+                $normalized = 2;
+            } else {
+                $normalized = 0;
+            }
 
-        if ($status === 'SUCCESS' || $payment->payment_status == 1) {
-            MembershipPackage::create([
-                'user_id' => $payment->user_id,
-                'start_date' => now(),
-                'expiry_date' => now()->addMonths(json_decode($payment->ad_data)->valid_month),
-                'ads_per_month' => json_decode($payment->ad_data)->ads_per_month,
-                'voucher_code' => strtoupper(Str::random(6)),
-                'price' => json_decode($payment->ad_data)->price,
-                'promotion_voucher_cost' => json_decode($payment->ad_data)->promotion_voucher_cost,
-                'valid_month' => json_decode($payment->ad_data)->valid_month,
-                'business_name' => json_decode($payment->ad_data)->business_name,
-                'business_email' => json_decode($payment->ad_data)->business_email,
-                'business_phone' => json_decode($payment->ad_data)->business_phone,
-            ]);
+            $payment->status = $rawStatus; // keep raw for debugging
+            $payment->payment_status = $normalized;
+            $payment->save();
+
+            // Create membership only on successful payment and if payment was for membership
+            if ($normalized === 1 && ($payment->payment_for ?? '') === 'membership') {
+                $data = json_decode($payment->ad_data, true) ?: [];
+                // check existing active package
+                $already = MembershipPackage::where('user_id', $payment->user_id)
+                    ->where('expiry_date', '>', now())
+                    ->exists();
+
+                if (!$already) {
+                    MembershipPackage::create([
+                        'user_id' => $payment->user_id,
+                        'start_date' => now(),
+                        'expiry_date' => now()->addMonths((int)($data['valid_month'] ?? 0)),
+                        'ads_per_month' => $data['ads_per_month'] ?? 0,
+                        'voucher_code' => strtoupper(Str::random(6)),
+                        'price' => $data['price'] ?? 0,
+                        'promotion_voucher_cost' => $data['promotion_voucher_cost'] ?? 0,
+                        'valid_month' => $data['valid_month'] ?? 0,
+                        'business_name' => $data['business_name'] ?? null,
+                        'business_email' => $data['business_email'] ?? null,
+                        'business_phone' => $data['business_phone'] ?? null,
+                    ]);
+                }
+            }
         }
 
         return response()->json(['message' => 'Payment recorded']);
