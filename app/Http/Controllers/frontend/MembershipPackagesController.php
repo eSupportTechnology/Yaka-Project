@@ -92,49 +92,6 @@ class MembershipPackagesController extends Controller
         return redirect()->route('membership.payment.init', ['membershipId' => $membership->id]);
     }
 
-
-    // public function initPayment(Request $request)
-    // {
-    //     try {
-    //         $user = auth()->user();
-    //         $price = (float) $request->price;
-
-    //         $invoiceId = "YKMB" . now()->format('ymdHis');
-
-    //         $checkValue = IpgHashService::hash($price, $invoiceId);
-
-    //         PaymentInfo::create([
-    //             'check_value' => $checkValue,
-    //             'invoice_id'  => $invoiceId,
-    //             'user_id'     => $user->id,
-    //             'ad_data'     => json_encode($request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])),
-    //             'payment_for' => 'membership',
-    //         ]);
-
-    //         session([
-    //             'checkValue' => $checkValue,
-    //             'invoiceId' => $invoiceId,
-    //             'membership_data' => $request->all(),
-    //             $invoiceId . 'add_data' => $request->only(['price', 'promotion_voucher_cost', 'ads_per_month', 'valid_month'])
-    //         ]);
-
-    //         return view('newFrontend.user.membership-payment', [
-    //             'price' => $price,
-    //             'invoiceId' => $invoiceId,
-    //             'checkValue' => $checkValue,
-    //             'membershipData' => $request->all(),
-    //             'gatewayUrl' => 'https://sandbox.payable.lk/ipg/v2'
-    //         ]);
-    //     } catch (\Throwable $e) {
-    //         Log::error('Payment initialization failed: ' . $e->getMessage(), [
-    //             'trace' => $e->getTraceAsString(),
-    //             'user_id' => auth()->id(),
-    //         ]);
-
-    //         return redirect()->back()->with('error', 'Something went wrong while initializing the payment. Please try again.');
-    //     }
-    // }
-
     public function initPayment(Request $request)
     {
         try {

@@ -42,16 +42,16 @@ class PaymentProcessingController extends Controller
         $selectedPackageDuration = session('selected_package_duration');
         $adData = session('ad_data');
         $user = auth()->user();
-        $price = (float) $request->price;
+        // $price = (float) $request->price;
 
         $invoiceId = "YKAD" . date('YmsHsi');
-        if (!empty($price) && $price > 0) {
-            $checkSource = 'price';
-            $checkValue = IpgHashService::hash($price, $invoiceId);
-        } else {
+        // if (!empty($price) && $price > 0) {
+        //     $checkSource = 'price';
+        //     $checkValue = IpgHashService::hash($price, $invoiceId);
+        // } else {
             $checkSource = 'selectedPackagePrice';
             $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
-        }
+        // }
 
         PaymentInfo::create([
             'check_value' => $checkValue,
@@ -77,7 +77,7 @@ class PaymentProcessingController extends Controller
             'invoiceId' => $invoiceId,
             'checkValue' => $checkValue,
             'checkSource' => $checkSource,
-            'price' => $price,
+            // 'price' => $price,
             'selectedPackagePrice' => $selectedPackagePrice
         ]);
 
@@ -91,7 +91,7 @@ class PaymentProcessingController extends Controller
             'checkValue' => $checkValue,
             'invoiceId' => $invoiceId,
             'activeMembership' => $activeMembership,
-            'price' => $price,
+            // 'price' => $price,
             'membershipData' => $request->all(),
         ]);
     }
@@ -305,10 +305,6 @@ class PaymentProcessingController extends Controller
         }
     }
 
-
-
-
-
     public function complete(Request $request)
     {
         try {
@@ -379,8 +375,6 @@ class PaymentProcessingController extends Controller
             return redirect()->back()->with('error', 'Payment failed due to a system error. Please try again later.');
         }
     }
-
-
 
 
     private function saveAd($adData, $invoiceId, $userId)
@@ -472,7 +466,7 @@ class PaymentProcessingController extends Controller
 
         // (Optional) call PAYable API here to confirm payment status.
 
-        if ($payment->status === 'SUCCESS' || $payment->payment_status == 1) {
+        if ($payment->status === 'SUCCESS') {
             return redirect()->route('membership-package')->with('success', 'Payment successful!');
         }
 
