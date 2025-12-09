@@ -92,6 +92,8 @@ Route::post('/ads/search', [AdsControllerMobile::class, 'searchByTitle']);
 //
 Route::post('/payment/notify',[PaymentProcessingController::class , 'getPaymentInfo']);
 
+Route::post('/payment/membership-notify',[PaymentProcessingController::class , 'notifyPayment']);
+
 // Payament ad boost
 Route::post('/payment/boostnotify',[BoostingController::class , 'updateBoost']);
 
