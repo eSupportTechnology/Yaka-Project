@@ -476,79 +476,79 @@ class PaymentProcessingController extends Controller
 
     public function notifyPayment(Request $request)
 {
-    // PAYable v4 sends these keys (confirmed from SDK)
-    $invoiceId = $request->invoice_id ?? $request->invoiceId ?? null;
-    $status = $request->order_status ?? $request->status ?? null;
-    $checkValue = $request->hash ?? $request->check_value ?? $request->checkValue ?? null;
-    $amount = $request->total_amount ?? $request->amount ?? null;
-
     Log::info('PAYABLE NOTIFY RECEIVED', $request->all());
 
-    if (!$invoiceId || !$status) {
+    // PAYable v4 fields
+    $invoiceId   = $request->invoiceNo ?? null;
+    $statusMsg   = $request->statusMessage ?? null;
+    $statusCode  = $request->statusCode ?? null;
+    $checkValue  = $request->checkValue ?? null;
+    $amount      = $request->payableAmount ?? null;
+
+    if (!$invoiceId || (!$statusMsg && $statusCode === null)) {
         return response()->json(['error' => 'Invalid notification'], 400);
     }
 
-    // Hash match (PAYable requires formatted 2 decimals)
-    $expected = IpgHashService::hash(number_format($amount, 2, '.', ''), $invoiceId);
+    // Hash Verification
+    $expected = IpgHashService::hash(
+        number_format($amount, 2, '.', ''),
+        $invoiceId
+    );
 
     if ($checkValue !== $expected) {
-        Log::error("Payment hash mismatch", [
-            'invoice' => $invoiceId,
+        Log::error('HASH MISMATCH', [
+            'expected' => $expected,
             'received' => $checkValue,
-            'expected' => $expected
+            'invoice' => $invoiceId,
         ]);
         return response()->json(['error' => 'Hash mismatch'], 400);
     }
 
-    // Find payment row
+    // Find DB Row
     $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
 
-    if ($payment) {
+    if (!$payment) {
+        Log::error("PaymentInfo NOT FOUND for invoice: $invoiceId");
+        return response()->json(['error' => 'Invoice not found'], 404);
+    }
 
-        // Normalize status
-        $rawStatus = strtoupper($status);
+    // Normalize status
+    // PAYable: statusCode = 1 → SUCCESS
+    $normalized = ($statusCode == 1 || strtoupper($statusMsg) == 'SUCCESS') ? 1 : 2;
 
-        if ($rawStatus === 'SUCCESS' || $rawStatus === '1') {
-            $normalized = 1;
-        } elseif ($rawStatus === 'FAILED' || $rawStatus === '0' || $rawStatus === '2') {
-            $normalized = 2;
-        } else {
-            $normalized = 0;
-        }
+    // Update Payment Row
+    $payment->status = $statusMsg;
+    $payment->payment_status = $normalized;
+    $payment->save();
 
-        // Update payment info
-        $payment->status = $rawStatus;
-        $payment->payment_status = $normalized;
-        $payment->save();
+    // Create Membership after success
+    if ($normalized === 1 && $payment->payment_for === 'membership') {
 
-        // Create membership on success
-        if ($normalized === 1 || ($payment->payment_for == 'membership')) {
+        $data = json_decode($payment->ad_data, true);
 
-            $data = json_decode($payment->ad_data, true) ?: [];
+        $hasActive = MembershipPackage::where('user_id', $payment->user_id)
+            ->where('expiry_date', '>', now())
+            ->exists();
 
-            $already = MembershipPackage::where('user_id', $payment->user_id)
-                ->where('expiry_date', '>', now())
-                ->exists();
-
-            if (!$already) {
-                MembershipPackage::create([
-                    'user_id' => $payment->user_id,
-                    'start_date' => now(),
-                    'expiry_date' => now()->addMonths($data['valid_month'] ?? 0),
-                    'ads_per_month' => $data['ads_per_month'] ?? 0,
-                    'voucher_code' => strtoupper(Str::random(6)),
-                    'price' => $data['price'] ?? 0,
-                    'promotion_voucher_cost' => $data['promotion_voucher_cost'] ?? 0,
-                    'valid_month' => $data['valid_month'] ?? 0,
-                    'business_name' => $data['business_name'] ?? null,
-                    'business_email' => $data['business_email'] ?? null,
-                    'business_phone' => $data['business_phone'] ?? null,
-                ]);
-            }
+        if (!$hasActive) {
+            MembershipPackage::create([
+                'user_id'                 => $payment->user_id,
+                'start_date'              => now(),
+                'expiry_date'             => now()->addMonths((int)($data['valid_month'] ?? 0)),
+                'ads_per_month'           => $data['ads_per_month'] ?? 0,
+                'voucher_code'            => strtoupper(Str::random(6)),
+                'price'                   => $data['price'] ?? 0,
+                'promotion_voucher_cost'  => $data['promotion_voucher_cost'] ?? 0,
+                'valid_month'             => $data['valid_month'] ?? 0,
+                'business_name'           => $data['business_name'] ?? null,
+                'business_email'          => $data['business_email'] ?? null,
+                'business_phone'          => $data['business_phone'] ?? null,
+            ]);
         }
     }
 
     return response()->json(['message' => 'Notification processed']);
 }
+
 
 }
