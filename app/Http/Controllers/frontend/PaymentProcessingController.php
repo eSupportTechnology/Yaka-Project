@@ -516,13 +516,18 @@ class PaymentProcessingController extends Controller
     // PAYable: statusCode = 1 → SUCCESS
     $normalized = ($statusCode == 1 || strtoupper($statusMsg) == 'SUCCESS') ? 1 : 2;
 
+    Log::info('Payment Notification Processed', [
+        'invoiceId' => $invoiceId,
+        'statusMsg' => $statusMsg,
+        'statusCode' => $statusCode,
+        'normalizedStatus' => $normalized,
+    ]);
     // Update Payment Row
-    $payment->status = $statusMsg;
     $payment->payment_status = $normalized;
     $payment->save();
 
     // Create Membership after success
-    if ($normalized === 1 && $payment->payment_for === 'membership') {
+    if ($normalized == 1 && $payment->payment_for == 'membership') {
 
         $data = json_decode($payment->ad_data, true);
 
