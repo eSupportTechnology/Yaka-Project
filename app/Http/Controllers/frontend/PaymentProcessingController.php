@@ -466,7 +466,8 @@ class PaymentProcessingController extends Controller
 
         // (Optional) call PAYable API here to confirm payment status.
 
-        if ($payment->status === 'SUCCESS') {
+        // if ($payment->status === 'SUCCESS') {
+        if ($payment->payment_status == 1) {
             return redirect()->route('membership-package')->with('success', 'Payment successful!');
         }
 
@@ -474,66 +475,80 @@ class PaymentProcessingController extends Controller
     }
 
     public function notifyPayment(Request $request)
-    {
-        $invoiceId = $request->invoiceId ?? null;
-        $status = $request->status ?? null;
-        $checkValue = $request->checkValue ?? null;
-        $amount = $request->amount ?? null;
+{
+    // PAYable v4 sends these keys (confirmed from SDK)
+    $invoiceId = $request->invoice_id ?? $request->invoiceId ?? null;
+    $status = $request->order_status ?? $request->status ?? null;
+    $checkValue = $request->hash ?? $request->check_value ?? $request->checkValue ?? null;
+    $amount = $request->total_amount ?? $request->amount ?? null;
 
-        if (!$invoiceId || !$status) {
-            return response()->json(['error' => 'Invalid notification'], 400);
-        }
+    Log::info('PAYABLE NOTIFY RECEIVED', $request->all());
 
-        // Verify checkValue
-        $expected = IpgHashService::hash($amount, $invoiceId);
-        if ($checkValue !== $expected) {
-            Log::error("Payment hash mismatch for invoice: $invoiceId");
-            return response()->json(['error' => 'Hash mismatch'], 400);
-        }
-
-        // Update DB
-        $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
-        if ($payment) {
-            // Normalize status to numeric: 0 = pending, 1 = success, 2 = failed
-            $rawStatus = strtoupper((string)$status);
-            if ($rawStatus === 'SUCCESS' || $rawStatus === '1') {
-                $normalized = 1;
-            } elseif ($rawStatus === 'FAILED' || $rawStatus === '0' || $rawStatus === '2') {
-                $normalized = 2;
-            } else {
-                $normalized = 0;
-            }
-
-            $payment->status = $rawStatus; // keep raw for debugging
-            $payment->payment_status = $normalized;
-            $payment->save();
-
-            // Create membership only on successful payment and if payment was for membership
-            if ($normalized === 1 && ($payment->payment_for ?? '') === 'membership') {
-                $data = json_decode($payment->ad_data, true) ?: [];
-                // check existing active package
-                $already = MembershipPackage::where('user_id', $payment->user_id)
-                    ->where('expiry_date', '>', now())
-                    ->exists();
-
-                if (!$already) {
-                    MembershipPackage::create([
-                        'user_id' => $payment->user_id,
-                        'start_date' => now(),
-                        'expiry_date' => now()->addMonths((int)($data['valid_month'] ?? 0)),
-                        'ads_per_month' => $data['ads_per_month'] ?? 0,
-                        'voucher_code' => strtoupper(Str::random(6)),
-                        'price' => $data['price'] ?? 0,
-                        'promotion_voucher_cost' => $data['promotion_voucher_cost'] ?? 0,
-                        'valid_month' => $data['valid_month'] ?? 0,
-                        'business_name' => $data['business_name'] ?? null,
-                        'business_email' => $data['business_email'] ?? null,
-                        'business_phone' => $data['business_phone'] ?? null,
-                    ]);
-                }
-            }
-        }
-
-        return response()->json(['message' => 'Payment recorded']);
+    if (!$invoiceId || !$status) {
+        return response()->json(['error' => 'Invalid notification'], 400);
     }
+
+    // Hash match (PAYable requires formatted 2 decimals)
+    $expected = IpgHashService::hash(number_format($amount, 2, '.', ''), $invoiceId);
+
+    if ($checkValue !== $expected) {
+        Log::error("Payment hash mismatch", [
+            'invoice' => $invoiceId,
+            'received' => $checkValue,
+            'expected' => $expected
+        ]);
+        return response()->json(['error' => 'Hash mismatch'], 400);
+    }
+
+    // Find payment row
+    $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
+
+    if ($payment) {
+
+        // Normalize status
+        $rawStatus = strtoupper($status);
+
+        if ($rawStatus === 'SUCCESS' || $rawStatus === '1') {
+            $normalized = 1;
+        } elseif ($rawStatus === 'FAILED' || $rawStatus === '0' || $rawStatus === '2') {
+            $normalized = 2;
+        } else {
+            $normalized = 0;
+        }
+
+        // Update payment info
+        $payment->status = $rawStatus;
+        $payment->payment_status = $normalized;
+        $payment->save();
+
+        // Create membership on success
+        if ($normalized === 1 && ($payment->payment_for == 'membership')) {
+
+            $data = json_decode($payment->ad_data, true) ?: [];
+
+            $already = MembershipPackage::where('user_id', $payment->user_id)
+                ->where('expiry_date', '>', now())
+                ->exists();
+
+            if (!$already) {
+                MembershipPackage::create([
+                    'user_id' => $payment->user_id,
+                    'start_date' => now(),
+                    'expiry_date' => now()->addMonths($data['valid_month'] ?? 0),
+                    'ads_per_month' => $data['ads_per_month'] ?? 0,
+                    'voucher_code' => strtoupper(Str::random(6)),
+                    'price' => $data['price'] ?? 0,
+                    'promotion_voucher_cost' => $data['promotion_voucher_cost'] ?? 0,
+                    'valid_month' => $data['valid_month'] ?? 0,
+                    'business_name' => $data['business_name'] ?? null,
+                    'business_email' => $data['business_email'] ?? null,
+                    'business_phone' => $data['business_phone'] ?? null,
+                ]);
+            }
+        }
+    }
+
+    return response()->json(['message' => 'Notification processed']);
+}
+
 }
