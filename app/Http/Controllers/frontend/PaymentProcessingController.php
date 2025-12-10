@@ -522,7 +522,7 @@ class PaymentProcessingController extends Controller
         $payment->save();
 
         // Create membership on success
-        if ($normalized === 1 && ($payment->payment_for == 'membership')) {
+        if ($normalized === 1 || ($payment->payment_for == 'membership')) {
 
             $data = json_decode($payment->ad_data, true) ?: [];
 
