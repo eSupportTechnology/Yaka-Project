@@ -190,7 +190,7 @@
                 amount: paymentAmount.toFixed(2),
                 currencyCode: "LKR",
                 paymentType: "1",
-                notifyUrl: "{{ config('ipg.notify-url') }}"
+                notifyUrl: "{{ config('ipg.notify-url-membership') }}"
             };
 
             console.log(payment);

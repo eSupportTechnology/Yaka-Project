@@ -6,6 +6,7 @@ return [
     'merchant-token' => env('MERCHANT_TOKEN', '0'),
     'notify-url' => env('NOTIFY_URL', '0'),
     'notify-boost-url' => rtrim(env('APP_URL'), '/') . '/' . ltrim(env('NOTIFY_BOOST_PATH', '/api/payment/boostnotify'), '/'),
-    'base_url' => rtrim(env('APP_URL'))
+    'base_url' => rtrim(env('APP_URL')),
+    'notify-url-membership' => env('NOTIFY_URL_MEMBERSHIP', '0'),
 
 ];
