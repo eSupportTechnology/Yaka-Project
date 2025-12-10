@@ -550,5 +550,11 @@ class PaymentProcessingController extends Controller
     return response()->json(['message' => 'Notification processed']);
 }
 
+public function paymentInfo(Request $request)
+    {
+        $payments = PaymentInfo::orderBy('created_at', 'desc')->get();
+        return view('newAdminDashboard.payment.index', compact('payments'));
+    }
+
 
 }

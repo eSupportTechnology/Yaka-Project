@@ -149,6 +149,13 @@
                         <span class="text">Banner-Packages</span>
                     </a>
                 </li>
+
+                <li class="menu-item {{ request()->routeIs('payment.info') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('payment.info') }}">
+                        <i class="icon material-icons md-image"></i>
+                        <span class="text">Payment</span>
+                    </a>
+                </li>
             @endif
         </ul>
         <hr />

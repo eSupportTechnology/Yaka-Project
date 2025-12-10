@@ -157,6 +157,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/payment/checking', [PaymentProcessingController::class, 'checkPayment'])->name('payment.checking');
     // Route::post('/payment/notify', [PaymentProcessingController::class, 'notifyPayment'])->name('payment.notify');
+
+    Route::get('payment-info', [PaymentProcessingController::class, 'paymentInfo'])->name('payment.info');
 });
 
 
