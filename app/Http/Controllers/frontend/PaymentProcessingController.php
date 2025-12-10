@@ -456,7 +456,11 @@ class PaymentProcessingController extends Controller
 
     public function checkPayment(Request $request)
     {
+        Log::info('Checking payment for request', $request->all());
+
         $invoiceId = $request->query('invId');
+
+        Log::info('Checking payment for invoice ID: ' . $invoiceId);
 
         $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
 
@@ -467,7 +471,7 @@ class PaymentProcessingController extends Controller
         // (Optional) call PAYable API here to confirm payment status.
 
         // if ($payment->status === 'SUCCESS') {
-        if ($payment->payment_status == 1) {
+        if ($payment->payment_status == 1 || strtoupper($payment->status) === 'SUCCESS') {
             return redirect()->route('membership-package')->with('success', 'Payment successful!');
         }
 
@@ -523,6 +527,7 @@ class PaymentProcessingController extends Controller
         'normalizedStatus' => $normalized,
     ]);
     // Update Payment Row
+    $payment->status = $statusMsg;
     $payment->payment_status = $normalized;
     $payment->save();
 
