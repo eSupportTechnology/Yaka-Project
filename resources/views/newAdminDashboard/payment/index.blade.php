@@ -20,6 +20,7 @@
                                 <th>Invoice ID</th>
                                 <th>Payment for</th>
                                 <th>Payment status</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -31,6 +32,7 @@
                                     <td>{{ $payment->invoice_id }}</td>
                                     <td>{{ $payment->payment_for }}</td>
                                     <td>{{ $payment->payment_status }}</td>
+                                    <td>{{ $payment->status ?? 'N/A' }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
