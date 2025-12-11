@@ -12,7 +12,10 @@ class PaymentInfo extends Model
         'payment_status',
         'ad_data',
         'user_id',
-        'payment_for'
+        'payment_for',
+        'status',
+        'payable_transaction_id',
+        'payable_order_id'
     ];
     protected $casts = [
         'ad_data' => 'array',
