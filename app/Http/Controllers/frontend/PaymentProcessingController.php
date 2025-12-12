@@ -18,6 +18,7 @@ use App\Models\FormField;
 use App\Models\MembershipAdUsage;
 use App\Models\MembershipPackage;
 use App\Models\PackageType;
+use App\Services\CheckValue;
 use App\Services\PusherNotificationService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -49,8 +50,8 @@ class PaymentProcessingController extends Controller
         //     $checkSource = 'price';
         //     $checkValue = IpgHashService::hash($price, $invoiceId);
         // } else {
-            $checkSource = 'selectedPackagePrice';
-            $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
+        $checkSource = 'selectedPackagePrice';
+        $checkValue = IpgHashService::hash($selectedPackagePrice, $invoiceId);
         // }
 
         PaymentInfo::create([
@@ -328,7 +329,7 @@ class PaymentProcessingController extends Controller
             }
 
             // Payment successful
-            if ($paymentInfo->payment_status == 1 || strtoupper($paymentInfo->status) === 'SUCCESS') {
+            if ($paymentInfo->payment_status == 1 || strtoupper($paymentInfo->status) == 'SUCCESS') {
                 echo "Step 6: Payment status = Successful<br>";
 
                 if ($paymentInfo->payment_for === 'membership') {
@@ -344,14 +345,17 @@ class PaymentProcessingController extends Controller
 
                     if (!$alreadyExists) {
                         MembershipPackage::create([
-                            'user_id' => $paymentInfo->user_id,
-                            'start_date' => now(),
-                            'expiry_date' => now()->addMonths($data['valid_month']),
-                            'ads_per_month' => $data['ads_per_month'],
-                            'voucher_code' => strtoupper(Str::random(6)),
-                            'price' => $data['price'],
-                            'promotion_voucher_cost' => $data['promotion_voucher_cost'],
-                            'valid_month' => $data['valid_month'],
+                            'user_id'                 => $paymentInfo->user_id,
+                            'start_date'              => now(),
+                            'expiry_date'             => now()->addMonths((int)($data['valid_month'] ?? 0)),
+                            'ads_per_month'           => $data['ads_per_month'] ?? 0,
+                            'voucher_code'            => strtoupper(Str::random(6)),
+                            'price'                   => $data['price'] ?? 0,
+                            'promotion_voucher_cost'  => $data['promotion_voucher_cost'] ?? 0,
+                            'valid_month'             => $data['valid_month'] ?? 0,
+                            'business_name'           => $data['business_name'] ?? null,
+                            'business_email'          => $data['business_email'] ?? null,
+                            'business_phone'          => $data['business_phone'] ?? null,
                         ]);
                         echo "Step 10: Membership package created<br>";
                     }
@@ -471,100 +475,111 @@ class PaymentProcessingController extends Controller
         // (Optional) call PAYable API here to confirm payment status.
 
         // if ($payment->status === 'SUCCESS') {
-        if ($payment->payment_status == 1 || strtoupper($payment->status) === 'SUCCESS') {
+        if ($payment->payment_status == 1 || strtoupper($payment->status) == 'SUCCESS') {
             return redirect()->route('membership-package')->with('success', 'Payment successful!');
         }
 
         return redirect()->route('membership-package')->with('error', 'Payment failed or pending.');
     }
 
+
     public function notifyPayment(Request $request)
-{
-    Log::info('PAYABLE NOTIFY RECEIVED', $request->all());
+    {
+        Log::info('PAYABLE NOTIFY RECEIVED', $request->all());
 
-    // PAYable v4 fields
-    $invoiceId   = $request->invoiceNo ?? null;
-    $statusMsg   = $request->statusMessage ?? null;
-    $statusCode  = $request->statusCode ?? null;
-    $checkValue  = $request->checkValue ?? null;
-    $amount      = $request->payableAmount ?? null;
+        // $data = $request->validate([
+        //     'invoiceNo' => 'required',
+        //     'payableTransactionId' => 'required',
+        //     'payableOrderId' => 'required',
+        // ]);
 
-    if (!$invoiceId || (!$statusMsg && $statusCode === null)) {
-        return response()->json(['error' => 'Invalid notification'], 400);
-    }
+        // $payment = PaymentInfo::where('invoice_no', $data['invoiceNo'])->first();
 
-    // Hash Verification
-    $expected = IpgHashService::hash(
-        number_format($amount, 2, '.', ''),
-        $invoiceId
-    );
+        // $payment->payable_transaction_id = $data['payableTransactionId'];
+        // $payment->payable_order_id = $data['payableOrderId'];
+        // $payment->save();
 
-    if ($checkValue !== $expected) {
-        Log::error('HASH MISMATCH', [
-            'expected' => $expected,
-            'received' => $checkValue,
-            'invoice' => $invoiceId,
-        ]);
-        return response()->json(['error' => 'Hash mismatch'], 400);
-    }
+        // PAYable v4 fields
+        $invoiceId   = $request->invoiceNo ?? null;
+        $statusMsg   = $request->statusMessage ?? null;
+        $statusCode  = $request->statusCode ?? null;
+        $checkValue  = $request->checkValue ?? null;
+        $amount      = $request->payableAmount ?? null;
+        $payableOrderId = $request->payableOrderId ?? null;
+        $payableTransactionId = $request->payableTransactionId ?? null;
 
-    // Find DB Row
-    $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
 
-    if (!$payment) {
-        Log::error("PaymentInfo NOT FOUND for invoice: $invoiceId");
-        return response()->json(['error' => 'Invoice not found'], 404);
-    }
-
-    // Normalize status
-    // PAYable: statusCode = 1 → SUCCESS
-    $normalized = ($statusCode == 1 || strtoupper($statusMsg) == 'SUCCESS') ? 1 : 2;
-
-    Log::info('Payment Notification Processed', [
-        'invoiceId' => $invoiceId,
-        'statusMsg' => $statusMsg,
-        'statusCode' => $statusCode,
-        'normalizedStatus' => $normalized,
-    ]);
-    // Update Payment Row
-    $payment->status = $statusMsg;
-    $payment->payment_status = $normalized;
-    $payment->save();
-
-    // Create Membership after success
-    if ($normalized == 1 && $payment->payment_for == 'membership') {
-
-        $data = json_decode($payment->ad_data, true);
-
-        $hasActive = MembershipPackage::where('user_id', $payment->user_id)
-            ->where('expiry_date', '>', now())
-            ->exists();
-
-        if (!$hasActive) {
-            MembershipPackage::create([
-                'user_id'                 => $payment->user_id,
-                'start_date'              => now(),
-                'expiry_date'             => now()->addMonths((int)($data['valid_month'] ?? 0)),
-                'ads_per_month'           => $data['ads_per_month'] ?? 0,
-                'voucher_code'            => strtoupper(Str::random(6)),
-                'price'                   => $data['price'] ?? 0,
-                'promotion_voucher_cost'  => $data['promotion_voucher_cost'] ?? 0,
-                'valid_month'             => $data['valid_month'] ?? 0,
-                'business_name'           => $data['business_name'] ?? null,
-                'business_email'          => $data['business_email'] ?? null,
-                'business_phone'          => $data['business_phone'] ?? null,
-            ]);
+        if (!$invoiceId || (!$statusMsg && $statusCode === null)) {
+            return response()->json(['error' => 'Invalid notification'], 400);
         }
+
+        // Hash Verification
+        $expected = CheckValue::hash($amount, $invoiceId, $payableOrderId, $payableTransactionId, $statusCode);
+
+        if ($checkValue !== $expected) {
+            Log::error('HASH MISMATCH', [
+                'expected' => $expected,
+                'received' => $checkValue,
+                'invoice' => $invoiceId,
+            ]);
+            return response()->json(['error' => 'Hash mismatch'], 400);
+        }
+
+        // Find DB Row
+        $payment = PaymentInfo::where('invoice_id', $invoiceId)->first();
+
+        if (!$payment) {
+            Log::error("PaymentInfo NOT FOUND for invoice: $invoiceId");
+            return response()->json(['error' => 'Invoice not found'], 404);
+        }
+
+        // Normalize status
+        // PAYable: statusCode = 1 → SUCCESS
+        $normalized = ($statusCode == 1 || strtoupper($statusMsg) == 'SUCCESS') ? 1 : 2;
+
+        Log::info('Payment Notification Processed', [
+            'invoiceId' => $invoiceId,
+            'statusMsg' => $statusMsg,
+            'statusCode' => $statusCode,
+            'normalizedStatus' => $normalized,
+        ]);
+        // Update Payment Row
+        $payment->status = $statusMsg;
+        $payment->payment_status = $normalized;
+        $payment->save();
+
+        // Create Membership after success
+        if ($normalized == 1 && $payment->payment_for == 'membership') {
+
+            $data = json_decode($payment->ad_data, true);
+
+            $hasActive = MembershipPackage::where('user_id', $payment->user_id)
+                ->where('expiry_date', '>', now())
+                ->exists();
+
+            if (!$hasActive) {
+                MembershipPackage::create([
+                    'user_id'                 => $payment->user_id,
+                    'start_date'              => now(),
+                    'expiry_date'             => now()->addMonths((int)($data['valid_month'] ?? 0)),
+                    'ads_per_month'           => $data['ads_per_month'] ?? 0,
+                    'voucher_code'            => strtoupper(Str::random(6)),
+                    'price'                   => $data['price'] ?? 0,
+                    'promotion_voucher_cost'  => $data['promotion_voucher_cost'] ?? 0,
+                    'valid_month'             => $data['valid_month'] ?? 0,
+                    'business_name'           => $data['business_name'] ?? null,
+                    'business_email'          => $data['business_email'] ?? null,
+                    'business_phone'          => $data['business_phone'] ?? null,
+                ]);
+            }
+        }
+
+        return response()->json(['message' => 'Notification processed']);
     }
 
-    return response()->json(['message' => 'Notification processed']);
-}
-
-public function paymentInfo(Request $request)
+    public function paymentInfo(Request $request)
     {
         $payments = PaymentInfo::orderBy('created_at', 'desc')->get();
         return view('newAdminDashboard.payment.index', compact('payments'));
     }
-
-
 }
